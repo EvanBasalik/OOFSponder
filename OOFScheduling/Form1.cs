@@ -111,9 +111,14 @@ namespace OOFScheduling
 
         private async void oofUpdateTimer_Tick(object sender, EventArgs e)
         {
-
-            //await System.Threading.Tasks.Task.Run(() => setOOF("Testing"));
-
+            string emailAddress = Properties.Settings.Default.EmailAddress;
+            string pw = Properties.Settings.Default.EncryptPW;
+            string oofMessage = Properties.Settings.Default.OOFHtml;
+            DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
+            if ((DateTime.Now < oofTimes[0]) || (DateTime.Now > oofTimes[1]))
+            {
+                await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, pw, oofMessage, oofTimes[0], oofTimes[1]));
+            }
         }
 
         public async System.Threading.Tasks.Task setOOF(string EmailAddress, string EncryptPW, string oofMessage, DateTime StartTime, DateTime EndTime)
