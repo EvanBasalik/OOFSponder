@@ -25,7 +25,7 @@
     <SupportUrl>http://codebox/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
     <PublisherName>Microsoft</PublisherName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>0.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
