@@ -50,12 +50,12 @@ namespace OOFScheduling.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("default")]
-        public string OOFHtml {
+        public string OOFHtmlExternal {
             get {
-                return ((string)(this["OOFHtml"]));
+                return ((string)(this["OOFHtmlExternal"]));
             }
             set {
-                this["OOFHtml"] = value;
+                this["OOFHtmlExternal"] = value;
             }
         }
         
@@ -68,6 +68,18 @@ namespace OOFScheduling.Properties {
             }
             set {
                 this["workingHours"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("default")]
+        public string OOFHtmlInternal {
+            get {
+                return ((string)(this["OOFHtmlInternal"]));
+            }
+            set {
+                this["OOFHtmlInternal"] = value;
             }
         }
     }

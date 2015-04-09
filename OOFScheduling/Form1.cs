@@ -9,20 +9,34 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Exchange.WebServices.Data;
 using System.Security.Cryptography;
+using System.Timers;
 using mshtml;
 using System.Text.RegularExpressions;
+using Microsoft.Win32;
 
 namespace OOFScheduling
 {
     public partial class Form1 : Form
     {
         private ContextMenu trayMenu;
+        private bool minimize = true;
         public Form1()
         {
             InitializeComponent();
 
+            // The path to the key where Windows looks for startup applications
+            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
+                                @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+
+            //Path to launch shortcut
+            string startPath = Environment.GetFolderPath(Environment.SpecialFolder.Programs)
+                               + @"\Microsoft\OOFSponder.appref-ms";
+
+            rkApp.SetValue("OOFSponder", startPath);
+
             // Create a simple tray menu with only one item.
             trayMenu = new ContextMenu();
+            trayMenu.MenuItems.Add("Run Manually", RunManualMenu);
             trayMenu.MenuItems.Add("Exit", OnExit);
 
             // Add menu to tray icon and show it.
@@ -33,9 +47,14 @@ namespace OOFScheduling
                 emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
             }
 
-            if (Properties.Settings.Default.OOFHtml != "default")
+            if (Properties.Settings.Default.OOFHtmlExternal != "default")
             {
-                htmlEditorControl1.BodyHtml = Properties.Settings.Default.OOFHtml;
+                htmlEditorControl1.BodyHtml = Properties.Settings.Default.OOFHtmlExternal;
+            }
+
+            if (Properties.Settings.Default.OOFHtmlInternal != "default")
+            {
+                htmlEditorControl2.BodyHtml = Properties.Settings.Default.OOFHtmlInternal;
             }
 
             if (Properties.Settings.Default.workingHours != "default")
@@ -79,11 +98,31 @@ namespace OOFScheduling
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
             }
 
+            Loopy();
+        }
+
+        void Loopy()
+        {
+            //Every 10 minutes for automation
+            var timer = new System.Timers.Timer(600000);
+            timer.Enabled = true;
+            timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+            timer.Start();
+        }
+
+        private async void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            RunSetOof();
         }
 
         private void OnExit(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void RunManualMenu(object sender, EventArgs e)
+        {
+            RunSetOof();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -105,23 +144,35 @@ namespace OOFScheduling
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            this.WindowState = FormWindowState.Minimized;
+            if(minimize)
+            {
+                e.Cancel = true;
+                this.WindowState = FormWindowState.Minimized;
+            }
+            
         }
 
-        private async void oofUpdateTimer_Tick(object sender, EventArgs e)
+        private async void RunSetOof()
         {
-            string emailAddress = Properties.Settings.Default.EmailAddress;
-            string pw = Properties.Settings.Default.EncryptPW;
-            string oofMessage = Properties.Settings.Default.OOFHtml;
-            DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
-            if ((DateTime.Now < oofTimes[0]) || (DateTime.Now > oofTimes[1]))
+            if (Properties.Settings.Default.EmailAddress != "default" &&
+                Properties.Settings.Default.OOFHtmlExternal != "default" && 
+                Properties.Settings.Default.OOFHtmlInternal != "default" && 
+                Properties.Settings.Default.workingHours != "default" &&
+                Properties.Settings.Default.EncryptPW != "default")
             {
-                await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, pw, oofMessage, oofTimes[0], oofTimes[1]));
+                string emailAddress = Properties.Settings.Default.EmailAddress;
+                string pw = Properties.Settings.Default.EncryptPW;
+                string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
+                string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
+                DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
+                if ((DateTime.Now < oofTimes[0]) || (DateTime.Now > oofTimes[1]))
+                {
+                    await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, pw, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
+                }
             }
         }
 
-        public async System.Threading.Tasks.Task setOOF(string EmailAddress, string EncryptPW, string oofMessage, DateTime StartTime, DateTime EndTime)
+        public async System.Threading.Tasks.Task setOOF(string EmailAddress, string EncryptPW, string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
             ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2013);
             service.Credentials = new WebCredentials(EmailAddress, DataProtectionApiWrapper.Decrypt(EncryptPW));
@@ -155,10 +206,10 @@ namespace OOFScheduling
             myOOF.ExternalAudience = OofExternalAudience.All;
 
             // Set the OOF message for your internal audience.
-            myOOF.InternalReply = new OofReply(oofMessage);
+            myOOF.InternalReply = new OofReply(oofMessageInternal);
 
             // Set the OOF message for your external audience.
-            myOOF.ExternalReply = new OofReply(oofMessage);
+            myOOF.ExternalReply = new OofReply(oofMessageExternal);
 
             string newinternal = Regex.Replace(myOOF.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
             string currentinternal = Regex.Replace(myOOFSettings.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
@@ -190,44 +241,12 @@ namespace OOFScheduling
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            string emailAddress = Properties.Settings.Default.EmailAddress;
-            string pw = Properties.Settings.Default.EncryptPW;
-            string oofMessage = Properties.Settings.Default.OOFHtml;
-            DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
-            if ((DateTime.Now < oofTimes[0]) || (DateTime.Now > oofTimes[1]))
-            {
-                await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, pw, oofMessage, oofTimes[0], oofTimes[1]));
-            }
-            
+            RunSetOof();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(emailAddressTB.Text))
-            {
-                MessageBox.Show("Please enter your email address");
-            }
-            else if (string.IsNullOrEmpty(passwordTB.Text))
-            {
-                MessageBox.Show("Please enter your password");
-            }
-            else if (string.IsNullOrEmpty(passwordConfirmTB.Text))
-            {
-                MessageBox.Show("Please confirm your password");
-            }
-            else if (passwordConfirmTB.Text != passwordTB.Text)
-            {
-                MessageBox.Show("Your password does not match the confirmed password, please confirm your password");
-            }
-            else
-            {
-                Properties.Settings.Default.EmailAddress = emailAddressTB.Text;
-                Properties.Settings.Default.EncryptPW = DataProtectionApiWrapper.Encrypt(passwordTB.Text);
-                Properties.Settings.Default.OOFHtml = htmlEditorControl1.BodyHtml;
-                Properties.Settings.Default.workingHours = ScheduleString();
-
-                Properties.Settings.Default.Save();
-            }
+            saveSettings();
         }
 
         private string ScheduleString()
@@ -422,6 +441,50 @@ namespace OOFScheduling
                 saturdayStartTimepicker.Enabled = true;
                 saturdayEndTimepicker.Enabled = true;
             }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveSettings();
+        }
+
+        private void saveSettings()
+        {
+            if (string.IsNullOrEmpty(emailAddressTB.Text))
+            {
+                MessageBox.Show("Please enter your email address");
+            }
+            else if (string.IsNullOrEmpty(passwordTB.Text))
+            {
+                MessageBox.Show("Please enter your password");
+            }
+            else if (string.IsNullOrEmpty(passwordConfirmTB.Text))
+            {
+                MessageBox.Show("Please confirm your password");
+            }
+            else if (passwordConfirmTB.Text != passwordTB.Text)
+            {
+                MessageBox.Show("Your password does not match the confirmed password, please confirm your password");
+            }
+            else
+            {
+                Properties.Settings.Default.EmailAddress = emailAddressTB.Text;
+                Properties.Settings.Default.EncryptPW = DataProtectionApiWrapper.Encrypt(passwordTB.Text);
+                Properties.Settings.Default.OOFHtmlExternal = htmlEditorControl1.BodyHtml;
+                Properties.Settings.Default.OOFHtmlInternal = htmlEditorControl2.BodyHtml;
+                Properties.Settings.Default.workingHours = ScheduleString();
+
+                Properties.Settings.Default.Save();
+
+                passwordConfirmTB.Text = "";
+                passwordTB.Text = "";
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            minimize = false;
+            Application.Exit();
         }
     }
 

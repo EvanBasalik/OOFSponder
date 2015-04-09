@@ -8,10 +8,13 @@
     <Setting Name="EncryptPW" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
-    <Setting Name="OOFHtml" Type="System.String" Scope="User">
+    <Setting Name="OOFHtmlExternal" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="workingHours" Type="System.String" Scope="User">
+      <Value Profile="(Default)">default</Value>
+    </Setting>
+    <Setting Name="OOFHtmlInternal" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
   </Settings>
