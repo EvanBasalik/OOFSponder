@@ -98,7 +98,23 @@ namespace OOFScheduling
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
             }
 
+            if (Properties.Settings.Default.EmailAddress != "default" &&
+               Properties.Settings.Default.OOFHtmlExternal != "default" &&
+               Properties.Settings.Default.OOFHtmlInternal != "default" &&
+               Properties.Settings.Default.workingHours != "default" &&
+               Properties.Settings.Default.EncryptPW != "default")
+            {
+                toolStripStatusLabel1.Text = "Ready";
+            }
+            else
+            {
+                toolStripStatusLabel1.Text = "Please setup OOFsponder";
+            }
+
+            toolStripStatusLabel2.Text = "";
             Loopy();
+            RunStatusCheck();
+
         }
 
         void Loopy()
@@ -110,9 +126,35 @@ namespace OOFScheduling
             timer.Start();
         }
 
+        public void UpdateStatusLabel(ToolStripStatusLabel ourLabel, String status_text)
+        {
+            MethodInvoker mi = new MethodInvoker(() => ourLabel.Text = status_text);
+
+            if (statusStrip1.InvokeRequired)
+            {
+                statusStrip1.Invoke(mi);
+            }
+            else
+            {
+                mi.Invoke();
+            }
+        }
+
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             RunSetOof();
+            RunStatusCheck();
+        }
+
+        private async void RunStatusCheck()
+        {
+            if (Properties.Settings.Default.EmailAddress != "default" &&
+                Properties.Settings.Default.EncryptPW != "default")
+            {
+                string emailAddress = Properties.Settings.Default.EmailAddress;
+                string pw = Properties.Settings.Default.EncryptPW;
+                await System.Threading.Tasks.Task.Run(() => checkOOFStatus(emailAddress, pw));
+            }
         }
 
         private void OnExit(object sender, EventArgs e)
@@ -174,6 +216,7 @@ namespace OOFScheduling
 
         public async System.Threading.Tasks.Task setOOF(string EmailAddress, string EncryptPW, string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
+            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
             ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2013);
             service.Credentials = new WebCredentials(EmailAddress, DataProtectionApiWrapper.Decrypt(EncryptPW));
             service.UseDefaultCredentials = false;
@@ -189,6 +232,7 @@ namespace OOFScheduling
             catch
             {
                 notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
                 return;
             }
 
@@ -223,8 +267,60 @@ namespace OOFScheduling
             {
                 // Set value to Server
                 service.SetUserOofSettings(EmailAddress, myOOF);
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
             }
-                    
+            else
+            {
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
+            }        
+        }
+
+        public async System.Threading.Tasks.Task checkOOFStatus(string EmailAddress, string EncryptPW)
+        {
+            ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2013);
+            service.Credentials = new WebCredentials(EmailAddress, DataProtectionApiWrapper.Decrypt(EncryptPW));
+            service.UseDefaultCredentials = false;
+
+            //Let's roll that beautiful bean footage
+            service.TraceEnabled = true;
+            service.TraceFlags = TraceFlags.All;
+
+            try
+            {
+                service.AutodiscoverUrl(EmailAddress, RedirectionUrlValidationCallback);
+            }
+            catch
+            {
+                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect or we cannot contact the server please check your settings and try again");
+                return;
+            }
+
+            OofSettings myOOFSettings = service.GetUserOofSettings(EmailAddress);
+
+            string currentStatus = "";
+
+            if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime > DateTime.Now && myOOFSettings.Duration.EndTime < DateTime.Now))
+            {
+                currentStatus = "OOF until " + myOOFSettings.Duration.EndTime.ToString();
+            }
+            else if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime < DateTime.Now || myOOFSettings.Duration.EndTime > DateTime.Now)) 
+            {
+                currentStatus = "OOF starting at " + myOOFSettings.Duration.StartTime.ToString();
+            }
+            else if (myOOFSettings.State == OofState.Enabled)
+            {
+                currentStatus = "Currently OOF";
+            }
+            else if (myOOFSettings.State == OofState.Disabled)
+            {
+                currentStatus = "OOF Disabled";
+            }
+
+
+            UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
+            notifyIcon1.Text = "Current Status: " + currentStatus; 
+
         }
         private static bool RedirectionUrlValidationCallback(string redirectionUrl)
         {
@@ -486,7 +582,10 @@ namespace OOFScheduling
 
                 passwordConfirmTB.Text = "";
                 passwordTB.Text = "";
+
+                toolStripStatusLabel1.Text = "Settings Saved";
             }
+            
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

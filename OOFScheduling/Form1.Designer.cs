@@ -60,7 +60,6 @@
             this.fridayOffWorkCB = new System.Windows.Forms.CheckBox();
             this.saturdayOffWorkCB = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
             this.label8 = new System.Windows.Forms.Label();
             this.emailAddressTB = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -68,7 +67,6 @@
             this.passwordConfirmTB = new System.Windows.Forms.MaskedTextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -77,7 +75,13 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
+            this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyIcon1
@@ -380,14 +384,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // htmlEditorControl1
-            // 
-            this.htmlEditorControl1.InnerText = null;
-            this.htmlEditorControl1.Location = new System.Drawing.Point(12, 197);
-            this.htmlEditorControl1.Name = "htmlEditorControl1";
-            this.htmlEditorControl1.Size = new System.Drawing.Size(663, 269);
-            this.htmlEditorControl1.TabIndex = 31;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -447,14 +443,6 @@
             this.button2.Text = "Save Settings";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // htmlEditorControl2
-            // 
-            this.htmlEditorControl2.InnerText = null;
-            this.htmlEditorControl2.Location = new System.Drawing.Point(12, 493);
-            this.htmlEditorControl2.Name = "htmlEditorControl2";
-            this.htmlEditorControl2.Size = new System.Drawing.Size(663, 269);
-            this.htmlEditorControl2.TabIndex = 39;
             // 
             // label11
             // 
@@ -529,11 +517,52 @@
             this.label14.TabIndex = 44;
             this.label14.Text = "Exchange/Email Credentials:";
             // 
+            // htmlEditorControl2
+            // 
+            this.htmlEditorControl2.InnerText = null;
+            this.htmlEditorControl2.Location = new System.Drawing.Point(12, 493);
+            this.htmlEditorControl2.Name = "htmlEditorControl2";
+            this.htmlEditorControl2.Size = new System.Drawing.Size(663, 269);
+            this.htmlEditorControl2.TabIndex = 39;
+            // 
+            // htmlEditorControl1
+            // 
+            this.htmlEditorControl1.InnerText = null;
+            this.htmlEditorControl1.Location = new System.Drawing.Point(12, 197);
+            this.htmlEditorControl1.Name = "htmlEditorControl1";
+            this.htmlEditorControl1.Size = new System.Drawing.Size(663, 269);
+            this.htmlEditorControl1.TabIndex = 31;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 792);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(691, 24);
+            this.statusStrip1.TabIndex = 45;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(122, 19);
+            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(691, 800);
+            this.ClientSize = new System.Drawing.Size(691, 816);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label12);
@@ -584,6 +613,8 @@
             this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -638,6 +669,9 @@
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
 
     }
 }
