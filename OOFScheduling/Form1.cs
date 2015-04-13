@@ -165,7 +165,7 @@ namespace OOFScheduling
                 string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
                 string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
                 DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
-                if ((DateTime.Now < oofTimes[0]) || (DateTime.Now > oofTimes[1]))
+                if (oofTimes[0] != oofTimes[1])
                 {
                     await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, pw, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
                 }
@@ -216,11 +216,15 @@ namespace OOFScheduling
             string newexternal = Regex.Replace(myOOF.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
             string currentexternal = Regex.Replace(myOOFSettings.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
 
-            if (myOOF != myOOFSettings)
+            if (myOOF.State != myOOFSettings.State || 
+                myOOF.Duration != myOOFSettings.Duration || 
+                newinternal != currentinternal ||
+                newexternal != currentexternal)
             {
                 // Set value to Server
                 service.SetUserOofSettings(EmailAddress, myOOF);
             }
+                    
         }
         private static bool RedirectionUrlValidationCallback(string redirectionUrl)
         {
@@ -280,25 +284,31 @@ namespace OOFScheduling
         private DateTime[] getOofTime(string workingHours)
         {
             DateTime[] OofTimes = new DateTime[2];
-
             string[] workingTimesArray = workingHours.Split('|');
 
-            DateTime now = DateTime.Now;
+            //Hold now time (if our working time hasn't come yet but we are on the next day make now still be yesterday
+            //Example: Your off at 5PM April 1st at 12:01 AM April 2nd we don't want to change our OOF to the one for April 2nd, we are still off from April 1st
+            // To handle this if the time we get for the Beginning of our working time comes after the current time we fall back a day to use that days oof time.
+            DateTime currentCheckDate = DateTime.Now;
+            string[] currentWorkingTime = workingTimesArray[(int)currentCheckDate.DayOfWeek].Split('~');
 
-            string[] currentWorkingTime = workingTimesArray[(int)now.DayOfWeek].Split('~');
+            if (DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime[0]) > DateTime.Now)
+            {
+                currentCheckDate = DateTime.Now.AddDays(-1);
+                currentWorkingTime = workingTimesArray[(int)currentCheckDate.DayOfWeek].Split('~');
+            }
 
             DateTime StartTime;
-
             if (currentWorkingTime[2] == "1")
             {
-                StartTime = DateTime.Parse(now.ToString("D") + " " + currentWorkingTime[1]);
+                StartTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime[1]);
             }
             else
             {
                 int daysback = -1;
                 while (true)
                 {
-                    DateTime backday = now.AddDays(daysback);
+                    DateTime backday = currentCheckDate.AddDays(daysback);
                     string[] oldWorkingTime = workingTimesArray[(int)backday.DayOfWeek].Split('~');
                     if (oldWorkingTime[2] == "1")
                     {
@@ -312,20 +322,18 @@ namespace OOFScheduling
                 }
             }
 
-            string[] futureWorkingTime = workingTimesArray[(int)now.AddDays(1).DayOfWeek].Split('~');
-
+            string[] futureWorkingTime = workingTimesArray[(int)currentCheckDate.AddDays(1).DayOfWeek].Split('~');
             DateTime EndTime;
-
             if (futureWorkingTime[2] == "1")
             {
-                EndTime = DateTime.Parse(now.AddDays(1).ToString("D") + " " + futureWorkingTime[0]);
+                EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime[0]);
             }
             else
             {
                 int daysforward = 1;
                 while (true)
                 {
-                    DateTime comingday = now.AddDays(1).AddDays(daysforward);
+                    DateTime comingday = currentCheckDate.AddDays(1).AddDays(daysforward);
                     string[] oldWorkingTime = workingTimesArray[(int)comingday.DayOfWeek].Split('~');
                     if (oldWorkingTime[2] == "1")
                     {

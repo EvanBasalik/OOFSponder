@@ -12,3 +12,17 @@ C:\Users\cabattag\Documents\Visual Studio 2013\Projects\OOFScheduling\HtmlEditor
 C:\Users\cabattag\Documents\Visual Studio 2013\Projects\OOFScheduling\HtmlEditorControl\obj\Debug\HTMLEditorControl.csproj.GenerateResource.Cache
 C:\Users\cabattag\Documents\Visual Studio 2013\Projects\OOFScheduling\HtmlEditorControl\obj\Debug\MSDN.HtmlEditorControl.dll
 C:\Users\cabattag\Documents\Visual Studio 2013\Projects\OOFScheduling\HtmlEditorControl\obj\Debug\MSDN.HtmlEditorControl.pdb
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\bin\Debug\MSDN.HtmlEditorControl.dll
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\bin\Debug\MSDN.HtmlEditorControl.pdb
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\HTMLEditorControl.csprojResolveAssemblyReference.cache
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.Html.Editor.EditHtmlForm.resources
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.Html.Editor.EnterHrefForm.resources
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.Html.Editor.EnterImageForm.resources
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.Html.Editor.FindReplaceForm.resources
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.Html.Editor.FontAttributeForm.resources
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.Html.Editor.HtmlEditorControl.resources
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.Html.Editor.TablePropertyForm.resources
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.Html.Editor.Properties.Resources.resources
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\HTMLEditorControl.csproj.GenerateResource.Cache
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.HtmlEditorControl.dll
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.HtmlEditorControl.pdb
