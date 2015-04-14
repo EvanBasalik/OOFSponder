@@ -217,17 +217,46 @@ namespace OOFScheduling
         public async System.Threading.Tasks.Task setOOF(string EmailAddress, string EncryptPW, string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
-            ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2013);
-            service.Credentials = new WebCredentials(EmailAddress, DataProtectionApiWrapper.Decrypt(EncryptPW));
-            service.UseDefaultCredentials = false;
-
-            //Let's roll that beautiful bean footage
-            service.TraceEnabled = true;
-            service.TraceFlags = TraceFlags.All;
 
             try
             {
-                service.AutodiscoverUrl(EmailAddress, RedirectionUrlValidationCallback);
+                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
+
+                OofSettings myOOF = new OofSettings();
+
+                // Set the OOF status to be a scheduled time period.
+                myOOF.State = OofState.Scheduled;
+
+                // Select the time period during which to send OOF messages.
+                myOOF.Duration = new TimeWindow(StartTime, EndTime);
+
+                // Select the external audience that will receive OOF messages.
+                myOOF.ExternalAudience = OofExternalAudience.All;
+
+                // Set the OOF message for your internal audience.
+                myOOF.InternalReply = new OofReply(oofMessageInternal);
+
+                // Set the OOF message for your external audience.
+                myOOF.ExternalReply = new OofReply(oofMessageExternal);
+
+                string newinternal = Regex.Replace(myOOF.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string currentinternal = Regex.Replace(myOOFSettings.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string newexternal = Regex.Replace(myOOF.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string currentexternal = Regex.Replace(myOOFSettings.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+
+                if (myOOF.State != myOOFSettings.State ||
+                    myOOF.Duration != myOOFSettings.Duration ||
+                    newinternal != currentinternal ||
+                    newexternal != currentexternal)
+                {
+                    // Set value to Server
+                    ExchangeServiceConnection.Instance.service.SetUserOofSettings(EmailAddress, myOOF);
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
+                }
+                else
+                {
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
+                }
             }
             catch
             {
@@ -235,59 +264,36 @@ namespace OOFScheduling
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
                 return;
             }
-
-            OofSettings myOOFSettings = service.GetUserOofSettings(EmailAddress);
-
-            OofSettings myOOF = new OofSettings();
-
-            // Set the OOF status to be a scheduled time period.
-            myOOF.State = OofState.Scheduled;
-
-            // Select the time period during which to send OOF messages.
-            myOOF.Duration = new TimeWindow(StartTime, EndTime);
-
-            // Select the external audience that will receive OOF messages.
-            myOOF.ExternalAudience = OofExternalAudience.All;
-
-            // Set the OOF message for your internal audience.
-            myOOF.InternalReply = new OofReply(oofMessageInternal);
-
-            // Set the OOF message for your external audience.
-            myOOF.ExternalReply = new OofReply(oofMessageExternal);
-
-            string newinternal = Regex.Replace(myOOF.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-            string currentinternal = Regex.Replace(myOOFSettings.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-            string newexternal = Regex.Replace(myOOF.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-            string currentexternal = Regex.Replace(myOOFSettings.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-
-            if (myOOF.State != myOOFSettings.State || 
-                myOOF.Duration != myOOFSettings.Duration || 
-                newinternal != currentinternal ||
-                newexternal != currentexternal)
-            {
-                // Set value to Server
-                service.SetUserOofSettings(EmailAddress, myOOF);
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
-            }
-            else
-            {
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
-            }        
         }
 
         public async System.Threading.Tasks.Task checkOOFStatus(string EmailAddress, string EncryptPW)
         {
-            ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2013);
-            service.Credentials = new WebCredentials(EmailAddress, DataProtectionApiWrapper.Decrypt(EncryptPW));
-            service.UseDefaultCredentials = false;
-
-            //Let's roll that beautiful bean footage
-            service.TraceEnabled = true;
-            service.TraceFlags = TraceFlags.All;
-
             try
             {
-                service.AutodiscoverUrl(EmailAddress, RedirectionUrlValidationCallback);
+                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
+
+                string currentStatus = "";
+
+                if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime > DateTime.Now && myOOFSettings.Duration.EndTime < DateTime.Now))
+                {
+                    currentStatus = "OOF until " + myOOFSettings.Duration.EndTime.ToString();
+                }
+                else if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime < DateTime.Now || myOOFSettings.Duration.EndTime > DateTime.Now)) 
+                {
+                    currentStatus = "OOF starting at " + myOOFSettings.Duration.StartTime.ToString();
+                }
+                else if (myOOFSettings.State == OofState.Enabled)
+                {
+                    currentStatus = "Currently OOF";
+                }
+                else if (myOOFSettings.State == OofState.Disabled)
+                {
+                    currentStatus = "OOF Disabled";
+                }
+
+
+                UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
+                notifyIcon1.Text = "Current Status: " + currentStatus;
             }
             catch
             {
@@ -296,49 +302,8 @@ namespace OOFScheduling
                 return;
             }
 
-            OofSettings myOOFSettings = service.GetUserOofSettings(EmailAddress);
-
-            string currentStatus = "";
-
-            if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime > DateTime.Now && myOOFSettings.Duration.EndTime < DateTime.Now))
-            {
-                currentStatus = "OOF until " + myOOFSettings.Duration.EndTime.ToString();
-            }
-            else if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime < DateTime.Now || myOOFSettings.Duration.EndTime > DateTime.Now)) 
-            {
-                currentStatus = "OOF starting at " + myOOFSettings.Duration.StartTime.ToString();
-            }
-            else if (myOOFSettings.State == OofState.Enabled)
-            {
-                currentStatus = "Currently OOF";
-            }
-            else if (myOOFSettings.State == OofState.Disabled)
-            {
-                currentStatus = "OOF Disabled";
-            }
-
-
-            UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
-            notifyIcon1.Text = "Current Status: " + currentStatus; 
-
         }
-        private static bool RedirectionUrlValidationCallback(string redirectionUrl)
-        {
-            // The default for the validation callback is to reject the URL.
-            bool result = false;
-
-            Uri redirectionUri = new Uri(redirectionUrl);
-
-            // Validate the contents of the redirection URL. In this simple validation
-            // callback, the redirection URL is considered valid if it is using HTTPS
-            // to encrypt the authentication credentials. 
-            if (redirectionUri.Scheme == "https")
-            {
-                result = true;
-            }
-            return result;
-        }
-
+        
         private async void button1_Click(object sender, EventArgs e)
         {
             RunSetOof();
@@ -593,6 +558,23 @@ namespace OOFScheduling
             minimize = false;
             Application.Exit();
         }
+
+        private static bool RedirectionUrlValidationCallback(string redirectionUrl)
+        {
+            // The default for the validation callback is to reject the URL.
+            bool result = false;
+
+            Uri redirectionUri = new Uri(redirectionUrl);
+
+            // Validate the contents of the redirection URL. In this simple validation
+            // callback, the redirection URL is considered valid if it is using HTTPS
+            // to encrypt the authentication credentials. 
+            if (redirectionUri.Scheme == "https")
+            {
+                result = true;
+            }
+            return result;
+        }
     }
 
     public static class DataProtectionApiWrapper
@@ -633,5 +615,67 @@ namespace OOFScheduling
             return Encoding.Unicode.GetString(decrypted);
         }
 
+    }
+
+    public sealed class ExchangeServiceConnection
+    {
+        private static volatile ExchangeServiceConnection instance;
+        private static object syncRoot = new Object();
+        public ExchangeService service;
+
+        private ExchangeServiceConnection() {
+            service = new ExchangeService(ExchangeVersion.Exchange2013);
+            string emailAddress = Properties.Settings.Default.EmailAddress;
+            string pw = Properties.Settings.Default.EncryptPW;
+            service.Credentials = new WebCredentials(emailAddress, DataProtectionApiWrapper.Decrypt(pw));
+            service.UseDefaultCredentials = false;
+
+            //Let's roll that beautiful bean footage
+            service.TraceEnabled = true;
+            service.TraceFlags = TraceFlags.All;
+
+            if(service.Url == null)
+            {
+                service.AutodiscoverUrl(emailAddress, RedirectionUrlValidationCallback);
+            }
+        }
+
+        public static ExchangeServiceConnection Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (syncRoot)
+                    {
+                        if (Properties.Settings.Default.EmailAddress != "default" &&
+                            Properties.Settings.Default.EncryptPW != "default")
+                        {
+                            if (instance == null)
+                                instance = new ExchangeServiceConnection();
+                        }
+                    }
+                }
+
+                return instance;
+            }
+        }
+
+        private static bool RedirectionUrlValidationCallback(string redirectionUrl)
+        {
+            // The default for the validation callback is to reject the URL.
+            bool result = false;
+
+            Uri redirectionUri = new Uri(redirectionUrl);
+
+            // Validate the contents of the redirection URL. In this simple validation
+            // callback, the redirection URL is considered valid if it is using HTTPS
+            // to encrypt the authentication credentials. 
+            if (redirectionUri.Scheme == "https")
+            {
+                result = true;
+            }
+            return result;
+        }
     }
 }
