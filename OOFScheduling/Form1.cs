@@ -19,7 +19,12 @@ namespace OOFScheduling
     public partial class Form1 : Form
     {
         private ContextMenu trayMenu;
+
+        //Track if force close or just hitting X to minimize
         private bool minimize = true;
+
+        //Track if we have turned on the manual oof message
+        private bool manualoof = false;
         public Form1()
         {
             InitializeComponent();
@@ -152,8 +157,77 @@ namespace OOFScheduling
                 Properties.Settings.Default.EncryptPW != "default")
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
-                string pw = Properties.Settings.Default.EncryptPW;
-                await System.Threading.Tasks.Task.Run(() => checkOOFStatus(emailAddress, pw));
+                await System.Threading.Tasks.Task.Run(() => checkOOFStatus(emailAddress));
+            }
+        }
+
+        private async void RunManualOOF()
+        {
+            if (Properties.Settings.Default.EmailAddress != "default" &&
+                Properties.Settings.Default.OOFHtmlExternal != "default" &&
+                Properties.Settings.Default.OOFHtmlInternal != "default" &&
+                Properties.Settings.Default.EncryptPW != "default")
+            {
+                string emailAddress = Properties.Settings.Default.EmailAddress;
+                string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
+                string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
+                //Toggle Manual OOF
+                await System.Threading.Tasks.Task.Run(() => setManualOOF(emailAddress, oofMessageExternal, oofMessageInternal, !manualoof));
+            }
+        }
+
+        public async System.Threading.Tasks.Task setManualOOF(string emailAddress, string oofMessageExternal, string oofMessageInternal, bool on)
+        {
+            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
+
+            try
+            {
+                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(emailAddress);
+
+                OofSettings myOOF = new OofSettings();
+
+                // Set the OOF status to be a scheduled time period.
+                if(on)
+                    myOOF.State = OofState.Enabled;
+                else
+                    myOOF.State = OofState.Disabled;
+
+                // Select the external audience that will receive OOF messages.
+                myOOF.ExternalAudience = OofExternalAudience.All;
+
+                // Set the OOF message for your internal audience.
+                myOOF.InternalReply = new OofReply(oofMessageInternal);
+
+                // Set the OOF message for your external audience.
+                myOOF.ExternalReply = new OofReply(oofMessageExternal);
+
+                string newinternal = Regex.Replace(myOOF.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string currentinternal = Regex.Replace(myOOFSettings.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string newexternal = Regex.Replace(myOOF.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string currentexternal = Regex.Replace(myOOFSettings.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+
+                if (myOOF.State != myOOFSettings.State ||
+                    newinternal != currentinternal ||
+                    newexternal != currentexternal)
+                {
+                    // Set value to Server
+                    ExchangeServiceConnection.Instance.service.SetUserOofSettings(emailAddress, myOOF);
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
+                }
+                else
+                {
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
+                }
+                if (on)
+                    manualoof = true;
+                else
+                    manualoof = false;
+            }
+            catch
+            {
+                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
+                return;
             }
         }
 
@@ -203,18 +277,17 @@ namespace OOFScheduling
                 Properties.Settings.Default.EncryptPW != "default")
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
-                string pw = Properties.Settings.Default.EncryptPW;
                 string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
                 string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
                 DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
                 if (oofTimes[0] != oofTimes[1])
                 {
-                    await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, pw, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
+                    await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
                 }
             }
         }
 
-        public async System.Threading.Tasks.Task setOOF(string EmailAddress, string EncryptPW, string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
+        public async System.Threading.Tasks.Task setOOF(string EmailAddress, string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
 
@@ -266,7 +339,7 @@ namespace OOFScheduling
             }
         }
 
-        public async System.Threading.Tasks.Task checkOOFStatus(string EmailAddress, string EncryptPW)
+        public async System.Threading.Tasks.Task checkOOFStatus(string EmailAddress)
         {
             try
             {
@@ -574,6 +647,19 @@ namespace OOFScheduling
                 result = true;
             }
             return result;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            RunManualOOF();
+            if (button3.Text == "Go OOF Now")
+            {
+                button3.Text = "Return from OOF";
+            }
+            else
+            {
+                button3.Text = "Go OOF Now";
+            }
         }
     }
 
