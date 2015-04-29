@@ -213,6 +213,7 @@ namespace OOFScheduling
                     // Set value to Server
                     ExchangeServiceConnection.Instance.service.SetUserOofSettings(emailAddress, myOOF);
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
+                    RunStatusCheck();
                 }
                 else
                 {
@@ -325,6 +326,7 @@ namespace OOFScheduling
                     // Set value to Server
                     ExchangeServiceConnection.Instance.service.SetUserOofSettings(EmailAddress, myOOF);
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
+                    RunStatusCheck();
                 }
                 else
                 {
