@@ -322,7 +322,6 @@ Properties.Settings.Default.workingHours != "default")
                 //variant using CredMan
                 OofSettings myOOFSettings = Exchange101.Service.ConnectToService(false).GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
 #endif
-                 \
                 OofSettings myOOF = new OofSettings();
 
                 // Set the OOF status to be a scheduled time period.
