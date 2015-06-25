@@ -27,8 +27,9 @@ namespace OOFScheduling
         private bool manualoof = false;
         public Form1()
         {
+            
             InitializeComponent();
-
+            #region Add to Startup
             // The path to the key where Windows looks for startup applications
             RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
                                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
@@ -38,7 +39,8 @@ namespace OOFScheduling
                                + @"\Microsoft\OOFSponder.appref-ms";
 
             rkApp.SetValue("OOFSponder", startPath);
-
+            #endregion
+            #region Tray Menu Initialize
             // Create a simple tray menu with only one item.
             trayMenu = new ContextMenu();
             trayMenu.MenuItems.Add("Run Manually", RunManualMenu);
@@ -46,7 +48,8 @@ namespace OOFScheduling
 
             // Add menu to tray icon and show it.
             notifyIcon1.ContextMenu = trayMenu;
-
+            #endregion
+            #region Fill in property data if set
             if (Properties.Settings.Default.EmailAddress != "default")
             {
                 emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
@@ -117,11 +120,13 @@ namespace OOFScheduling
             }
 
             toolStripStatusLabel2.Text = "";
+            #endregion
             Loopy();
             RunStatusCheck();
 
         }
 
+        #region Set Oof Timed Loop
         void Loopy()
         {
             //Every 10 minutes for automation
@@ -131,26 +136,15 @@ namespace OOFScheduling
             timer.Start();
         }
 
-        public void UpdateStatusLabel(ToolStripStatusLabel ourLabel, String status_text)
-        {
-            MethodInvoker mi = new MethodInvoker(() => ourLabel.Text = status_text);
-
-            if (statusStrip1.InvokeRequired)
-            {
-                statusStrip1.Invoke(mi);
-            }
-            else
-            {
-                mi.Invoke();
-            }
-        }
-
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             RunSetOof();
             RunStatusCheck();
         }
+        #endregion
 
+        #region Oof/EWS interaction
+        #region Oof Status Check
         private async void RunStatusCheck()
         {
             if (Properties.Settings.Default.EmailAddress != "default" &&
@@ -161,6 +155,45 @@ namespace OOFScheduling
             }
         }
 
+        public async System.Threading.Tasks.Task checkOOFStatus(string EmailAddress)
+        {
+            try
+            {
+                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
+
+                string currentStatus = "";
+
+                if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime > DateTime.Now && myOOFSettings.Duration.EndTime < DateTime.Now))
+                {
+                    currentStatus = "OOF until " + myOOFSettings.Duration.EndTime.ToString();
+                }
+                else if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime < DateTime.Now || myOOFSettings.Duration.EndTime > DateTime.Now)) 
+                {
+                    currentStatus = "OOF starting at " + myOOFSettings.Duration.StartTime.ToString();
+                }
+                else if (myOOFSettings.State == OofState.Enabled)
+                {
+                    currentStatus = "Currently OOF";
+                }
+                else if (myOOFSettings.State == OofState.Disabled)
+                {
+                    currentStatus = "OOF Disabled";
+                }
+
+
+                UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
+                notifyIcon1.Text = "Current Status: " + currentStatus;
+            }
+            catch
+            {
+                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect or we cannot contact the server please check your settings and try again");
+                return;
+            }
+
+        }
+        #endregion
+        #region Oof Manual Run
         private async void RunManualOOF()
         {
             if (Properties.Settings.Default.EmailAddress != "default" &&
@@ -231,44 +264,8 @@ namespace OOFScheduling
                 return;
             }
         }
-
-        private void OnExit(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void RunManualMenu(object sender, EventArgs e)
-        {
-            RunSetOof();
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                notifyIcon1.Visible = true;
-                notifyIcon1.ShowBalloonTip(100);
-                this.ShowInTaskbar = false;
-            }
-        }
-
-        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-            notifyIcon1.Visible = false;
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if(minimize)
-            {
-                e.Cancel = true;
-                this.WindowState = FormWindowState.Minimized;
-            }
-            
-        }
-
+        #endregion
+        #region Oof Set
         private async void RunSetOof()
         {
             bool haveNecessaryData = false;
@@ -366,53 +363,22 @@ Properties.Settings.Default.workingHours != "default")
                 return;
             }
         }
+        #endregion
+        #endregion
 
-        public async System.Threading.Tasks.Task checkOOFStatus(string EmailAddress)
+        #region Utilities
+        public void UpdateStatusLabel(ToolStripStatusLabel ourLabel, String status_text)
         {
-            try
+            MethodInvoker mi = new MethodInvoker(() => ourLabel.Text = status_text);
+
+            if (statusStrip1.InvokeRequired)
             {
-                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
-
-                string currentStatus = "";
-
-                if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime > DateTime.Now && myOOFSettings.Duration.EndTime < DateTime.Now))
-                {
-                    currentStatus = "OOF until " + myOOFSettings.Duration.EndTime.ToString();
-                }
-                else if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime < DateTime.Now || myOOFSettings.Duration.EndTime > DateTime.Now)) 
-                {
-                    currentStatus = "OOF starting at " + myOOFSettings.Duration.StartTime.ToString();
-                }
-                else if (myOOFSettings.State == OofState.Enabled)
-                {
-                    currentStatus = "Currently OOF";
-                }
-                else if (myOOFSettings.State == OofState.Disabled)
-                {
-                    currentStatus = "OOF Disabled";
-                }
-
-
-                UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
-                notifyIcon1.Text = "Current Status: " + currentStatus;
+                statusStrip1.Invoke(mi);
             }
-            catch
+            else
             {
-                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect or we cannot contact the server please check your settings and try again");
-                return;
+                mi.Invoke();
             }
-
-        }
-        
-        private async void btnRunManually_Click(object sender, EventArgs e)
-        {
-            RunSetOof();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            saveSettings();
         }
 
         private string ScheduleString()
@@ -515,6 +481,91 @@ Properties.Settings.Default.workingHours != "default")
             return OofTimes;
         }
 
+        private void saveSettings()
+        {
+            if (string.IsNullOrEmpty(emailAddressTB.Text))
+            {
+                MessageBox.Show("Please enter your email address");
+            }
+            else if (string.IsNullOrEmpty(passwordTB.Text))
+            {
+                MessageBox.Show("Please enter your password");
+            }
+            else if (string.IsNullOrEmpty(passwordConfirmTB.Text))
+            {
+                MessageBox.Show("Please confirm your password");
+            }
+            else if (passwordConfirmTB.Text != passwordTB.Text)
+            {
+                MessageBox.Show("Your password does not match the confirmed password, please confirm your password");
+            }
+            else
+            {
+                Properties.Settings.Default.EmailAddress = emailAddressTB.Text;
+                Properties.Settings.Default.EncryptPW = DataProtectionApiWrapper.Encrypt(passwordTB.Text);
+                Properties.Settings.Default.OOFHtmlExternal = htmlEditorControl1.BodyHtml;
+                Properties.Settings.Default.OOFHtmlInternal = htmlEditorControl2.BodyHtml;
+                Properties.Settings.Default.workingHours = ScheduleString();
+
+                Properties.Settings.Default.Save();
+
+                passwordConfirmTB.Text = "";
+                passwordTB.Text = "";
+
+                toolStripStatusLabel1.Text = "Settings Saved";
+            }
+            
+        }
+
+        #endregion
+
+        #region Events
+        private void OnExit(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void RunManualMenu(object sender, EventArgs e)
+        {
+            RunSetOof();
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                notifyIcon1.Visible = true;
+                notifyIcon1.ShowBalloonTip(100);
+                this.ShowInTaskbar = false;
+            }
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
+            notifyIcon1.Visible = false;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(minimize)
+            {
+                e.Cancel = true;
+                this.WindowState = FormWindowState.Minimized;
+            }
+            
+        }
+
+        private async void btnRunManually_Click(object sender, EventArgs e)
+        {
+            RunSetOof();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            saveSettings();
+        }
         private void sundayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
             if (sundayOffWorkCB.Checked)
@@ -618,63 +669,11 @@ Properties.Settings.Default.workingHours != "default")
             saveSettings();
         }
 
-        private void saveSettings()
-        {
-            if (string.IsNullOrEmpty(emailAddressTB.Text))
-            {
-                MessageBox.Show("Please enter your email address");
-            }
-            else if (string.IsNullOrEmpty(passwordTB.Text))
-            {
-                MessageBox.Show("Please enter your password");
-            }
-            else if (string.IsNullOrEmpty(passwordConfirmTB.Text))
-            {
-                MessageBox.Show("Please confirm your password");
-            }
-            else if (passwordConfirmTB.Text != passwordTB.Text)
-            {
-                MessageBox.Show("Your password does not match the confirmed password, please confirm your password");
-            }
-            else
-            {
-                Properties.Settings.Default.EmailAddress = emailAddressTB.Text;
-                Properties.Settings.Default.EncryptPW = DataProtectionApiWrapper.Encrypt(passwordTB.Text);
-                Properties.Settings.Default.OOFHtmlExternal = htmlEditorControl1.BodyHtml;
-                Properties.Settings.Default.OOFHtmlInternal = htmlEditorControl2.BodyHtml;
-                Properties.Settings.Default.workingHours = ScheduleString();
-
-                Properties.Settings.Default.Save();
-
-                passwordConfirmTB.Text = "";
-                passwordTB.Text = "";
-
-                toolStripStatusLabel1.Text = "Settings Saved";
-            }
-            
-        }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             minimize = false;
             Application.Exit();
-        }
-
-        private static bool RedirectionUrlValidationCallback(string redirectionUrl)
-        {
-            // The default for the validation callback is to reject the URL.
-            bool result = false;
-
-            Uri redirectionUri = new Uri(redirectionUrl);
-
-            // Validate the contents of the redirection URL. In this simple validation
-            // callback, the redirection URL is considered valid if it is using HTTPS
-            // to encrypt the authentication credentials. 
-            if (redirectionUri.Scheme == "https")
-            {
-                result = true;
-            }
-            return result;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -689,8 +688,10 @@ Properties.Settings.Default.workingHours != "default")
                 button3.Text = "Go OOF Now";
             }
         }
+        #endregion
     }
 
+    #region Old Credential and EWS Singleton class (Remove After CredMan Integration)
     public static class DataProtectionApiWrapper
     {
         /// <summary>
@@ -792,4 +793,5 @@ Properties.Settings.Default.workingHours != "default")
             return result;
         }
     }
+    #endregion 
 }
