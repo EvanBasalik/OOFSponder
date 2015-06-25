@@ -294,9 +294,13 @@ namespace OOFScheduling
 
             try
             {
+#if !CredMan
                 //variant using Web Credentials
-                //OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
-
+                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
+#else
+                //variant using CredMan
+                OofSettings myOOFSettings = Exchange101.Service.ConnectToService(false).GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+#endif
                 OofSettings myOOF = new OofSettings();
 
                 // Set the OOF status to be a scheduled time period.
@@ -380,7 +384,7 @@ namespace OOFScheduling
 
         }
         
-        private async void button1_Click(object sender, EventArgs e)
+        private async void btnRunManually_Click(object sender, EventArgs e)
         {
             RunSetOof();
         }
