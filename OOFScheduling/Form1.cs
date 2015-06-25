@@ -29,6 +29,8 @@ namespace OOFScheduling
         {
             InitializeComponent();
 
+            Exchange101.Service.ConnectToService(true);
+
             // The path to the key where Windows looks for startup applications
             RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
                                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
