@@ -29,8 +29,6 @@ namespace OOFScheduling
         {
             InitializeComponent();
 
-            Exchange101.Service.ConnectToService(true);
-
             // The path to the key where Windows looks for startup applications
             RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
                                 @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
@@ -296,7 +294,8 @@ namespace OOFScheduling
 
             try
             {
-                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
+                //variant using Web Credentials
+                //OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
 
                 OofSettings myOOF = new OofSettings();
 
