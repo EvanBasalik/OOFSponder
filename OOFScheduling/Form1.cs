@@ -271,11 +271,32 @@ namespace OOFScheduling
 
         private async void RunSetOof()
         {
+            bool haveNecessaryData = false;
+
+#if !CredMan
+            //check to ensure we have all the necessary inputs
             if (Properties.Settings.Default.EmailAddress != "default" &&
-                Properties.Settings.Default.OOFHtmlExternal != "default" && 
-                Properties.Settings.Default.OOFHtmlInternal != "default" && 
-                Properties.Settings.Default.workingHours != "default" &&
-                Properties.Settings.Default.EncryptPW != "default")
+    Properties.Settings.Default.OOFHtmlExternal != "default" &&
+    Properties.Settings.Default.OOFHtmlInternal != "default" &&
+    Properties.Settings.Default.workingHours != "default" &&
+    Properties.Settings.Default.EncryptPW != "default")
+            {
+                haveNecessaryData = true;
+            }
+#else
+            //if CredMan is turned on, then we don't need the email or password
+            //but we still need the OOF messages and working hours
+            if (Properties.Settings.Default.OOFHtmlExternal != "default" &&
+Properties.Settings.Default.OOFHtmlInternal != "default" &&
+Properties.Settings.Default.workingHours != "default")
+            {
+                haveNecessaryData = true;
+            }
+#endif
+
+
+
+            if (haveNecessaryData)
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
                 string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
@@ -301,6 +322,7 @@ namespace OOFScheduling
                 //variant using CredMan
                 OofSettings myOOFSettings = Exchange101.Service.ConnectToService(false).GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
 #endif
+                 \
                 OofSettings myOOF = new OofSettings();
 
                 // Set the OOF status to be a scheduled time period.
