@@ -63,8 +63,9 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Kerr.Credentials">
-      <HintPath>..\..\..\..\..\..\recurringOOF\RecurringOOF\Kerr.Credentials\Release\Kerr.Credentials.dll</HintPath>
+    <Reference Include="Kerr.Credentials, Version=1.0.0.1, Culture=neutral, PublicKeyToken=ce7a2d015f9fdd1b, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ReferenceDLLs\Kerr.Credentials.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Exchange.WebServices, Version=15.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -172,6 +173,9 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ReferenceDLLs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
