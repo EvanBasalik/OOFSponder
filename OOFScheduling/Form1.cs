@@ -159,7 +159,13 @@ namespace OOFScheduling
         {
             try
             {
+#if !CredMan
+                //variant using Web Credentials
                 OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
+#else
+                //variant using CredMan
+                OofSettings myOOFSettings = Exchange101.Service.ConnectToService(false).GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+#endif
 
                 string currentStatus = "";
 
@@ -215,7 +221,13 @@ namespace OOFScheduling
 
             try
             {
-                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(emailAddress);
+#if !CredMan
+                //variant using Web Credentials
+                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
+#else
+                //variant using CredMan
+                OofSettings myOOFSettings = Exchange101.Service.ConnectToService(false).GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+#endif
 
                 OofSettings myOOF = new OofSettings();
 
@@ -244,7 +256,13 @@ namespace OOFScheduling
                     newexternal != currentexternal)
                 {
                     // Set value to Server
+#if !CredMan
+                    //variant using Web Credentials
                     ExchangeServiceConnection.Instance.service.SetUserOofSettings(emailAddress, myOOF);
+#else
+                    //variant using CredMan
+                    Exchange101.Service.ConnectToService(false).SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
+#endif
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
                     RunStatusCheck();
                 }
@@ -347,7 +365,13 @@ Properties.Settings.Default.workingHours != "default")
                     newexternal != currentexternal)
                 {
                     // Set value to Server
+#if !CredMan
+                    //variant using Web Credentials
                     ExchangeServiceConnection.Instance.service.SetUserOofSettings(EmailAddress, myOOF);
+#else
+                    //variant using CredMan
+                    Exchange101.Service.ConnectToService(false).SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
+#endif
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
                     RunStatusCheck();
                 }
