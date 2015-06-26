@@ -56,7 +56,7 @@ namespace Exchange101
                 service.TraceEnablePrettyPrinting = true; 
             } 
  
-            UserData.GetUserDataFromCredUI(ref service);
+            UserData.GetUserByAutodiscover(ref service);
  
             return service; 
         } 

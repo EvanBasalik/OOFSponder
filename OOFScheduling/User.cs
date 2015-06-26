@@ -15,20 +15,35 @@ namespace Exchange101
 
     public class UserData : IUserData
     {
-        public static UserData user;
+        public static UserData user=new UserData();
         public static string Target = "OOFSponder";
 
         public static IUserData GetUserData(ref ExchangeService service)
         {
             if (user == null)
             {
-                GetUserDataFromCredUI(ref service);
+                GetUserByAutodiscover(ref service);
             }
 
             return user;
         }
 
-        internal static void GetUserDataFromCredUI(ref ExchangeService service)
+        internal static void GetUserfromCredMan()
+        {
+            //leverage the Kerr library to do the CredMan stuff
+            using (Kerr.CredentialSet creds = new Kerr.CredentialSet(Target))
+            {
+                foreach (Kerr.Credential cred in creds)
+                {
+                    System.Diagnostics.Debug.WriteLine("Found the cred: " + cred.UserName);
+                    user.Password = cred.Password;
+                    user.EmailAddress = cred.UserName;
+                }
+
+            }
+        }
+
+        internal static void GetUserByAutodiscover(ref ExchangeService service)
         {
             //leverage the Kerr library to do the CredMan stuff
             using (Kerr.PromptForCredential prompt = new Kerr.PromptForCredential())
@@ -46,8 +61,6 @@ namespace Exchange101
                     {
                         prompt.ConfirmCredentials();
                     }
-
-                    user = new UserData();
 
                     user.Password = prompt.Password;
                     user.EmailAddress = prompt.UserName;
