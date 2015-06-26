@@ -72,7 +72,7 @@ namespace Exchange101
         public string EmailAddress
         {
             get;
-            private set;
+            set;
         }
 
         public SecureString Password
