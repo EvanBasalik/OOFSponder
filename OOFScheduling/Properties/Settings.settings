@@ -17,5 +17,8 @@
     <Setting Name="OOFHtmlInternal" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
+    <Setting Name="EWSURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">default</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
