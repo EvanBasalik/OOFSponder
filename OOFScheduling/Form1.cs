@@ -58,20 +58,23 @@ namespace OOFScheduling
             }
 #if CredMan
             //if we don't have the EWS stuff stored, then have to go get it fresh
-            if (Properties.Settings.Default.EWSURL == "default")
+            if (Properties.Settings.Default.EWSURL != "default")
 	        {
-                GetUserData();
-            }
-            else
-            {
                 //if we have the URL, then we should have creds stored somewhere
                 Exchange101.UserData.GetUserfromCredMan();
+               
+                //since we got creds, tack in the known URL
+                Exchange101.UserData.user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
 
                 //if we didn't get any creds, then go the autodiscover route
-                if (Exchange101.UserData.user.EmailAddress==null)
+                if (Exchange101.UserData.user.EmailAddress == null)
                 {
                     GetUserData();
                 }
+            }
+            else
+            {
+                GetUserData();
             }
 #endif
 
@@ -234,7 +237,7 @@ namespace OOFScheduling
                 UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
                 notifyIcon1.Text = "Current Status: " + currentStatus;
             }
-            catch
+            catch (Exception ex)
             {
                 notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect or we cannot contact the server please check your settings and try again");

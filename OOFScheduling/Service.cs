@@ -56,7 +56,7 @@ namespace Exchange101
                 service.TraceEnablePrettyPrinting = true; 
             } 
  
-            UserData.GetUserByAutodiscover(ref service);
+            UserData.GetUser(ref service);
  
             return service; 
         } 
@@ -68,8 +68,8 @@ namespace Exchange101
         } 
  
         public static ExchangeService ConnectToService(IUserData userData, ITraceListener listener) 
-        { 
-            ExchangeService service = new ExchangeService(userData.Version); 
+        {
+            ExchangeService service = new ExchangeService(userData.Version);
  
             if (listener != null) 
             { 
@@ -95,7 +95,9 @@ namespace Exchange101
             } 
  
             return service; 
-        } 
+        }
+
+
     }
 
         
