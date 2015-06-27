@@ -168,9 +168,7 @@ namespace OOFScheduling
             AIClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
 
             //we are using this to track unique users
-            AIClient.TrackEvent(AIClient.Context.User.Id.ToString());
-            AIClient.TrackTrace("Opened up Main Form");
-
+            AIClient.TrackEvent("User: " + AIClient.Context.User.Id.ToString());
 
         }
 
