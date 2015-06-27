@@ -135,11 +135,31 @@ namespace OOFScheduling
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
             }
 
+            bool haveNecessaryData = false;
+
+#if !CredMan
+            //check to ensure we have all the necessary inputs
             if (Properties.Settings.Default.EmailAddress != "default" &&
-               Properties.Settings.Default.OOFHtmlExternal != "default" &&
-               Properties.Settings.Default.OOFHtmlInternal != "default" &&
-               Properties.Settings.Default.workingHours != "default" &&
-               Properties.Settings.Default.EncryptPW != "default")
+    Properties.Settings.Default.OOFHtmlExternal != "default" &&
+    Properties.Settings.Default.OOFHtmlInternal != "default" &&
+    Properties.Settings.Default.workingHours != "default" &&
+    Properties.Settings.Default.EncryptPW != "default")
+            {
+                haveNecessaryData = true;
+            }
+#else
+            //if CredMan is turned on, then we don't need the email or password
+            //but we still need the OOF messages and working hours
+            if (Properties.Settings.Default.OOFHtmlExternal != "default" &&
+Properties.Settings.Default.OOFHtmlInternal != "default" &&
+Properties.Settings.Default.workingHours != "default")
+            {
+                haveNecessaryData = true;
+            }
+#endif
+
+
+            if (haveNecessaryData)
             {
                 toolStripStatusLabel1.Text = "Ready";
             }
@@ -599,6 +619,7 @@ Properties.Settings.Default.workingHours != "default")
 
         private void saveSettings()
         {
+#if !CredMan
             if (string.IsNullOrEmpty(emailAddressTB.Text))
             {
                 MessageBox.Show("Please enter your email address");
@@ -630,6 +651,15 @@ Properties.Settings.Default.workingHours != "default")
 
                 toolStripStatusLabel1.Text = "Settings Saved";
             }
+#else
+            Properties.Settings.Default.OOFHtmlExternal = htmlEditorControl1.BodyHtml;
+            Properties.Settings.Default.OOFHtmlInternal = htmlEditorControl2.BodyHtml;
+            Properties.Settings.Default.workingHours = ScheduleString();
+
+            Properties.Settings.Default.Save();
+
+            toolStripStatusLabel1.Text = "Settings Saved";
+#endif
             
         }
 
