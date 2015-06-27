@@ -80,6 +80,7 @@ namespace OOFScheduling
             Properties.Settings.Default.Save();
 #endif
 
+            //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (Properties.Settings.Default.OOFHtmlExternal != "default")
             {
                 htmlEditorControl1.BodyHtml = Properties.Settings.Default.OOFHtmlExternal;
@@ -211,6 +212,14 @@ namespace OOFScheduling
                     currentStatus = "OOF Disabled";
                 }
 
+                //pull the existing OOF messages in
+                htmlEditorControl1.BodyHtml = myOOFSettings.ExternalReply;
+                htmlEditorControl2.BodyHtml = myOOFSettings.InternalReply;
+
+                //save them
+                Properties.Settings.Default.OOFHtmlExternal = myOOFSettings.ExternalReply;
+                Properties.Settings.Default.OOFHtmlInternal = myOOFSettings.InternalReply;
+                Properties.Settings.Default.Save();
 
                 UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
                 notifyIcon1.Text = "Current Status: " + currentStatus;
