@@ -18,6 +18,9 @@ namespace OOFScheduling
 {
     public partial class Form1 : Form
     {
+        //AppInsights
+        Microsoft.ApplicationInsights.TelemetryClient AIClient = new Microsoft.ApplicationInsights.TelemetryClient();
+
         private ContextMenu trayMenu;
 
         //Track if force close or just hitting X to minimize
@@ -29,6 +32,9 @@ namespace OOFScheduling
         {
             
             InitializeComponent();
+
+            ConfigureApplicationInsights();
+
             #region Add to Startup
             // The path to the key where Windows looks for startup applications
             RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
@@ -147,6 +153,20 @@ namespace OOFScheduling
             Loopy();
             RunStatusCheck();
 
+        }
+
+        private void ConfigureApplicationInsights()
+        {
+            AIClient.InstrumentationKey = "9eacd004-7944-4d2e-a978-d66104c67a49";
+            // Set session data:
+            AIClient.Context.User.Id = Environment.UserName;
+            AIClient.Context.Session.Id = Guid.NewGuid().ToString();
+            AIClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+            AIClient.TrackEvent("Opened Main Form");
+
+#if DEBUG
+            AIClient.Context.User.Id = "DEBUG";
+#endif
         }
 
         private static void GetCreds()
@@ -638,6 +658,11 @@ Properties.Settings.Default.workingHours != "default")
                 e.Cancel = true;
                 this.WindowState = FormWindowState.Minimized;
             }
+
+            if (AIClient != null)
+            {
+                AIClient.Flush(); // only for desktop apps
+            }
             
         }
 
@@ -757,6 +782,13 @@ Properties.Settings.Default.workingHours != "default")
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             minimize = false;
+
+            //flush AI data
+            if (AIClient != null)
+            {
+                AIClient.Flush(); // only for desktop apps
+            }
+
             Application.Exit();
         }
 
