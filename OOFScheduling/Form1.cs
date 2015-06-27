@@ -74,27 +74,7 @@ namespace OOFScheduling
                 emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
             }
 #if CredMan
-            //if we have the EWSURL, then send it in
-            Exchange101.UserData user = new Exchange101.UserData();
-            if (Properties.Settings.Default.EWSURL != "default")
-	        {
-                user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
-                Exchange101.Service.ConnectToService(user);
-
-            }
-            else
-            {
-                //if we get here, that means we don't have creds or URL
-                //therefore, turn on autodiscover tracing
-                Exchange101.Service.ConnectToService(true);
-                Properties.Settings.Default.EWSURL = Exchange101.Service.Instance.Url.ToString();
-                Properties.Settings.Default.Save();
-            }
-
-            //map the collected info to the properties
-            Properties.Settings.Default.EncryptPW = "UsingCredMan";
-            Properties.Settings.Default.EmailAddress = Exchange101.UserData.user.EmailAddress;
-            Properties.Settings.Default.Save();
+            GetCreds();
 #endif
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
@@ -167,6 +147,35 @@ namespace OOFScheduling
             Loopy();
             RunStatusCheck();
 
+        }
+
+        private static void GetCreds()
+        {
+
+            //if we have the EWSURL, then send it in
+            Exchange101.UserData user = new Exchange101.UserData();
+            if (Properties.Settings.Default.EWSURL != "default")
+            {
+                user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
+                Exchange101.Service.ConnectToService(user);
+
+            }
+            else
+            {
+                //should really have a more elegant way of doing this, but that is future work
+                //if we get here, that means we don't have creds or URL
+                MessageBox.Show("No Exchange server identified yet. This may take a couple minutes");
+                //therefore, turn on autodiscover tracing
+                Exchange101.Service.ConnectToService(true);
+                Properties.Settings.Default.EWSURL = Exchange101.Service.Instance.Url.ToString();
+                MessageBox.Show("Found your Exchange server!");
+                Properties.Settings.Default.Save();
+            }
+
+            //map the collected info to the properties
+            Properties.Settings.Default.EncryptPW = "UsingCredMan";
+            Properties.Settings.Default.EmailAddress = Exchange101.UserData.user.EmailAddress;
+            Properties.Settings.Default.Save();
         }
 
         #region Set Oof Timed Loop
