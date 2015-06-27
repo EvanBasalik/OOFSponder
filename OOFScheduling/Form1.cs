@@ -360,11 +360,15 @@ namespace OOFScheduling
                     manualoof = true;
                 else
                     manualoof = false;
+
+                //report to AppInsights
+                AIClient.TrackEvent("Set OOF manually");
             }
-            catch
+            catch (Exception ex)
             {
                 notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
+                AIClient.TrackException(ex);
                 return;
             }
         }
@@ -460,16 +464,20 @@ Properties.Settings.Default.workingHours != "default")
 #endif
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
                     RunStatusCheck();
+
+                    //report back to AppInsights
+                    AIClient.TrackEvent("Set OOF");
                 }
                 else
                 {
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
+                AIClient.TrackException(ex);
                 return;
             }
         }
@@ -674,6 +682,8 @@ Properties.Settings.Default.workingHours != "default")
 
         private async void btnRunManually_Click(object sender, EventArgs e)
         {
+            //report back to AppInsights
+            AIClient.TrackEvent("Setting OOF manually");
             RunSetOof();
         }
 
