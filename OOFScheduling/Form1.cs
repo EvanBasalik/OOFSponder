@@ -166,6 +166,7 @@ namespace OOFScheduling
 
 #if DEBUG
             AIClient.Context.User.Id = "DEBUG";
+            Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
 #endif
         }
 
@@ -274,6 +275,7 @@ namespace OOFScheduling
             {
                 notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect or we cannot contact the server please check your settings and try again");
+                AIClient.TrackException(ex);
                 return;
             }
 
