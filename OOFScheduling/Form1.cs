@@ -49,6 +49,23 @@ namespace OOFScheduling
             // Add menu to tray icon and show it.
             notifyIcon1.ContextMenu = trayMenu;
             #endregion
+            #region Read the list of teams to populate with templates
+            //Read in the list of teams and build the dictionary list of team name
+            //and template location
+
+            //for each team, add an entry to the the Team Settings menu item (teamSettingsToolStripMenuItem)
+
+            //If Use Team Settings is checked and a team is selected
+            //then pull the remote files in as the text and then set the
+            //controls to ReadOnly
+            //Use a naming convention of "ExternalOOF.html" and "InternalOOF.html"?
+
+            //Will also need to add some #Start/#End/#TimeZone logic
+            //could even get fancy and have that be some sort of pop-up
+            //so that each team could have its own
+            //this is definitely future work :)
+
+            #endregion
             #region Fill in property data if set
             //we could always get from CredMan, but setting it anyway to avoid
             //breaking other code dependencies that are checking to see if this is set
