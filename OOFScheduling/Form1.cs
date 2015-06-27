@@ -160,14 +160,18 @@ namespace OOFScheduling
             AIClient.InstrumentationKey = "9eacd004-7944-4d2e-a978-d66104c67a49";
             // Set session data:
             AIClient.Context.User.Id = Environment.UserName;
-            AIClient.Context.Session.Id = Guid.NewGuid().ToString();
-            AIClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-            AIClient.TrackEvent("Opened Main Form");
-
 #if DEBUG
             AIClient.Context.User.Id = "DEBUG";
             Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
 #endif
+            AIClient.Context.Session.Id = Guid.NewGuid().ToString();
+            AIClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
+
+            //we are using this to track unique users
+            AIClient.TrackEvent(AIClient.Context.User.Id.ToString());
+            AIClient.TrackTrace("Opened up Main Form");
+
+
         }
 
         private static void GetCreds()
