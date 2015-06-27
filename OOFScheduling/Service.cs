@@ -102,7 +102,14 @@ namespace Exchange101
                     {
                         Console.Write(string.Format("Using Autodiscover to find EWS URL for {0}. Please wait... ", prompt.UserName));
                         Instance.TraceEnabled = true;
-                        Instance.AutodiscoverUrl(prompt.UserName, Service.RedirectionUrlValidationCallback);
+                        if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                        {
+                            Instance.AutodiscoverUrl(prompt.UserName, Service.RedirectionUrlValidationCallback);
+                        }
+                        else
+                        {
+                            throw new AutodiscoverLocalException("No network detected");
+                        }
                         Console.WriteLine("Autodiscover Complete");
                     }
                     else
