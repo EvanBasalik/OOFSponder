@@ -6,7 +6,10 @@ namespace Exchange101
 { 
     // This sample is for demonstration purposes only. Before you run this sample, make sure that the code meets the coding requirements of your organization. 
     public static class Service 
-    { 
+    {
+        public static ExchangeService Instance = new ExchangeService(ExchangeVersion.Exchange2013_SP1);
+        public static string Target = "OOFSponder";
+
         static Service() 
         { 
             CertificateCallback.Initialize(); 
@@ -54,9 +57,9 @@ namespace Exchange101
                 service.TraceEnabled = true; 
                 service.TraceFlags = TraceFlags.All; 
                 service.TraceEnablePrettyPrinting = true; 
-            } 
- 
-            UserData.GetUser(ref service);
+            }
+
+            ConnectToService(userData, null);
  
             return service; 
         } 
@@ -67,34 +70,56 @@ namespace Exchange101
             return ConnectToService(userData, null); 
         } 
  
-        public static ExchangeService ConnectToService(IUserData userData, ITraceListener listener) 
+        public static ExchangeService ConnectToService(UserData userData, ITraceListener listener) 
         {
-            ExchangeService service = new ExchangeService(userData.Version);
- 
+             
             if (listener != null) 
             { 
-                service.TraceListener = listener; 
-                service.TraceFlags = TraceFlags.All; 
-                service.TraceEnabled = true; 
-            } 
+                Instance.TraceListener = listener; 
+                Instance.TraceFlags = TraceFlags.All; 
+                Instance.TraceEnabled = true; 
+            }
+
+            using (Kerr.PromptForCredential prompt = new Kerr.PromptForCredential())
+            {
+                prompt.TargetName = Target;
+                prompt.Title = "Save credentials for Recurring OOF";
+
+                prompt.ExcludeCertificates = true;
+                prompt.GenericCredentials = true;
+
+                if (System.Windows.Forms.DialogResult.OK == prompt.ShowDialog(/* owner */))
+                {
+
+                    if (prompt.ExpectConfirmation && prompt.SaveChecked)
+                    {
+                        prompt.ConfirmCredentials();
+                    }
+
+                    Instance.Credentials = new System.Net.NetworkCredential(prompt.UserName, prompt.Password);
+
+                    if (userData.AutodiscoverUrl == null)
+                    {
+                        Console.Write(string.Format("Using Autodiscover to find EWS URL for {0}. Please wait... ", prompt.UserName));
+                        Instance.TraceEnabled = true;
+                        Instance.AutodiscoverUrl(prompt.UserName, Service.RedirectionUrlValidationCallback);
+                        Console.WriteLine("Autodiscover Complete");
+                    }
+                    else
+                    {
+                        Instance.Url = userData.AutodiscoverUrl;
+                    }
+
+                    //to make it easier to grap, let's populate the User object
+                    Exchange101.UserData.user.AutodiscoverUrl = Instance.Url;
+                    Exchange101.UserData.user.EmailAddress = prompt.UserName;
+                    Exchange101.UserData.user.Password = prompt.Password;
+
+                }
+            }
+
  
-            service.Credentials = new NetworkCredential(userData.EmailAddress, userData.Password); 
- 
-            if (userData.AutodiscoverUrl == null) 
-            { 
-                Console.Write(string.Format("Using Autodiscover to find EWS URL for {0}. Please wait... ", userData.EmailAddress)); 
- 
-                service.AutodiscoverUrl(userData.EmailAddress, RedirectionUrlValidationCallback); 
-                userData.AutodiscoverUrl = service.Url; 
- 
-                Console.WriteLine("Autodiscover Complete"); 
-            } 
-            else 
-            { 
-                service.Url = userData.AutodiscoverUrl; 
-            } 
- 
-            return service; 
+            return Instance; 
         }
 
 

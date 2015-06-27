@@ -57,25 +57,27 @@ namespace OOFScheduling
                 emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
             }
 #if CredMan
-            //if we don't have the EWS stuff stored, then have to go get it fresh
+            //if we have the EWSURL, then send it in
+            Exchange101.UserData user = new Exchange101.UserData();
             if (Properties.Settings.Default.EWSURL != "default")
 	        {
-                //if we have the URL, then we should have creds stored somewhere
-                Exchange101.UserData.GetUserfromCredMan();
-               
-                //since we got creds, tack in the known URL
-                Exchange101.UserData.user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
+                user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
+                Exchange101.Service.ConnectToService(user);
 
-                //if we didn't get any creds, then go the autodiscover route
-                if (Exchange101.UserData.user.EmailAddress == null)
-                {
-                    GetUserData();
-                }
             }
             else
             {
-                GetUserData();
+                //if we get here, that means we don't have creds or URL
+                //therefore, turn on autodiscover tracing
+                Exchange101.Service.ConnectToService(true);
+                Properties.Settings.Default.EWSURL = Exchange101.Service.Instance.Url.ToString();
+                Properties.Settings.Default.Save();
             }
+
+            //map the collected info to the properties
+            Properties.Settings.Default.EncryptPW = "UsingCredMan";
+            Properties.Settings.Default.EmailAddress = Exchange101.UserData.user.EmailAddress;
+            Properties.Settings.Default.Save();
 #endif
 
             if (Properties.Settings.Default.OOFHtmlExternal != "default")
@@ -149,30 +151,6 @@ namespace OOFScheduling
 
         }
 
-        private void GetUserData()
-        {
-            //call into EWS to do autodiscover
-            //this will allow us to capture both the email and URL
-            Exchange101.Service.ConnectToService(true);
-            Properties.Settings.Default.EmailAddress = Exchange101.UserData.user.EmailAddress;
-            Properties.Settings.Default.EWSURL = Exchange101.UserData.user.AutodiscoverUrl.ToString();
-
-            //we aren't using it, but set the password to something bogus to avoid
-            //breaking other code dependencies that are checking to see if this is set
-            Properties.Settings.Default.EncryptPW = "UsingCredMan";
-
-            //don't forget to save everything immediately - cannot wait because then CredMan and
-            //properties would be out of sync
-            Properties.Settings.Default.Save();
-
-            emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
-        }
-
-        private void GetPasswordfromCredman()
-        {
-            throw new NotImplementedException();
-        }
-
         #region Set Oof Timed Loop
         void Loopy()
         {
@@ -211,7 +189,7 @@ namespace OOFScheduling
                 OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
 #else
                 //variant using CredMan
-                OofSettings myOOFSettings = Exchange101.Service.ConnectToService(Exchange101.UserData.user, null).GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Properties.Settings.Default.EmailAddress);
 #endif
 
                 string currentStatus = "";
@@ -273,7 +251,7 @@ namespace OOFScheduling
                 OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(emailAddress);
 #else
                 //variant using CredMan
-                OofSettings myOOFSettings = Exchange101.Service.ConnectToService(false).GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
 #endif
 
                 OofSettings myOOF = new OofSettings();
@@ -308,7 +286,7 @@ namespace OOFScheduling
                     ExchangeServiceConnection.Instance.service.SetUserOofSettings(emailAddress, myOOF);
 #else
                     //variant using CredMan
-                    Exchange101.Service.ConnectToService(false).SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
+                    Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
 #endif
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
                     RunStatusCheck();
@@ -382,7 +360,7 @@ Properties.Settings.Default.workingHours != "default")
                 OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
 #else
                 //variant using CredMan
-                OofSettings myOOFSettings = Exchange101.Service.ConnectToService(false).GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
 #endif
                 OofSettings myOOF = new OofSettings();
 
@@ -417,7 +395,7 @@ Properties.Settings.Default.workingHours != "default")
                     ExchangeServiceConnection.Instance.service.SetUserOofSettings(EmailAddress, myOOF);
 #else
                     //variant using CredMan
-                    Exchange101.Service.ConnectToService(false).SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
+                    Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
 #endif
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
                     RunStatusCheck();
