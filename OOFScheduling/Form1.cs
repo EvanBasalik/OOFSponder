@@ -484,7 +484,7 @@ Properties.Settings.Default.workingHours != "default")
                     RunStatusCheck();
 
                     //report back to AppInsights
-                    AIClient.TrackEvent("Set OOF");
+                    AIClient.TrackEvent("Set OOF for user: " + AIClient.Context.User.Id.ToString());
                 }
                 else
                 {
