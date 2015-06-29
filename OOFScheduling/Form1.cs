@@ -180,15 +180,20 @@ Properties.Settings.Default.workingHours != "default")
             AIClient.InstrumentationKey = "9eacd004-7944-4d2e-a978-d66104c67a49";
             // Set session data:
             AIClient.Context.User.Id = Environment.UserName;
-#if DEBUG
+
+            //use DEBUGAI if we actually want AppInsights from a DEBUG build
+#if DEBUGAI
             AIClient.Context.User.Id = "DEBUG";
             Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
 #endif
             AIClient.Context.Session.Id = Guid.NewGuid().ToString();
             AIClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
 
+            //don't send AI stuff if running in DEBUG
+#if !DEBUG
             //we are using this to track unique users
             AIClient.TrackEvent("User: " + AIClient.Context.User.Id.ToString());
+#endif
 
         }
 
@@ -297,7 +302,10 @@ Properties.Settings.Default.workingHours != "default")
             {
                 notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect or we cannot contact the server please check your settings and try again");
+                            //don't send AI stuff if running in DEBUG
+#if !DEBUG
                 AIClient.TrackException(ex);
+#endif
                 return;
             }
 
@@ -379,14 +387,22 @@ Properties.Settings.Default.workingHours != "default")
                 else
                     manualoof = false;
 
+                
+                //don't send AI stuff if running in DEBUG
                 //report to AppInsights
+#if !DEBUG
                 AIClient.TrackEvent("Set OOF manually");
+#endif
             }
             catch (Exception ex)
             {
                 notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
+                //don't send AI stuff if running in DEBUG
+                //report to AppInsights
+#if !DEBUG
                 AIClient.TrackException(ex);
+#endif
                 return;
             }
         }
@@ -495,7 +511,11 @@ Properties.Settings.Default.workingHours != "default")
             {
                 notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
+                //don't send AI stuff if running in DEBUG
+                //report to AppInsights
+#if !DEBUG
                 AIClient.TrackException(ex);
+#endif
                 return;
             }
         }
@@ -701,17 +721,24 @@ Properties.Settings.Default.workingHours != "default")
                 this.WindowState = FormWindowState.Minimized;
             }
 
+            //don't send AI stuff if running in DEBUG
+            //report to AppInsights
+#if !DEBUG
             if (AIClient != null)
             {
                 AIClient.Flush(); // only for desktop apps
             }
+#endif
             
         }
 
         private async void btnRunManually_Click(object sender, EventArgs e)
         {
-            //report back to AppInsights
+            //don't send AI stuff if running in DEBUG
+            //report to AppInsights
+#if !DEBUG
             AIClient.TrackEvent("Setting OOF manually");
+#endif
             RunSetOof();
         }
 
