@@ -80,7 +80,7 @@ namespace OOFScheduling
                 emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
             }
 #if CredMan
-            GetCreds();
+            RunGetCreds();
 #endif
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
@@ -192,7 +192,12 @@ Properties.Settings.Default.workingHours != "default")
 
         }
 
-        private static void GetCreds()
+        private async void RunGetCreds()
+        {
+            await System.Threading.Tasks.Task.Run(() => GetCreds());
+        }
+
+        private async System.Threading.Tasks.Task GetCreds()
         {
 
             //if we have the EWSURL, then send it in
