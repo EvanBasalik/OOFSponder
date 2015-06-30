@@ -229,10 +229,8 @@ Properties.Settings.Default.workingHours != "default")
             Exchange101.UserData user = new Exchange101.UserData();
             if (Properties.Settings.Default.EWSURL != "default")
             {
-
                 user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
                 Exchange101.Service.ConnectToService(user);
-
             }
             else
             {
