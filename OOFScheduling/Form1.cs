@@ -212,7 +212,15 @@ Properties.Settings.Default.workingHours != "default")
 
         private async void RunGetCreds()
         {
+            UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
+            notifyIcon1.Text = "Configuring Exchange, please wait.";
+
             await System.Threading.Tasks.Task.Run(() => GetCreds());
+
+            UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
+            notifyIcon1.Text = "Found your Exchange server!";
+
+
         }
 
         private async System.Threading.Tasks.Task GetCreds()
@@ -221,19 +229,13 @@ Properties.Settings.Default.workingHours != "default")
             Exchange101.UserData user = new Exchange101.UserData();
             if (Properties.Settings.Default.EWSURL != "default")
             {
-                UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
-                notifyIcon1.Text = "Configuring Exchange, please wait.";
 
                 user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
                 Exchange101.Service.ConnectToService(user);
 
-                UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
-                notifyIcon1.Text = "Found your Exchange server!";
             }
             else
             {
-                UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
-                notifyIcon1.Text = "Configuring Exchange, please wait.";
 
                 //should really have a more elegant way of doing this, but that is future work
                 //if we get here, that means we don't have creds or URL
@@ -242,9 +244,6 @@ Properties.Settings.Default.workingHours != "default")
                 Exchange101.Service.ConnectToService(true);
                 Properties.Settings.Default.EWSURL = Exchange101.Service.Instance.Url.ToString();
                 //MessageBox.Show("Found your Exchange server!");
-
-                UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
-                notifyIcon1.Text = "Found your Exchange server!";
 
                 Properties.Settings.Default.Save();
             }
@@ -324,7 +323,7 @@ Properties.Settings.Default.workingHours != "default")
 
                 //pull the existing OOF messages in
                 htmlEditorControl1.BodyHtml = myOOFSettings.ExternalReply;
-                htmlEditorControl2.BodyHtml = myOOFSettings.InternalReply;
+                 htmlEditorControl2.BodyHtml = myOOFSettings.InternalReply;
 
                 //save them
                 Properties.Settings.Default.OOFHtmlExternal = myOOFSettings.ExternalReply;
