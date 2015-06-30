@@ -28,13 +28,26 @@ namespace OOFScheduling
 
         //Track if we have turned on the manual oof message
         private bool manualoof = false;
+
+        //Track if we have a valid exchange connection
+        private bool foundexchange = false;
         public Form1()
         {
             
             InitializeComponent();
 
             ConfigureApplicationInsights();
-
+#if !CredMan
+            //Show manual credentials on the bottom if we don't have credman
+            label14.Visible = true;
+            label8.Visible = true;
+            label9.Visible = true;
+            label10.Visible = true;
+            passwordConfirmTB.Visible = true;
+            passwordTB.Visible = true;
+            emailAddressTB.Visible = true;
+            this.Height = 860;      
+#endif
             #region Add to Startup
             // The path to the key where Windows looks for startup applications
             RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
@@ -204,28 +217,40 @@ Properties.Settings.Default.workingHours != "default")
 
         private async System.Threading.Tasks.Task GetCreds()
         {
-
             //if we have the EWSURL, then send it in
             Exchange101.UserData user = new Exchange101.UserData();
             if (Properties.Settings.Default.EWSURL != "default")
             {
+                UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
+                notifyIcon1.Text = "Configuring Exchange, please wait.";
+
                 user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
                 Exchange101.Service.ConnectToService(user);
 
+                UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
+                notifyIcon1.Text = "Found your Exchange server!";
             }
             else
             {
+                UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
+                notifyIcon1.Text = "Configuring Exchange, please wait.";
+
                 //should really have a more elegant way of doing this, but that is future work
                 //if we get here, that means we don't have creds or URL
-                MessageBox.Show("No Exchange server identified yet. This may take a couple minutes");
+                //MessageBox.Show("No Exchange server identified yet. This may take a couple minutes");
                 //therefore, turn on autodiscover tracing
                 Exchange101.Service.ConnectToService(true);
                 Properties.Settings.Default.EWSURL = Exchange101.Service.Instance.Url.ToString();
-                MessageBox.Show("Found your Exchange server!");
+                //MessageBox.Show("Found your Exchange server!");
+
+                UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
+                notifyIcon1.Text = "Found your Exchange server!";
+
                 Properties.Settings.Default.Save();
             }
 
             //map the collected info to the properties
+            foundexchange = true;
             Properties.Settings.Default.EncryptPW = "UsingCredMan";
             Properties.Settings.Default.EmailAddress = Exchange101.UserData.user.EmailAddress;
             Properties.Settings.Default.Save();
@@ -253,7 +278,13 @@ Properties.Settings.Default.workingHours != "default")
         private async void RunStatusCheck()
         {
             if (Properties.Settings.Default.EmailAddress != "default" &&
-                Properties.Settings.Default.EncryptPW != "default")
+                Properties.Settings.Default.EncryptPW != "default"
+#if CredMan
+                && Properties.Settings.Default.EncryptPW == "UsingCredMan" 
+                && Properties.Settings.Default.EWSURL != "default"
+                && foundexchange
+#endif
+                )
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
                 await System.Threading.Tasks.Task.Run(() => checkOOFStatus(emailAddress));
@@ -322,7 +353,13 @@ Properties.Settings.Default.workingHours != "default")
             if (Properties.Settings.Default.EmailAddress != "default" &&
                 Properties.Settings.Default.OOFHtmlExternal != "default" &&
                 Properties.Settings.Default.OOFHtmlInternal != "default" &&
-                Properties.Settings.Default.EncryptPW != "default")
+                Properties.Settings.Default.EncryptPW != "default"
+#if CredMan
+                && Properties.Settings.Default.EncryptPW == "UsingCredMan"
+                && Properties.Settings.Default.EWSURL != "default"
+                && foundexchange
+#endif
+                )
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
                 string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
@@ -431,8 +468,11 @@ Properties.Settings.Default.workingHours != "default")
             //if CredMan is turned on, then we don't need the email or password
             //but we still need the OOF messages and working hours
             if (Properties.Settings.Default.OOFHtmlExternal != "default" &&
-Properties.Settings.Default.OOFHtmlInternal != "default" &&
-Properties.Settings.Default.workingHours != "default")
+                Properties.Settings.Default.OOFHtmlInternal != "default" &&
+                Properties.Settings.Default.workingHours != "default" &&
+                Properties.Settings.Default.EncryptPW == "UsingCredMan" &&
+                Properties.Settings.Default.EWSURL != "default" &&
+                foundexchange)
             {
                 haveNecessaryData = true;
             }
