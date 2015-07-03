@@ -209,6 +209,12 @@ Properties.Settings.Default.workingHours != "default")
         private void clearToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+            ClearAllCreds();
+
+        }
+
+        private static void ClearAllCreds()
+        {
             //also clear out the stored credentials
             Exchange101.Service.ClearCredentaials();
 
@@ -219,8 +225,7 @@ Properties.Settings.Default.workingHours != "default")
 
             //rather than fighting with system and UI state
             //just tell the user the exit and restart
-            MessageBox.Show("Cleared credentials. Please exit and restart.","OOFSponder",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
-
+            MessageBox.Show("Cleared credentials. Please exit and restart.", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
         private void ConfigureApplicationInsights()
@@ -250,10 +255,25 @@ Properties.Settings.Default.workingHours != "default")
             UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
             notifyIcon1.Text = "Configuring Exchange, please wait.";
 
-            await System.Threading.Tasks.Task.Run(() => GetCreds());
+            try
+            {
+                await System.Threading.Tasks.Task.Run(() => GetCreds());
+                UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
+                notifyIcon1.Text = "Found your Exchange server!";
+            }
+            catch (System.Security.Authentication.AuthenticationException authEx)
+            {
+                //AuthenticationException should be handled lower in the stack, so just record it
+                //and move on
+                AIClient.TrackException(authEx);
+            }
+            catch (Exception ex)
+            {
+                AIClient.TrackException(ex);
+                MessageBox.Show("Unable to find your Exchange server. Please try again later", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-            UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
-            notifyIcon1.Text = "Found your Exchange server!";
+
 
 
         }
@@ -535,8 +555,8 @@ Properties.Settings.Default.workingHours != "default")
                 //variant using Web Credentials
                 OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
 #else
-                //variant using CredMan
                 OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+
 #endif
                 OofSettings myOOF = new OofSettings();
 

@@ -1,6 +1,7 @@
 ﻿﻿using System; 
 using System.Net; 
-using Microsoft.Exchange.WebServices.Data; 
+using Microsoft.Exchange.WebServices.Data;
+using System.Windows.Forms;
  
 namespace Exchange101 
 { 
@@ -105,14 +106,10 @@ namespace Exchange101
 
                 prompt.ExcludeCertificates = true;
                 prompt.GenericCredentials = true;
+                prompt.ExpectConfirmation = true;
 
                 if (System.Windows.Forms.DialogResult.OK == prompt.ShowDialog(/* owner */))
                 {
-
-                    if (prompt.ExpectConfirmation && prompt.SaveChecked)
-                    {
-                        prompt.ConfirmCredentials();
-                    }
 
                     Instance.Credentials = new System.Net.NetworkCredential(prompt.UserName, prompt.Password);
 
@@ -122,7 +119,26 @@ namespace Exchange101
                         Instance.TraceEnabled = true;
                         if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                         {
-                            Instance.AutodiscoverUrl(prompt.UserName, Service.RedirectionUrlValidationCallback);
+                            try
+                            {
+                                Instance.AutodiscoverUrl(prompt.UserName, Service.RedirectionUrlValidationCallback);
+                            }
+                            catch (AutodiscoverLocalException ex)
+                            {
+                                throw;
+                            }
+                            catch (System.FormatException ex)
+                            {
+                                //if we catch a FormatException, that means that the
+                                //username wasn't entered as a UPN, so we cannot figure out the email format
+                                DialogResult result = MessageBox.Show("Please enter your username in name@domain.com format", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                //clear the credentials
+                                Exchange101.Service.ClearCredentaials();
+                            }
+                            catch (Exception ex)
+                            {
+                                throw;
+                            }
                         }
                         else
                         {
@@ -135,16 +151,52 @@ namespace Exchange101
                         Instance.Url = userData.AutodiscoverUrl;
                     }
 
-                    //to make it easier to grap, let's populate the User object
-                    Exchange101.UserData.user.AutodiscoverUrl = Instance.Url;
-                    Exchange101.UserData.user.EmailAddress = prompt.UserName;
-                    Exchange101.UserData.user.Password = prompt.Password;
+                    //if we have the URL, attempt to authenticate
+                    Authenticate(prompt);
 
                 }
             }
 
  
             return Instance; 
+        }
+
+        public static void Authenticate(Kerr.PromptForCredential prompt=null)
+        {
+            // Once we have the URL, try a ConvertId operation to check if we can access the service. We expect that 
+            // the user will be authenticated and that we will get an error code due to the invalid format. Expect a
+            // ServiceResponseException. 
+            try
+            {
+                Console.WriteLine("Attempting to connect to EWS...");
+                AlternateIdBase response = Service.Instance.ConvertId(new AlternateId(IdFormat.EwsId, "Placeholder", prompt.UserName), IdFormat.EwsId);
+            }
+            catch (ServiceResponseException)
+            {
+                //if we get a ServiceResponseException, that means we authenticated
+                //since we were able to authenticate, store the credentials
+                if (prompt.SaveChecked)
+                {
+                    prompt.ConfirmCredentials();
+                }
+
+                //to make it easier to grap, let's populate the User object
+                Exchange101.UserData.user.AutodiscoverUrl = Instance.Url;
+                Exchange101.UserData.user.EmailAddress = prompt.UserName;
+                Exchange101.UserData.user.Password = prompt.Password;
+            }
+            catch (Exception ex)
+            {
+                //if we get an authentication exception, that means the URL was correct
+                //but the credentials were not
+                DialogResult result = MessageBox.Show("Credentials incorrect. Do you want OOFSponder to delete the credentials from Credential Manager?", "OOFSponder", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (result == DialogResult.Yes)
+                {
+                    Exchange101.Service.ClearCredentaials();
+                }
+                throw new System.Security.Authentication.AuthenticationException("Unable to login", ex);
+            }
+
         }
 
 
