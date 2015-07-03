@@ -36,6 +36,9 @@ namespace OOFScheduling
             
             InitializeComponent();
 
+            #region AddMenuItems
+            AddMenuItems();
+            #endregion
             ConfigureApplicationInsights();
 #if !CredMan
             //Show manual credentials on the bottom if we don't have credman
@@ -185,6 +188,38 @@ Properties.Settings.Default.workingHours != "default")
             #endregion
             Loopy();
             RunStatusCheck();
+
+        }
+
+        private void AddMenuItems()
+        {
+
+            //for some reason, just touching the main form adds margins to everything
+            //so doing this in code
+            System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem = new ToolStripMenuItem();
+            clearToolStripMenuItem.Name = "clearToolStripMenuItem";
+            clearToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            clearToolStripMenuItem.Text = "Clear Stored Credentials";
+            clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
+
+
+            this.fileToolStripMenuItem.DropDownItems.Insert(0,clearToolStripMenuItem);
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            //also clear out the stored credentials
+            Exchange101.Service.ClearCredentaials();
+
+            //autodiscover is only done if Properties.Settings.Default.EWSURL != "default"
+            //so setting it to default is the equivalent of resetting credential properties
+            Properties.Settings.Default.EWSURL = "default";
+            Properties.Settings.Default.Save();
+
+            //rather than fighting with system and UI state
+            //just tell the user the exit and restart
+            MessageBox.Show("Cleared credentials. Please exit and restart.","OOFSponder",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
 
         }
 

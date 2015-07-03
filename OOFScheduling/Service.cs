@@ -41,7 +41,25 @@ namespace Exchange101
  
             return result; 
         } 
- 
+
+        //clear the stored credentials
+        public static bool ClearCredentaials()
+        {
+            bool _result = false;
+
+            Kerr.CredentialSet creds = new Kerr.CredentialSet(Target);
+            foreach (Kerr.Credential cred in creds)
+            {
+                if (cred.TargetName==Target)
+                {
+                    cred.Delete();
+                    _result = true;
+                }
+            }
+
+            return _result;
+        }
+
         public static ExchangeService ConnectToService(bool traceToFile) 
         { 
             // We use this to get the target Exchange version.  
