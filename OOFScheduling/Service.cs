@@ -102,7 +102,7 @@ namespace Exchange101
             using (Kerr.PromptForCredential prompt = new Kerr.PromptForCredential())
             {
                 prompt.TargetName = Target;
-                prompt.Title = "Save credentials for Recurring OOF";
+                prompt.Title = "Please enter your email address and password";
 
                 prompt.ExcludeCertificates = true;
                 prompt.GenericCredentials = true;
