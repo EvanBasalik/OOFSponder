@@ -123,6 +123,7 @@ namespace Exchange101
                             try
                             {
                                 Instance.AutodiscoverUrl(prompt.UserName, Service.RedirectionUrlValidationCallback);
+                                Logger.Info("Found the URL: " + Instance.Url);
                             }
                             catch (AutodiscoverLocalException ex)
                             {
@@ -152,6 +153,7 @@ namespace Exchange101
                     }
                     else
                     {
+                        Logger.Info("Using existing URL: " + userData.AutodiscoverUrl);
                         Instance.Url = userData.AutodiscoverUrl;
                     }
 
