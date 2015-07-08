@@ -2,6 +2,7 @@
 using System.Net; 
 using Microsoft.Exchange.WebServices.Data;
 using System.Windows.Forms;
+using OOFSponder;
  
 namespace Exchange101 
 { 
@@ -115,7 +116,7 @@ namespace Exchange101
 
                     if (userData.AutodiscoverUrl == null)
                     {
-                        Console.Write(string.Format("Using Autodiscover to find EWS URL for {0}. Please wait... ", prompt.UserName));
+                        Logger.Info(string.Format("Using Autodiscover to find EWS URL for {0}. Please wait... ", prompt.UserName));
                         Instance.TraceEnabled = true;
                         if (System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                         {
@@ -125,6 +126,7 @@ namespace Exchange101
                             }
                             catch (AutodiscoverLocalException ex)
                             {
+                                Logger.Error(ex);
                                 throw;
                             }
                             catch (System.FormatException ex)
@@ -137,14 +139,16 @@ namespace Exchange101
                             }
                             catch (Exception ex)
                             {
+                                Logger.Error(ex);
                                 throw;
                             }
                         }
                         else
                         {
+                            Logger.Error("No network detected");
                             throw new AutodiscoverLocalException("No network detected");
                         }
-                        Console.WriteLine("Autodiscover Complete");
+                       Logger.Info("Autodiscover Complete");
                     }
                     else
                     {
@@ -168,11 +172,12 @@ namespace Exchange101
             // ServiceResponseException. 
             try
             {
-                Console.WriteLine("Attempting to connect to EWS...");
+                Logger.Info("Attempting to connect to EWS...");
                 AlternateIdBase response = Service.Instance.ConvertId(new AlternateId(IdFormat.EwsId, "Placeholder", prompt.UserName), IdFormat.EwsId);
             }
             catch (ServiceResponseException)
             {
+                Logger.Info("ServiceResponseException - credentials validated");
                 //if we get a ServiceResponseException, that means we authenticated
                 //since we were able to authenticate, store the credentials
                 if (prompt.SaveChecked)
@@ -187,6 +192,7 @@ namespace Exchange101
             }
             catch (Exception ex)
             {
+                Logger.Error(ex);
                 //if we get an authentication exception, that means the URL was correct
                 //but the credentials were not
                 DialogResult result = MessageBox.Show("Credentials incorrect. Do you want OOFSponder to delete the credentials from Credential Manager?", "OOFSponder", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
