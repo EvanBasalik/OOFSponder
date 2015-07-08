@@ -216,7 +216,7 @@ Properties.Settings.Default.workingHours != "default")
         private static void ClearAllCreds()
         {
             //also clear out the stored credentials
-            Exchange101.Service.ClearCredentaials();
+            Exchange101.Service.ClearCredentials();
 
             //autodiscover is only done if Properties.Settings.Default.EWSURL != "default"
             //so setting it to default is the equivalent of resetting credential properties

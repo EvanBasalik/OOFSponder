@@ -44,7 +44,7 @@ namespace Exchange101
         } 
 
         //clear the stored credentials
-        public static bool ClearCredentaials()
+        public static bool ClearCredentials()
         {
             bool _result = false;
 
@@ -133,7 +133,7 @@ namespace Exchange101
                                 //username wasn't entered as a UPN, so we cannot figure out the email format
                                 DialogResult result = MessageBox.Show("Please enter your username in name@domain.com format", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                 //clear the credentials
-                                Exchange101.Service.ClearCredentaials();
+                                Exchange101.Service.ClearCredentials();
                             }
                             catch (Exception ex)
                             {
@@ -192,7 +192,7 @@ namespace Exchange101
                 DialogResult result = MessageBox.Show("Credentials incorrect. Do you want OOFSponder to delete the credentials from Credential Manager?", "OOFSponder", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
                 if (result == DialogResult.Yes)
                 {
-                    Exchange101.Service.ClearCredentaials();
+                    Exchange101.Service.ClearCredentials();
                 }
                 throw new System.Security.Authentication.AuthenticationException("Unable to login", ex);
             }
