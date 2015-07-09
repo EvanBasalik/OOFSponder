@@ -12,6 +12,7 @@ namespace OOFScheduling
     {
         internal const int SW_NORMAL = 1; // see WinUser.h for definitions
         internal const int SW_RESTORE = 9;
+        internal const int SW_MINIMIZE = 6;
 
         [DllImport("User32", EntryPoint = "FindWindow")]
         internal static extern IntPtr FindWindow(string className, string windowName);

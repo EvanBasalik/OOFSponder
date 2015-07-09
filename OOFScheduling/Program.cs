@@ -48,7 +48,7 @@ namespace OOFScheduling
 
                     NativeMethods.GetWindowPlacement(hWnd, ref placement);
 
-                    if (placement.showCmd != NativeMethods.SW_NORMAL)
+                    if (placement.showCmd != NativeMethods.SW_MINIMIZE)
                     {
                         placement.showCmd = NativeMethods.SW_RESTORE;
 
