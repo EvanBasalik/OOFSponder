@@ -639,25 +639,25 @@ Properties.Settings.Default.workingHours != "default")
             string[] scheduleString = new string[7];
 
             string checkstring = sundayOffWorkCB.Checked ? "0" : "1";
-            scheduleString[0] = sundayStartTimepicker.Value.ToString("hh:mm tt") + "~" + sundayEndTimepicker.Value.ToString("hh:mm tt") + "~" + checkstring;
+            scheduleString[0] = sundayStartTimepicker.Value.ToString("HH:mm tt") + "~" + sundayEndTimepicker.Value.ToString("HH:mm tt") + "~" + checkstring;
 
             checkstring = mondayOffWorkCB.Checked ? "0" : "1";
-            scheduleString[1] = mondayStartTimepicker.Value.ToString("hh:mm tt") + "~" + mondayEndTimepicker.Value.ToString("hh:mm tt") + "~" + checkstring;
+            scheduleString[1] = mondayStartTimepicker.Value.ToString("HH:mm tt") + "~" + mondayEndTimepicker.Value.ToString("HH:mm tt") + "~" + checkstring;
 
             checkstring = tuesdayOffWorkCB.Checked ? "0" : "1";
-            scheduleString[2] = tuesdayStartTimepicker.Value.ToString("hh:mm tt") + "~" + tuesdayEndTimepicker.Value.ToString("hh:mm tt") + "~" + checkstring;
+            scheduleString[2] = tuesdayStartTimepicker.Value.ToString("HH:mm tt") + "~" + tuesdayEndTimepicker.Value.ToString("HH:mm tt") + "~" + checkstring;
 
             checkstring = wednesdayOffWorkCB.Checked ? "0" : "1";
-            scheduleString[3] = wednesdayStartTimepicker.Value.ToString("hh:mm tt") + "~" + wednesdayEndTimepicker.Value.ToString("hh:mm tt") + "~" + checkstring;
+            scheduleString[3] = wednesdayStartTimepicker.Value.ToString("HH:mm tt") + "~" + wednesdayEndTimepicker.Value.ToString("HH:mm tt") + "~" + checkstring;
 
             checkstring = thursdayOffWorkCB.Checked ? "0" : "1";
-            scheduleString[4] = thursdayStartTimepicker.Value.ToString("hh:mm tt") + "~" + thursdayEndTimepicker.Value.ToString("hh:mm tt") + "~" + checkstring;
+            scheduleString[4] = thursdayStartTimepicker.Value.ToString("HH:mm tt") + "~" + thursdayEndTimepicker.Value.ToString("HH:mm tt") + "~" + checkstring;
 
             checkstring = fridayOffWorkCB.Checked ? "0" : "1";
-            scheduleString[5] = fridayStartTimepicker.Value.ToString("hh:mm tt") + "~" + fridayEndTimepicker.Value.ToString("hh:mm tt") + "~" + checkstring;
+            scheduleString[5] = fridayStartTimepicker.Value.ToString("HH:mm tt") + "~" + fridayEndTimepicker.Value.ToString("HH:mm tt") + "~" + checkstring;
 
             checkstring = saturdayOffWorkCB.Checked ? "0" : "1";
-            scheduleString[6] = saturdayStartTimepicker.Value.ToString("hh:mm tt") + "~" + saturdayEndTimepicker.Value.ToString("hh:mm tt") + "~" + checkstring;
+            scheduleString[6] = saturdayStartTimepicker.Value.ToString("HH:mm tt") + "~" + saturdayEndTimepicker.Value.ToString("HH:mm tt") + "~" + checkstring;
 
             return string.Join("|", scheduleString);
         }
