@@ -9,7 +9,7 @@ namespace Exchange101
     // This sample is for demonstration purposes only. Before you run this sample, make sure that the code meets the coding requirements of your organization. 
     public static class Service 
     {
-        public static ExchangeService Instance = new ExchangeService(ExchangeVersion.Exchange2013_SP1);
+        public static ExchangeService Instance = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
         public static string Target = "OOFSponder";
 
         static Service() 

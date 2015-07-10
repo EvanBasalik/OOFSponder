@@ -136,7 +136,7 @@ namespace Exchange101
 
         }
 
-        public ExchangeVersion Version { get { return ExchangeVersion.Exchange2013; } }
+        public ExchangeVersion Version { get { return ExchangeVersion.Exchange2010_SP2; } }
 
         public string EmailAddress
         {

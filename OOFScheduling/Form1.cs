@@ -1023,7 +1023,7 @@ Properties.Settings.Default.workingHours != "default")
         public ExchangeService service;
 
         private ExchangeServiceConnection() {
-            service = new ExchangeService(ExchangeVersion.Exchange2013);
+            service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
             string emailAddress = Properties.Settings.Default.EmailAddress;
             string pw = Properties.Settings.Default.EncryptPW;
             service.Credentials = new WebCredentials(emailAddress, DataProtectionApiWrapper.Decrypt(pw));
