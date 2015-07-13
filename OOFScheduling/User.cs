@@ -1,6 +1,7 @@
 ﻿﻿using System;
 using System.Security;
 using Microsoft.Exchange.WebServices.Data;
+using OOFSponder;
 
 namespace Exchange101
 {
@@ -89,6 +90,7 @@ namespace Exchange101
             {
                 foreach (Kerr.Credential cred in creds)
                 {
+                    Logger.Info("Found the cred: " + cred.UserName);
                     System.Diagnostics.Debug.WriteLine("Found the cred: " + cred.UserName);
                     _user.Password = cred.Password;
                     _user.EmailAddress = cred.UserName;
@@ -121,12 +123,14 @@ namespace Exchange101
                         if (service.Url == null)
                         {
                             Console.Write(string.Format("Using Autodiscover to find EWS URL for {0}. Please wait... ", prompt.UserName));
+                            Logger.Info(string.Format("Using Autodiscover to find EWS URL for {0}. Please wait... ", prompt.UserName));
 
                             service.Credentials = new System.Net.NetworkCredential(user.EmailAddress, user.Password);
                             service.TraceEnabled = true;
                             service.AutodiscoverUrl(user.EmailAddress, Service.RedirectionUrlValidationCallback);
                             _user.AutodiscoverUrl = service.Url;
                             Console.WriteLine("Autodiscover Complete");
+                            Logger.Info("Autodiscover Complete");
                         }
                     }
                 }
