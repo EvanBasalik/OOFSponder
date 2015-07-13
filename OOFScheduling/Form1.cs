@@ -13,6 +13,8 @@ using System.Timers;
 using mshtml;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
+using System.Threading;
+using System.Reflection;
 
 namespace OOFScheduling
 {
@@ -35,6 +37,17 @@ namespace OOFScheduling
         {
             
             InitializeComponent();
+
+            #region SetBuildInfo
+            foreach (Assembly a in Thread.GetDomain().GetAssemblies())
+            {
+                if (a.GetName().Name == "OOFScheduling")
+                {
+                    lblBuild.Text = a.GetName().Version.ToString();
+                    break;
+                }
+            }
+            #endregion
 
             #region AddMenuItems
             AddMenuItems();

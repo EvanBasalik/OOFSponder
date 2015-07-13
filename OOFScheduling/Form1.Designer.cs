@@ -81,6 +81,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.emailAddressTB = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.lblBuild = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -480,7 +481,8 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2});
+            this.toolStripStatusLabel2,
+            this.lblBuild});
             this.statusStrip1.Location = new System.Drawing.Point(0, 747);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(691, 24);
@@ -576,6 +578,12 @@
             this.label8.TabIndex = 47;
             this.label8.Text = "Email:";
             this.label8.Visible = false;
+            // 
+            // lblBuild
+            // 
+            this.lblBuild.Name = "lblBuild";
+            this.lblBuild.Size = new System.Drawing.Size(78, 19);
+            this.lblBuild.Text = "BuildNumber";
             // 
             // Form1
             // 
@@ -696,6 +704,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox emailAddressTB;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.ToolStripStatusLabel lblBuild;
 
     }
 }
