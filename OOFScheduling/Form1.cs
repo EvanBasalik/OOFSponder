@@ -33,10 +33,20 @@ namespace OOFScheduling
 
         //Track if we have a valid exchange connection
         private bool foundexchange = false;
+
+        //Track if PermaOOF (OOF until a specific day in the future)
+        private bool permaOOF = false;
+        private DateTime permaOOFDate;
+
         public Form1()
         {
             
             InitializeComponent();
+
+            //workaround for strange form sizing on Evan's laptop
+#if DEBUG
+            this.Height = 1500;
+#endif
 
             #region SetBuildInfo
             foreach (Assembly a in Thread.GetDomain().GetAssemblies())
@@ -111,6 +121,12 @@ namespace OOFScheduling
 #if CredMan
             RunGetCreds();
 #endif
+       
+            if (Properties.Settings.Default.IsPermaOOFOn==true)
+            {
+                permaOOF = true;
+                permaOOFDate = Properties.Settings.Default.PermaOOFDate;
+            }
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (Properties.Settings.Default.OOFHtmlExternal != "default")
@@ -544,17 +560,47 @@ Properties.Settings.Default.workingHours != "default")
 #endif
 
 
-
             if (haveNecessaryData)
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
                 string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
                 string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
                 DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
-                if (oofTimes[0] != oofTimes[1])
+
+                //if PermaOOF is turned on, need to adjust the end time
+                if (permaOOFDate < oofTimes[0])
+                {
+                    //turn off permaOOF
+                    //NOTE: this all should be abstracted in a Property somewhere
+                    permaOOF = false;
+                    Properties.Settings.Default.IsPermaOOFOn = permaOOF;
+                    Properties.Settings.Default.Save();
+
+                }
+
+                //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
+                if ((oofTimes[0] != oofTimes[1]) && !permaOOF)
                 {
                     await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
                 }
+                else
+                //since permaOOF is on, need to adjust the end date such that is permaOOFDate
+                //if permaOOF>oofTimes[0] and permaOOF<oofTimes[1], then AddDays((permaOOFDate - oofTimes[1]).Days
+                //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
+                {
+                    int adjustmentDays = 0;
+                    if(permaOOFDate>oofTimes[0] && permaOOFDate<oofTimes[1])
+                    {
+                        adjustmentDays = 1;
+                    }
+
+                    await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((permaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+                }
+
+
+                
+
+
             }
         }
 
@@ -986,6 +1032,15 @@ Properties.Settings.Default.workingHours != "default")
             }
         }
         #endregion
+
+        private void btnPermaOOF_Click(object sender, EventArgs e)
+        {
+            permaOOF = true;
+            Properties.Settings.Default.IsPermaOOFOn = permaOOF;
+            permaOOFDate = dtPermaOOF.Value;
+            Properties.Settings.Default.PermaOOFDate = dtPermaOOF.Value;
+            Properties.Settings.Default.Save();
+        }
     }
 
     #region Old Credential and EWS Singleton class (Remove After CredMan Integration)
