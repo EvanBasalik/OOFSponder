@@ -616,17 +616,17 @@
             // 
             // btnPermaOOF
             // 
-            this.btnPermaOOF.Location = new System.Drawing.Point(468, 1106);
+            this.btnPermaOOF.Location = new System.Drawing.Point(462, 1106);
             this.btnPermaOOF.Name = "btnPermaOOF";
-            this.btnPermaOOF.Size = new System.Drawing.Size(157, 35);
+            this.btnPermaOOF.Size = new System.Drawing.Size(181, 35);
             this.btnPermaOOF.TabIndex = 54;
-            this.btnPermaOOF.Text = "Go OOF Until:";
+            this.btnPermaOOF.Text = "Ignore schedule until:";
             this.btnPermaOOF.UseVisualStyleBackColor = true;
             this.btnPermaOOF.Click += new System.EventHandler(this.btnPermaOOF_Click);
             // 
             // dtPermaOOF
             // 
-            this.dtPermaOOF.Location = new System.Drawing.Point(631, 1110);
+            this.dtPermaOOF.Location = new System.Drawing.Point(657, 1110);
             this.dtPermaOOF.Name = "dtPermaOOF";
             this.dtPermaOOF.Size = new System.Drawing.Size(276, 26);
             this.dtPermaOOF.TabIndex = 55;
