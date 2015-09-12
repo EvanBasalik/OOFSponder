@@ -94,5 +94,28 @@ namespace OOFScheduling.Properties {
                 this["EWSURL"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsPermaOOFOn {
+            get {
+                return ((bool)(this["IsPermaOOFOn"]));
+            }
+            set {
+                this["IsPermaOOFOn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime PermaOOFDate {
+            get {
+                return ((global::System.DateTime)(this["PermaOOFDate"]));
+            }
+            set {
+                this["PermaOOFDate"] = value;
+            }
+        }
     }
 }
