@@ -117,5 +117,65 @@ namespace OOFScheduling.Properties {
                 this["PermaOOFDate"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PrimaryOOFExternal {
+            get {
+                return ((string)(this["PrimaryOOFExternal"]));
+            }
+            set {
+                this["PrimaryOOFExternal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PrimaryOOFInternal {
+            get {
+                return ((string)(this["PrimaryOOFInternal"]));
+            }
+            set {
+                this["PrimaryOOFInternal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SecondaryOOFExternal {
+            get {
+                return ((string)(this["SecondaryOOFExternal"]));
+            }
+            set {
+                this["SecondaryOOFExternal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SecondaryOOFInternal {
+            get {
+                return ((string)(this["SecondaryOOFInternal"]));
+            }
+            set {
+                this["SecondaryOOFInternal"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string MessageOption {
+            get {
+                return ((string)(this["MessageOption"]));
+            }
+            set {
+                this["MessageOption"] = value;
+            }
+        }
     }
 }

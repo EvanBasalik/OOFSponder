@@ -61,10 +61,13 @@
             this.saturdayOffWorkCB = new System.Windows.Forms.CheckBox();
             this.btnRunManually = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.lblExternalMesage = new System.Windows.Forms.Label();
+            this.lblInternalMessage = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
@@ -428,27 +431,27 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // label11
+            // lblExternalMesage
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(21, 203);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(159, 20);
-            this.label11.TabIndex = 40;
-            this.label11.Text = "External Message";
+            this.lblExternalMesage.AutoSize = true;
+            this.lblExternalMesage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExternalMesage.Location = new System.Drawing.Point(21, 203);
+            this.lblExternalMesage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblExternalMesage.Name = "lblExternalMesage";
+            this.lblExternalMesage.Size = new System.Drawing.Size(159, 20);
+            this.lblExternalMesage.TabIndex = 40;
+            this.lblExternalMesage.Text = "External Message";
             // 
-            // label12
+            // lblInternalMessage
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(21, 658);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(153, 20);
-            this.label12.TabIndex = 41;
-            this.label12.Text = "Internal Message";
+            this.lblInternalMessage.AutoSize = true;
+            this.lblInternalMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblInternalMessage.Location = new System.Drawing.Point(21, 658);
+            this.lblInternalMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblInternalMessage.Name = "lblInternalMessage";
+            this.lblInternalMessage.Size = new System.Drawing.Size(153, 20);
+            this.lblInternalMessage.TabIndex = 41;
+            this.lblInternalMessage.Text = "Internal Message";
             // 
             // menuStrip1
             // 
@@ -465,23 +468,50 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.CheckOnClick = true;
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.primaryToolStripMenuItem,
+            this.secondaryToolStripMenuItem});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(211, 30);
+            this.toolStripMenuItem1.Text = "Message";
+            // 
+            // primaryToolStripMenuItem
+            // 
+            this.primaryToolStripMenuItem.Checked = true;
+            this.primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
+            this.primaryToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.primaryToolStripMenuItem.Text = "Primary";
+            this.primaryToolStripMenuItem.Click += new System.EventHandler(this.primaryToolStripMenuItem_Click);
+            // 
+            // secondaryToolStripMenuItem
+            // 
+            this.secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
+            this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.secondaryToolStripMenuItem.Text = "Secondary";
+            this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
+            // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(203, 30);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.saveToolStripMenuItem.Text = "Save Settings";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(203, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -667,8 +697,8 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
+            this.Controls.Add(this.lblInternalMessage);
+            this.Controls.Add(this.lblExternalMesage);
             this.Controls.Add(this.htmlEditorControl2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.htmlEditorControl1);
@@ -754,8 +784,8 @@
         private MSDN.Html.Editor.HtmlEditorControl htmlEditorControl1;
         private System.Windows.Forms.Button button2;
         private MSDN.Html.Editor.HtmlEditorControl htmlEditorControl2;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label lblExternalMesage;
+        private System.Windows.Forms.Label lblInternalMessage;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
@@ -775,6 +805,9 @@
         private System.Windows.Forms.ToolStripStatusLabel lblBuild;
         private System.Windows.Forms.Button btnPermaOOF;
         private System.Windows.Forms.DateTimePicker dtPermaOOF;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem primaryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem secondaryToolStripMenuItem;
 
     }
 }

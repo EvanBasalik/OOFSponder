@@ -180,6 +180,22 @@ namespace OOFScheduling
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
             }
 
+            //if MessageOption=1, then set up UI to show Primary
+            if (Properties.Settings.Default.MessageOption=="1")
+            {
+                SetUIforPrimary();
+            }
+            else
+            {
+                //else set up for Secondary
+                SetUIforSecondary();
+            }
+           
+
+
+
+
+
             bool haveNecessaryData = false;
 
 #if !CredMan
@@ -1039,6 +1055,53 @@ Properties.Settings.Default.workingHours != "default")
             Properties.Settings.Default.IsPermaOOFOn = permaOOF;
             permaOOFDate = dtPermaOOF.Value;
             Properties.Settings.Default.PermaOOFDate = dtPermaOOF.Value;
+            Properties.Settings.Default.Save();
+        }
+
+        private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetUIforSecondary();
+
+            //persist the existing OOF messages as Primary and then pull in the secondary
+            Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
+            Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
+            Properties.Settings.Default.Save();
+            htmlEditorControl1.BodyHtml = Properties.Settings.Default.SecondaryOOFExternal == String.Empty ? htmlEditorControl1.BodyHtml = String.Empty : Properties.Settings.Default.SecondaryOOFExternal;
+            htmlEditorControl2.BodyHtml = Properties.Settings.Default.SecondaryOOFInternal == String.Empty ? htmlEditorControl2.BodyHtml = String.Empty : Properties.Settings.Default.SecondaryOOFInternal;
+            Properties.Settings.Default.Save();
+
+        }
+
+        private void SetUIforSecondary()
+        {
+            primaryToolStripMenuItem.Checked = false;
+            secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
+            lblExternalMesage.Text = "Secondary External Message";
+            lblInternalMessage.Text = "Secondary Internal Message";
+            Properties.Settings.Default.MessageOption = "2";
+            Properties.Settings.Default.Save();
+        }
+
+        private void primaryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SetUIforPrimary();
+
+
+            //persist the existing OOF messages as Secondary and then pull in the Primary
+            Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
+            Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+            Properties.Settings.Default.Save();
+            htmlEditorControl1.BodyHtml = Properties.Settings.Default.PrimaryOOFExternal == String.Empty ? htmlEditorControl1.BodyHtml = String.Empty : Properties.Settings.Default.PrimaryOOFExternal;
+            htmlEditorControl2.BodyHtml = Properties.Settings.Default.PrimaryOOFInternal == String.Empty ? htmlEditorControl2.BodyHtml = String.Empty : Properties.Settings.Default.PrimaryOOFInternal;
+        }
+
+        private void SetUIforPrimary()
+        {
+            primaryToolStripMenuItem.Checked = true;
+            secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
+            lblExternalMesage.Text = "Primary External Message";
+            lblInternalMessage.Text = "Primary Internal Message";
+            Properties.Settings.Default.MessageOption = "1";
             Properties.Settings.Default.Save();
         }
     }
