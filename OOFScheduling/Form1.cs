@@ -188,10 +188,11 @@ namespace OOFScheduling
             else
             {
                 //else set up for Secondary
-                SetUIforSecondary();
+                SetUIforPermaOOF();
             }
            
-
+            //set the PermaOOF date to something in the future
+            dtPermaOOF.Value = DateTime.Now.AddDays(4);
 
 
 
@@ -1060,7 +1061,7 @@ Properties.Settings.Default.workingHours != "default")
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetUIforSecondary();
+            SetUIforPermaOOF();
 
             //persist the existing OOF messages as Primary and then pull in the secondary
             Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
@@ -1072,12 +1073,12 @@ Properties.Settings.Default.workingHours != "default")
 
         }
 
-        private void SetUIforSecondary()
+        private void SetUIforPermaOOF()
         {
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
-            lblExternalMesage.Text = "Secondary External Message";
-            lblInternalMessage.Text = "Secondary Internal Message";
+            lblExternalMesage.Text = "Extended OOF External Message";
+            lblInternalMessage.Text = "Extended OOF Internal Message";
             Properties.Settings.Default.MessageOption = "2";
             Properties.Settings.Default.Save();
         }

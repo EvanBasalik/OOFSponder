@@ -490,15 +490,15 @@
             this.primaryToolStripMenuItem.Checked = true;
             this.primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
-            this.primaryToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.primaryToolStripMenuItem.Size = new System.Drawing.Size(212, 30);
             this.primaryToolStripMenuItem.Text = "Primary";
             this.primaryToolStripMenuItem.Click += new System.EventHandler(this.primaryToolStripMenuItem_Click);
             // 
             // secondaryToolStripMenuItem
             // 
             this.secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
-            this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
-            this.secondaryToolStripMenuItem.Text = "Secondary";
+            this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(212, 30);
+            this.secondaryToolStripMenuItem.Text = "Extended OOF";
             this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
@@ -568,6 +568,7 @@
             this.button3.TabIndex = 46;
             this.button3.Text = "Go OOF Now";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label14
@@ -650,7 +651,7 @@
             this.btnPermaOOF.Name = "btnPermaOOF";
             this.btnPermaOOF.Size = new System.Drawing.Size(181, 35);
             this.btnPermaOOF.TabIndex = 54;
-            this.btnPermaOOF.Text = "Ignore schedule until:";
+            this.btnPermaOOF.Text = "Go OOF now until:";
             this.btnPermaOOF.UseVisualStyleBackColor = true;
             this.btnPermaOOF.Click += new System.EventHandler(this.btnPermaOOF_Click);
             // 
