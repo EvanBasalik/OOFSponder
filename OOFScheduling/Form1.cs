@@ -20,6 +20,8 @@ namespace OOFScheduling
 {
     public partial class Form1 : Form
     {
+        static string DummyHTML = @"<BODY scroll=auto></BODY>";
+
         //AppInsights
         Microsoft.ApplicationInsights.TelemetryClient AIClient = new Microsoft.ApplicationInsights.TelemetryClient();
 
@@ -565,8 +567,11 @@ Properties.Settings.Default.workingHours != "default")
 #else
             //if CredMan is turned on, then we don't need the email or password
             //but we still need the OOF messages and working hours
-            if (Properties.Settings.Default.OOFHtmlExternal != "default" &&
-                Properties.Settings.Default.OOFHtmlInternal != "default" &&
+            //also, don't need to check SecondaryOOF messages for two reasons:
+            //1) they won't always be set
+            //2) the UI flow won't let you get here with permaOOF if they aren't set
+            if (Properties.Settings.Default.PrimaryOOFExternal != "default" &&
+                Properties.Settings.Default.PrimaryOOFInternal != "default" &&
                 Properties.Settings.Default.workingHours != "default" &&
                 Properties.Settings.Default.EncryptPW == "UsingCredMan" &&
                 Properties.Settings.Default.EWSURL != "default" &&
@@ -580,8 +585,9 @@ Properties.Settings.Default.workingHours != "default")
             if (haveNecessaryData)
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
-                string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
-                string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
+                //need to move these to *after* decided whether to use Primary or Secondary
+                //string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
+                //string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
                 DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
 
                 //if PermaOOF is turned on, need to adjust the end time
@@ -593,7 +599,14 @@ Properties.Settings.Default.workingHours != "default")
                     Properties.Settings.Default.IsPermaOOFOn = permaOOF;
                     Properties.Settings.Default.Save();
 
+                    //set all the UI stuff back to primary 
+                    //to set up for normal OOF schedule
+                    SetUIforPrimary();
+
                 }
+
+                string oofMessageExternal = htmlEditorControl1.BodyHtml;
+                string oofMessageInternal = htmlEditorControl2.BodyHtml;
 
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !permaOOF)
@@ -613,11 +626,6 @@ Properties.Settings.Default.workingHours != "default")
 
                     await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((permaOOFDate - oofTimes[1]).Days + adjustmentDays)));
                 }
-
-
-                
-
-
             }
         }
 
@@ -845,8 +853,18 @@ Properties.Settings.Default.workingHours != "default")
                 toolStripStatusLabel1.Text = "Settings Saved";
             }
 #else
-            Properties.Settings.Default.OOFHtmlExternal = htmlEditorControl1.BodyHtml;
-            Properties.Settings.Default.OOFHtmlInternal = htmlEditorControl2.BodyHtml;
+            if (primaryToolStripMenuItem.Checked)
+            {
+                Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
+                Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
+            }
+            else
+            //since customer is editing Secondary message, save text in Secondary
+            {
+                Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
+                Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+            }
+
             Properties.Settings.Default.workingHours = ScheduleString();
 
             Properties.Settings.Default.Save();
@@ -1052,25 +1070,49 @@ Properties.Settings.Default.workingHours != "default")
 
         private void btnPermaOOF_Click(object sender, EventArgs e)
         {
-            permaOOF = true;
-            Properties.Settings.Default.IsPermaOOFOn = permaOOF;
-            permaOOFDate = dtPermaOOF.Value;
-            Properties.Settings.Default.PermaOOFDate = dtPermaOOF.Value;
-            Properties.Settings.Default.Save();
+            //persist the HTML text if it has been set
+            //assume the latest text in the HTML controls should win
+            if (htmlEditorControl1.BodyHtml != DummyHTML)
+            {
+                Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
+            }
+            if (htmlEditorControl2.BodyHtml != DummyHTML)
+            {
+                Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+            }
+
+            //only set up for permaOOF if we have OOF messages
+            if (Properties.Settings.Default.SecondaryOOFExternal == String.Empty | Properties.Settings.Default.SecondaryOOFInternal == String.Empty)
+            {
+                MessageBox.Show("Unable to turn on extended OOF - OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+
+                //save the current text to permaOOF
+                permaOOF = true;
+                Properties.Settings.Default.IsPermaOOFOn = permaOOF;
+                permaOOFDate = dtPermaOOF.Value;
+                Properties.Settings.Default.PermaOOFDate = dtPermaOOF.Value;
+                Properties.Settings.Default.Save();
+
+                SetUIforPermaOOF();
+            }
+
+
+
+
         }
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetUIforPermaOOF();
-
             //persist the existing OOF messages as Primary and then pull in the secondary
             Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
             Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
             Properties.Settings.Default.Save();
-            htmlEditorControl1.BodyHtml = Properties.Settings.Default.SecondaryOOFExternal == String.Empty ? htmlEditorControl1.BodyHtml = String.Empty : Properties.Settings.Default.SecondaryOOFExternal;
-            htmlEditorControl2.BodyHtml = Properties.Settings.Default.SecondaryOOFInternal == String.Empty ? htmlEditorControl2.BodyHtml = String.Empty : Properties.Settings.Default.SecondaryOOFInternal;
-            Properties.Settings.Default.Save();
 
+            //now, set up the UI for PermaOOF
+            SetUIforPermaOOF();
         }
 
         private void SetUIforPermaOOF()
@@ -1079,21 +1121,32 @@ Properties.Settings.Default.workingHours != "default")
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
             lblExternalMesage.Text = "Extended OOF External Message";
             lblInternalMessage.Text = "Extended OOF Internal Message";
+
+
+            htmlEditorControl1.BodyHtml = Properties.Settings.Default.SecondaryOOFExternal == String.Empty ? htmlEditorControl1.BodyHtml = String.Empty : Properties.Settings.Default.SecondaryOOFExternal;
+            htmlEditorControl2.BodyHtml = Properties.Settings.Default.SecondaryOOFInternal == String.Empty ? htmlEditorControl2.BodyHtml = String.Empty : Properties.Settings.Default.SecondaryOOFInternal;
+
             Properties.Settings.Default.MessageOption = "2";
             Properties.Settings.Default.Save();
+
+            //lastly, enable the permaOOF controls to help with some UI flow issues
+            btnPermaOOF.Enabled = true;
+            dtPermaOOF.Enabled = true;
         }
 
         private void primaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SetUIforPrimary();
-
+            //since we are in the process of flipping from secondary to primary
+            //we know that the UI is currently in Primary mode
+            //so HTML controls have the Primary messages
 
             //persist the existing OOF messages as Secondary and then pull in the Primary
             Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
             Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
             Properties.Settings.Default.Save();
-            htmlEditorControl1.BodyHtml = Properties.Settings.Default.PrimaryOOFExternal == String.Empty ? htmlEditorControl1.BodyHtml = String.Empty : Properties.Settings.Default.PrimaryOOFExternal;
-            htmlEditorControl2.BodyHtml = Properties.Settings.Default.PrimaryOOFInternal == String.Empty ? htmlEditorControl2.BodyHtml = String.Empty : Properties.Settings.Default.PrimaryOOFInternal;
+
+            //now, set up the UI for primary
+            SetUIforPrimary();
         }
 
         private void SetUIforPrimary()
@@ -1102,8 +1155,16 @@ Properties.Settings.Default.workingHours != "default")
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
             lblExternalMesage.Text = "Primary External Message";
             lblInternalMessage.Text = "Primary Internal Message";
+
+            htmlEditorControl1.BodyHtml = Properties.Settings.Default.PrimaryOOFExternal == String.Empty ? htmlEditorControl1.BodyHtml = String.Empty : Properties.Settings.Default.PrimaryOOFExternal;
+            htmlEditorControl2.BodyHtml = Properties.Settings.Default.PrimaryOOFInternal == String.Empty ? htmlEditorControl2.BodyHtml = String.Empty : Properties.Settings.Default.PrimaryOOFInternal;
+
             Properties.Settings.Default.MessageOption = "1";
             Properties.Settings.Default.Save();
+
+            //lastly, disable the permaOOF controls to help with some UI flow issues
+            btnPermaOOF.Enabled = false;
+            dtPermaOOF.Enabled = false;
         }
     }
 
