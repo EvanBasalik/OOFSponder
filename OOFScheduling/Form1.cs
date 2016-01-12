@@ -130,6 +130,19 @@ namespace OOFScheduling
                 permaOOFDate = Properties.Settings.Default.PermaOOFDate;
             }
 
+            //since the property names changed when PermaOOF was added, need to bring them forward
+            //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
+            if (Properties.Settings.Default.OOFHtmlExternal != "default")
+            {
+                Properties.Settings.Default.PrimaryOOFExternal = Properties.Settings.Default.OOFHtmlExternal;
+            }
+
+            if (Properties.Settings.Default.OOFHtmlInternal != "default")
+            {
+                Properties.Settings.Default.PrimaryOOFInternal = Properties.Settings.Default.OOFHtmlInternal;
+            }
+            Properties.Settings.Default.Save();
+
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (Properties.Settings.Default.OOFHtmlExternal != "default")
             {
