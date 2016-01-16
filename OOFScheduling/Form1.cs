@@ -1083,6 +1083,8 @@ Properties.Settings.Default.workingHours != "default")
 
         private void btnPermaOOF_Click(object sender, EventArgs e)
         {
+            AIClient.TrackEvent("Went PermaOOF");
+
             //persist the HTML text if it has been set
             //assume the latest text in the HTML controls should win
             if (htmlEditorControl1.BodyHtml != DummyHTML)
@@ -1097,7 +1099,7 @@ Properties.Settings.Default.workingHours != "default")
             //only set up for permaOOF if we have OOF messages
             if (Properties.Settings.Default.SecondaryOOFExternal == String.Empty | Properties.Settings.Default.SecondaryOOFInternal == String.Empty)
             {
-                MessageBox.Show("Unable to turn on extended OOF - OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to turn on extended OOF - Secondary OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -1119,6 +1121,8 @@ Properties.Settings.Default.workingHours != "default")
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            AIClient.TrackEvent("Configured secondary OOF messages");
+
             //persist the existing OOF messages as Primary and then pull in the secondary
             Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
             Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
