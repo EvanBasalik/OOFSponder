@@ -682,19 +682,23 @@ Properties.Settings.Default.workingHours != "default")
                     newinternal != currentinternal ||
                     newexternal != currentexternal)
                 {
-                    // Set value to Server
+                    // Set value to Server if we have the user address and URL
+                    if (Exchange101.UserData.user.EmailAddress !=null)
+                    {
 #if !CredMan
                     //variant using Web Credentials
                     ExchangeServiceConnection.Instance.service.SetUserOofSettings(EmailAddress, myOOF);
 #else
-                    //variant using CredMan
-                    Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
+                        //variant using CredMan
+                        Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
 #endif
-                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
-                    RunStatusCheck();
+                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
+                        RunStatusCheck();
 
-                    //report back to AppInsights
-                    AIClient.TrackEvent("Set OOF for user: " + AIClient.Context.User.Id.ToString());
+                        //report back to AppInsights
+                        AIClient.TrackEvent("Set OOF for user: " + AIClient.Context.User.Id.ToString());
+                    }
+
                 }
                 else
                 {

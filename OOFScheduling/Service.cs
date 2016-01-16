@@ -157,8 +157,11 @@ namespace Exchange101
                         Instance.Url = userData.AutodiscoverUrl;
                     }
 
-                    //if we have the URL, attempt to authenticate
-                    Authenticate(prompt);
+                    //if we have the URL and username, attempt to authenticate
+                    if (prompt.UserName != null)
+                    {
+                        Authenticate(prompt);
+                    }
 
                 }
             }
