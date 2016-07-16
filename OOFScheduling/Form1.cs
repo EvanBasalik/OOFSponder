@@ -583,11 +583,11 @@ Properties.Settings.Default.workingHours != "default")
             //also, don't need to check SecondaryOOF messages for two reasons:
             //1) they won't always be set
             //2) the UI flow won't let you get here with permaOOF if they aren't set
-            if (Properties.Settings.Default.PrimaryOOFExternal != "default" &&
-                Properties.Settings.Default.PrimaryOOFInternal != "default" &&
-                Properties.Settings.Default.workingHours != "default" &&
-                Properties.Settings.Default.EncryptPW == "UsingCredMan" &&
-                Properties.Settings.Default.EWSURL != "default" &&
+            if (OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal != "default" &&
+                OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal != "default" &&
+                OOFScheduling.Properties.Settings.Default.workingHours != "default" &&
+                OOFScheduling.Properties.Settings.Default.EncryptPW == "UsingCredMan" &&
+                OOFScheduling.Properties.Settings.Default.EWSURL != "default" &&
                 foundexchange)
             {
                 haveNecessaryData = true;
