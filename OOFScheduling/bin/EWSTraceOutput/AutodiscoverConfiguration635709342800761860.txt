@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="8" Time="2015-06-26 20:51:20Z">
+Request error: The remote server returned an error: (404) Not Found.
+</Trace>

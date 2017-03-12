@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="7" Time="2015-06-25 07:43:48Z">
+Trying to get Autodiscover redirection URL from http://autodiscover.service.microsoft.com/autodiscover/autodiscover.xml.
+</Trace>

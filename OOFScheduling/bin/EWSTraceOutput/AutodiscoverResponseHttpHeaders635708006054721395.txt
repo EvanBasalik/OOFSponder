@@ -1,0 +1,14 @@
+<Trace Tag="AutodiscoverResponseHttpHeaders" Tid="7" Time="2015-06-25 07:43:25Z">
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Persistent-Auth: false
+Cache-Control: private
+Content-Type: text/xml; charset=utf-8
+Date: Thu, 25 Jun 2015 07:43:24 GMT
+Server: Microsoft-IIS/7.5
+WWW-Authenticate: Negotiate oYGyMIGvoAMKAQChCwYJKoZIgvcSAQICooGaBIGXYIGUBgkqhkiG9xIBAgICAG+BhDCBgaADAgEFoQMCAQ+idTBzoAMCAReibARq3UyifN7nRYah2sH0mJnaLTEEBXt1j6UdhbxzkALae8swdt52Lf8+fuA73uz1yjDNwN3sbBHKcN1i9aTbRvtCLTh7EGP+N+7TZCuY87f9nbeNdI7wCN14PPVs2xdtgwB94BchtmaY6guz+A==
+X-AspNet-Version: 2.0.50727
+X-Powered-By: ASP.NET
+
+
+</Trace>

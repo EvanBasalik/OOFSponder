@@ -1,0 +1,18 @@
+<Trace Tag="AutodiscoverResponseHttpHeaders" Tid="10" Time="2015-06-25 07:39:01Z">
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+request-id: e128c642-c6ba-4456-bd59-6963e0a4d0f8
+X-CalculatedBETarget: dm2pr0301mb1295.namprd03.prod.outlook.com
+X-DiagInfo: DM2PR0301MB1295
+X-BEServer: DM2PR0301MB1295
+Cache-Control: private
+Content-Type: text/xml; charset=utf-8
+Set-Cookie: X-BackEndCookie2=evanba@microsoft.com=u56Lnp2ejJqByp6ZzM3NnJ3Sy8rLz9LLz5vO0saczZrSms2ayp7Lnc2bmpqagZKWnI2QjJCZi9GckJKBzc/OytLPyNLNyqvPyMXMxsXPzoGRnpKPjZvPzNGPjZCb0ZCKi5OQkJTRnJCSgc8=; expires=Sat, 25-Jul-2015 07:39:01 GMT; path=/autodiscover; secure; HttpOnly,X-BackEndCookie=evanba@microsoft.com=u56Lnp2ejJqByp6ZzM3NnJ3Sy8rLz9LLz5vO0saczZrSms2ayp7Lnc2bmpqagZKWnI2QjJCZi9GckJKBzc/OytLPyNLNyqvPyMXMxsXPzoGRnpKPjZvPzNGPjZCb0ZCKi5OQkJTRnJCSgc8=; expires=Sat, 25-Jul-2015 07:39:01 GMT; path=/autodiscover; secure; HttpOnly
+Server: Microsoft-IIS/8.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+X-FEServer: SG2PR03CA0030
+Date: Thu, 25 Jun 2015 07:39:00 GMT
+
+
+</Trace>

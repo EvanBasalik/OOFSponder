@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="8" Time="2015-06-26 20:43:02Z">
+Request error: Unable to connect to the remote server
+</Trace>

@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="9" Time="2015-06-26 22:33:12Z">
+Searching for SCP entries in LDAP://CN=Configuration,DC=corp,DC=microsoft,DC=com
+</Trace>

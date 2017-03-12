@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="10" Time="2015-06-26 20:56:58Z">
+Determining which endpoints are enabled for host autodiscover.microsoft.com
+</Trace>

@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="10" Time="2015-06-26 22:28:48Z">
+Starting SCP lookup for domainName='microsoft.com', root path=''
+</Trace>

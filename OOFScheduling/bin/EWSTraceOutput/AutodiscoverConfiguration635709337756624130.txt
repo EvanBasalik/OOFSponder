@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="8" Time="2015-06-26 20:42:55Z">
+Request error: The remote name could not be resolved: 'service.microsoft.com'
+</Trace>

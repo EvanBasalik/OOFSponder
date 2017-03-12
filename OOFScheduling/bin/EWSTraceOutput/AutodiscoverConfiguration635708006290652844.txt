@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="7" Time="2015-06-25 07:43:49Z">
+Redirection URL found: 'https://autodiscover-s.outlook.com/autodiscover/autodiscover.xml'
+</Trace>

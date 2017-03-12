@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="7" Time="2015-06-25 07:43:36Z">
+Scanning for SCP urls for the current computer Site=SP-SG-SINDC
+</Trace>

@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="7" Time="2015-06-25 07:43:29Z">
+Scanning for SCP pointers Domain=service.microsoft.com
+</Trace>

@@ -1,0 +1,3 @@
+<Trace Tag="AutodiscoverConfiguration" Tid="10" Time="2015-06-26 22:29:42Z">
+Host returned enabled endpoint flags: Legacy, Soap, WsSecurity, WSSecuritySymmetricKey, WSSecurityX509Cert, OAuth
+</Trace>

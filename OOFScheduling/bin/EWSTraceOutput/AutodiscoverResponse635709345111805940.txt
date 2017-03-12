@@ -1,0 +1,42 @@
+<Trace Tag="AutodiscoverResponse" Tid="9" Time="2015-06-26 20:55:11Z" Version="15.00.0913.015">
+  <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" xmlns:a="http://www.w3.org/2005/08/addressing">
+    <s:Header>
+      <a:Action s:mustUnderstand="1">http://schemas.microsoft.com/exchange/2010/Autodiscover/Autodiscover/GetUserSettingsResponse</a:Action>
+      <h:ServerVersionInfo xmlns:h="http://schemas.microsoft.com/exchange/2010/Autodiscover" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+        <h:MajorVersion>15</h:MajorVersion>
+        <h:MinorVersion>1</h:MinorVersion>
+        <h:MajorBuildNumber>195</h:MajorBuildNumber>
+        <h:MinorBuildNumber>2</h:MinorBuildNumber>
+        <h:Version>Exchange2015</h:Version>
+      </h:ServerVersionInfo>
+    </s:Header>
+    <s:Body>
+      <GetUserSettingsResponseMessage xmlns="http://schemas.microsoft.com/exchange/2010/Autodiscover">
+        <Response xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+          <ErrorCode>NoError</ErrorCode>
+          <ErrorMessage />
+          <UserResponses>
+            <UserResponse>
+              <ErrorCode>NoError</ErrorCode>
+              <ErrorMessage>No error.</ErrorMessage>
+              <RedirectTarget i:nil="true" />
+              <UserSettingErrors>
+                <UserSettingError>
+                  <ErrorCode>SettingIsNotAvailable</ErrorCode>
+                  <ErrorMessage>User setting 'InternalEwsUrl' is not available. </ErrorMessage>
+                  <SettingName>InternalEwsUrl</SettingName>
+                </UserSettingError>
+              </UserSettingErrors>
+              <UserSettings>
+                <UserSetting i:type="StringSetting">
+                  <Name>ExternalEwsUrl</Name>
+                  <Value>https://outlook.office365.com/EWS/Exchange.asmx</Value>
+                </UserSetting>
+              </UserSettings>
+            </UserResponse>
+          </UserResponses>
+        </Response>
+      </GetUserSettingsResponseMessage>
+    </s:Body>
+  </s:Envelope>
+</Trace>

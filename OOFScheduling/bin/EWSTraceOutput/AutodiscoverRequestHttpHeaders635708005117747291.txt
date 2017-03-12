@@ -1,0 +1,8 @@
+<Trace Tag="AutodiscoverRequestHttpHeaders" Tid="8" Time="2015-06-25 07:41:51Z">
+POST /autodiscover/autodiscover.svc HTTP/1.1
+Content-Type: text/xml; charset=utf-8
+Accept: text/xml
+User-Agent: ExchangeServicesClient/15.00.0913.015
+
+
+</Trace>
