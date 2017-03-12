@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PublishUrlHistory>publish\|\\tkfiltoolbox\tools\oofsponder\</PublishUrlHistory>
     <InstallUrlHistory>https://oofsponderdeploy.blob.core.windows.net/install/</InstallUrlHistory>
-    <SupportUrlHistory />
+    <SupportUrlHistory>http://codebox/oofsponder</SupportUrlHistory>
     <UpdateUrlHistory>https://oofsponderdeploy.blob.core.windows.net/install/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />

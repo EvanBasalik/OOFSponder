@@ -3,7 +3,7 @@
   <asmv1:assemblyIdentity name="OOFScheduling.exe" version="0.1.1.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="OOFScheduling" version="1.0.6279.34199" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="OOFScheduling" version="1.0.6279.34731" language="neutral" processorArchitecture="msil" />
     <commandLine file="OOFScheduling.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -103,13 +103,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OOFScheduling.exe" size="62936">
-      <assemblyIdentity name="OOFScheduling" version="1.0.6279.34199" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="OOFScheduling" version="1.0.6279.34731" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>uVawGtFxerxLnsfJS81IDa7KUnQMcCw0INJhluMLysA=</dsig:DigestValue>
+        <dsig:DigestValue>EZjwV0LR0rfyOAEG5dcYIJg2fj669u7mpwZ9mYFYrb8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
