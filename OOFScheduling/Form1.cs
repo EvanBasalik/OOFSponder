@@ -923,7 +923,7 @@ Properties.Settings.Default.workingHours != "default")
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(minimize)
+            if (minimize && e.CloseReason != CloseReason.WindowsShutDown)
             {
                 e.Cancel = true;
                 this.WindowState = FormWindowState.Minimized;
@@ -937,7 +937,7 @@ Properties.Settings.Default.workingHours != "default")
                 AIClient.Flush(); // only for desktop apps
             }
 #endif
-            
+
         }
 
         private async void btnRunManually_Click(object sender, EventArgs e)
