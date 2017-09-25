@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="OOFScheduling.exe" version="0.2.1.1" publicKeyToken="da7bd0d09092bda0" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="OOFScheduling" version="1.0.6313.19126" language="neutral" processorArchitecture="msil" />
+    <commandLine file="OOFScheduling.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Kerr.Credentials.dll" size="68608">
+      <assemblyIdentity name="Kerr.Credentials" version="1.0.0.1" publicKeyToken="CE7A2D015F9FDD1B" language="neutral" processorArchitecture="x86" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>7K81OtWLLFlcVLrmYBFMdl7inIt+YC1tQgSp1IS4TQE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.ApplicationInsights.dll" size="154872">
+      <assemblyIdentity name="Microsoft.ApplicationInsights" version="1.0.0.4220" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>hBnLqkIJY/7/I7gvr1ylAwC2g1JgLTu+ldjRVqY8Rf4=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Exchange.WebServices.dll" size="1130264">
+      <assemblyIdentity name="Microsoft.Exchange.WebServices" version="15.0.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>D+gCW5puaQfQvkgQ+/vGHxruO6FOhVu/XDXw87i5E84=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Microsoft.Exchange.WebServices.Auth.dll" size="43824">
+      <assemblyIdentity name="Microsoft.Exchange.WebServices.Auth" version="15.0.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>EMfR2Wp6XGwLxifeZJknsa5Mqi5Y3MieJLG3cWMHE5w=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MSDN.HtmlEditorControl.dll" size="241664">
+      <assemblyIdentity name="MSDN.HtmlEditorControl" version="2.0.6313.19126" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>DfdYpKUYW2rzJ9w+1/b6UFKRMxDkp+oryS4QpbYpyoA=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OOFScheduling.exe" size="62944">
+      <assemblyIdentity name="OOFScheduling" version="1.0.6313.19126" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>qOoHWbz0tzVmwX+NEL1Qwc96/VHNe4JX43NaItkiJtE=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="OOFScheduling.exe.config" size="2713">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>SgECsPCteNFAiHWx9Xjnx+BDut/6t1NqR3cc2/coeQo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="ReferenceDLLs\Kerr.Credentials.dll" size="68608">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>7K81OtWLLFlcVLrmYBFMdl7inIt+YC1tQgSp1IS4TQE=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=NORTHAMERICA\cabattag" issuerKeyHash="47b1d5fa592e57b3af0996c2a4505f521dc0d6f5" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>kSY+EXVk7M1qwvuMpXfm3z/5tWo9L4q02uCX1AXYGhI=</DigestValue></Reference></SignedInfo><SignatureValue>QGJ9rLC8pDRANnYmXiqFgX9NL59Ar/i6Y7l6cNWD8veb+3pKldslfSIrNubYC1i44+9K7u+BMM6R/e9cBXL6khGSKHQXqbw8jdyasY5kpPAs+H+pKKifxejOq+ZfyIIAExDpfXxgtPt9Vh6eL6o9akm2zYU4dDgHAqpq2tGWXTM=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>2Tznx8JTuOvPnjA/BN8ZzLy2YLr8xlzJcF51+Neavbr6n2CBtVX9qF80nKcucChJuRznOqo7Sz93pTSUIhTlNlyKAYQBWTX4o6SgS6p2DPqV1tw5cq39jznLbrKKyTBwPrzx3wx7yeBseYFlLm9+EbbJ91OppclZaw7/KdRkSlE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="121ad805d497e0dab48a2f3d6ab5f93fdfe677a58cfbc26acdec6475113e2691" Description="" Url=""><as:assemblyIdentity name="OOFScheduling.exe" version="0.2.1.1" publicKeyToken="da7bd0d09092bda0" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=NORTHAMERICA\cabattag</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>nQjpQiqXjnD+OtZRzo2VWBKbC2vzisL/MvvtMb9cmXM=</DigestValue></Reference></SignedInfo><SignatureValue>G9Jw5eOCWAC/JbwVC5GPSVycWTTbZ0J9y1U1PO81bEQkXdzI9Gq9h0xwdp/EIJED6bxuUc1tV2S17c9KC1rqrqM0k7NLBpbU7/84/B36/ORlCTuRf9rGKwCMDdNZNWIU2Em6ITIr8nxvr14gFPR9BAVgVJqGkJl4gRvUrUao+y8=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>2Tznx8JTuOvPnjA/BN8ZzLy2YLr8xlzJcF51+Neavbr6n2CBtVX9qF80nKcucChJuRznOqo7Sz93pTSUIhTlNlyKAYQBWTX4o6SgS6p2DPqV1tw5cq39jznLbrKKyTBwPrzx3wx7yeBseYFlLm9+EbbJ91OppclZaw7/KdRkSlE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB7TCCAVagAwIBAgIQFcLaYjSDZrtK8Z+/qbIMjjANBgkqhkiG9w0BAQsFADA1MTMwMQYDVQQDHioATgBPAFIAVABIAEEATQBFAFIASQBDAEEAXABjAGEAYgBhAHQAdABhAGcwHhcNMTcwNDE0MTUzNzIxWhcNMTgwNDE0MjEzNzIxWjA1MTMwMQYDVQQDHioATgBPAFIAVABIAEEATQBFAFIASQBDAEEAXABjAGEAYgBhAHQAdABhAGcwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANk858fCU7jrz54wPwTfGcy8tmC6/MZcyXBedfjXmr26+p9ggbVV/ahfNJynLnAoSbkc5zqqO0s/d6U0lCIU5TZcigGEAVk1+KOkoEuqdgz6ldbcOXKt/Y85y26yiskwcD688d8Me8ngbHmBZS5vfhG2yfdTqaXJWWsO/ynUZEpRAgMBAAEwDQYJKoZIhvcNAQELBQADgYEAOK95DCeSoCqqb97+N3Y+QyPzCbzQ+z88sqpqpEmMxE0SPrBrFwx0hoItZjqNPFV1vetriZP7TkWJi2FoUvMK5utI7H802hzrTzCw1YQ72wNajyG1prZpYu7oLy8zpO4WuKsnbctbyZ5G9zfycrOS+QopujHapMjsnUvaLfKqJBQ=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

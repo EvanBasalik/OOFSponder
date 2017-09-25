@@ -41,3 +41,4 @@ C:\Users\evanba\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.HtmlEdi
 C:\Users\evanba\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\MSDN.HtmlEditorControl.pdb
 C:\Users\evanba\Source\Repos\oofsponder\HtmlEditorControl\obj\Debug\HTMLEditorControl.csprojResolveAssemblyReference.cache
 C:\Users\evanba\Source\Repos\oofsponder\HtmlEditorControl\bin\Debug\Microsoft.mshtml.dll
+C:\Users\cabattag\Source\Repos\oofsponder\HtmlEditorControl\bin\Debug\Microsoft.mshtml.dll
