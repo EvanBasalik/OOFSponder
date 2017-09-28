@@ -1144,8 +1144,8 @@ Properties.Settings.Default.workingHours != "default")
             lblInternalMessage.Text = "Extended OOF Internal Message";
 
 
-            htmlEditorControl1.BodyHtml = Properties.Settings.Default.SecondaryOOFExternal == String.Empty ? htmlEditorControl1.BodyHtml = String.Empty : Properties.Settings.Default.SecondaryOOFExternal;
-            htmlEditorControl2.BodyHtml = Properties.Settings.Default.SecondaryOOFInternal == String.Empty ? htmlEditorControl2.BodyHtml = String.Empty : Properties.Settings.Default.SecondaryOOFInternal;
+            htmlEditorControl1.BodyHtml = Properties.Settings.Default.SecondaryOOFExternal == String.Empty ? String.Empty : Properties.Settings.Default.SecondaryOOFExternal;
+            htmlEditorControl2.BodyHtml = Properties.Settings.Default.SecondaryOOFInternal == String.Empty ? String.Empty : Properties.Settings.Default.SecondaryOOFInternal;
 
             Properties.Settings.Default.MessageOption = "2";
             Properties.Settings.Default.Save();
