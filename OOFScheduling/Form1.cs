@@ -250,6 +250,9 @@ Properties.Settings.Default.workingHours != "default")
             Loopy();
             RunStatusCheck();
 
+            //set up handlers to persist OOF messages
+            htmlEditorControl1.Validated += htmlEditorValidated;
+            htmlEditorControl2.Validated += htmlEditorValidated;
         }
 
         private void AddMenuItems()
@@ -1216,14 +1219,15 @@ Properties.Settings.Default.workingHours != "default")
         //common call for both controls, regardless of primary or secondary
         private void htmlEditorValidated(object sender, EventArgs e)
         {
-            
             if (!permaOOF)
             {
+                System.Diagnostics.Trace.WriteLine("PermaOOF off - persisting primary messages");
                 OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
                 OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
             }
             else
             {
+                System.Diagnostics.Trace.WriteLine("PermaOOF on - persisting secondary messages");
                 OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
                 OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
             }
