@@ -618,8 +618,22 @@ Properties.Settings.Default.workingHours != "default")
 
                 }
 
-                string oofMessageExternal = htmlEditorControl1.BodyHtml;
-                string oofMessageInternal = htmlEditorControl2.BodyHtml;
+                //persist settings just in case
+                string oofMessageExternal= htmlEditorControl1.BodyHtml;
+                string oofMessageInternal= htmlEditorControl2.BodyHtml;
+                if (!permaOOF)
+                {
+                    OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
+                    OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
+                }
+                else
+                {
+                    OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
+                    OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+                }
+
+                OOFScheduling.Properties.Settings.Default.Save();
+
 
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !permaOOF)
@@ -635,6 +649,14 @@ Properties.Settings.Default.workingHours != "default")
                     if(permaOOFDate>oofTimes[0] && permaOOFDate<oofTimes[1])
                     {
                         adjustmentDays = 1;
+                    }
+
+                    //in order to accomodate someone going OOF mid-schedule
+                    //check if now is before the next scheduled "OFF" slot
+                    //if it is, then adjust start time to NOW
+                    if (oofTimes[0] > DateTime.Now)
+                    {
+                        oofTimes[0] = DateTime.Now;
                     }
 
                     await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((permaOOFDate - oofTimes[1]).Days + adjustmentDays)));
@@ -1115,6 +1137,9 @@ Properties.Settings.Default.workingHours != "default")
                 Properties.Settings.Default.PermaOOFDate = dtPermaOOF.Value;
                 Properties.Settings.Default.Save();
 
+                //actually go OOF now
+                RunSetOof();
+
                 SetUIforPermaOOF();
             }
 
@@ -1186,6 +1211,24 @@ Properties.Settings.Default.workingHours != "default")
             //lastly, disable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = false;
             dtPermaOOF.Enabled = false;
+        }
+
+        //common call for both controls, regardless of primary or secondary
+        private void htmlEditorValidated(object sender, EventArgs e)
+        {
+            
+            if (!permaOOF)
+            {
+                OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
+                OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
+            }
+            else
+            {
+                OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
+                OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+            }
+
+            OOFScheduling.Properties.Settings.Default.Save();
         }
     }
 
