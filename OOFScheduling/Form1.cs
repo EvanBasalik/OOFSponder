@@ -39,7 +39,6 @@ namespace OOFScheduling
         //Track if PermaOOF (OOF until a specific day in the future)
         private bool permaOOF = false;
         private DateTime permaOOFDate;
-        private OOF thisOOF = new OOF();
 
         public Form1()
         {
@@ -124,25 +123,28 @@ namespace OOFScheduling
 #if CredMan
             RunGetCreds();
 #endif
-       
-            if (Properties.Settings.Default.IsPermaOOFOn==true)
-            {
-                thisOOF.isPermaOOFOn=true;
-                thisOOF.permaOOFDate=Properties.Settings.Default.PermaOOFDate;
-            }
+
+            //pull in the persisted values
+            OOFData.PrimaryOOF.externalMessage = Properties.Settings.Default.PrimaryOOFExternal;
+            OOFData.PrimaryOOF.internalMessage = Properties.Settings.Default.PrimaryOOFInternal;
+            OOFData.SecondaryOOF.externalMessage = Properties.Settings.Default.SecondaryOOFExternal;
+            OOFData.SecondaryOOF.internalMessage = Properties.Settings.Default.SecondaryOOFInternal;
+            OOFData.IsPermaOOFOn = Properties.Settings.Default.IsPermaOOFOn;
+            OOFData.PermaOOFDate = Properties.Settings.Default.PermaOOFDate;
+            OOFData.WorkingHours = Properties.Settings.Default.workingHours;
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
-            if (Properties.Settings.Default.OOFHtmlExternal != "default")
+            if (OOFData.ExternalOOFMessage != "default")
             {
-                htmlEditorControl1.BodyHtml = Properties.Settings.Default.OOFHtmlExternal;
+                htmlEditorControl1.BodyHtml = OOFData.ExternalOOFMessage;
             }
 
-            if (Properties.Settings.Default.OOFHtmlInternal != "default")
+            if (OOFData.InternalOOFMessage != "default")
             {
-                htmlEditorControl2.BodyHtml = Properties.Settings.Default.OOFHtmlInternal;
+                htmlEditorControl2.BodyHtml = OOFData.InternalOOFMessage;
             }
 
-            if (Properties.Settings.Default.workingHours != "default")
+            if (OOFData.WorkingHours != "default")
             {
                 string[] workingHours = Properties.Settings.Default.workingHours.Split('|');
 
@@ -183,8 +185,8 @@ namespace OOFScheduling
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
             }
 
-            //if MessageOption=1, then set up UI to show Primary
-            if (Properties.Settings.Default.MessageOption=="1")
+            //if PermaOOF isn't on, then set up UI to show Primary
+            if (DateTime.Now > OOFData.PermaOOFDate)
             {
                 SetUIforPrimary();
             }
@@ -215,14 +217,11 @@ namespace OOFScheduling
 #else
             //if CredMan is turned on, then we don't need the email or password
             //but we still need the OOF messages and working hours
-            if (Properties.Settings.Default.OOFHtmlExternal != "default" &&
-Properties.Settings.Default.OOFHtmlInternal != "default" &&
-Properties.Settings.Default.workingHours != "default")
+            if (OOFData.ExternalOOFMessage != "default" && OOFData.InternalOOFMessage != "default" && OOFData.WorkingHours != "default")
             {
                 haveNecessaryData = true;
             }
 #endif
-
 
             if (haveNecessaryData)
             {
