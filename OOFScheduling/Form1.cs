@@ -125,6 +125,7 @@ namespace OOFScheduling
 #endif
 
             //pull in the persisted values
+            
             OOFData.PrimaryOOF.externalMessage = Properties.Settings.Default.PrimaryOOFExternal;
             OOFData.PrimaryOOF.internalMessage = Properties.Settings.Default.PrimaryOOFInternal;
             OOFData.SecondaryOOF.externalMessage = Properties.Settings.Default.SecondaryOOFExternal;
@@ -427,7 +428,7 @@ namespace OOFScheduling
 
                 //pull the existing OOF messages in
                 htmlEditorControl1.BodyHtml = myOOFSettings.ExternalReply;
-                 htmlEditorControl2.BodyHtml = myOOFSettings.InternalReply;
+                htmlEditorControl2.BodyHtml = myOOFSettings.InternalReply;
 
                 //save them
                 Properties.Settings.Default.OOFHtmlExternal = myOOFSettings.ExternalReply;

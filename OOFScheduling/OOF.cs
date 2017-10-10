@@ -6,13 +6,20 @@ using System.Threading.Tasks;
 
 namespace OOFScheduling
 {
-    public static class OOFData
+    public class OOFData
     {
         public static OOFMessage PrimaryOOF { internal get; set; }
         public static OOFMessage SecondaryOOF { internal get; set; }
         public static bool IsPermaOOFOn { get; set; }
         public static DateTime PermaOOFDate { get; set; }
         public static string WorkingHours { get; set; }
+
+        static OOFData instance = new OOFData();
+
+        public static OOFData Instance
+        {
+            get { return instance; }
+        }
 
         public static string InternalOOFMessage
         {

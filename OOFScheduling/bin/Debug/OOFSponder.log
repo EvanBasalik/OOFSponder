@@ -248,3 +248,87 @@
 2016-07-16 13:16:53,info,ConnectToService,Autodiscover Complete
 2016-07-16 13:17:00,info,Authenticate,Attempting to connect to EWS...
 2016-07-16 13:17:39,info,Authenticate,ServiceResponseException - credentials validated
+2017-10-08 18:25:04,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 18:26:42,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 20:30:46,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 20:31:14,info,ConnectToService,Found the URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 20:31:14,info,ConnectToService,Autodiscover Complete
+2017-10-08 20:31:14,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 20:31:37,info,Authenticate,ServiceResponseException - credentials validated
+2017-10-08 20:34:24,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 20:35:50,info,ConnectToService,Found the URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 20:35:50,info,ConnectToService,Autodiscover Complete
+2017-10-08 20:35:50,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 20:35:51,info,Authenticate,ServiceResponseException - credentials validated
+2017-10-08 20:41:57,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 20:42:27,info,ConnectToService,Found the URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 20:42:27,info,ConnectToService,Autodiscover Complete
+2017-10-08 20:42:27,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 20:42:28,info,Authenticate,ServiceResponseException - credentials validated
+2017-10-08 20:43:33,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 20:43:59,info,ConnectToService,Found the URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 20:43:59,info,ConnectToService,Autodiscover Complete
+2017-10-08 20:43:59,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 20:44:00,info,Authenticate,ServiceResponseException - credentials validated
+2017-10-08 20:48:56,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 20:49:20,info,ConnectToService,Found the URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 20:49:20,info,ConnectToService,Autodiscover Complete
+2017-10-08 20:49:20,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 20:49:21,info,Authenticate,ServiceResponseException - credentials validated
+2017-10-08 20:55:36,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 20:57:12,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 20:58:23,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+2017-10-08 21:05:02,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+PermaOOF off - persisting primary messages
+2017-10-08 21:05:26,info,ConnectToService,Found the URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 21:05:26,info,ConnectToService,Autodiscover Complete
+2017-10-08 21:05:26,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 21:05:26,info,Authenticate,ServiceResponseException - credentials validated
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+2017-10-08 21:09:30,info,ConnectToService,Using existing URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 21:09:30,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 21:09:31,info,Authenticate,ServiceResponseException - credentials validated
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+2017-10-08 21:13:37,info,ConnectToService,Using existing URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 21:13:37,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 21:13:38,info,Authenticate,ServiceResponseException - credentials validated
+2017-10-08 21:27:01,info,ConnectToService,Using existing URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 21:27:01,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 21:27:02,info,Authenticate,ServiceResponseException - credentials validated
+2017-10-08 21:30:27,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+2017-10-08 21:31:33,info,ConnectToService,Using Autodiscover to find EWS URL for evanba@microsoft.com. Please wait... 
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+2017-10-08 21:32:40,info,ConnectToService,Found the URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 21:32:40,info,ConnectToService,Autodiscover Complete
+2017-10-08 21:32:40,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 21:32:41,info,Authenticate,ServiceResponseException - credentials validated
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+2017-10-08 21:34:14,info,ConnectToService,Using existing URL: https://outlook.office365.com/EWS/Exchange.asmx
+2017-10-08 21:34:14,info,Authenticate,Attempting to connect to EWS...
+2017-10-08 21:34:15,info,Authenticate,ServiceResponseException - credentials validated
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
+PermaOOF off - persisting primary messages
