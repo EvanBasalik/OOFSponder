@@ -125,8 +125,15 @@ namespace OOFScheduling
 #endif
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
+            if (OOFData.Instance.IsPermaOOFOn)
+            {
+                SetUIforPermaOOF();
+            }
+            else
+            {
+                SetUIforPrimary();
+            }
             htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
-
             htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
 
             if (OOFData.Instance.WorkingHours!= "")
@@ -868,19 +875,18 @@ namespace OOFScheduling
 #else
             if (primaryToolStripMenuItem.Checked)
             {
-                Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
-                Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
             else
             //since customer is editing Secondary message, save text in Secondary
             {
-                Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
-                Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
 
-            Properties.Settings.Default.workingHours = ScheduleString();
-
-            Properties.Settings.Default.Save();
+            OOFData.Instance.WorkingHours = ScheduleString();
+            OOFData.Instance.WriteProperties();
 
             toolStripStatusLabel1.Text = "Settings Saved";
 #endif
@@ -1107,8 +1113,6 @@ namespace OOFScheduling
                 //save the current text to permaOOF
                 OOFData.Instance.IsPermaOOFOn = true;
                 OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
-                Properties.Settings.Default.PermaOOFDate = dtPermaOOF.Value;
-                Properties.Settings.Default.Save();
 
                 //actually go OOF now
                 RunSetOof();

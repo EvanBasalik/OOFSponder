@@ -107,7 +107,7 @@ namespace OOFScheduling
             Dispose(false);
         }
 
-        public void WriteProperties()
+        public void WriteProperties(bool disposing=false)
         {
             System.Diagnostics.Trace.TraceInformation("Persisted properties");
 
@@ -119,7 +119,12 @@ namespace OOFScheduling
             Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
             Properties.Settings.Default.workingHours = instance.WorkingHours;
             Properties.Settings.Default.Save();
-            Dispose();
+
+            if (disposing)
+            {
+                Dispose();
+            }
+
         }
 
         #region IDisposable Members
@@ -143,7 +148,7 @@ namespace OOFScheduling
             // as the owned managed objects finalize method
             // will be (or has been) called by finalization queue
             // processing already
-            WriteProperties();
+            WriteProperties(disposing);
         }
     }
 
