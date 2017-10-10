@@ -12,7 +12,7 @@ namespace OOFScheduling.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -50,36 +50,12 @@ namespace OOFScheduling.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("default")]
-        public string OOFHtmlExternal {
-            get {
-                return ((string)(this["OOFHtmlExternal"]));
-            }
-            set {
-                this["OOFHtmlExternal"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string workingHours {
             get {
                 return ((string)(this["workingHours"]));
             }
             set {
                 this["workingHours"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("default")]
-        public string OOFHtmlInternal {
-            get {
-                return ((string)(this["OOFHtmlInternal"]));
-            }
-            set {
-                this["OOFHtmlInternal"] = value;
             }
         }
         
@@ -109,6 +85,7 @@ namespace OOFScheduling.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1900-01-01")]
         public global::System.DateTime PermaOOFDate {
             get {
                 return ((global::System.DateTime)(this["PermaOOFDate"]));
@@ -120,7 +97,7 @@ namespace OOFScheduling.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string PrimaryOOFExternal {
             get {
                 return ((string)(this["PrimaryOOFExternal"]));
@@ -132,7 +109,7 @@ namespace OOFScheduling.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string PrimaryOOFInternal {
             get {
                 return ((string)(this["PrimaryOOFInternal"]));
@@ -144,7 +121,7 @@ namespace OOFScheduling.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string SecondaryOOFExternal {
             get {
                 return ((string)(this["SecondaryOOFExternal"]));
@@ -156,7 +133,7 @@ namespace OOFScheduling.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string SecondaryOOFInternal {
             get {
                 return ((string)(this["SecondaryOOFInternal"]));

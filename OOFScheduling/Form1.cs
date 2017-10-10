@@ -124,28 +124,12 @@ namespace OOFScheduling
             RunGetCreds();
 #endif
 
-            //pull in the persisted values
-            
-            OOFData.PrimaryOOF.externalMessage = Properties.Settings.Default.PrimaryOOFExternal;
-            OOFData.PrimaryOOF.internalMessage = Properties.Settings.Default.PrimaryOOFInternal;
-            OOFData.SecondaryOOF.externalMessage = Properties.Settings.Default.SecondaryOOFExternal;
-            OOFData.SecondaryOOF.internalMessage = Properties.Settings.Default.SecondaryOOFInternal;
-            OOFData.IsPermaOOFOn = Properties.Settings.Default.IsPermaOOFOn;
-            OOFData.PermaOOFDate = Properties.Settings.Default.PermaOOFDate;
-            OOFData.WorkingHours = Properties.Settings.Default.workingHours;
-
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
-            if (OOFData.ExternalOOFMessage != "default")
-            {
-                htmlEditorControl1.BodyHtml = OOFData.ExternalOOFMessage;
-            }
+            htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
 
-            if (OOFData.InternalOOFMessage != "default")
-            {
-                htmlEditorControl2.BodyHtml = OOFData.InternalOOFMessage;
-            }
+            htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
 
-            if (OOFData.WorkingHours != "default")
+            if (OOFData.Instance.WorkingHours!= "")
             {
                 string[] workingHours = Properties.Settings.Default.workingHours.Split('|');
 
@@ -187,7 +171,7 @@ namespace OOFScheduling
             }
 
             //if PermaOOF isn't on, then set up UI to show Primary
-            if (DateTime.Now > OOFData.PermaOOFDate)
+            if (DateTime.Now > OOFData.Instance.PermaOOFDate)
             {
                 SetUIforPrimary();
             }
@@ -218,7 +202,8 @@ namespace OOFScheduling
 #else
             //if CredMan is turned on, then we don't need the email or password
             //but we still need the OOF messages and working hours
-            if (OOFData.ExternalOOFMessage != "default" && OOFData.InternalOOFMessage != "default" && OOFData.WorkingHours != "default")
+            if (OOFData.Instance.ExternalOOFMessage != "default" && OOFData.Instance.InternalOOFMessage != "default" 
+                && OOFData.Instance.WorkingHours != "default")
             {
                 haveNecessaryData = true;
             }
@@ -431,8 +416,8 @@ namespace OOFScheduling
                 htmlEditorControl2.BodyHtml = myOOFSettings.InternalReply;
 
                 //save them
-                Properties.Settings.Default.OOFHtmlExternal = myOOFSettings.ExternalReply;
-                Properties.Settings.Default.OOFHtmlInternal = myOOFSettings.InternalReply;
+                //Properties.Settings.Default.OOFHtmlExternal = myOOFSettings.ExternalReply;
+                //Properties.Settings.Default.OOFHtmlInternal = myOOFSettings.InternalReply;
                 Properties.Settings.Default.Save();
 
                 UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
@@ -455,8 +440,8 @@ namespace OOFScheduling
         private async void RunManualOOF()
         {
             if (Properties.Settings.Default.EmailAddress != "default" &&
-                Properties.Settings.Default.OOFHtmlExternal != "default" &&
-                Properties.Settings.Default.OOFHtmlInternal != "default" &&
+                OOFData.Instance.ExternalOOFMessage != "default" &&
+                OOFData.Instance.InternalOOFMessage != "default" &&
                 Properties.Settings.Default.EncryptPW != "default"
 #if CredMan
                 && Properties.Settings.Default.EncryptPW == "UsingCredMan"
@@ -466,8 +451,8 @@ namespace OOFScheduling
                 )
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
-                string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
-                string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
+                string oofMessageExternal = OOFData.Instance.ExternalOOFMessage;
+                string oofMessageInternal = OOFData.Instance.InternalOOFMessage;
                 //Toggle Manual OOF
                 await System.Threading.Tasks.Task.Run(() => setManualOOF(emailAddress, oofMessageExternal, oofMessageInternal, !manualoof));
             }

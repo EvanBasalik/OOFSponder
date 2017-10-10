@@ -8,55 +8,116 @@ namespace OOFScheduling
 {
     public class OOFData
     {
-        public static OOFMessage PrimaryOOF { internal get; set; }
-        public static OOFMessage SecondaryOOF { internal get; set; }
-        public static bool IsPermaOOFOn { get; set; }
-        public static DateTime PermaOOFDate { get; set; }
-        public static string WorkingHours { get; set; }
+        internal bool IsPermaOOFOn { get; set; }
+        internal DateTime PermaOOFDate { get; set; }
+        internal string WorkingHours { get; set; }
+        internal string PrimaryOOFExternalMessage { get; set;}
+        internal string PrimaryOOFInternalMessage { get; set; }
+        internal string SecondaryOOFExternalMessage { get; set; }
+        internal string SecondaryOOFInternalMessage { get; set; }
 
-        static OOFData instance = new OOFData();
+        private const string baseValue = "default";
+        static OOFData instance;
 
         public static OOFData Instance
         {
-            get { return instance; }
+            get
+            {
+
+                if (instance == null)
+                {
+                    instance = new OOFData();
+                    instance.ReadProperties();
+                }
+                return instance;
+            }
         }
 
-        public static string InternalOOFMessage
+        private void ReadProperties()
+        {
+            instance.IsPermaOOFOn = OOFScheduling.Properties.Settings.Default.IsPermaOOFOn;
+            instance.PermaOOFDate = OOFScheduling.Properties.Settings.Default.PermaOOFDate;
+            instance.WorkingHours = OOFScheduling.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
+            instance.PrimaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFExternal;
+            instance.PrimaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFInternal;
+            instance.SecondaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
+            instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
+        }
+
+        internal string InternalOOFMessage
         {
             get
             {
                 //decided whether to return primary or secondary message
-                if (!IsPermaOOFOn)
+                if (!instance.IsPermaOOFOn)
                 {
-                    return PrimaryOOF.internalMessage;
+                    return instance.PrimaryOOFInternalMessage;
                 }
                 else
                 {
-                    return SecondaryOOF.internalMessage;
+                    return instance.SecondaryOOFInternalMessage;
                 }
             }
         }
 
-        public static string ExternalOOFMessage
+        internal string ExternalOOFMessage
         {
             get
             {
                 //decided whether to return primary or secondary message
-                if (!IsPermaOOFOn)
+                if (!instance.IsPermaOOFOn)
                 {
-                    return PrimaryOOF.externalMessage;
+                    return instance.PrimaryOOFExternalMessage;
                 }
                 else
                 {
-                    return SecondaryOOF.externalMessage;
+                    return instance.SecondaryOOFExternalMessage;
                 }
             }
         }
+
+        ~OOFData()
+        {
+            Dispose(false);
+        }
+
+        public void WriteProperties()
+        {
+            System.Diagnostics.Trace.TraceInformation("Persisted properties");
+
+            Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
+            Properties.Settings.Default.PrimaryOOFInternal = instance.PrimaryOOFInternalMessage;
+            Properties.Settings.Default.SecondaryOOFExternal = instance.SecondaryOOFExternalMessage;
+            Properties.Settings.Default.SecondaryOOFInternal = instance.SecondaryOOFInternalMessage;
+            Properties.Settings.Default.IsPermaOOFOn = instance.IsPermaOOFOn;
+            Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
+            Properties.Settings.Default.workingHours = instance.WorkingHours;
+            Dispose();
+        }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+
+            Dispose(true);
+
+            // Turn off calling the finalizer
+            System.GC.SuppressFinalize(this);
+
+        }
+
+        #endregion
+
+        public void Dispose(bool disposing)
+        {
+            // Do not dispose of an owned managed object (one with a
+            // finalizer) if called by member finalize,
+            // as the owned managed objects finalize method
+            // will be (or has been) called by finalization queue
+            // processing already
+            WriteProperties();
+        }
     }
 
-    public class OOFMessage
-    {
-        public string internalMessage { get; set; }
-        public string externalMessage { get; set; }
-    }
 }

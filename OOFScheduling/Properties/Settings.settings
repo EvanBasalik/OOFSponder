@@ -8,13 +8,7 @@
     <Setting Name="EncryptPW" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
-    <Setting Name="OOFHtmlExternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
     <Setting Name="workingHours" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
-    <Setting Name="OOFHtmlInternal" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="EWSURL" Type="System.String" Scope="User">
@@ -24,19 +18,19 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PermaOOFDate" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">1900-01-01</Value>
     </Setting>
     <Setting Name="PrimaryOOFExternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="PrimaryOOFInternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="SecondaryOOFExternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="SecondaryOOFInternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="MessageOption" Type="System.String" Scope="User">
       <Value Profile="(Default)">1</Value>
