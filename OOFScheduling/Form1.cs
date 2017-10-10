@@ -412,12 +412,13 @@ namespace OOFScheduling
                 }
 
                 //pull the existing OOF messages in
+                //this accounts for where someone changes te message externally
                 htmlEditorControl1.BodyHtml = myOOFSettings.ExternalReply;
                 htmlEditorControl2.BodyHtml = myOOFSettings.InternalReply;
 
                 //save them
-                //Properties.Settings.Default.OOFHtmlExternal = myOOFSettings.ExternalReply;
-                //Properties.Settings.Default.OOFHtmlInternal = myOOFSettings.InternalReply;
+                OOFData.Instance.ExternalOOFMessage = myOOFSettings.ExternalReply;
+                OOFData.Instance.InternalOOFMessage = myOOFSettings.InternalReply;
                 Properties.Settings.Default.Save();
 
                 UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
@@ -451,10 +452,9 @@ namespace OOFScheduling
                 )
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
-                string oofMessageExternal = OOFData.Instance.ExternalOOFMessage;
-                string oofMessageInternal = OOFData.Instance.InternalOOFMessage;
                 //Toggle Manual OOF
-                await System.Threading.Tasks.Task.Run(() => setManualOOF(emailAddress, oofMessageExternal, oofMessageInternal, !manualoof));
+                await System.Threading.Tasks.Task.Run(() => setManualOOF(emailAddress, OOFData.Instance.ExternalOOFMessage, 
+                    OOFData.Instance.InternalOOFMessage, !manualoof));
             }
         }
 

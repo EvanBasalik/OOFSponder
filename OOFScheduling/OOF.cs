@@ -58,6 +58,19 @@ namespace OOFScheduling
                     return instance.SecondaryOOFInternalMessage;
                 }
             }
+
+            set
+            {
+                //decided whether to return primary or secondary message
+                if (!instance.IsPermaOOFOn)
+                {
+                    instance.PrimaryOOFInternalMessage = value;
+                }
+                else
+                {
+                    instance.SecondaryOOFInternalMessage = value;
+                }
+            }
         }
 
         internal string ExternalOOFMessage
@@ -72,6 +85,19 @@ namespace OOFScheduling
                 else
                 {
                     return instance.SecondaryOOFExternalMessage;
+                }
+            }
+
+            set
+            {
+                //decided whether to return primary or secondary message
+                if (!instance.IsPermaOOFOn)
+                {
+                    instance.PrimaryOOFExternalMessage=value;
+                }
+                else
+                {
+                    instance.SecondaryOOFExternalMessage=value;
                 }
             }
         }
