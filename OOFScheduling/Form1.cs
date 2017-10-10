@@ -1089,11 +1089,11 @@ namespace OOFScheduling
             //assume the latest text in the HTML controls should win
             if (htmlEditorControl1.BodyHtml != DummyHTML)
             {
-                Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
+                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
             }
             if (htmlEditorControl2.BodyHtml != DummyHTML)
             {
-                Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
 
             //only set up for permaOOF if we have OOF messages
