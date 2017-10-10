@@ -202,8 +202,8 @@ namespace OOFScheduling
 #else
             //if CredMan is turned on, then we don't need the email or password
             //but we still need the OOF messages and working hours
-            if (OOFData.Instance.ExternalOOFMessage != "default" && OOFData.Instance.InternalOOFMessage != "default" 
-                && OOFData.Instance.WorkingHours != "default")
+            if (OOFData.Instance.ExternalOOFMessage != "" && OOFData.Instance.InternalOOFMessage != "" 
+                && OOFData.Instance.WorkingHours != "")
             {
                 haveNecessaryData = true;
             }

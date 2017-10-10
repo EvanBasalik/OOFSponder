@@ -92,6 +92,7 @@ namespace OOFScheduling
             Properties.Settings.Default.IsPermaOOFOn = instance.IsPermaOOFOn;
             Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
             Properties.Settings.Default.workingHours = instance.WorkingHours;
+            Properties.Settings.Default.Save();
             Dispose();
         }
 
