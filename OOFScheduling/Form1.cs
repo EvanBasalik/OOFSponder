@@ -559,8 +559,8 @@ namespace OOFScheduling
             //also, don't need to check SecondaryOOF messages for two reasons:
             //1) they won't always be set
             //2) the UI flow won't let you get here with permaOOF if they aren't set
-            if (OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal != "default" &&
-                OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal != "default" &&
+            if (OOFData.Instance.ExternalOOFMessage != "default" &&
+                OOFData.Instance.InternalOOFMessage != "default" &&
                 OOFScheduling.Properties.Settings.Default.workingHours != "default" &&
                 OOFScheduling.Properties.Settings.Default.EncryptPW == "UsingCredMan" &&
                 OOFScheduling.Properties.Settings.Default.EWSURL != "default" &&
@@ -597,13 +597,13 @@ namespace OOFScheduling
                 string oofMessageInternal= htmlEditorControl2.BodyHtml;
                 if (!OOFData.Instance.IsPermaOOFOn)
                 {
-                    OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
-                    OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
+                    OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                    OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
                 }
                 else
                 {
-                    OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
-                    OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+                    OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                    OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
                 }
 
                 OOFScheduling.Properties.Settings.Default.Save();
