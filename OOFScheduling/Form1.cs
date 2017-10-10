@@ -39,6 +39,7 @@ namespace OOFScheduling
         //Track if PermaOOF (OOF until a specific day in the future)
         private bool permaOOF = false;
         private DateTime permaOOFDate;
+        private OOF thisOOF = new OOF();
 
         public Form1()
         {
@@ -126,22 +127,9 @@ namespace OOFScheduling
        
             if (Properties.Settings.Default.IsPermaOOFOn==true)
             {
-                permaOOF = true;
-                permaOOFDate = Properties.Settings.Default.PermaOOFDate;
+                thisOOF.isPermaOOFOn=true;
+                thisOOF.permaOOFDate=Properties.Settings.Default.PermaOOFDate;
             }
-
-            //since the property names changed when PermaOOF was added, need to bring them forward
-            //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
-            if (Properties.Settings.Default.OOFHtmlExternal != "default")
-            {
-                Properties.Settings.Default.PrimaryOOFExternal = Properties.Settings.Default.OOFHtmlExternal;
-            }
-
-            if (Properties.Settings.Default.OOFHtmlInternal != "default")
-            {
-                Properties.Settings.Default.PrimaryOOFInternal = Properties.Settings.Default.OOFHtmlInternal;
-            }
-            Properties.Settings.Default.Save();
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (Properties.Settings.Default.OOFHtmlExternal != "default")
@@ -1172,8 +1160,8 @@ Properties.Settings.Default.workingHours != "default")
             lblInternalMessage.Text = "Extended OOF Internal Message";
 
 
-            htmlEditorControl1.BodyHtml = Properties.Settings.Default.SecondaryOOFExternal == String.Empty ? String.Empty : Properties.Settings.Default.SecondaryOOFExternal;
-            htmlEditorControl2.BodyHtml = Properties.Settings.Default.SecondaryOOFInternal == String.Empty ? String.Empty : Properties.Settings.Default.SecondaryOOFInternal;
+            htmlEditorControl1.BodyHtml = Properties.Settings.Default.SecondaryOOFExternal;
+            htmlEditorControl2.BodyHtml = Properties.Settings.Default.SecondaryOOFInternal;
 
             Properties.Settings.Default.MessageOption = "2";
             Properties.Settings.Default.Save();
@@ -1205,8 +1193,8 @@ Properties.Settings.Default.workingHours != "default")
             lblExternalMesage.Text = "Primary External Message";
             lblInternalMessage.Text = "Primary Internal Message";
 
-            htmlEditorControl1.BodyHtml = Properties.Settings.Default.PrimaryOOFExternal == String.Empty ? htmlEditorControl1.BodyHtml = String.Empty : Properties.Settings.Default.PrimaryOOFExternal;
-            htmlEditorControl2.BodyHtml = Properties.Settings.Default.PrimaryOOFInternal == String.Empty ? htmlEditorControl2.BodyHtml = String.Empty : Properties.Settings.Default.PrimaryOOFInternal;
+            htmlEditorControl1.BodyHtml = Properties.Settings.Default.PrimaryOOFExternal;
+            htmlEditorControl2.BodyHtml = Properties.Settings.Default.PrimaryOOFInternal;
 
             Properties.Settings.Default.MessageOption = "1";
             Properties.Settings.Default.Save();
