@@ -37,8 +37,8 @@ namespace OOFScheduling
         private bool foundexchange = false;
 
         //Track if PermaOOF (OOF until a specific day in the future)
-        private bool permaOOF = false;
-        private DateTime permaOOFDate;
+        //private bool permaOOF = false;
+        //private DateTime permaOOFDate;
 
         public Form1()
         {
@@ -580,13 +580,11 @@ namespace OOFScheduling
                 DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
 
                 //if PermaOOF is turned on, need to adjust the end time
-                if (permaOOFDate < oofTimes[0])
+                if (OOFData.Instance.PermaOOFDate < oofTimes[0])
                 {
                     //turn off permaOOF
                     //NOTE: this all should be abstracted in a Property somewhere
-                    permaOOF = false;
-                    Properties.Settings.Default.IsPermaOOFOn = permaOOF;
-                    Properties.Settings.Default.Save();
+                    OOFData.Instance.IsPermaOOFOn = false;
 
                     //set all the UI stuff back to primary 
                     //to set up for normal OOF schedule
@@ -597,7 +595,7 @@ namespace OOFScheduling
                 //persist settings just in case
                 string oofMessageExternal= htmlEditorControl1.BodyHtml;
                 string oofMessageInternal= htmlEditorControl2.BodyHtml;
-                if (!permaOOF)
+                if (!OOFData.Instance.IsPermaOOFOn)
                 {
                     OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
                     OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
@@ -612,7 +610,7 @@ namespace OOFScheduling
 
 
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
-                if ((oofTimes[0] != oofTimes[1]) && !permaOOF)
+                if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
                     await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
                 }
@@ -622,7 +620,7 @@ namespace OOFScheduling
                 //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
                 {
                     int adjustmentDays = 0;
-                    if(permaOOFDate>oofTimes[0] && permaOOFDate<oofTimes[1])
+                    if(OOFData.Instance.PermaOOFDate>oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
                     {
                         adjustmentDays = 1;
                     }
@@ -635,7 +633,7 @@ namespace OOFScheduling
                         oofTimes[0] = DateTime.Now;
                     }
 
-                    await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((permaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+                    await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
                 }
             }
         }
@@ -1107,9 +1105,8 @@ namespace OOFScheduling
             {
 
                 //save the current text to permaOOF
-                permaOOF = true;
-                Properties.Settings.Default.IsPermaOOFOn = permaOOF;
-                permaOOFDate = dtPermaOOF.Value;
+                OOFData.Instance.IsPermaOOFOn = true;
+                OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
                 Properties.Settings.Default.PermaOOFDate = dtPermaOOF.Value;
                 Properties.Settings.Default.Save();
 
@@ -1192,7 +1189,7 @@ namespace OOFScheduling
         //common call for both controls, regardless of primary or secondary
         private void htmlEditorValidated(object sender, EventArgs e)
         {
-            if (!permaOOF)
+            if (!OOFData.Instance.IsPermaOOFOn)
             {
                 System.Diagnostics.Trace.WriteLine("PermaOOF off - persisting primary messages");
                 OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
