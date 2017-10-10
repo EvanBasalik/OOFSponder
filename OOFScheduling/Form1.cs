@@ -1126,9 +1126,9 @@ namespace OOFScheduling
             AIClient.TrackEvent("Configured secondary OOF messages");
 
             //persist the existing OOF messages as Primary and then pull in the secondary
-            Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
-            Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
-            Properties.Settings.Default.Save();
+            OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+            OOFData.Instance.PrimaryOOFInternalMessage= htmlEditorControl2.BodyHtml;
+            OOFData.Instance.IsPermaOOFOn = true;
 
             //now, set up the UI for PermaOOF
             SetUIforPermaOOF();
@@ -1142,8 +1142,8 @@ namespace OOFScheduling
             lblInternalMessage.Text = "Extended OOF Internal Message";
 
 
-            htmlEditorControl1.BodyHtml = Properties.Settings.Default.SecondaryOOFExternal;
-            htmlEditorControl2.BodyHtml = Properties.Settings.Default.SecondaryOOFInternal;
+            htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
+            htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
 
             Properties.Settings.Default.MessageOption = "2";
             Properties.Settings.Default.Save();
@@ -1160,9 +1160,9 @@ namespace OOFScheduling
             //so HTML controls have the Primary messages
 
             //persist the existing OOF messages as Secondary and then pull in the Primary
-            Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
-            Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
-            Properties.Settings.Default.Save();
+            OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+            OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+            OOFData.Instance.IsPermaOOFOn = false;
 
             //now, set up the UI for primary
             SetUIforPrimary();
@@ -1175,8 +1175,8 @@ namespace OOFScheduling
             lblExternalMesage.Text = "Primary External Message";
             lblInternalMessage.Text = "Primary Internal Message";
 
-            htmlEditorControl1.BodyHtml = Properties.Settings.Default.PrimaryOOFExternal;
-            htmlEditorControl2.BodyHtml = Properties.Settings.Default.PrimaryOOFInternal;
+            htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
+            htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
 
             Properties.Settings.Default.MessageOption = "1";
             Properties.Settings.Default.Save();
@@ -1192,17 +1192,15 @@ namespace OOFScheduling
             if (!OOFData.Instance.IsPermaOOFOn)
             {
                 System.Diagnostics.Trace.WriteLine("PermaOOF off - persisting primary messages");
-                OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal = htmlEditorControl1.BodyHtml;
-                OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
             else
             {
                 System.Diagnostics.Trace.WriteLine("PermaOOF on - persisting secondary messages");
-                OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal = htmlEditorControl1.BodyHtml;
-                OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
-
-            OOFScheduling.Properties.Settings.Default.Save();
         }
     }
 
