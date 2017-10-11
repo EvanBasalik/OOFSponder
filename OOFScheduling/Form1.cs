@@ -187,9 +187,10 @@ namespace OOFScheduling
                 //else set up for Secondary
                 SetUIforPermaOOF();
             }
-           
+
             //set the PermaOOF date to something in the future
-            dtPermaOOF.Value = DateTime.Now.AddDays(4);
+            OOFData.Instance.PermaOOFDate = DateTime.Now.AddDays(4);
+            dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
 
 
 
