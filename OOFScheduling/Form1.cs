@@ -639,8 +639,9 @@ namespace OOFScheduling
                     {
                         oofTimes[0] = DateTime.Now;
                     }
-
+#if !NOOOF
                     await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+#endif
                 }
             }
         }
@@ -693,7 +694,9 @@ namespace OOFScheduling
                     ExchangeServiceConnection.Instance.service.SetUserOofSettings(EmailAddress, myOOF);
 #else
                         //variant using CredMan
+#if !NOOOF
                         Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
+#endif
 #endif
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
                         RunStatusCheck();
