@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Exchange.WebServices.Data;
-using System.Security.Cryptography;
 using System.Timers;
 using mshtml;
 using System.Text.RegularExpressions;
@@ -274,6 +267,8 @@ namespace OOFScheduling
             UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
             notifyIcon1.Text = "Configuring Exchange, please wait.";
 
+            GetCredswithMSAL();
+
             try
             {
                 await System.Threading.Tasks.Task.Run(() => GetCreds());
@@ -297,7 +292,12 @@ namespace OOFScheduling
 
         }
 
-        private async System.Threading.Tasks.Task GetCreds()
+        private void GetCredswithMSAL()
+        {
+
+        }
+
+            private async System.Threading.Tasks.Task GetCreds()
         {
             //if we have the EWSURL, then send it in
             Exchange101.UserData user = new Exchange101.UserData();
