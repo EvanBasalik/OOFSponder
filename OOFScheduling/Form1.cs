@@ -65,17 +65,7 @@ namespace OOFScheduling
             AddMenuItems();
             #endregion
             ConfigureApplicationInsights();
-#if !CredMan
-            //Show manual credentials on the bottom if we don't have credman
-            label14.Visible = true;
-            label8.Visible = true;
-            label9.Visible = true;
-            label10.Visible = true;
-            passwordConfirmTB.Visible = true;
-            passwordTB.Visible = true;
-            emailAddressTB.Visible = true;
-            this.Height = 860;      
-#endif
+
             #region Add to Startup
             // The path to the key where Windows looks for startup applications
             RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
@@ -120,9 +110,8 @@ namespace OOFScheduling
             {
                 emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
             }
-#if CredMan
+
             RunGetCreds();
-#endif
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (OOFData.Instance.IsPermaOOFOn)
@@ -197,17 +186,7 @@ namespace OOFScheduling
 
             bool haveNecessaryData = false;
 
-#if !CredMan
-            //check to ensure we have all the necessary inputs
-            if (Properties.Settings.Default.EmailAddress != "default" &&
-    Properties.Settings.Default.OOFHtmlExternal != "default" &&
-    Properties.Settings.Default.OOFHtmlInternal != "default" &&
-    Properties.Settings.Default.workingHours != "default" &&
-    Properties.Settings.Default.EncryptPW != "default")
-            {
-                haveNecessaryData = true;
-            }
-#else
+
             //if CredMan is turned on, then we don't need the email or password
             //but we still need the OOF messages and working hours
             if (OOFData.Instance.ExternalOOFMessage != "" && OOFData.Instance.InternalOOFMessage != "" 
@@ -215,7 +194,6 @@ namespace OOFScheduling
             {
                 haveNecessaryData = true;
             }
-#endif
 
             if (haveNecessaryData)
             {
@@ -376,11 +354,9 @@ namespace OOFScheduling
         {
             if (Properties.Settings.Default.EmailAddress != "default" &&
                 Properties.Settings.Default.EncryptPW != "default"
-#if CredMan
                 && Properties.Settings.Default.EncryptPW == "UsingCredMan" 
                 && Properties.Settings.Default.EWSURL != "default"
                 && foundexchange
-#endif
                 )
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
@@ -392,13 +368,8 @@ namespace OOFScheduling
         {
             try
             {
-#if !CredMan
-                //variant using Web Credentials
-                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
-#else
                 //variant using CredMan
                 OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Properties.Settings.Default.EmailAddress);
-#endif
 
                 string currentStatus = "";
 
@@ -452,11 +423,9 @@ namespace OOFScheduling
                 OOFData.Instance.ExternalOOFMessage != "default" &&
                 OOFData.Instance.InternalOOFMessage != "default" &&
                 Properties.Settings.Default.EncryptPW != "default"
-#if CredMan
                 && Properties.Settings.Default.EncryptPW == "UsingCredMan"
                 && Properties.Settings.Default.EWSURL != "default"
                 && foundexchange
-#endif
                 )
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
@@ -472,13 +441,8 @@ namespace OOFScheduling
 
             try
             {
-#if !CredMan
-                //variant using Web Credentials
-                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(emailAddress);
-#else
                 //variant using CredMan
                 OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
-#endif
 
                 OofSettings myOOF = new OofSettings();
 
@@ -507,13 +471,8 @@ namespace OOFScheduling
                     newexternal != currentexternal)
                 {
                     // Set value to Server
-#if !CredMan
-                    //variant using Web Credentials
-                    ExchangeServiceConnection.Instance.service.SetUserOofSettings(emailAddress, myOOF);
-#else
                     //variant using CredMan
                     Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
-#endif
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
                     RunStatusCheck();
                 }
@@ -551,17 +510,6 @@ namespace OOFScheduling
         {
             bool haveNecessaryData = false;
 
-#if !CredMan
-            //check to ensure we have all the necessary inputs
-            if (Properties.Settings.Default.EmailAddress != "default" &&
-    Properties.Settings.Default.OOFHtmlExternal != "default" &&
-    Properties.Settings.Default.OOFHtmlInternal != "default" &&
-    Properties.Settings.Default.workingHours != "default" &&
-    Properties.Settings.Default.EncryptPW != "default")
-            {
-                haveNecessaryData = true;
-            }
-#else
             //if CredMan is turned on, then we don't need the email or password
             //but we still need the OOF messages and working hours
             //also, don't need to check SecondaryOOF messages for two reasons:
@@ -576,8 +524,6 @@ namespace OOFScheduling
             {
                 haveNecessaryData = true;
             }
-#endif
-
 
             if (haveNecessaryData)
             {
@@ -653,13 +599,8 @@ namespace OOFScheduling
 
             try
             {
-#if !CredMan
-                //variant using Web Credentials
-                OofSettings myOOFSettings = ExchangeServiceConnection.Instance.service.GetUserOofSettings(EmailAddress);
-#else
                 OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
 
-#endif
                 OofSettings myOOF = new OofSettings();
 
                 // Set the OOF status to be a scheduled time period.
@@ -690,14 +631,9 @@ namespace OOFScheduling
                     // Set value to Server if we have the user address and URL
                     if (Exchange101.UserData.user.EmailAddress !=null)
                     {
-#if !CredMan
-                    //variant using Web Credentials
-                    ExchangeServiceConnection.Instance.service.SetUserOofSettings(EmailAddress, myOOF);
-#else
                         //variant using CredMan
 #if !NOOOF
                         Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
-#endif
 #endif
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
                         RunStatusCheck();
@@ -844,39 +780,6 @@ namespace OOFScheduling
 
         private void saveSettings()
         {
-#if !CredMan
-            if (string.IsNullOrEmpty(emailAddressTB.Text))
-            {
-                MessageBox.Show("Please enter your email address");
-            }
-            else if (string.IsNullOrEmpty(passwordTB.Text))
-            {
-                MessageBox.Show("Please enter your password");
-            }
-            else if (string.IsNullOrEmpty(passwordConfirmTB.Text))
-            {
-                MessageBox.Show("Please confirm your password");
-            }
-            else if (passwordConfirmTB.Text != passwordTB.Text)
-            {
-                MessageBox.Show("Your password does not match the confirmed password, please confirm your password");
-            }
-            else
-            {
-                Properties.Settings.Default.EmailAddress = emailAddressTB.Text;
-                Properties.Settings.Default.EncryptPW = DataProtectionApiWrapper.Encrypt(passwordTB.Text);
-                Properties.Settings.Default.OOFHtmlExternal = htmlEditorControl1.BodyHtml;
-                Properties.Settings.Default.OOFHtmlInternal = htmlEditorControl2.BodyHtml;
-                Properties.Settings.Default.workingHours = ScheduleString();
-
-                Properties.Settings.Default.Save();
-
-                passwordConfirmTB.Text = "";
-                passwordTB.Text = "";
-
-                toolStripStatusLabel1.Text = "Settings Saved";
-            }
-#else
             if (primaryToolStripMenuItem.Checked)
             {
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
@@ -892,9 +795,7 @@ namespace OOFScheduling
             OOFData.Instance.WorkingHours = ScheduleString();
             OOFData.Instance.WriteProperties();
 
-            toolStripStatusLabel1.Text = "Settings Saved";
-#endif
-            
+            toolStripStatusLabel1.Text = "Settings Saved";          
         }
 
         #endregion
@@ -1211,108 +1112,4 @@ namespace OOFScheduling
             }
         }
     }
-
-    #region Old Credential and EWS Singleton class (Remove After CredMan Integration)
-    public static class DataProtectionApiWrapper
-    {
-        /// <summary>
-        /// Specifies the data protection scope of the DPAPI.
-        /// </summary>
-        private const DataProtectionScope Scope = DataProtectionScope.CurrentUser;
-        private const string ProgramName = "OOFScheduling";
-
-        public static string Encrypt(this string text)
-        {
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
-
-            //encrypt data
-            var data = Encoding.Unicode.GetBytes(text);
-            byte[] encrypted = ProtectedData.Protect(data, Encoding.Unicode.GetBytes(ProgramName), Scope);
-
-            //return as base64 string
-            return Convert.ToBase64String(encrypted);
-        }
-
-        public static string Decrypt(this string cipher)
-        {
-            if (cipher == null)
-            {
-                throw new ArgumentNullException("cipher");
-            }
-
-            //parse base64 string
-            byte[] data = Convert.FromBase64String(cipher);
-
-            //decrypt data
-            byte[] decrypted = ProtectedData.Unprotect(data, Encoding.Unicode.GetBytes(ProgramName), Scope);
-            return Encoding.Unicode.GetString(decrypted);
-        }
-
-    }
-
-    public sealed class ExchangeServiceConnection
-    {
-        private static volatile ExchangeServiceConnection instance;
-        private static object syncRoot = new Object();
-        public ExchangeService service;
-
-        private ExchangeServiceConnection() {
-            service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
-            string emailAddress = Properties.Settings.Default.EmailAddress;
-            string pw = Properties.Settings.Default.EncryptPW;
-            service.Credentials = new WebCredentials(emailAddress, DataProtectionApiWrapper.Decrypt(pw));
-            service.UseDefaultCredentials = false;
-
-            //Let's roll that beautiful bean footage
-            service.TraceEnabled = true;
-            service.TraceFlags = TraceFlags.All;
-
-            if(service.Url == null)
-            {
-                service.AutodiscoverUrl(emailAddress, RedirectionUrlValidationCallback);
-            }
-        }
-
-        public static ExchangeServiceConnection Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (syncRoot)
-                    {
-                        if (Properties.Settings.Default.EmailAddress != "default" &&
-                            Properties.Settings.Default.EncryptPW != "default")
-                        {
-                            if (instance == null)
-                                instance = new ExchangeServiceConnection();
-                        }
-                    }
-                }
-
-                return instance;
-            }
-        }
-
-        private static bool RedirectionUrlValidationCallback(string redirectionUrl)
-        {
-            // The default for the validation callback is to reject the URL.
-            bool result = false;
-
-            Uri redirectionUri = new Uri(redirectionUrl);
-
-            // Validate the contents of the redirection URL. In this simple validation
-            // callback, the redirection URL is considered valid if it is using HTTPS
-            // to encrypt the authentication credentials. 
-            if (redirectionUri.Scheme == "https")
-            {
-                result = true;
-            }
-            return result;
-        }
-    }
-    #endregion 
 }
