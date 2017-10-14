@@ -10,7 +10,7 @@ namespace OOFScheduling
     class O365
     {
 
-        public static string ClientId = "0b3ba50e-9082-4dd9-b8f1-e4b24280c4e1"; // "1affca8b-a48a-45a5-acdd-4ca36abb3d5b"; // "f5ddaa5e-d521-44d5-95f0-5a6327d1ae9a";//"ec49c239-177a-4b48-b4d7-fa380ef17c5b"; //"e6ee43eb-0fbc-4546-bc52-4c161fcdf4c4";// 
+        private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
         public static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId);
 
         //Set the API Endpoint to Graph 'me' endpoint
