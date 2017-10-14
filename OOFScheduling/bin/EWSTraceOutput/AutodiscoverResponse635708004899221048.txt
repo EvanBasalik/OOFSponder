@@ -1,3 +1,0 @@
-<Trace Tag="AutodiscoverResponse" Tid="8" Time="2015-06-25 07:41:29Z">
-Autodiscover service returned redirection email address 'evanba@Service.microsoft.com'.
-</Trace>

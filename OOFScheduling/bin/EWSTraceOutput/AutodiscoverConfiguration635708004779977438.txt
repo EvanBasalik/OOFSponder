@@ -1,3 +1,0 @@
-<Trace Tag="AutodiscoverConfiguration" Tid="8" Time="2015-06-25 07:41:17Z">
-Determining which endpoints are enabled for host mail.microsoft.com
-</Trace>

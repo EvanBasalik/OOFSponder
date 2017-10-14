@@ -1,3 +1,0 @@
-<Trace Tag="AutodiscoverConfiguration" Tid="8" Time="2015-06-26 23:51:08Z">
-Request error: The remote server returned an error: (401) Unauthorized.
-</Trace>

@@ -1,3 +1,0 @@
-<Trace Tag="AutodiscoverConfiguration" Tid="10" Time="2015-06-25 07:38:19Z">
-No SCP pointers found for 'Domain=service.microsoft.com' in configPath='CN=Configuration,DC=corp,DC=microsoft,DC=com'
-</Trace>

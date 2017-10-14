@@ -1,3 +1,0 @@
-<Trace Tag="AutodiscoverConfiguration" Tid="10" Time="2015-06-26 22:29:05Z">
-Adding (prio 3) 'https://mail.microsoft.com/autodiscover/autodiscover.xml' from 'LDAP://CN=CO1-E16MSF01,CN=Autodiscover,CN=Protocols,CN=CO1-E16MSF01,CN=Servers,CN=Exchange Administrative Group (FYDIBOHF23SPDLT),CN=Administrative Groups,CN=microsoft,CN=Microsoft Exchange,CN=Services,CN=Configuration,DC=corp,DC=microsoft,DC=com' to the end of the list (site mismatch)
-</Trace>

@@ -1,3 +1,0 @@
-<Trace Tag="AutodiscoverConfiguration" Tid="7" Time="2015-06-25 07:43:40Z">
-No Autodiscover endpoints are available for host service.microsoft.com
-</Trace>
