@@ -36,10 +36,6 @@ namespace OOFScheduling
         //Track if we have a valid exchange connection
         private bool foundexchange = false;
 
-        //Track if PermaOOF (OOF until a specific day in the future)
-        //private bool permaOOF = false;
-        //private DateTime permaOOFDate;
-
         public Form1()
         {
             
