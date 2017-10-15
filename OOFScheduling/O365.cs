@@ -18,7 +18,7 @@ namespace OOFScheduling
         static string _graphAPIEndpoint = "https://graph.microsoft.com/v1.0/me";
 
         //Set the scope for API call to user.read
-        static string[] _scopes = new string[] { "user.read" };
+        static string[] _scopes = new string[] { "user.read", "MailboxSettings.Read" };
 
         internal static AuthenticationResult authResult = null;
 
