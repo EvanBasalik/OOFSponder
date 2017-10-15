@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extension;
 
 namespace OOFScheduling
 {
@@ -11,7 +12,7 @@ namespace OOFScheduling
     {
 
         private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
-        internal static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId);
+        internal static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId, "https://login.microsoftonline.com/common", TokenCacheHelper.GetUserCache());
         internal static string AutomatedReplySettingsURL = "/mailboxSettings/automaticRepliesSetting";
 
         //Set the API Endpoint to Graph 'me' endpoint
@@ -38,23 +39,20 @@ namespace OOFScheduling
             {
                 try
                 {
-                    authResult = await PublicClientApp.AcquireTokenAsync(_scopes);
+                    authResult = await PublicClientApp.AcquireTokenSilentAsync(_scopes, PublicClientApp.Users.FirstOrDefault());
                 }
                 catch (MsalUiRequiredException ex)
                 {
                     // A MsalUiRequiredException happened on AcquireTokenSilentAsync. This indicates you need to call AcquireTokenAsync to acquire a token
                     OOFSponder.Logger.Info($"MsalUiRequiredException: {ex.Message}");
 
-                    if (action == AADAction.ForceSignIn)
+                    try
                     {
-                        try
-                        {
-                            authResult = await PublicClientApp.AcquireTokenAsync(_scopes);
-                        }
-                        catch (MsalException msalex)
-                        {
-                            OOFSponder.Logger.Error(new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
-                        }
+                        authResult = await PublicClientApp.AcquireTokenAsync(_scopes);
+                    }
+                    catch (MsalException msalex)
+                    {
+                        OOFSponder.Logger.Error(new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
                     }
 
                 }
