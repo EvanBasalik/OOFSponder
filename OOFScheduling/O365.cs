@@ -12,12 +12,15 @@ namespace OOFScheduling
 
         private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
         internal static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId);
+        internal static string AutomatedReplySettingsURL = "/mailboxSettings/automaticRepliesSetting";
 
         //Set the API Endpoint to Graph 'me' endpoint
         static string _graphAPIEndpoint = "https://graph.microsoft.com/v1.0/me";
 
         //Set the scope for API call to user.read
         static string[] _scopes = new string[] { "user.read" };
+
+        internal static AuthenticationResult authResult = null;
 
         internal enum AADAction
         {
@@ -30,7 +33,6 @@ namespace OOFScheduling
         internal async static Task<bool> MSALWork(AADAction action)
         {
             bool _result = false;
-            AuthenticationResult authResult = null;
 
             if (action == AADAction.SignIn | action == AADAction.ForceSignIn)
             {
@@ -101,15 +103,17 @@ namespace OOFScheduling
         /// <param name="url">The URL</param>
         /// <param name="token">The token</param>
         /// <returns>String containing the results of the GET operation</returns>
-        public async Task<string> GetHttpContentWithToken(string url, string token)
+        public static async Task<string> GetHttpContentWithToken(string url)
         {
             var httpClient = new System.Net.Http.HttpClient();
             System.Net.Http.HttpResponseMessage response;
             try
             {
-                var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, url);
+                Uri baseUrl = new Uri(_graphAPIEndpoint);
+                Uri target = new Uri(baseUrl, url);
+                var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, target);
                 //Add the token in Authorization header
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
                 response = await httpClient.SendAsync(request);
                 var content = await response.Content.ReadAsStringAsync();
                 return content;
