@@ -109,9 +109,9 @@ namespace OOFScheduling
             System.Net.Http.HttpResponseMessage response;
             try
             {
-                Uri baseUrl = new Uri(_graphAPIEndpoint);
-                Uri target = new Uri(baseUrl, url);
-                var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, target);
+                
+
+                var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, UrlCombine(_graphAPIEndpoint, url));
                 //Add the token in Authorization header
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
                 response = await httpClient.SendAsync(request);
@@ -122,6 +122,20 @@ namespace OOFScheduling
             {
                 return ex.ToString();
             }
+        }
+
+        // Combines urls like System.IO.Path.Combine
+        // Usage: this.Literal1.Text = CommonCode.UrlCombine("http://stackoverflow.com/", "/questions ", " 372865", "path-combine-for-urls");
+        public static string UrlCombine(params string[] urls)
+        {
+            string retVal = string.Empty;
+            foreach (string url in urls)
+            {
+                var path = url.Trim().TrimEnd('/').TrimStart('/').Trim();
+                retVal = string.IsNullOrWhiteSpace(retVal) ? path : new System.Uri(new System.Uri(retVal + "/"), path).ToString();
+            }
+            return retVal;
+
         }
     }
 
