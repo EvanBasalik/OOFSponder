@@ -53,7 +53,7 @@ namespace OOFScheduling
             #region AddMenuItems
             AddMenuItems();
             #endregion
-            ConfigureApplicationInsights();
+            OOFSponderInsights.ConfigureApplicationInsights();
 
             #region Add to Startup
             // The path to the key where Windows looks for startup applications
@@ -100,7 +100,9 @@ namespace OOFScheduling
                 emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
             }
 
-            RunGetCreds();
+            //prep for async work
+            System.Threading.Tasks.Task AuthTask = null;
+            AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.ForceSignIn); }));
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (OOFData.Instance.IsPermaOOFOn)
@@ -201,6 +203,12 @@ namespace OOFScheduling
             //set up handlers to persist OOF messages
             htmlEditorControl1.Validated += htmlEditorValidated;
             htmlEditorControl2.Validated += htmlEditorValidated;
+
+            //wait on async auth stuff if not null
+            if (AuthTask != null)
+            {
+                AuthTask.Wait();
+            }
         }
 
         private void AddMenuItems()
@@ -240,92 +248,63 @@ namespace OOFScheduling
             MessageBox.Show("Cleared credentials. Please exit and restart.", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
-        private void ConfigureApplicationInsights()
-        {
-            AIClient.InstrumentationKey = "9eacd004-7944-4d2e-a978-d66104c67a49";
-            // Set session data:
-            AIClient.Context.User.Id = Environment.UserName;
+        //private async System.Threading.Tasks.Task RunGetCreds()
+        //{
+        //    UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
+        //    notifyIcon1.Text = "Configuring Exchange, please wait.";
 
-            //use DEBUGAI if we actually want AppInsights from a DEBUG build
-#if DEBUGAI
-            AIClient.Context.User.Id = "DEBUG";
-            Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
-#endif
-            AIClient.Context.Session.Id = Guid.NewGuid().ToString();
-            AIClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
-
-            //don't send AI stuff if running in DEBUG
-#if !DEBUG
-            //we are using this to track unique users
-            AIClient.TrackEvent("User: " + AIClient.Context.User.Id.ToString());
-#endif
-
-        }
-
-        private async void RunGetCreds()
-        {
-            UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
-            notifyIcon1.Text = "Configuring Exchange, please wait.";
-
-            GetCredswithMSAL();
-
-            try
-            {
-                await System.Threading.Tasks.Task.Run(() => GetCreds());
-                UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
-                notifyIcon1.Text = "Found your Exchange server!";
-            }
-            catch (System.Security.Authentication.AuthenticationException authEx)
-            {
-                //AuthenticationException should be handled lower in the stack, so just record it
-                //and move on
-                AIClient.TrackException(authEx);
-            }
-            catch (Exception ex)
-            {
-                AIClient.TrackException(ex);
-                MessageBox.Show("Unable to find your Exchange server. Please try again later", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        //    try
+        //    {
+        //        await System.Threading.Tasks.Task.Run(() => GetCreds());
+        //        UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
+        //        notifyIcon1.Text = "Found your Exchange server!";
+        //    }
+        //    catch (System.Security.Authentication.AuthenticationException authEx)
+        //    {
+        //        //AuthenticationException should be handled lower in the stack, so just record it
+        //        //and move on
+        //        AIClient.TrackException(authEx);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        AIClient.TrackException(ex);
+        //        MessageBox.Show("Unable to find your Exchange server. Please try again later", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
 
 
 
 
-        }
+        //}
 
-        private void GetCredswithMSAL()
-        {
+        //    private async System.Threading.Tasks.Task GetCreds()
+        //{
+        //    //if we have the EWSURL, then send it in
+        //    Exchange101.UserData user = new Exchange101.UserData();
+        //    if (Properties.Settings.Default.EWSURL != "default")
+        //    {
+        //        user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
+        //        Exchange101.Service.ConnectToService(user);
+        //    }
+        //    else
+        //    {
 
-        }
+        //        //should really have a more elegant way of doing this, but that is future work
+        //        //if we get here, that means we don't have creds or URL
+        //        //MessageBox.Show("No Exchange server identified yet. This may take a couple minutes");
+        //        //therefore, turn on autodiscover tracing
+        //        Exchange101.Service.ConnectToService(true);
+        //        Properties.Settings.Default.EWSURL = Exchange101.Service.Instance.Url.ToString();
+        //        //MessageBox.Show("Found your Exchange server!");
 
-            private async System.Threading.Tasks.Task GetCreds()
-        {
-            //if we have the EWSURL, then send it in
-            Exchange101.UserData user = new Exchange101.UserData();
-            if (Properties.Settings.Default.EWSURL != "default")
-            {
-                user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
-                Exchange101.Service.ConnectToService(user);
-            }
-            else
-            {
+        //        Properties.Settings.Default.Save();
+        //    }
 
-                //should really have a more elegant way of doing this, but that is future work
-                //if we get here, that means we don't have creds or URL
-                //MessageBox.Show("No Exchange server identified yet. This may take a couple minutes");
-                //therefore, turn on autodiscover tracing
-                Exchange101.Service.ConnectToService(true);
-                Properties.Settings.Default.EWSURL = Exchange101.Service.Instance.Url.ToString();
-                //MessageBox.Show("Found your Exchange server!");
-
-                Properties.Settings.Default.Save();
-            }
-
-            //map the collected info to the properties
-            foundexchange = true;
-            Properties.Settings.Default.EncryptPW = "UsingCredMan";
-            Properties.Settings.Default.EmailAddress = Exchange101.UserData.user.EmailAddress;
-            Properties.Settings.Default.Save();
-        }
+        //    //map the collected info to the properties
+        //    foundexchange = true;
+        //    Properties.Settings.Default.EncryptPW = "UsingCredMan";
+        //    Properties.Settings.Default.EmailAddress = Exchange101.UserData.user.EmailAddress;
+        //    Properties.Settings.Default.Save();
+        //}
 
         #region Set Oof Timed Loop
         void Loopy()
@@ -589,6 +568,83 @@ namespace OOFScheduling
             }
         }
 
+        private async void RunSetOofO365()
+        {
+            bool haveNecessaryData = false;
+
+            //if CredMan is turned on, then we don't need the email or password
+            //but we still need the OOF messages and working hours
+            //also, don't need to check SecondaryOOF messages for two reasons:
+            //1) they won't always be set
+            //2) the UI flow won't let you get here with permaOOF if they aren't set
+            if (OOFData.Instance.ExternalOOFMessage != "default" &&
+                OOFData.Instance.InternalOOFMessage != "default" &&
+                OOFData.Instance.WorkingHours != "default" )
+            {
+                haveNecessaryData = true;
+            }
+
+            if (haveNecessaryData)
+            {
+                DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
+
+                //if PermaOOF is turned on, need to adjust the end time
+                if (OOFData.Instance.PermaOOFDate < oofTimes[0])
+                {
+                    //turn off permaOOF
+                    //NOTE: this all should be abstracted in a Property somewhere
+                    OOFData.Instance.IsPermaOOFOn = false;
+
+                    //set all the UI stuff back to primary 
+                    //to set up for normal OOF schedule
+                    SetUIforPrimary();
+
+                }
+
+                //persist settings just in case
+                string oofMessageExternal = htmlEditorControl1.BodyHtml;
+                string oofMessageInternal = htmlEditorControl2.BodyHtml;
+                if (!OOFData.Instance.IsPermaOOFOn)
+                {
+                    OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                    OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                }
+                else
+                {
+                    OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                    OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                }
+
+                //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
+                if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
+                {
+                    await System.Threading.Tasks.Task.Run(() => setOOFO365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
+                }
+                else
+                //since permaOOF is on, need to adjust the end date such that is permaOOFDate
+                //if permaOOF>oofTimes[0] and permaOOF<oofTimes[1], then AddDays((permaOOFDate - oofTimes[1]).Days
+                //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
+                {
+                    int adjustmentDays = 0;
+                    if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                    {
+                        adjustmentDays = 1;
+                    }
+
+                    //in order to accomodate someone going OOF mid-schedule
+                    //check if now is before the next scheduled "OFF" slot
+                    //if it is, then adjust start time to NOW
+                    if (oofTimes[0] > DateTime.Now)
+                    {
+                        oofTimes[0] = DateTime.Now;
+                    }
+#if !NOOOF
+                    await System.Threading.Tasks.Task.Run(() => setOOFO365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+#endif
+                }
+            }
+        }
+
         public async System.Threading.Tasks.Task setOOF(string EmailAddress, string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
@@ -656,6 +712,75 @@ namespace OOFScheduling
                 return;
             }
         }
+
+        public async System.Threading.Tasks.Task setOOFO365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
+        {
+            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
+
+            try
+            {
+                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+
+                OofSettings myOOF = new OofSettings();
+
+                // Set the OOF status to be a scheduled time period.
+                myOOF.State = OofState.Scheduled;
+
+                // Select the time period during which to send OOF messages.
+                myOOF.Duration = new TimeWindow(StartTime, EndTime);
+
+                // Select the external audience that will receive OOF messages.
+                myOOF.ExternalAudience = OofExternalAudience.All;
+
+                // Set the OOF message for your internal audience.
+                myOOF.InternalReply = new OofReply(oofMessageInternal);
+
+                // Set the OOF message for your external audience.
+                myOOF.ExternalReply = new OofReply(oofMessageExternal);
+
+                string newinternal = Regex.Replace(myOOF.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string currentinternal = Regex.Replace(myOOFSettings.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string newexternal = Regex.Replace(myOOF.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+                string currentexternal = Regex.Replace(myOOFSettings.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+
+                if (myOOF.State != myOOFSettings.State ||
+                    myOOF.Duration != myOOFSettings.Duration ||
+                    newinternal != currentinternal ||
+                    newexternal != currentexternal)
+                {
+                    // Set value to Server if we have the user address and URL
+                    if (Exchange101.UserData.user.EmailAddress != null)
+                    {
+                        //variant using CredMan
+#if !NOOOF
+                        Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
+#endif
+                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
+                        RunStatusCheck();
+
+                        //report back to AppInsights
+                        AIClient.TrackEvent("Set OOF for user: " + AIClient.Context.User.Id.ToString());
+                    }
+
+                }
+                else
+                {
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
+                }
+            }
+            catch (Exception ex)
+            {
+                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
+                //don't send AI stuff if running in DEBUG
+                //report to AppInsights
+#if !DEBUG
+                AIClient.TrackException(ex);
+#endif
+                return;
+            }
+        }
+
         #endregion
         #endregion
 
@@ -990,7 +1115,7 @@ namespace OOFScheduling
 
         private void btnPermaOOF_Click(object sender, EventArgs e)
         {
-            AIClient.TrackEvent("Went PermaOOF");
+            OOFSponderInsights.Track("Went PermaOOF");
 
             //persist the HTML text if it has been set
             //assume the latest text in the HTML controls should win

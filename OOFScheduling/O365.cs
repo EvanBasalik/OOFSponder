@@ -7,19 +7,19 @@ using Microsoft.Identity.Client;
 
 namespace OOFScheduling
 {
-    class O365
+    internal class O365
     {
 
         private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
-        public static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId);
+        internal static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId);
 
         //Set the API Endpoint to Graph 'me' endpoint
-        string _graphAPIEndpoint = "https://graph.microsoft.com/v1.0/me";
+        static string _graphAPIEndpoint = "https://graph.microsoft.com/v1.0/me";
 
         //Set the scope for API call to user.read
-        string[] _scopes = new string[] { "user.read" };
+        static string[] _scopes = new string[] { "user.read" };
 
-        private enum AADAction
+        internal enum AADAction
         {
             SignIn, SignOut, ForceSignIn
         }
@@ -27,7 +27,7 @@ namespace OOFScheduling
         /// <summary>
         /// Call AcquireTokenAsync - to acquire a token requiring user to sign-in
         /// </summary>
-        private async Task<bool> MSALWork(AADAction action)
+        internal async static Task<bool> MSALWork(AADAction action)
         {
             bool _result = false;
             AuthenticationResult authResult = null;
@@ -41,7 +41,7 @@ namespace OOFScheduling
                 catch (MsalUiRequiredException ex)
                 {
                     // A MsalUiRequiredException happened on AcquireTokenSilentAsync. This indicates you need to call AcquireTokenAsync to acquire a token
-                    DbgLog($"MsalUiRequiredException: {ex.Message}");
+                    OOFSponder.Logger.Info($"MsalUiRequiredException: {ex.Message}");
 
                     if (action == AADAction.ForceSignIn)
                     {
@@ -51,14 +51,14 @@ namespace OOFScheduling
                         }
                         catch (MsalException msalex)
                         {
-                            DbgLog($"Error Acquiring Token:{System.Environment.NewLine}{msalex}");
+                            OOFSponder.Logger.Error(new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
                         }
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    BuddyInsights.AIClient.TrackException(new Exception("Error Acquiring Token Silently", ex));
+                    OOFSponderInsights.TrackException("Error Acquiring Token Silently", ex);
                     return false;
                 }
 
@@ -68,7 +68,7 @@ namespace OOFScheduling
                     _result = true;
 
                     //also, update the Application Insights info with the authenticated user
-                    BuddyInsights.AIClient.Context.User.Id = authResult.User.DisplayableId.Split('@')[0];
+                   OOFSponderInsights.AIClient.Context.User.Id = authResult.User.DisplayableId.Split('@')[0];
                 }
                 else
                 {
@@ -86,8 +86,8 @@ namespace OOFScheduling
                     }
                     catch (MsalException ex)
                     {
-                        DbgLog($"Error signing-out user: {ex.Message}");
-                        BuddyInsights.AIClient.TrackException(new Exception($"Error signing-out user: {ex.Message}", ex));
+                        OOFSponder.Logger.Error($"Error signing-out user: {ex.Message}");
+                        OOFSponderInsights.TrackException($"Error signing-out user: {ex.Message}", ex);
                     }
                 }
             }
