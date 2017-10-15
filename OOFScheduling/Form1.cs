@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using System.Threading;
 using System.Reflection;
 using Newtonsoft.Json;
+using Microsoft.Graph;
 
 namespace OOFScheduling
 {
@@ -103,7 +104,7 @@ namespace OOFScheduling
 
             //prep for async work
             System.Threading.Tasks.Task AuthTask = null;
-            AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.ForceSignIn); }));
+            AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (OOFData.Instance.IsPermaOOFOn)
@@ -718,14 +719,24 @@ namespace OOFScheduling
         {
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
+            //need to convert the times from local datetime to DateTimeTimeZone
+            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToString("u").Replace("Z",""), TimeZone = TimeZone.CurrentTimeZone.StandardName };
+            DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToString("u").Replace("Z", ""), TimeZone = TimeZone.CurrentTimeZone.StandardName };
+
+            //create local OOF object
+            AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
+            localOOF.ExternalReplyMessage = oofMessageExternal;
+            localOOF.InternalReplyMessage = oofMessageInternal;
+            localOOF.ScheduledStartDateTime = oofStart;
+            localOOF.ScheduledEndDateTime = oofEnd;
+    
             //try
             //{
 
-            string raw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
-            Microsoft.Graph.MailboxSettings jsonDe = JsonConvert.DeserializeObject<Microsoft.Graph.MailboxSettings>(raw);
+            string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
+            AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
+            //AutomaticRepliesSetting remoteOOF = mailboxSettings.AutomaticRepliesSetting;
             
-                
-
             //                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
 
             //                OofSettings myOOF = new OofSettings();
@@ -774,6 +785,16 @@ namespace OOFScheduling
             //                {
             //                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
             //                }
+
+            if (remoteOOF.ExternalReplyMessage != localOOF.ExternalReplyMessage
+                    || remoteOOF.InternalReplyMessage != localOOF.InternalReplyMessage
+                    || remoteOOF.Status != AutomaticRepliesStatus.Scheduled
+                    || remoteOOF.ScheduledStartDateTime != localOOF.ScheduledStartDateTime
+                    || remoteOOF.ScheduledEndDateTime != localOOF.ScheduledEndDateTime
+                    )
+            {
+                //string setOOFResponse = O365.GetHttpContentWithToken()
+            }
             //            }
             //            catch (Exception ex)
             //            {
