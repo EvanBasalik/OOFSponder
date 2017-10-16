@@ -250,64 +250,6 @@ namespace OOFScheduling
             MessageBox.Show("Cleared credentials. Please exit and restart.", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
 
-        //private async System.Threading.Tasks.Task RunGetCreds()
-        //{
-        //    UpdateStatusLabel(toolStripStatusLabel2, "Configuring Exchange, please wait.");
-        //    notifyIcon1.Text = "Configuring Exchange, please wait.";
-
-        //    try
-        //    {
-        //        await System.Threading.Tasks.Task.Run(() => GetCreds());
-        //        UpdateStatusLabel(toolStripStatusLabel2, "Found your Exchange server!");
-        //        notifyIcon1.Text = "Found your Exchange server!";
-        //    }
-        //    catch (System.Security.Authentication.AuthenticationException authEx)
-        //    {
-        //        //AuthenticationException should be handled lower in the stack, so just record it
-        //        //and move on
-        //        AIClient.TrackException(authEx);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        AIClient.TrackException(ex);
-        //        MessageBox.Show("Unable to find your Exchange server. Please try again later", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-
-
-
-
-        //}
-
-        //    private async System.Threading.Tasks.Task GetCreds()
-        //{
-        //    //if we have the EWSURL, then send it in
-        //    Exchange101.UserData user = new Exchange101.UserData();
-        //    if (Properties.Settings.Default.EWSURL != "default")
-        //    {
-        //        user.AutodiscoverUrl = new Uri(Properties.Settings.Default.EWSURL);
-        //        Exchange101.Service.ConnectToService(user);
-        //    }
-        //    else
-        //    {
-
-        //        //should really have a more elegant way of doing this, but that is future work
-        //        //if we get here, that means we don't have creds or URL
-        //        //MessageBox.Show("No Exchange server identified yet. This may take a couple minutes");
-        //        //therefore, turn on autodiscover tracing
-        //        Exchange101.Service.ConnectToService(true);
-        //        Properties.Settings.Default.EWSURL = Exchange101.Service.Instance.Url.ToString();
-        //        //MessageBox.Show("Found your Exchange server!");
-
-        //        Properties.Settings.Default.Save();
-        //    }
-
-        //    //map the collected info to the properties
-        //    foundexchange = true;
-        //    Properties.Settings.Default.EncryptPW = "UsingCredMan";
-        //    Properties.Settings.Default.EmailAddress = Exchange101.UserData.user.EmailAddress;
-        //    Properties.Settings.Default.Save();
-        //}
-
         #region Set Oof Timed Loop
         void Loopy()
         {
@@ -505,9 +447,6 @@ namespace OOFScheduling
             if (haveNecessaryData)
             {
                 string emailAddress = Properties.Settings.Default.EmailAddress;
-                //need to move these to *after* decided whether to use Primary or Secondary
-                //string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
-                //string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
                 DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
 
                 //if PermaOOF is turned on, need to adjust the end time
