@@ -620,7 +620,7 @@ namespace OOFScheduling
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
-                    await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
+                    bool result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
                 }
                 else
                 //since permaOOF is on, need to adjust the end date such that is permaOOFDate
@@ -926,7 +926,13 @@ namespace OOFScheduling
 
         private void RunManualMenu(object sender, EventArgs e)
         {
-            RunSetOof();
+            //don't send AI stuff if running in DEBUG
+            //report to AppInsights
+#if !DEBUG
+            AIClient.TrackEvent("Setting OOF manually");
+#endif
+            //RunSetOof();
+            RunSetOofO365();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -1086,13 +1092,6 @@ namespace OOFScheduling
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             minimize = false;
-
-            //flush AI data
-            if (AIClient != null)
-            {
-                AIClient.Flush(); // only for desktop apps
-            }
-
             Application.Exit();
         }
 
