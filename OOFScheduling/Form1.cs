@@ -262,7 +262,7 @@ namespace OOFScheduling
 
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            RunSetOof();
+            RunSetOofO365();
             RunStatusCheck();
         }
         #endregion
@@ -425,89 +425,6 @@ namespace OOFScheduling
         }
         #endregion
         #region Oof Set
-        private async void RunSetOof()
-        {
-            bool haveNecessaryData = false;
-
-            //if CredMan is turned on, then we don't need the email or password
-            //but we still need the OOF messages and working hours
-            //also, don't need to check SecondaryOOF messages for two reasons:
-            //1) they won't always be set
-            //2) the UI flow won't let you get here with permaOOF if they aren't set
-            if (OOFData.Instance.ExternalOOFMessage != "default" &&
-                OOFData.Instance.InternalOOFMessage != "default" &&
-                OOFData.Instance.WorkingHours != "default" &&
-                Properties.Settings.Default.EncryptPW == "UsingCredMan" &&
-                Properties.Settings.Default.EWSURL != "default" &&
-                foundexchange)
-            {
-                haveNecessaryData = true;
-            }
-
-            if (haveNecessaryData)
-            {
-                string emailAddress = Properties.Settings.Default.EmailAddress;
-                DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
-
-                //if PermaOOF is turned on, need to adjust the end time
-                if (OOFData.Instance.PermaOOFDate < oofTimes[0])
-                {
-                    //turn off permaOOF
-                    //NOTE: this all should be abstracted in a Property somewhere
-                    OOFData.Instance.IsPermaOOFOn = false;
-
-                    //set all the UI stuff back to primary 
-                    //to set up for normal OOF schedule
-                    SetUIforPrimary();
-
-                }
-
-                //persist settings just in case
-                string oofMessageExternal= htmlEditorControl1.BodyHtml;
-                string oofMessageInternal= htmlEditorControl2.BodyHtml;
-                if (!OOFData.Instance.IsPermaOOFOn)
-                {
-                    OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                    OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
-                }
-                else
-                {
-                    OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                    OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
-                }
-
-                OOFScheduling.Properties.Settings.Default.Save();
-
-
-                //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
-                if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
-                {
-                    await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
-                }
-                else
-                //since permaOOF is on, need to adjust the end date such that is permaOOFDate
-                //if permaOOF>oofTimes[0] and permaOOF<oofTimes[1], then AddDays((permaOOFDate - oofTimes[1]).Days
-                //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
-                {
-                    int adjustmentDays = 0;
-                    if(OOFData.Instance.PermaOOFDate>oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
-                    {
-                        adjustmentDays = 1;
-                    }
-
-                    //in order to accomodate someone going OOF mid-schedule
-                    //check if now is before the next scheduled "OFF" slot
-                    //if it is, then adjust start time to NOW
-                    if (oofTimes[0] > DateTime.Now)
-                    {
-                        oofTimes[0] = DateTime.Now;
-                    }
-#if !NOOOF
-                    await System.Threading.Tasks.Task.Run(() => setOOF(emailAddress, oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
-#endif
-                }
-            }
-        }
 
         private async void RunSetOofO365()
         {
@@ -870,7 +787,6 @@ namespace OOFScheduling
 #if !DEBUG
             AIClient.TrackEvent("Setting OOF manually");
 #endif
-            //RunSetOof();
             RunSetOofO365();
         }
 
@@ -1076,9 +992,7 @@ namespace OOFScheduling
                 OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
 
                 //actually go OOF now
-                //RunSetOof();
                 RunSetOofO365();
-
                 SetUIforPermaOOF();
             }
 
