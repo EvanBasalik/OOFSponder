@@ -120,7 +120,7 @@ namespace OOFScheduling
 
             if (OOFData.Instance.WorkingHours!= "")
             {
-                string[] workingHours = Properties.Settings.Default.workingHours.Split('|');
+                string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
 
                 //Zero means you are off that day (not working) therefore the box is checked
                 string[] dayHours = workingHours[0].Split('~');
@@ -494,9 +494,9 @@ namespace OOFScheduling
             //2) the UI flow won't let you get here with permaOOF if they aren't set
             if (OOFData.Instance.ExternalOOFMessage != "default" &&
                 OOFData.Instance.InternalOOFMessage != "default" &&
-                OOFScheduling.Properties.Settings.Default.workingHours != "default" &&
-                OOFScheduling.Properties.Settings.Default.EncryptPW == "UsingCredMan" &&
-                OOFScheduling.Properties.Settings.Default.EWSURL != "default" &&
+                OOFData.Instance.WorkingHours != "default" &&
+                Properties.Settings.Default.EncryptPW == "UsingCredMan" &&
+                Properties.Settings.Default.EWSURL != "default" &&
                 foundexchange)
             {
                 haveNecessaryData = true;
@@ -508,7 +508,7 @@ namespace OOFScheduling
                 //need to move these to *after* decided whether to use Primary or Secondary
                 //string oofMessageExternal = Properties.Settings.Default.OOFHtmlExternal;
                 //string oofMessageInternal = Properties.Settings.Default.OOFHtmlInternal;
-                DateTime[] oofTimes = getOofTime(Properties.Settings.Default.workingHours);
+                DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
 
                 //if PermaOOF is turned on, need to adjust the end time
                 if (OOFData.Instance.PermaOOFDate < oofTimes[0])
@@ -1125,7 +1125,7 @@ namespace OOFScheduling
             }
 
             //only set up for permaOOF if we have OOF messages
-            if (Properties.Settings.Default.SecondaryOOFExternal == String.Empty | Properties.Settings.Default.SecondaryOOFInternal == String.Empty)
+            if (OOFData.Instance.SecondaryOOFExternalMessage == String.Empty | OOFData.Instance.SecondaryOOFInternalMessage == String.Empty)
             {
                 MessageBox.Show("Unable to turn on extended OOF - Secondary OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -1137,7 +1137,8 @@ namespace OOFScheduling
                 OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
 
                 //actually go OOF now
-                RunSetOof();
+                //RunSetOof();
+                RunSetOofO365();
 
                 SetUIforPermaOOF();
             }
