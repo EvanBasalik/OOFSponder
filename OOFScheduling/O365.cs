@@ -14,6 +14,7 @@ namespace OOFScheduling
         private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
         internal static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId, "https://login.microsoftonline.com/common", TokenCacheHelper.GetUserCache());
         internal static string AutomatedReplySettingsURL = "/mailboxSettings/automaticRepliesSetting";
+        internal static string MailboxSettingsURL = "/mailboxSettings";
 
         //Set the API Endpoint to Graph 'me' endpoint
         static string _graphAPIEndpoint = "https://graph.microsoft.com/v1.0/me";
@@ -99,7 +100,6 @@ namespace OOFScheduling
         /// Perform an HTTP GET request to a URL using an HTTP Authorization header
         /// </summary>
         /// <param name="url">The URL</param>
-        /// <param name="token">The token</param>
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<string> GetHttpContentWithToken(string url)
         {
@@ -119,6 +119,42 @@ namespace OOFScheduling
             catch (Exception ex)
             {
                 return ex.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Perform an HTTP GET request to a URL using an HTTP Authorization header
+        /// </summary>
+        /// <param name="url">The URL</param>
+        /// <param name="token">The token</param>
+        /// <returns>String containing the results of the GET operation</returns>
+        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF )
+        {
+            var httpClient = new System.Net.Http.HttpClient();
+            System.Net.Http.HttpMethod method = new System.Net.Http.HttpMethod("PATCH");
+            System.Net.Http.HttpResponseMessage response;
+
+            //         var response = client.PostAsync("api/AgentCollection", new StringContent(
+            //new JavaScriptSerializer().Serialize(user), Encoding.UTF8, "application/json")).Result;
+
+            try
+            {
+                Microsoft.Graph.MailboxSettings mbox = new Microsoft.Graph.MailboxSettings();
+                mbox.AutomaticRepliesSetting = OOF;
+
+                var request = new System.Net.Http.HttpRequestMessage(method, UrlCombine(_graphAPIEndpoint, url));
+                var jsonBody = Newtonsoft.Json.JsonConvert.SerializeObject(mbox);
+                System.Net.Http.StringContent iContent = new System.Net.Http.StringContent(jsonBody, Encoding.UTF8, "application/json");
+                request.Content = iContent;
+                //Add the token in Authorization header
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
+                response = await httpClient.SendAsync(request);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception ("Unable to set OOF: " + ex.Message, ex);
             }
         }
 
