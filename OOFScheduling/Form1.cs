@@ -500,73 +500,73 @@ namespace OOFScheduling
             }
         }
 
-        public async System.Threading.Tasks.Task setOOF(string EmailAddress, string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
-        {
-            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
+//        public async System.Threading.Tasks.Task setOOF(string EmailAddress, string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
+//        {
+//            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
 
-            try
-            {
-                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
+//            try
+//            {
+//                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
 
-                OofSettings myOOF = new OofSettings();
+//                OofSettings myOOF = new OofSettings();
 
-                // Set the OOF status to be a scheduled time period.
-                myOOF.State = OofState.Scheduled;
+//                // Set the OOF status to be a scheduled time period.
+//                myOOF.State = OofState.Scheduled;
 
-                // Select the time period during which to send OOF messages.
-                myOOF.Duration = new TimeWindow(StartTime, EndTime);
+//                // Select the time period during which to send OOF messages.
+//                myOOF.Duration = new TimeWindow(StartTime, EndTime);
 
-                // Select the external audience that will receive OOF messages.
-                myOOF.ExternalAudience = OofExternalAudience.All;
+//                // Select the external audience that will receive OOF messages.
+//                myOOF.ExternalAudience = OofExternalAudience.All;
 
-                // Set the OOF message for your internal audience.
-                myOOF.InternalReply = new OofReply(oofMessageInternal);
+//                // Set the OOF message for your internal audience.
+//                myOOF.InternalReply = new OofReply(oofMessageInternal);
 
-                // Set the OOF message for your external audience.
-                myOOF.ExternalReply = new OofReply(oofMessageExternal);
+//                // Set the OOF message for your external audience.
+//                myOOF.ExternalReply = new OofReply(oofMessageExternal);
 
-                string newinternal = Regex.Replace(myOOF.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-                string currentinternal = Regex.Replace(myOOFSettings.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-                string newexternal = Regex.Replace(myOOF.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-                string currentexternal = Regex.Replace(myOOFSettings.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+//                string newinternal = Regex.Replace(myOOF.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+//                string currentinternal = Regex.Replace(myOOFSettings.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+//                string newexternal = Regex.Replace(myOOF.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
+//                string currentexternal = Regex.Replace(myOOFSettings.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
 
-                if (myOOF.State != myOOFSettings.State ||
-                    myOOF.Duration != myOOFSettings.Duration ||
-                    newinternal != currentinternal ||
-                    newexternal != currentexternal)
-                {
-                    // Set value to Server if we have the user address and URL
-                    if (Exchange101.UserData.user.EmailAddress !=null)
-                    {
-                        //variant using CredMan
-#if !NOOOF
-                        Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
-#endif
-                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
-                        RunStatusCheck();
+//                if (myOOF.State != myOOFSettings.State ||
+//                    myOOF.Duration != myOOFSettings.Duration ||
+//                    newinternal != currentinternal ||
+//                    newexternal != currentexternal)
+//                {
+//                    // Set value to Server if we have the user address and URL
+//                    if (Exchange101.UserData.user.EmailAddress !=null)
+//                    {
+//                        //variant using CredMan
+//#if !NOOOF
+//                        Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
+//#endif
+//                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
+//                        RunStatusCheck();
 
-                        //report back to AppInsights
-                        OOFSponderInsights.Track("Set OOF");
-                    }
+//                        //report back to AppInsights
+//                        OOFSponderInsights.Track("Set OOF");
+//                    }
 
-                }
-                else
-                {
-                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
-                }
-            }
-            catch (Exception ex)
-            {
-                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
-                //don't send AI stuff if running in DEBUG
-                //report to AppInsights
-#if !DEBUG
-                AIClient.TrackException(ex);
-#endif
-                return;
-            }
-        }
+//                }
+//                else
+//                {
+//                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
+//                }
+//            }
+//            catch (Exception ex)
+//            {
+//                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
+//                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
+//                //don't send AI stuff if running in DEBUG
+//                //report to AppInsights
+//#if !DEBUG
+//                AIClient.TrackException(ex);
+//#endif
+//                return;
+//            }
+//        }
 
         public async System.Threading.Tasks.Task<bool> TrySetOOF365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
