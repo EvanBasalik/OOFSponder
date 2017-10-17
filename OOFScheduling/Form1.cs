@@ -25,9 +25,6 @@ namespace OOFScheduling
         //Track if we have turned on the manual oof message
         private bool manualoof = false;
 
-        //Track if we have a valid exchange connection
-        private bool foundexchange = false;
-
         public Form1()
         {
             
