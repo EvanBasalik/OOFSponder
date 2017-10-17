@@ -2,16 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OOFScheduling.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="EmailAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
-    <Setting Name="EncryptPW" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
     <Setting Name="workingHours" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
-    <Setting Name="EWSURL" Type="System.String" Scope="User">
       <Value Profile="(Default)">default</Value>
     </Setting>
     <Setting Name="IsPermaOOFOn" Type="System.Boolean" Scope="User">

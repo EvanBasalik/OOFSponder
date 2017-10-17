@@ -26,48 +26,12 @@ namespace OOFScheduling.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("default")]
-        public string EmailAddress {
-            get {
-                return ((string)(this["EmailAddress"]));
-            }
-            set {
-                this["EmailAddress"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("default")]
-        public string EncryptPW {
-            get {
-                return ((string)(this["EncryptPW"]));
-            }
-            set {
-                this["EncryptPW"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("default")]
         public string workingHours {
             get {
                 return ((string)(this["workingHours"]));
             }
             set {
                 this["workingHours"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("default")]
-        public string EWSURL {
-            get {
-                return ((string)(this["EWSURL"]));
-            }
-            set {
-                this["EWSURL"] = value;
             }
         }
         

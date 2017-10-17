@@ -49,9 +49,6 @@ namespace OOFScheduling
             }
             #endregion
 
-            #region AddMenuItems
-            AddMenuItems();
-            #endregion
             OOFSponderInsights.ConfigureApplicationInsights();
 
             #region Add to Startup
@@ -92,12 +89,7 @@ namespace OOFScheduling
 
             #endregion
             #region Fill in property data if set
-            //we could always get from CredMan, but setting it anyway to avoid
-            //breaking other code dependencies that are checking to see if this is set
-            if (Properties.Settings.Default.EmailAddress != "default")
-            {
-                emailAddressTB.Text = Properties.Settings.Default.EmailAddress;
-            }
+
 
             //prep for async work
             System.Threading.Tasks.Task AuthTask = null;
@@ -210,43 +202,6 @@ namespace OOFScheduling
             }
         }
 
-        private void AddMenuItems()
-        {
-
-            //for some reason, just touching the main form adds margins to everything
-            //so doing this in code
-            System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem = new ToolStripMenuItem();
-            clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            clearToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            clearToolStripMenuItem.Text = "Clear Stored Credentials";
-            clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
-
-
-            this.fileToolStripMenuItem.DropDownItems.Insert(0,clearToolStripMenuItem);
-        }
-
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            ClearAllCreds();
-
-        }
-
-        private static void ClearAllCreds()
-        {
-            //also clear out the stored credentials
-            Exchange101.Service.ClearCredentials();
-
-            //autodiscover is only done if Properties.Settings.Default.EWSURL != "default"
-            //so setting it to default is the equivalent of resetting credential properties
-            Properties.Settings.Default.EWSURL = "default";
-            Properties.Settings.Default.Save();
-
-            //rather than fighting with system and UI state
-            //just tell the user the exit and restart
-            MessageBox.Show("Cleared credentials. Please exit and restart.", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
-
         #region Set Oof Timed Loop
         void Loopy()
         {
@@ -268,60 +223,58 @@ namespace OOFScheduling
         #region Oof Status Check
         private async void RunStatusCheck()
         {
-            if (Properties.Settings.Default.EmailAddress != "default" &&
-                Properties.Settings.Default.EncryptPW != "default"
-                && Properties.Settings.Default.EncryptPW == "UsingCredMan" 
-                && Properties.Settings.Default.EWSURL != "default"
-                && foundexchange
-                )
-            {
-                string emailAddress = Properties.Settings.Default.EmailAddress;
-                await System.Threading.Tasks.Task.Run(() => checkOOFStatus(emailAddress));
-            }
+            await System.Threading.Tasks.Task.Run(() => checkOOFStatus());
         }
 
-        public async System.Threading.Tasks.Task checkOOFStatus(string EmailAddress)
+        public async System.Threading.Tasks.Task checkOOFStatus()
         {
             try
             {
-                //variant using CredMan
-                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Properties.Settings.Default.EmailAddress);
+
+                //get current OOF state from O365
+                string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
+                AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
 
                 string currentStatus = "";
 
-                if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime > DateTime.Now && myOOFSettings.Duration.EndTime < DateTime.Now))
+                if (remoteOOF.Status ==AutomaticRepliesStatus.Scheduled && (DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) > DateTime.UtcNow && DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) < DateTime.UtcNow))
                 {
-                    currentStatus = "OOF until " + myOOFSettings.Duration.EndTime.ToString();
+                    //remote is in UTC, so need to convert to local for UI
+                    currentStatus = "OOF until " + DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime).ToLocalTime();
                 }
-                else if (myOOFSettings.State == OofState.Scheduled && (myOOFSettings.Duration.StartTime < DateTime.Now || myOOFSettings.Duration.EndTime > DateTime.Now)) 
+                else if (remoteOOF.Status == AutomaticRepliesStatus.Scheduled && (DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) < DateTime.UtcNow || DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) > DateTime.UtcNow)) 
                 {
-                    currentStatus = "OOF starting at " + myOOFSettings.Duration.StartTime.ToString();
+                    //remote is in UTC, so need to convert to local for UI
+                    currentStatus = "OOF starting at " + DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime).ToLocalTime();
                 }
-                else if (myOOFSettings.State == OofState.Enabled)
+                else if (remoteOOF.Status == AutomaticRepliesStatus.AlwaysEnabled)
                 {
                     currentStatus = "Currently OOF";
                 }
-                else if (myOOFSettings.State == OofState.Disabled)
+                else if (remoteOOF.Status == AutomaticRepliesStatus.Disabled)
                 {
                     currentStatus = "OOF Disabled";
                 }
 
                 //pull the existing OOF messages in
-                //this accounts for where someone changes te message externally
-                htmlEditorControl1.BodyHtml = myOOFSettings.ExternalReply;
-                htmlEditorControl2.BodyHtml = myOOFSettings.InternalReply;
-
-                //save them
-                OOFData.Instance.ExternalOOFMessage = myOOFSettings.ExternalReply;
-                OOFData.Instance.InternalOOFMessage = myOOFSettings.InternalReply;
-                Properties.Settings.Default.Save();
+                //this accounts for where someone changes the message externally
+                if (!OOFData.Instance.IsPermaOOFOn)
+                {
+                    htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage = remoteOOF.ExternalReplyMessage;
+                    htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage = remoteOOF.InternalReplyMessage;
+                }
+                else
+                {
+                    htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage = remoteOOF.ExternalReplyMessage;
+                    htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage = remoteOOF.InternalReplyMessage;
+                }
 
                 UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
                 notifyIcon1.Text = "Current Status: " + currentStatus;
             }
             catch (Exception ex)
             {
-                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
+                notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect or we cannot contact the server please check your settings and try again");
                             //don't send AI stuff if running in DEBUG
 #if !DEBUG
@@ -335,89 +288,91 @@ namespace OOFScheduling
         #region Oof Manual Run
         private async void RunManualOOF()
         {
-            if (Properties.Settings.Default.EmailAddress != "default" &&
-                OOFData.Instance.ExternalOOFMessage != "default" &&
-                OOFData.Instance.InternalOOFMessage != "default" &&
-                Properties.Settings.Default.EncryptPW != "default"
-                && Properties.Settings.Default.EncryptPW == "UsingCredMan"
-                && Properties.Settings.Default.EWSURL != "default"
-                && foundexchange
+            if (OOFData.Instance.ExternalOOFMessage != "default" &&
+                OOFData.Instance.InternalOOFMessage != "default"
                 )
             {
-                string emailAddress = Properties.Settings.Default.EmailAddress;
                 //Toggle Manual OOF
-                await System.Threading.Tasks.Task.Run(() => setManualOOF(emailAddress, OOFData.Instance.ExternalOOFMessage, 
+                bool result = await System.Threading.Tasks.Task.Run(() => setManualOOF(OOFData.Instance.ExternalOOFMessage, 
                     OOFData.Instance.InternalOOFMessage, !manualoof));
+
+                if (result)
+                {
+                    OOFSponderInsights.Track("Set OOF manually");
+                }
+                else
+                {
+                    OOFSponderInsights.Track("Unable to set OOF manually");
+                }
             }
         }
 
-        public async System.Threading.Tasks.Task setManualOOF(string emailAddress, string oofMessageExternal, string oofMessageInternal, bool on)
+        public async System.Threading.Tasks.Task<bool> setManualOOF(string oofMessageExternal, string oofMessageInternal, bool on)
         {
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
 
             try
             {
-                //variant using CredMan
-                OofSettings myOOFSettings = Exchange101.Service.Instance.GetUserOofSettings(Exchange101.UserData.user.EmailAddress);
-
-                OofSettings myOOF = new OofSettings();
+                //create local OOF object
+                AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
+                localOOF.ExternalReplyMessage = oofMessageExternal;
+                localOOF.InternalReplyMessage = oofMessageInternal;
 
                 // Set the OOF status to be a scheduled time period.
-                if(on)
-                    myOOF.State = OofState.Enabled;
-                else
-                    myOOF.State = OofState.Disabled;
-
-                // Select the external audience that will receive OOF messages.
-                myOOF.ExternalAudience = OofExternalAudience.All;
-
-                // Set the OOF message for your internal audience.
-                myOOF.InternalReply = new OofReply(oofMessageInternal);
-
-                // Set the OOF message for your external audience.
-                myOOF.ExternalReply = new OofReply(oofMessageExternal);
-
-                string newinternal = Regex.Replace(myOOF.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-                string currentinternal = Regex.Replace(myOOFSettings.InternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-                string newexternal = Regex.Replace(myOOF.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-                string currentexternal = Regex.Replace(myOOFSettings.ExternalReply, @"\r\n|\n\r|\n|\r", "\r\n");
-
-                if (myOOF.State != myOOFSettings.State ||
-                    newinternal != currentinternal ||
-                    newexternal != currentexternal)
-                {
-                    // Set value to Server
-                    //variant using CredMan
-                    Exchange101.Service.Instance.SetUserOofSettings(Exchange101.UserData.user.EmailAddress, myOOF);
-                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF Message set on Server");
-                    RunStatusCheck();
-                }
-                else
-                {
-                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not set on Server");
-                }
                 if (on)
-                    manualoof = true;
+                    localOOF.Status = AutomaticRepliesStatus.AlwaysEnabled;
                 else
-                    manualoof = false;
+                    localOOF.Status = AutomaticRepliesStatus.Disabled;
 
-                
-                //don't send AI stuff if running in DEBUG
-                //report to AppInsights
-#if !DEBUG
-                AIClient.TrackEvent("Set OOF manually");
-#endif
+                string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
+                AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
+
+                if (remoteOOF.ExternalReplyMessage != localOOF.ExternalReplyMessage
+                        || remoteOOF.InternalReplyMessage != localOOF.InternalReplyMessage
+                        || remoteOOF.Status != AutomaticRepliesStatus.Scheduled
+                        )
+                {
+                    System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
+
+                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set");
+
+                        //report back to AppInsights
+                        OOFSponderInsights.Track("Set OOF");
+
+                        //store the property
+                        if (on)
+                            manualoof = true;
+                        return manualoof;
+                    }
+                    else
+                    {
+                        //failed, turn off manual OOF
+                        manualoof = false;
+
+                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
+                        return manualoof;
+                    }
+
+                }
+                else
+                {
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed");
+                    manualoof = true;
+                    return manualoof;
+                }
             }
             catch (Exception ex)
             {
-                notifyIcon1.ShowBalloonTip(100, "Login Error", "Cannot login to Exchange, please check your password!", ToolTipIcon.Error);
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect");
+                notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
                 //don't send AI stuff if running in DEBUG
                 //report to AppInsights
 #if !DEBUG
                 AIClient.TrackException(ex);
 #endif
-                return;
+                return false;
             }
         }
         #endregion
@@ -1026,9 +981,6 @@ namespace OOFScheduling
             htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
 
-            Properties.Settings.Default.MessageOption = "2";
-            Properties.Settings.Default.Save();
-
             //lastly, enable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = true;
             dtPermaOOF.Enabled = true;
@@ -1058,9 +1010,6 @@ namespace OOFScheduling
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
-
-            Properties.Settings.Default.MessageOption = "1";
-            Properties.Settings.Default.Save();
 
             //lastly, disable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = false;
