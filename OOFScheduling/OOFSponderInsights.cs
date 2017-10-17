@@ -67,8 +67,6 @@ namespace OOFScheduling
             try
             {
                 AIClient.InstrumentationKey = "9eacd004 - 7944 - 4d2e-a978 - d66104c67a49";
-                // Set session data:
-                AIClient.Context.User.Id = Environment.UserName;
 
                 //use DEBUGAI if we actually want AppInsights from a DEBUG build
 #if DEBUGAI

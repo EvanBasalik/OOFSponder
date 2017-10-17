@@ -17,9 +17,6 @@ namespace OOFScheduling
     {
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
 
-        //AppInsights
-        Microsoft.ApplicationInsights.TelemetryClient AIClient = new Microsoft.ApplicationInsights.TelemetryClient();
-
         private ContextMenu trayMenu;
 
         //Track if force close or just hitting X to minimize
@@ -549,7 +546,7 @@ namespace OOFScheduling
                         RunStatusCheck();
 
                         //report back to AppInsights
-                        AIClient.TrackEvent("Set OOF for user: " + AIClient.Context.User.Id.ToString());
+                        OOFSponderInsights.Track("Set OOF");
                     }
 
                 }
@@ -606,7 +603,7 @@ namespace OOFScheduling
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set");
 
                         //report back to AppInsights
-                        AIClient.TrackEvent("Set OOF for user: " + AIClient.Context.User.Id.ToString());
+                        OOFSponderInsights.Track("Set OOF");
                         return true;
                     }
                     else
@@ -840,6 +837,9 @@ namespace OOFScheduling
         {
             saveSettings();
         }
+
+
+        #region WorkingDaysControls
         private void sundayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
             if (sundayOffWorkCB.Checked)
@@ -937,6 +937,7 @@ namespace OOFScheduling
                 saturdayEndTimepicker.Enabled = true;
             }
         }
+#endregion
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1003,7 +1004,7 @@ namespace OOFScheduling
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AIClient.TrackEvent("Configured secondary OOF messages");
+            OOFSponderInsights.Track("Configured secondary OOF messages");
 
             //persist the existing OOF messages as Primary and then pull in the secondary
             OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
