@@ -210,17 +210,13 @@ namespace OOFScheduling
 
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            RunSetOofO365();
-            RunStatusCheck();
+            await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
+            await checkOOFStatus();
         }
         #endregion
 
         #region Oof/EWS interaction
         #region Oof Status Check
-        private async void RunStatusCheck()
-        {
-            await System.Threading.Tasks.Task.Run(() => checkOOFStatus());
-        }
 
         public async System.Threading.Tasks.Task checkOOFStatus()
         {
