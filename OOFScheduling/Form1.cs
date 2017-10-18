@@ -166,8 +166,7 @@ namespace OOFScheduling
             bool haveNecessaryData = false;
 
 
-            //if CredMan is turned on, then we don't need the email or password
-            //but we still need the OOF messages and working hours
+            //we need the OOF messages and working hours
             if (OOFData.Instance.ExternalOOFMessage != "" && OOFData.Instance.InternalOOFMessage != "" 
                 && OOFData.Instance.WorkingHours != "")
             {
@@ -525,8 +524,8 @@ namespace OOFScheduling
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
             //need to convert the times from local datetime to DateTimeTimeZone
-            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToString("u").Replace("Z", ""), TimeZone = TimeZone.CurrentTimeZone.StandardName };
-            DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToString("u").Replace("Z", ""), TimeZone = TimeZone.CurrentTimeZone.StandardName };
+            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss"), TimeZone = "UTC"};
+            DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss"), TimeZone = "UTC" };
 
             //create local OOF object
             AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
@@ -534,6 +533,7 @@ namespace OOFScheduling
             localOOF.InternalReplyMessage = oofMessageInternal;
             localOOF.ScheduledStartDateTime = oofStart;
             localOOF.ScheduledEndDateTime = oofEnd;
+            localOOF.Status = AutomaticRepliesStatus.Scheduled;
 
             try
             {
@@ -541,11 +541,16 @@ namespace OOFScheduling
                 string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
                 AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
 
-                if (remoteOOF.ExternalReplyMessage != localOOF.ExternalReplyMessage
-                        || remoteOOF.InternalReplyMessage != localOOF.InternalReplyMessage
-                        || remoteOOF.Status != AutomaticRepliesStatus.Scheduled
-                        || remoteOOF.ScheduledStartDateTime != localOOF.ScheduledStartDateTime
-                        || remoteOOF.ScheduledEndDateTime != localOOF.ScheduledEndDateTime
+                bool externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
+                bool internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
+                //local and remote are both UTC, so just compare times
+                bool scheduledStartDateTimeEqual = remoteOOF.ScheduledStartDateTime.DateTime == localOOF.ScheduledStartDateTime.DateTime;
+                bool scheduledEndDateTimeEqual = remoteOOF.ScheduledEndDateTime.DateTime == localOOF.ScheduledEndDateTime.DateTime;
+
+                if ( !externalReplyMessageEqual
+                        || !internalReplyMessageEqual
+                        || !scheduledStartDateTimeEqual
+                        || !scheduledEndDateTimeEqual
                         )
                 {
                     System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
@@ -1028,6 +1033,14 @@ namespace OOFScheduling
                 OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
+        }
+    }
+
+    internal static class Extensions
+    {
+        internal static string CleanReplyMessage(this string input)
+        {
+            return Regex.Replace(input, @"\r\n|\n\r|\n|\r", "\r\n");
         }
     }
 }
