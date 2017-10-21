@@ -30,11 +30,6 @@ namespace OOFScheduling
             
             InitializeComponent();
 
-            //workaround for strange form sizing on Evan's laptop
-#if DEBUG
-            this.Height = 1500;
-#endif
-
             #region SetBuildInfo
             foreach (Assembly a in Thread.GetDomain().GetAssemblies())
             {
@@ -185,7 +180,6 @@ namespace OOFScheduling
             toolStripStatusLabel2.Text = "";
             #endregion
             Loopy();
-            System.Threading.Tasks.Task.Run(() => checkOOFStatus());
 
             //set up handlers to persist OOF messages
             htmlEditorControl1.Validated += htmlEditorValidated;
@@ -196,6 +190,9 @@ namespace OOFScheduling
             {
                 AuthTask.Wait();
             }
+
+            //needs to be after the login
+            System.Threading.Tasks.Task.Run(() => checkOOFStatus());
         }
 
         #region Set Oof Timed Loop
