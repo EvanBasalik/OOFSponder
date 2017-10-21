@@ -185,7 +185,7 @@ namespace OOFScheduling
             toolStripStatusLabel2.Text = "";
             #endregion
             Loopy();
-            RunStatusCheck();
+            System.Threading.Tasks.Task.Run(() => checkOOFStatus());
 
             //set up handlers to persist OOF messages
             htmlEditorControl1.Validated += htmlEditorValidated;

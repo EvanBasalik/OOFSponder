@@ -59,7 +59,6 @@
             this.thursdayOffWorkCB = new System.Windows.Forms.CheckBox();
             this.fridayOffWorkCB = new System.Windows.Forms.CheckBox();
             this.saturdayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.btnRunManually = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.lblExternalMesage = new System.Windows.Forms.Label();
             this.lblInternalMessage = new System.Windows.Forms.Label();
@@ -381,19 +380,9 @@
             this.saturdayOffWorkCB.UseVisualStyleBackColor = true;
             this.saturdayOffWorkCB.CheckedChanged += new System.EventHandler(this.saturdayOffWorkCB_CheckedChanged);
             // 
-            // btnRunManually
-            // 
-            this.btnRunManually.Location = new System.Drawing.Point(12, 719);
-            this.btnRunManually.Name = "btnRunManually";
-            this.btnRunManually.Size = new System.Drawing.Size(87, 23);
-            this.btnRunManually.TabIndex = 29;
-            this.btnRunManually.Text = "Run Manually";
-            this.btnRunManually.UseVisualStyleBackColor = true;
-            this.btnRunManually.Click += new System.EventHandler(this.btnRunManually_Click);
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(105, 719);
+            this.button2.Location = new System.Drawing.Point(12, 719);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(84, 23);
             this.button2.TabIndex = 38;
@@ -465,7 +454,7 @@
             // 
             this.secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
             this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.secondaryToolStripMenuItem.Text = "Extended OOF";
+            this.secondaryToolStripMenuItem.Text = "Secondary";
             this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
@@ -660,7 +649,6 @@
             this.Controls.Add(this.htmlEditorControl2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.htmlEditorControl1);
-            this.Controls.Add(this.btnRunManually);
             this.Controls.Add(this.saturdayOffWorkCB);
             this.Controls.Add(this.fridayOffWorkCB);
             this.Controls.Add(this.thursdayOffWorkCB);
@@ -739,7 +727,6 @@
         private System.Windows.Forms.CheckBox thursdayOffWorkCB;
         private System.Windows.Forms.CheckBox fridayOffWorkCB;
         private System.Windows.Forms.CheckBox saturdayOffWorkCB;
-        private System.Windows.Forms.Button btnRunManually;
         private MSDN.Html.Editor.HtmlEditorControl htmlEditorControl1;
         private System.Windows.Forms.Button button2;
         private MSDN.Html.Editor.HtmlEditorControl htmlEditorControl2;
