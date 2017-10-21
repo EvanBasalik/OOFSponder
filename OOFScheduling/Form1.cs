@@ -22,9 +22,6 @@ namespace OOFScheduling
         //Track if force close or just hitting X to minimize
         private bool minimize = true;
 
-        //Track if we have turned on the manual oof message
-        private bool manualoof = false;
-
         public Form1()
         {
             
