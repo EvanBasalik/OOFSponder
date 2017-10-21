@@ -776,16 +776,6 @@ namespace OOFScheduling
 
         }
 
-        private async void btnRunManually_Click(object sender, EventArgs e)
-        {
-            //don't send AI stuff if running in DEBUG
-            //report to AppInsights
-#if !DEBUG
-            AIClient.TrackEvent("Setting OOF manually");
-#endif
-            RunSetOofO365();
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             saveSettings();
