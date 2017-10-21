@@ -83,6 +83,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnPermaOOF = new System.Windows.Forms.Button();
             this.dtPermaOOF = new System.Windows.Forms.DateTimePicker();
+            this.radPrimary = new System.Windows.Forms.RadioButton();
+            this.radSecondary = new System.Windows.Forms.RadioButton();
             this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
             this.menuStrip1.SuspendLayout();
@@ -389,6 +391,28 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // radPrimary
+            // 
+            this.radPrimary.AutoSize = true;
+            this.radPrimary.Location = new System.Drawing.Point(110, 722);
+            this.radPrimary.Name = "radPrimary";
+            this.radPrimary.Size = new System.Drawing.Size(126, 24);
+            this.radPrimary.TabIndex = 56;
+            this.radPrimary.TabStop = true;
+            this.radPrimary.Text = "Primary OOF";
+            this.radPrimary.UseVisualStyleBackColor = true;
+            // 
+            // radSecondary
+            // 
+            this.radSecondary.AutoSize = true;
+            this.radSecondary.Location = new System.Drawing.Point(202, 722);
+            this.radSecondary.Name = "radSecondary";
+            this.radSecondary.Size = new System.Drawing.Size(126, 24);
+            this.radSecondary.TabIndex = 56;
+            this.radSecondary.TabStop = true;
+            this.radSecondary.Text = "Secondary OOF";
+            this.radSecondary.UseVisualStyleBackColor = true;
+            // 
             // lblExternalMesage
             // 
             this.lblExternalMesage.AutoSize = true;
@@ -665,6 +689,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.radPrimary);
+            this.Controls.Add(this.radSecondary);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -740,6 +766,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem primaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secondaryToolStripMenuItem;
+        private System.Windows.Forms.RadioButton radPrimary;
+        private System.Windows.Forms.RadioButton radSecondary;
 
     }
 }
