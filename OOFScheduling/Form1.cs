@@ -988,6 +988,27 @@ namespace OOFScheduling
             OOFSponderInsights.Track("Configured for primary");
         }
 
+        private void radPrimary_CheckedChanged(object sender, EventArgs e)
+        {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+            if (radPrimary.Checked)
+            {
+                SetUIforPrimary();
+            }
+        }
+
+        private void radSecondary_CheckedChanged(object sender, EventArgs e)
+        {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+            if (radSecondary.Checked)
+            {
+                SetUIforPermaOOF();
+            }
+        }
+
+
         //common call for both controls, regardless of primary or secondary
         private void htmlEditorValidated(object sender, EventArgs e)
         {

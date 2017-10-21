@@ -402,6 +402,7 @@
             this.radPrimary.Text = "Primary OOF";
             this.radPrimary.UseVisualStyleBackColor = true;
             this.radPrimary.Checked = true;
+            this.radPrimary.CheckedChanged += new System.EventHandler(this.radPrimary_CheckedChanged);
             // 
             // radSecondary
             // 
@@ -413,6 +414,7 @@
             this.radSecondary.TabStop = true;
             this.radSecondary.Text = "Secondary OOF";
             this.radSecondary.UseVisualStyleBackColor = true;
+            this.radPrimary.CheckedChanged += new System.EventHandler(this.radSecondary_CheckedChanged);
             // 
             // lblExternalMesage
             // 
