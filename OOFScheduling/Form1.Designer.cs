@@ -74,7 +74,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblBuild = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button3 = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.passwordConfirmTB = new System.Windows.Forms.MaskedTextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -513,17 +512,6 @@
             this.lblBuild.Size = new System.Drawing.Size(78, 19);
             this.lblBuild.Text = "BuildNumber";
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(195, 719);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(108, 23);
-            this.button3.TabIndex = 46;
-            this.button3.Text = "Go OOF Now";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
@@ -641,7 +629,6 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.emailAddressTB);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.lblInternalMessage);
@@ -740,7 +727,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.MaskedTextBox passwordConfirmTB;
         private System.Windows.Forms.Label label10;

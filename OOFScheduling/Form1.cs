@@ -894,18 +894,6 @@ namespace OOFScheduling
             Application.Exit();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            RunManualOOF();
-            if (button3.Text == "Go OOF Now")
-            {
-                button3.Text = "Return from OOF";
-            }
-            else
-            {
-                button3.Text = "Go OOF Now";
-            }
-        }
         #endregion
 
         private void btnPermaOOF_Click(object sender, EventArgs e)
