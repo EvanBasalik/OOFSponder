@@ -401,6 +401,7 @@
             this.radPrimary.TabStop = true;
             this.radPrimary.Text = "Primary OOF";
             this.radPrimary.UseVisualStyleBackColor = true;
+            this.radPrimary.Checked = true;
             // 
             // radSecondary
             // 

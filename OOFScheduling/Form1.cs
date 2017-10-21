@@ -924,25 +924,23 @@ namespace OOFScheduling
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-            //persist the existing OOF messages as Primary and then pull in the secondary
-            OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-            OOFData.Instance.PrimaryOOFInternalMessage= htmlEditorControl2.BodyHtml;
-            OOFData.Instance.IsPermaOOFOn = true;
-
             //now, set up the UI for PermaOOF
             SetUIforPermaOOF();
-
-            OOFSponderInsights.Track("Configured secondary OOF messages");
         }
 
         private void SetUIforPermaOOF()
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+            //persist the existing OOF messages as Primary and then pull in the secondary
+            OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+            OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+            OOFData.Instance.IsPermaOOFOn = true;
+
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
             lblExternalMesage.Text = "Extended OOF External Message";
             lblInternalMessage.Text = "Extended OOF Internal Message";
-
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
@@ -951,21 +949,12 @@ namespace OOFScheduling
             btnPermaOOF.Enabled = true;
             dtPermaOOF.Enabled = true;
 
-            OOFSponderInsights.Track("Set UI for secondary");
+            OOFSponderInsights.Track("Configured for secondary");
         }
 
         private void primaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
-
-            //since we are in the process of flipping from secondary to primary
-            //we know that the UI is currently in Primary mode
-            //so HTML controls have the Primary messages
-
-            //persist the existing OOF messages as Secondary and then pull in the Primary
-            OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-            OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
-            OOFData.Instance.IsPermaOOFOn = false;
 
             //now, set up the UI for primary
             SetUIforPrimary();
@@ -974,6 +963,16 @@ namespace OOFScheduling
         private void SetUIforPrimary()
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+            //since we are in the process of flipping from secondary to primary
+            //we know that the UI is currently in Secondary mode (or first run)
+            //so HTML controls have the Secondary messages
+
+            //persist the existing OOF messages as Secondary and then pull in the Primary
+            OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+            OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+            OOFData.Instance.IsPermaOOFOn = false;
+
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
             lblExternalMesage.Text = "Primary External Message";
@@ -986,7 +985,7 @@ namespace OOFScheduling
             btnPermaOOF.Enabled = false;
             dtPermaOOF.Enabled = false;
 
-            OOFSponderInsights.Track("Set UI for primary");
+            OOFSponderInsights.Track("Configured for primary");
         }
 
         //common call for both controls, regardless of primary or secondary
