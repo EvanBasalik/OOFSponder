@@ -45,7 +45,7 @@ namespace OOFScheduling
             AIClient.TrackException(_exception, _properties);
         }
 
-        public static TelemetryClient AIClient
+        private static TelemetryClient AIClient
         {
             get
             {
