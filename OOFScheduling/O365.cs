@@ -109,12 +109,13 @@ namespace OOFScheduling
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+            //check and refresh token if necessary
+            await O365.MSALWork(O365.AADAction.SignIn);
+
             var httpClient = new System.Net.Http.HttpClient();
             System.Net.Http.HttpResponseMessage response;
             try
             {
-                
-
                 var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, UrlCombine(_graphAPIEndpoint, url));
                 //Add the token in Authorization header
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
@@ -137,6 +138,9 @@ namespace OOFScheduling
         public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF )
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
+            //check and refresh token if necessary
+            await O365.MSALWork(O365.AADAction.SignIn);
 
             var httpClient = new System.Net.Http.HttpClient();
             System.Net.Http.HttpMethod method = new System.Net.Http.HttpMethod("PATCH");
