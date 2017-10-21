@@ -277,97 +277,100 @@ namespace OOFScheduling
 
         }
         #endregion
+
+        //no longer used
         #region Oof Manual Run
-        private async void RunManualOOF()
-        {
-            if (OOFData.Instance.ExternalOOFMessage != "default" &&
-                OOFData.Instance.InternalOOFMessage != "default"
-                )
-            {
-                //Toggle Manual OOF
-                bool result = await System.Threading.Tasks.Task.Run(() => setManualOOF(OOFData.Instance.ExternalOOFMessage, 
-                    OOFData.Instance.InternalOOFMessage, !manualoof));
+        //private async void RunManualOOF()
+        //{
+        //    if (OOFData.Instance.ExternalOOFMessage != "default" &&
+        //        OOFData.Instance.InternalOOFMessage != "default"
+        //        )
+        //    {
+        //        //Toggle Manual OOF
+        //        bool result = await System.Threading.Tasks.Task.Run(() => setManualOOF(OOFData.Instance.ExternalOOFMessage, 
+        //            OOFData.Instance.InternalOOFMessage, !manualoof));
 
-                if (result)
-                {
-                    OOFSponderInsights.Track("Set OOF manually");
-                }
-                else
-                {
-                    OOFSponderInsights.Track("Unable to set OOF manually");
-                }
-            }
-        }
+        //        if (result)
+        //        {
+        //            OOFSponderInsights.Track("Set OOF manually");
+        //        }
+        //        else
+        //        {
+        //            OOFSponderInsights.Track("Unable to set OOF manually");
+        //        }
+        //    }
+        //}
 
-        public async System.Threading.Tasks.Task<bool> setManualOOF(string oofMessageExternal, string oofMessageInternal, bool on)
-        {
-            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
+//        public async System.Threading.Tasks.Task<bool> setManualOOF(string oofMessageExternal, string oofMessageInternal, bool on)
+//        {
+//            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to Exchange Server";
 
-            try
-            {
-                //create local OOF object
-                AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
-                localOOF.ExternalReplyMessage = oofMessageExternal;
-                localOOF.InternalReplyMessage = oofMessageInternal;
+//            try
+//            {
+//                //create local OOF object
+//                AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
+//                localOOF.ExternalReplyMessage = oofMessageExternal;
+//                localOOF.InternalReplyMessage = oofMessageInternal;
 
-                // Set the OOF status to be a scheduled time period.
-                if (on)
-                    localOOF.Status = AutomaticRepliesStatus.AlwaysEnabled;
-                else
-                    localOOF.Status = AutomaticRepliesStatus.Disabled;
+//                // Set the OOF status to be a scheduled time period.
+//                if (on)
+//                    localOOF.Status = AutomaticRepliesStatus.AlwaysEnabled;
+//                else
+//                    localOOF.Status = AutomaticRepliesStatus.Disabled;
 
-                string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
-                AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
+//                string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
+//                AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
 
-                if (remoteOOF.ExternalReplyMessage != localOOF.ExternalReplyMessage
-                        || remoteOOF.InternalReplyMessage != localOOF.InternalReplyMessage
-                        || remoteOOF.Status != AutomaticRepliesStatus.Scheduled
-                        )
-                {
-                    System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
+//                if (remoteOOF.ExternalReplyMessage != localOOF.ExternalReplyMessage
+//                        || remoteOOF.InternalReplyMessage != localOOF.InternalReplyMessage
+//                        || remoteOOF.Status != AutomaticRepliesStatus.Scheduled
+//                        )
+//                {
+//                    System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
 
-                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set");
+//                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
+//                    {
+//                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set");
 
-                        //report back to AppInsights
-                        OOFSponderInsights.Track("Set OOF");
+//                        //report back to AppInsights
+//                        OOFSponderInsights.Track("Set OOF");
 
-                        //store the property
-                        if (on)
-                            manualoof = true;
-                        return manualoof;
-                    }
-                    else
-                    {
-                        //failed, turn off manual OOF
-                        manualoof = false;
+//                        //store the property
+//                        if (on)
+//                            manualoof = true;
+//                        return manualoof;
+//                    }
+//                    else
+//                    {
+//                        //failed, turn off manual OOF
+//                        manualoof = false;
 
-                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
-                        return manualoof;
-                    }
+//                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
+//                        return manualoof;
+//                    }
 
-                }
-                else
-                {
-                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed");
-                    manualoof = true;
-                    return manualoof;
-                }
-            }
-            catch (Exception ex)
-            {
-                notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
-                //don't send AI stuff if running in DEBUG
-                //report to AppInsights
-#if !DEBUG
-                AIClient.TrackException(ex);
-#endif
-                return false;
-            }
-        }
+//                }
+//                else
+//                {
+//                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed");
+//                    manualoof = true;
+//                    return manualoof;
+//                }
+//            }
+//            catch (Exception ex)
+//            {
+//                notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
+//                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
+//                //don't send AI stuff if running in DEBUG
+//                //report to AppInsights
+//#if !DEBUG
+//                AIClient.TrackException(ex);
+//#endif
+//                return false;
+//            }
+//        }
         #endregion
+
         #region Oof Set
 
         private async void RunSetOofO365()
