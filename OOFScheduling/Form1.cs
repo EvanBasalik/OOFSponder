@@ -267,11 +267,7 @@ namespace OOFScheduling
             catch (Exception ex)
             {
                 notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Email or Password incorrect or we cannot contact the server please check your settings and try again");
-                            //don't send AI stuff if running in DEBUG
-#if !DEBUG
-                AIClient.TrackException(ex);
-#endif
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF: " + ex.Message);
                 return;
             }
 
@@ -423,7 +419,9 @@ namespace OOFScheduling
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
+#if !NOOOF
                     bool result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
+#endif
                 }
                 else
                 //since permaOOF is on, need to adjust the end date such that is permaOOFDate

@@ -106,17 +106,5 @@ namespace OOFScheduling.Properties {
                 this["SecondaryOOFInternal"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public string MessageOption {
-            get {
-                return ((string)(this["MessageOption"]));
-            }
-            set {
-                this["MessageOption"] = value;
-            }
-        }
     }
 }
