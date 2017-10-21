@@ -22,6 +22,8 @@ namespace OOFScheduling
         //Track if force close or just hitting X to minimize
         private bool minimize = true;
 
+        private static string version;
+
         public Form1()
         {
             
@@ -32,7 +34,7 @@ namespace OOFScheduling
             {
                 if (a.GetName().Name == "OOFScheduling")
                 {
-                    lblBuild.Text = a.GetName().Version.ToString();
+                    OOFData.version = lblBuild.Text = a.GetName().Version.ToString();
                     break;
                 }
             }
