@@ -34,6 +34,8 @@ namespace OOFScheduling
         /// </summary>
         internal async static Task<bool> MSALWork(AADAction action)
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
             bool _result = false;
 
             if (action == AADAction.SignIn | action == AADAction.ForceSignIn)
@@ -46,6 +48,7 @@ namespace OOFScheduling
                 {
                     // A MsalUiRequiredException happened on AcquireTokenSilentAsync. This indicates you need to call AcquireTokenAsync to acquire a token
                     OOFSponder.Logger.Info($"MsalUiRequiredException: {ex.Message}");
+                    OOFSponderInsights.TrackException($"MsalUiRequiredException: {ex.Message}", ex);
 
                     try
                     {
@@ -54,6 +57,7 @@ namespace OOFScheduling
                     catch (MsalException msalex)
                     {
                         OOFSponder.Logger.Error(new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
+                        OOFSponderInsights.TrackException("MsalException", new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
                     }
 
                 }
@@ -103,6 +107,8 @@ namespace OOFScheduling
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<string> GetHttpContentWithToken(string url)
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
             var httpClient = new System.Net.Http.HttpClient();
             System.Net.Http.HttpResponseMessage response;
             try
@@ -130,6 +136,8 @@ namespace OOFScheduling
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF )
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
             var httpClient = new System.Net.Http.HttpClient();
             System.Net.Http.HttpMethod method = new System.Net.Http.HttpMethod("PATCH");
             System.Net.Http.HttpResponseMessage response;

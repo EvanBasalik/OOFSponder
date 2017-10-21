@@ -22,8 +22,6 @@ namespace OOFScheduling
         //Track if force close or just hitting X to minimize
         private bool minimize = true;
 
-        private static string version;
-
         public Form1()
         {
             
@@ -194,7 +192,7 @@ namespace OOFScheduling
             }
 
             //needs to be after the login
-            System.Threading.Tasks.Task.Run(() => checkOOFStatus());
+            //System.Threading.Tasks.Task.Run(() => checkOOFStatus());
         }
 
         #region Set Oof Timed Loop
@@ -210,67 +208,67 @@ namespace OOFScheduling
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
-            await checkOOFStatus();
+            //await checkOOFStatus();
         }
         #endregion
 
         #region Oof/EWS interaction
         #region Oof Status Check
 
-        public async System.Threading.Tasks.Task checkOOFStatus()
-        {
-            try
-            {
+        //public async System.Threading.Tasks.Task checkOOFStatus()
+        //{
+        //    try
+        //    {
 
-                //get current OOF state from O365
-                string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
-                AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
+        //        //get current OOF state from O365
+        //        string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
+        //        AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
 
-                string currentStatus = "";
+        //        string currentStatus = "";
 
-                if (remoteOOF.Status ==AutomaticRepliesStatus.Scheduled && (DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) > DateTime.UtcNow && DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) < DateTime.UtcNow))
-                {
-                    //remote is in UTC, so need to convert to local for UI
-                    currentStatus = "OOF until " + DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime).ToLocalTime();
-                }
-                else if (remoteOOF.Status == AutomaticRepliesStatus.Scheduled && (DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) < DateTime.UtcNow || DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) > DateTime.UtcNow)) 
-                {
-                    //remote is in UTC, so need to convert to local for UI
-                    currentStatus = "OOF starting at " + DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime).ToLocalTime();
-                }
-                else if (remoteOOF.Status == AutomaticRepliesStatus.AlwaysEnabled)
-                {
-                    currentStatus = "Currently OOF";
-                }
-                else if (remoteOOF.Status == AutomaticRepliesStatus.Disabled)
-                {
-                    currentStatus = "OOF Disabled";
-                }
+        //        if (remoteOOF.Status ==AutomaticRepliesStatus.Scheduled && (DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) > DateTime.UtcNow && DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) < DateTime.UtcNow))
+        //        {
+        //            //remote is in UTC, so need to convert to local for UI
+        //            currentStatus = "OOF until " + DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime).ToLocalTime();
+        //        }
+        //        else if (remoteOOF.Status == AutomaticRepliesStatus.Scheduled && (DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) < DateTime.UtcNow || DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) > DateTime.UtcNow)) 
+        //        {
+        //            //remote is in UTC, so need to convert to local for UI
+        //            currentStatus = "OOF starting at " + DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime).ToLocalTime();
+        //        }
+        //        else if (remoteOOF.Status == AutomaticRepliesStatus.AlwaysEnabled)
+        //        {
+        //            currentStatus = "Currently OOF";
+        //        }
+        //        else if (remoteOOF.Status == AutomaticRepliesStatus.Disabled)
+        //        {
+        //            currentStatus = "OOF Disabled";
+        //        }
 
-                //pull the existing OOF messages in
-                //this accounts for where someone changes the message externally
-                if (!OOFData.Instance.IsPermaOOFOn)
-                {
-                    htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage = remoteOOF.ExternalReplyMessage;
-                    htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage = remoteOOF.InternalReplyMessage;
-                }
-                else
-                {
-                    htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage = remoteOOF.ExternalReplyMessage;
-                    htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage = remoteOOF.InternalReplyMessage;
-                }
+        //        //pull the existing OOF messages in
+        //        //this accounts for where someone changes the message externally
+        //        if (!OOFData.Instance.IsPermaOOFOn)
+        //        {
+        //            htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage = remoteOOF.ExternalReplyMessage;
+        //            htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage = remoteOOF.InternalReplyMessage;
+        //        }
+        //        else
+        //        {
+        //            htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage = remoteOOF.ExternalReplyMessage;
+        //            htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage = remoteOOF.InternalReplyMessage;
+        //        }
 
-                UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
-                notifyIcon1.Text = "Current Status: " + currentStatus;
-            }
-            catch (Exception ex)
-            {
-                notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF: " + ex.Message);
-                return;
-            }
+        //        UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
+        //        notifyIcon1.Text = "Current Status: " + currentStatus;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
+        //        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF: " + ex.Message);
+        //        return;
+        //    }
 
-        }
+        //}
         #endregion
 
         //no longer used
@@ -370,6 +368,7 @@ namespace OOFScheduling
 
         private async void RunSetOofO365()
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
             bool haveNecessaryData = false;
 
             //if CredMan is turned on, then we don't need the email or password
@@ -419,7 +418,7 @@ namespace OOFScheduling
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
-                    OOFSponderInsights.Track("SetNormalOOF");
+                    OOFSponderInsights.Track("TrySetNormalOOF");
 #if !NOOOF
                     bool result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
 #endif
@@ -443,7 +442,7 @@ namespace OOFScheduling
                         oofTimes[0] = DateTime.Now;
                     }
 
-                    OOFSponderInsights.Track("SetPermaOOF");
+                    OOFSponderInsights.Track("TrySetPermaOOF");
 #if !NOOOF
                     bool OOFSet = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
 #endif
@@ -521,6 +520,7 @@ namespace OOFScheduling
 
         public async System.Threading.Tasks.Task<bool> TrySetOOF365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
             //need to convert the times from local datetime to DateTimeTimeZone
@@ -709,6 +709,8 @@ namespace OOFScheduling
 
         private void saveSettings()
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
             if (primaryToolStripMenuItem.Checked)
             {
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
@@ -760,16 +762,6 @@ namespace OOFScheduling
                 e.Cancel = true;
                 this.WindowState = FormWindowState.Minimized;
             }
-
-            //don't send AI stuff if running in DEBUG
-            //report to AppInsights
-#if !DEBUG
-            if (AIClient != null)
-            {
-                AIClient.Flush(); // only for desktop apps
-            }
-#endif
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -894,7 +886,7 @@ namespace OOFScheduling
 
         private void btnPermaOOF_Click(object sender, EventArgs e)
         {
-            OOFSponderInsights.Track("Went PermaOOF");
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
             //persist the HTML text if it has been set
             //assume the latest text in the HTML controls should win
@@ -924,14 +916,13 @@ namespace OOFScheduling
                 SetUIforPermaOOF();
             }
 
-
-
+            OOFSponderInsights.Track("Went PermaOOF");
 
         }
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OOFSponderInsights.Track("Configured secondary OOF messages");
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
             //persist the existing OOF messages as Primary and then pull in the secondary
             OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
@@ -940,10 +931,13 @@ namespace OOFScheduling
 
             //now, set up the UI for PermaOOF
             SetUIforPermaOOF();
+
+            OOFSponderInsights.Track("Configured secondary OOF messages");
         }
 
         private void SetUIforPermaOOF()
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
             lblExternalMesage.Text = "Extended OOF External Message";
@@ -956,10 +950,14 @@ namespace OOFScheduling
             //lastly, enable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = true;
             dtPermaOOF.Enabled = true;
+
+            OOFSponderInsights.Track("Set UI for secondary");
         }
 
         private void primaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+
             //since we are in the process of flipping from secondary to primary
             //we know that the UI is currently in Primary mode
             //so HTML controls have the Primary messages
@@ -975,6 +973,7 @@ namespace OOFScheduling
 
         private void SetUIforPrimary()
         {
+            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
             lblExternalMesage.Text = "Primary External Message";
@@ -986,6 +985,8 @@ namespace OOFScheduling
             //lastly, disable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = false;
             dtPermaOOF.Enabled = false;
+
+            OOFSponderInsights.Track("Set UI for primary");
         }
 
         //common call for both controls, regardless of primary or secondary
