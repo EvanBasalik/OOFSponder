@@ -17,6 +17,7 @@ namespace OOFScheduling
         internal string SecondaryOOFInternalMessage { get; set; }
 
         private const string baseValue = "default";
+        internal static string version;
         static OOFData instance;
 
         public static OOFData Instance

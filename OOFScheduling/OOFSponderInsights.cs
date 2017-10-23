@@ -11,7 +11,7 @@ namespace OOFScheduling
     {
 
         private const string InfoEvent = "INFO";
-        private const string AppName = "OOFSponer";
+        private const string AppName = "OOFSponder";
 
         //prep for ApplicationInsights right away so we can even instrument startup
         private static TelemetryClient appInsightsClient;
@@ -66,15 +66,14 @@ namespace OOFScheduling
 
             try
             {
-                AIClient.InstrumentationKey = "9eacd004 - 7944 - 4d2e-a978 - d66104c67a49";
+                AIClient.InstrumentationKey = "9eacd004-7944-4d2e-a978-d66104c67a49";
 
-                //use DEBUGAI if we actually want AppInsights from a DEBUG build
-#if DEBUGAI
-            AIClient.Context.User.Id = "DEBUG";
+#if DEBUG
             Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
 #endif
 
                 AIClient.Context.Properties["MachineName"] = Environment.MachineName;
+                AIClient.Context.Properties["Version"] = OOFData.version;
 
                 isConfigured = true;
                 OOFSponder.Logger.Info("Successfully configured ApplicationInsights");

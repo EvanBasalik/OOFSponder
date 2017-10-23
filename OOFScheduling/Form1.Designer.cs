@@ -59,7 +59,6 @@
             this.thursdayOffWorkCB = new System.Windows.Forms.CheckBox();
             this.fridayOffWorkCB = new System.Windows.Forms.CheckBox();
             this.saturdayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.btnRunManually = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.lblExternalMesage = new System.Windows.Forms.Label();
             this.lblInternalMessage = new System.Windows.Forms.Label();
@@ -75,7 +74,6 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblBuild = new System.Windows.Forms.ToolStripStatusLabel();
-            this.button3 = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.passwordConfirmTB = new System.Windows.Forms.MaskedTextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -85,6 +83,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btnPermaOOF = new System.Windows.Forms.Button();
             this.dtPermaOOF = new System.Windows.Forms.DateTimePicker();
+            this.radPrimary = new System.Windows.Forms.RadioButton();
+            this.radSecondary = new System.Windows.Forms.RadioButton();
             this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
             this.menuStrip1.SuspendLayout();
@@ -381,25 +381,40 @@
             this.saturdayOffWorkCB.UseVisualStyleBackColor = true;
             this.saturdayOffWorkCB.CheckedChanged += new System.EventHandler(this.saturdayOffWorkCB_CheckedChanged);
             // 
-            // btnRunManually
-            // 
-            this.btnRunManually.Location = new System.Drawing.Point(12, 719);
-            this.btnRunManually.Name = "btnRunManually";
-            this.btnRunManually.Size = new System.Drawing.Size(87, 23);
-            this.btnRunManually.TabIndex = 29;
-            this.btnRunManually.Text = "Run Manually";
-            this.btnRunManually.UseVisualStyleBackColor = true;
-            this.btnRunManually.Click += new System.EventHandler(this.btnRunManually_Click);
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(105, 719);
+            this.button2.Location = new System.Drawing.Point(12, 719);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(84, 23);
             this.button2.TabIndex = 38;
             this.button2.Text = "Save Settings";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // radPrimary
+            // 
+            this.radPrimary.AutoSize = true;
+            this.radPrimary.Location = new System.Drawing.Point(110, 722);
+            this.radPrimary.Name = "radPrimary";
+            this.radPrimary.Size = new System.Drawing.Size(126, 24);
+            this.radPrimary.TabIndex = 56;
+            this.radPrimary.TabStop = true;
+            this.radPrimary.Text = "Primary OOF";
+            this.radPrimary.UseVisualStyleBackColor = true;
+            this.radPrimary.Checked = true;
+            this.radPrimary.CheckedChanged += new System.EventHandler(this.radPrimary_CheckedChanged);
+            // 
+            // radSecondary
+            // 
+            this.radSecondary.AutoSize = true;
+            this.radSecondary.Location = new System.Drawing.Point(202, 722);
+            this.radSecondary.Name = "radSecondary";
+            this.radSecondary.Size = new System.Drawing.Size(126, 24);
+            this.radSecondary.TabIndex = 56;
+            this.radSecondary.TabStop = true;
+            this.radSecondary.Text = "Secondary OOF";
+            this.radSecondary.UseVisualStyleBackColor = true;
+            this.radPrimary.CheckedChanged += new System.EventHandler(this.radSecondary_CheckedChanged);
             // 
             // lblExternalMesage
             // 
@@ -465,7 +480,7 @@
             // 
             this.secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
             this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.secondaryToolStripMenuItem.Text = "Extended OOF";
+            this.secondaryToolStripMenuItem.Text = "Secondary";
             this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
@@ -523,17 +538,6 @@
             this.lblBuild.Name = "lblBuild";
             this.lblBuild.Size = new System.Drawing.Size(78, 19);
             this.lblBuild.Text = "BuildNumber";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(195, 719);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(108, 23);
-            this.button3.TabIndex = 46;
-            this.button3.Text = "Go OOF Now";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Visible = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label14
             // 
@@ -652,7 +656,6 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.emailAddressTB);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.lblInternalMessage);
@@ -660,7 +663,6 @@
             this.Controls.Add(this.htmlEditorControl2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.htmlEditorControl1);
-            this.Controls.Add(this.btnRunManually);
             this.Controls.Add(this.saturdayOffWorkCB);
             this.Controls.Add(this.fridayOffWorkCB);
             this.Controls.Add(this.thursdayOffWorkCB);
@@ -690,6 +692,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.radPrimary);
+            this.Controls.Add(this.radSecondary);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -739,7 +743,6 @@
         private System.Windows.Forms.CheckBox thursdayOffWorkCB;
         private System.Windows.Forms.CheckBox fridayOffWorkCB;
         private System.Windows.Forms.CheckBox saturdayOffWorkCB;
-        private System.Windows.Forms.Button btnRunManually;
         private MSDN.Html.Editor.HtmlEditorControl htmlEditorControl1;
         private System.Windows.Forms.Button button2;
         private MSDN.Html.Editor.HtmlEditorControl htmlEditorControl2;
@@ -753,7 +756,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.MaskedTextBox passwordConfirmTB;
         private System.Windows.Forms.Label label10;
@@ -767,6 +769,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem primaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secondaryToolStripMenuItem;
+        private System.Windows.Forms.RadioButton radPrimary;
+        private System.Windows.Forms.RadioButton radSecondary;
 
     }
 }
