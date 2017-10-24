@@ -85,8 +85,10 @@ namespace OOFScheduling
             System.Threading.Tasks.Task AuthTask = null;
             AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
 
+#if DEBUG
             MessageBox.Show("Attach now", "OOFSponder", MessageBoxButtons.OK);
-  
+#endif
+
 
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (OOFData.Instance.IsPermaOOFOn)
@@ -193,10 +195,6 @@ namespace OOFScheduling
             {
                 AuthTask.Wait();
             }
-
-#if DEBUG
-            MessageBox.Show("Attach now");
-#endif
 
             //trigger a check on current status
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
