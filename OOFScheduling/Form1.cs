@@ -152,9 +152,9 @@ namespace OOFScheduling
                 SetUIforPermaOOF();
             }
 
-            //set the PermaOOF date to something in the future
-            OOFData.Instance.PermaOOFDate = DateTime.Now.AddDays(4);
-            dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
+            ////set the PermaOOF date to something in the future
+            //OOFData.Instance.PermaOOFDate = DateTime.Now.AddDays(4);
+            //dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
 
 
 
@@ -194,8 +194,12 @@ namespace OOFScheduling
                 AuthTask.Wait();
             }
 
-            //needs to be after the login
-            //System.Threading.Tasks.Task.Run(() => checkOOFStatus());
+#if DEBUG
+            MessageBox.Show("Attach now");
+#endif
+
+            //trigger a check on current status
+            System.Threading.Tasks.Task.Run(() => RunSetOofO365());
         }
 
         #region Set Oof Timed Loop
@@ -425,6 +429,8 @@ namespace OOFScheduling
                     OOFSponderInsights.Track("TrySetNormalOOF");
 #if !NOOOF
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
+#else
+                    result = true;
 #endif
                 }
                 else
@@ -449,6 +455,8 @@ namespace OOFScheduling
                     OOFSponderInsights.Track("TrySetPermaOOF");
 #if !NOOOF
                     bool OOFSet = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+#else
+                    result = true;
 #endif
                 }
 
@@ -742,6 +750,9 @@ namespace OOFScheduling
 
             toolStripStatusLabel1.Text = "Settings Saved";
             OOFSponderInsights.TrackInfo("Settings saved");
+
+            //go implement the settings if possible
+            System.Threading.Tasks.Task.Run(() => RunSetOofO365());
         }
 
         #endregion
