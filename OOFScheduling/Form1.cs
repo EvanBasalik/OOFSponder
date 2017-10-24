@@ -544,8 +544,8 @@ namespace OOFScheduling
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
             //need to convert the times from local datetime to DateTimeTimeZone and UTC
-            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = TimeZone.CurrentTimeZone.StandardName };
-            DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = TimeZone.CurrentTimeZone.StandardName };
+            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
+            DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
 
             //create local OOF object
             AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
