@@ -422,6 +422,10 @@ namespace OOFScheduling
 #if !NOOOF
                     bool result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
 #endif
+                    if (result)
+                    {
+                        UpdateStatusLabel(toolStripStatusLabel1, "Set OOF Message - Start: " + oofTimes[0] + " - End: " + oofTimes[1]);
+                    }
                 }
                 else
                 //since permaOOF is on, need to adjust the end date such that is permaOOFDate
@@ -446,6 +450,10 @@ namespace OOFScheduling
 #if !NOOOF
                     bool OOFSet = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
 #endif
+                    if (OOFSet)
+                    {
+                        UpdateStatusLabel(toolStripStatusLabel1, "Set OOF Message - Start: " + oofTimes[0] + " - End: " + oofTimes[1]);
+                    }
                 }
             }
         }
