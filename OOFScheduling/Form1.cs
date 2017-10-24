@@ -85,6 +85,9 @@ namespace OOFScheduling
             System.Threading.Tasks.Task AuthTask = null;
             AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
 
+            MessageBox.Show("Attach now", "OOFSponder", MessageBoxButtons.OK);
+  
+
             //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
             if (OOFData.Instance.IsPermaOOFOn)
             {
@@ -415,17 +418,14 @@ namespace OOFScheduling
                     OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
                 }
 
+                bool result = false;
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
                     OOFSponderInsights.Track("TrySetNormalOOF");
 #if !NOOOF
-                    bool result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
+                    result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
 #endif
-                    if (result)
-                    {
-                        UpdateStatusLabel(toolStripStatusLabel1, "Set OOF Message - Start: " + oofTimes[0] + " - End: " + oofTimes[1]);
-                    }
                 }
                 else
                 //since permaOOF is on, need to adjust the end date such that is permaOOFDate
@@ -450,10 +450,16 @@ namespace OOFScheduling
 #if !NOOOF
                     bool OOFSet = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
 #endif
-                    if (OOFSet)
-                    {
-                        UpdateStatusLabel(toolStripStatusLabel1, "Set OOF Message - Start: " + oofTimes[0] + " - End: " + oofTimes[1]);
-                    }
+                }
+
+                //update UI status bar
+                if (result)
+                {
+                    UpdateStatusLabel(toolStripStatusLabel1, "Set OOF Message - Start: " + oofTimes[0] + " - End: " + oofTimes[1]);
+                }
+                else
+                {
+                    UpdateStatusLabel(toolStripStatusLabel1, "OOF Message not set");
                 }
             }
         }
@@ -940,9 +946,6 @@ namespace OOFScheduling
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-            //persist the existing OOF messages as Primary and then pull in the secondary
-            OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-            OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             OOFData.Instance.IsPermaOOFOn = true;
 
             primaryToolStripMenuItem.Checked = false;
@@ -976,9 +979,6 @@ namespace OOFScheduling
             //we know that the UI is currently in Secondary mode (or first run)
             //so HTML controls have the Secondary messages
 
-            //persist the existing OOF messages as Secondary and then pull in the Primary
-            OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-            OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             OOFData.Instance.IsPermaOOFOn = false;
 
             primaryToolStripMenuItem.Checked = true;

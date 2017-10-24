@@ -110,15 +110,29 @@ namespace OOFScheduling
 
         public void WriteProperties(bool disposing=false)
         {
-            System.Diagnostics.Trace.TraceInformation("Persisted properties");
+            System.Diagnostics.Trace.TraceInformation("Persisting properties");
 
             Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
+            System.Diagnostics.Trace.TraceInformation("Persisting PrimaryOOFExternalMessage");
+
             Properties.Settings.Default.PrimaryOOFInternal = instance.PrimaryOOFInternalMessage;
+            System.Diagnostics.Trace.TraceInformation("Persisting PrimaryOOFInternalMessage");
+
             Properties.Settings.Default.SecondaryOOFExternal = instance.SecondaryOOFExternalMessage;
+            System.Diagnostics.Trace.TraceInformation("Persisting SecondaryOOFExternalMessage");
+
             Properties.Settings.Default.SecondaryOOFInternal = instance.SecondaryOOFInternalMessage;
+            System.Diagnostics.Trace.TraceInformation("Persisting SecondaryOOFInternalMessage");
+
             Properties.Settings.Default.IsPermaOOFOn = instance.IsPermaOOFOn;
+            System.Diagnostics.Trace.TraceInformation("Persisting IsPermaOOFOn");
+
             Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
+            System.Diagnostics.Trace.TraceInformation("Persisting PermaOOFDate");
+
             Properties.Settings.Default.workingHours = instance.WorkingHours;
+            System.Diagnostics.Trace.TraceInformation("Persisting WorkingHours");
+
             Properties.Settings.Default.Save();
 
             if (disposing)
