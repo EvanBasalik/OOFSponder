@@ -42,6 +42,9 @@ namespace OOFScheduling
 
             OOFSponderInsights.Track("OOFSponderStart");
 
+            //Set icon in code
+            this.Icon = Properties.Resources.OOFSponderIcon;
+
             #region Add to Startup
             // The path to the key where Windows looks for startup applications
             RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
@@ -60,6 +63,7 @@ namespace OOFScheduling
 
             // Add menu to tray icon and show it.
             notifyIcon1.ContextMenu = trayMenu;
+            notifyIcon1.Icon = Properties.Resources.OOFSponderIcon;
             #endregion
             #region Read the list of teams to populate with templates
             //Read in the list of teams and build the dictionary list of team name
