@@ -99,6 +99,10 @@ namespace OOFScheduling
             {
                 SetUIforPrimary();
             }
+
+            //enable or disable extended OOF button as appropriate
+            btnPermaOOF.Enabled = !OOFData.Instance.IsPermaOOFOn;
+
             htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
 
@@ -934,6 +938,10 @@ namespace OOFScheduling
                 OOFData.Instance.IsPermaOOFOn = true;
                 OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
 
+                //update the UI
+                btnPermaOOF.Text = "Disable Extended OOF";
+                btnPermaOOF.Enabled = !OOFData.Instance.IsPermaOOFOn;
+
                 //actually go OOF now
                 RunSetOofO365();
                 SetUIforPermaOOF();
@@ -954,8 +962,6 @@ namespace OOFScheduling
         private void SetUIforPermaOOF()
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
-
-            OOFData.Instance.IsPermaOOFOn = true;
 
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
