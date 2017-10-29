@@ -33,9 +33,12 @@ namespace OOFScheduling
             }
         }
 
-        internal bool IsPermaOOFOn()
+        internal bool IsPermaOOFOn
         {
-            return DateTime.Now > PermaOOFDate;
+            get
+            {
+                return DateTime.Now < PermaOOFDate;
+            }
         }
 
         private void ReadProperties()
