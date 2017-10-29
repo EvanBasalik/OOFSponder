@@ -197,6 +197,19 @@ namespace OOFScheduling
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
         }
 
+        void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //prep for async work
+            System.Threading.Tasks.Task AuthTask = null;
+            AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignOut); }));
+
+            //wait on async auth stuff if not null
+            if (AuthTask != null)
+            {
+                AuthTask.Wait();
+            }
+        }
+
         #region Set Oof Timed Loop
         void Loopy()
         {
