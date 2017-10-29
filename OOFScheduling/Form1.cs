@@ -89,22 +89,14 @@ namespace OOFScheduling
             MessageBox.Show("Attach now", "OOFSponder", MessageBoxButtons.OK);
 #endif
 
-
-            //Can this get dropped by pulling in the OOF from the server during the CheckOOFStatus call?
-            if (OOFData.Instance.IsPermaOOFOn)
+            if (OOFData.Instance.IsPermaOOFOn())
             {
-                SetUIforPermaOOF();
+                SetUIforSecondary();
             }
             else
             {
                 SetUIforPrimary();
             }
-
-            //enable or disable extended OOF button as appropriate
-            btnPermaOOF.Enabled = !OOFData.Instance.IsPermaOOFOn;
-
-            htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
-            htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
 
             if (OOFData.Instance.WorkingHours!= "")
             {
@@ -155,7 +147,7 @@ namespace OOFScheduling
             else
             {
                 //else set up for Secondary
-                SetUIforPermaOOF();
+                SetUIforSecondary();
             }
 
             ////set the PermaOOF date to something in the future
@@ -169,7 +161,7 @@ namespace OOFScheduling
 
 
             //we need the OOF messages and working hours
-            if (OOFData.Instance.ExternalOOFMessage != "" && OOFData.Instance.InternalOOFMessage != "" 
+            if (OOFData.Instance.PrimaryOOFExternalMessage != "" && OOFData.Instance.PrimaryOOFInternalMessage != "" 
                 && OOFData.Instance.WorkingHours != "")
             {
                 haveNecessaryData = true;
@@ -202,6 +194,9 @@ namespace OOFScheduling
 
             //trigger a check on current status
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
+
+            radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
+            radSecondary.CheckedChanged += new System.EventHandler(radSecondary_CheckedChanged);
         }
 
         #region Set Oof Timed Loop
@@ -258,13 +253,13 @@ namespace OOFScheduling
         //        //this accounts for where someone changes the message externally
         //        if (!OOFData.Instance.IsPermaOOFOn)
         //        {
-        //            htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage = remoteOOF.ExternalReplyMessage;
-        //            htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage = remoteOOF.InternalReplyMessage;
+        //            htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryExternalMessage = remoteOOF.ExternalReplyMessage;
+        //            htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryInternalMessage = remoteOOF.InternalReplyMessage;
         //        }
         //        else
         //        {
-        //            htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage = remoteOOF.ExternalReplyMessage;
-        //            htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage = remoteOOF.InternalReplyMessage;
+        //            htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryExternalMessage = remoteOOF.ExternalReplyMessage;
+        //            htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryInternalMessage = remoteOOF.InternalReplyMessage;
         //        }
 
         //        UpdateStatusLabel(toolStripStatusLabel2, "Current Status: " + currentStatus);
@@ -385,8 +380,8 @@ namespace OOFScheduling
             //also, don't need to check SecondaryOOF messages for two reasons:
             //1) they won't always be set
             //2) the UI flow won't let you get here with permaOOF if they aren't set
-            if (OOFData.Instance.ExternalOOFMessage != "" &&
-                OOFData.Instance.InternalOOFMessage != "" &&
+            if (OOFData.Instance.PrimaryOOFExternalMessage != "" &&
+                OOFData.Instance.PrimaryOOFInternalMessage != "" &&
                 OOFData.Instance.WorkingHours != "" )
             {
                 haveNecessaryData = true;
@@ -397,36 +392,32 @@ namespace OOFScheduling
             {
                 DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
 
-                //if PermaOOF is turned on, need to adjust the end time
-                if (OOFData.Instance.PermaOOFDate < oofTimes[0])
-                {
-                    //turn off permaOOF
-                    //NOTE: this all should be abstracted in a Property somewhere
-                    OOFData.Instance.IsPermaOOFOn = false;
+                ////if PermaOOF is turned on, need to adjust the end time
+                //if (OOFData.Instance.PermaOOFDate < oofTimes[0])
+                //{
+                //    //set all the UI stuff back to primary 
+                //    //to set up for normal OOF schedule
+                //    SetUIforPrimary();
 
-                    //set all the UI stuff back to primary 
-                    //to set up for normal OOF schedule
-                    SetUIforPrimary();
-
-                }
+                //}
 
                 //persist settings just in case
                 string oofMessageExternal = htmlEditorControl1.BodyHtml;
                 string oofMessageInternal = htmlEditorControl2.BodyHtml;
-                if (!OOFData.Instance.IsPermaOOFOn)
-                {
-                    OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                    OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
-                }
-                else
-                {
-                    OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                    OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
-                }
+                //if (!OOFData.Instance.IsPermaOOFOn)
+                //{
+                //    OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                //    OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                //}
+                //else
+                //{
+                //    OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                //    OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                //}
 
                 bool result = false;
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
-                if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
+                if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn())
                 {
                     OOFSponderInsights.Track("TrySetNormalOOF");
 #if !NOOOF
@@ -491,7 +482,7 @@ namespace OOFScheduling
 //                myOOF.Duration = new TimeWindow(StartTime, EndTime);
 
 //                // Select the external audience that will receive OOF messages.
-//                myOOF.ExternalAudience = OofExternalAudience.All;
+//                myOOF.ExternalAudience = ExternalAudience.All;
 
 //                // Set the OOF message for your internal audience.
 //                myOOF.InternalReply = new OofReply(oofMessageInternal);
@@ -926,28 +917,42 @@ namespace OOFScheduling
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
 
+            //bail if permaOOF not in the future
+            if (DateTime.Now <= dtPermaOOF.Value)
+            {
+                MessageBox.Show("You must pick a date in future", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             //only set up for permaOOF if we have OOF messages
             if (OOFData.Instance.SecondaryOOFExternalMessage == String.Empty | OOFData.Instance.SecondaryOOFInternalMessage == String.Empty)
             {
                 MessageBox.Show("Unable to turn on extended OOF - Secondary OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             else
             {
 
-                //save the current text to permaOOF
-                OOFData.Instance.IsPermaOOFOn = true;
                 OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
 
                 //update the UI
-                btnPermaOOF.Text = "Disable Extended OOF";
-                btnPermaOOF.Enabled = !OOFData.Instance.IsPermaOOFOn;
+                if (!OOFData.Instance.IsPermaOOFOn())
+                {
+                    btnPermaOOF.Text = "Disable Extended OOF";
+                }
+                else
+                {
+                    btnPermaOOF.Text = "Enable Extended OOF";
+                }
+                btnPermaOOF.Enabled = !OOFData.Instance.IsPermaOOFOn();
 
                 //actually go OOF now
                 RunSetOofO365();
-                SetUIforPermaOOF();
+                SetUIforSecondary();
+
+                OOFSponderInsights.Track("Went PermaOOF");
             }
 
-            OOFSponderInsights.Track("Went PermaOOF");
 
         }
 
@@ -956,10 +961,10 @@ namespace OOFScheduling
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
             //now, set up the UI for PermaOOF
-            SetUIforPermaOOF();
+            SetUIforSecondary();
         }
 
-        private void SetUIforPermaOOF()
+        private void SetUIforSecondary()
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -968,8 +973,8 @@ namespace OOFScheduling
             lblExternalMesage.Text = "Extended OOF External Message";
             lblInternalMessage.Text = "Extended OOF Internal Message";
 
-            htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
-            htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
+            htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
+            htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
 
             //lastly, enable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = true;
@@ -994,15 +999,16 @@ namespace OOFScheduling
             //we know that the UI is currently in Secondary mode (or first run)
             //so HTML controls have the Secondary messages
 
-            OOFData.Instance.IsPermaOOFOn = false;
+            //disable PermaOOF by setting date to time in the past
+            OOFData.Instance.PermaOOFDate = DateTime.Now.AddMinutes(-1);
 
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
             lblExternalMesage.Text = "Primary External Message";
             lblInternalMessage.Text = "Primary Internal Message";
 
-            htmlEditorControl1.BodyHtml = OOFData.Instance.ExternalOOFMessage;
-            htmlEditorControl2.BodyHtml = OOFData.Instance.InternalOOFMessage;
+            htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
+            htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
 
             //lastly, disable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = false;
@@ -1017,25 +1023,41 @@ namespace OOFScheduling
 
             if (radPrimary.Checked)
             {
+                //Persist the opposite message
+                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+
                 SetUIforPrimary();
+            }
+            else
+            {
+                //Persist the opposite message
+                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+
+                SetUIforSecondary();
             }
         }
 
         private void radSecondary_CheckedChanged(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            //OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-            if (radSecondary.Checked)
-            {
-                SetUIforPermaOOF();
-            }
+            //if (radSecondary.Checked)
+            //{
+            //    SetUIforPermaOOF();
+            //}
+            //else
+            //{
+
+            //}
         }
 
 
         //common call for both controls, regardless of primary or secondary
         private void htmlEditorValidated(object sender, EventArgs e)
         {
-            if (!OOFData.Instance.IsPermaOOFOn)
+            if (radPrimary.Checked)
             {
                 System.Diagnostics.Trace.WriteLine("PermaOOF off - persisting primary messages");
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
