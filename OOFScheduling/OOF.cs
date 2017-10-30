@@ -8,7 +8,6 @@ namespace OOFScheduling
 {
     public class OOFData
     {
-        internal bool IsPermaOOFOn { get; set; }
         internal DateTime PermaOOFDate { get; set; }
         internal string WorkingHours { get; set; }
         internal string PrimaryOOFExternalMessage { get; set;}
@@ -34,9 +33,16 @@ namespace OOFScheduling
             }
         }
 
+        internal bool IsPermaOOFOn
+        {
+            get
+            {
+                return DateTime.Now < PermaOOFDate;
+            }
+        }
+
         private void ReadProperties()
         {
-            instance.IsPermaOOFOn = OOFScheduling.Properties.Settings.Default.IsPermaOOFOn;
             instance.PermaOOFDate = OOFScheduling.Properties.Settings.Default.PermaOOFDate;
             instance.WorkingHours = OOFScheduling.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
             instance.PrimaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFExternal;
@@ -45,63 +51,63 @@ namespace OOFScheduling
             instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
         }
 
-        internal string InternalOOFMessage
-        {
-            get
-            {
-                //decided whether to return primary or secondary message
-                if (!instance.IsPermaOOFOn)
-                {
-                    return instance.PrimaryOOFInternalMessage;
-                }
-                else
-                {
-                    return instance.SecondaryOOFInternalMessage;
-                }
-            }
+        //internal string InternalOOFMessage
+        //{
+        //    get
+        //    {
+        //        //decided whether to return primary or secondary message
+        //        if (!instance.IsPermaOOFOn)
+        //        {
+        //            return instance.PrimaryOOFInternalMessage;
+        //        }
+        //        else
+        //        {
+        //            return instance.SecondaryOOFInternalMessage;
+        //        }
+        //    }
 
-            set
-            {
-                //decided whether to return primary or secondary message
-                if (!instance.IsPermaOOFOn)
-                {
-                    instance.PrimaryOOFInternalMessage = value;
-                }
-                else
-                {
-                    instance.SecondaryOOFInternalMessage = value;
-                }
-            }
-        }
+        //    set
+        //    {
+        //        //decided whether to return primary or secondary message
+        //        if (!instance.IsPermaOOFOn)
+        //        {
+        //            instance.PrimaryOOFInternalMessage = value;
+        //        }
+        //        else
+        //        {
+        //            instance.SecondaryOOFInternalMessage = value;
+        //        }
+        //    }
+        //}
 
-        internal string ExternalOOFMessage
-        {
-            get
-            {
-                //decided whether to return primary or secondary message
-                if (!instance.IsPermaOOFOn)
-                {
-                    return instance.PrimaryOOFExternalMessage;
-                }
-                else
-                {
-                    return instance.SecondaryOOFExternalMessage;
-                }
-            }
+        //internal string ExternalOOFMessage
+        //{
+        //    get
+        //    {
+        //        //decided whether to return primary or secondary message
+        //        if (!instance.IsPermaOOFOn)
+        //        {
+        //            return instance.PrimaryOOFExternalMessage;
+        //        }
+        //        else
+        //        {
+        //            return instance.SecondaryOOFExternalMessage;
+        //        }
+        //    }
 
-            set
-            {
-                //decided whether to return primary or secondary message
-                if (!instance.IsPermaOOFOn)
-                {
-                    instance.PrimaryOOFExternalMessage=value;
-                }
-                else
-                {
-                    instance.SecondaryOOFExternalMessage=value;
-                }
-            }
-        }
+        //    set
+        //    {
+        //        //decided whether to return primary or secondary message
+        //        if (!instance.IsPermaOOFOn)
+        //        {
+        //            instance.PrimaryOOFExternalMessage=value;
+        //        }
+        //        else
+        //        {
+        //            instance.SecondaryOOFExternalMessage=value;
+        //        }
+        //    }
+        //}
 
         ~OOFData()
         {
@@ -123,9 +129,6 @@ namespace OOFScheduling
 
             Properties.Settings.Default.SecondaryOOFInternal = instance.SecondaryOOFInternalMessage;
             System.Diagnostics.Trace.TraceInformation("Persisting SecondaryOOFInternalMessage");
-
-            Properties.Settings.Default.IsPermaOOFOn = instance.IsPermaOOFOn;
-            System.Diagnostics.Trace.TraceInformation("Persisting IsPermaOOFOn");
 
             Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
             System.Diagnostics.Trace.TraceInformation("Persisting PermaOOFDate");
