@@ -600,7 +600,7 @@ namespace OOFScheduling
 
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set");
+                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
 
                         //report back to AppInsights
                         OOFSponderInsights.Track("Successfully set OOF");
@@ -616,7 +616,7 @@ namespace OOFScheduling
                 else
                 {
                     OOFSponderInsights.Track("Remote OOF matches - no changes");
-                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed");
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
                     return true;
                 }
             }
