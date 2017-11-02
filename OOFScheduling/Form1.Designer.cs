@@ -623,6 +623,7 @@
             this.btnPermaOOF.Text = "Go OOF now until:";
             this.btnPermaOOF.UseVisualStyleBackColor = true;
             this.btnPermaOOF.Click += new System.EventHandler(this.btnPermaOOF_Click);
+            this.btnPermaOOF.Tag = "Enable";
             // 
             // dtPermaOOF
             // 
@@ -631,7 +632,7 @@
             this.dtPermaOOF.Name = "dtPermaOOF";
             this.dtPermaOOF.Size = new System.Drawing.Size(185, 20);
             this.dtPermaOOF.TabIndex = 55;
-            this.dtPermaOOF.Value = new System.DateTime(2015, 9, 16, 0, 0, 0, 0);
+            this.dtPermaOOF.Enabled = false;
             // 
             // htmlEditorControl2
             // 

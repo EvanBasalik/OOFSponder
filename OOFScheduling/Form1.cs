@@ -928,7 +928,7 @@ namespace OOFScheduling
 
         #endregion
 
-        private void btnPermaOOF_Click(object sender, EventArgs e)
+        private async void btnPermaOOF_Click(object sender, EventArgs e)
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -956,23 +956,40 @@ namespace OOFScheduling
                 MessageBox.Show("Unable to turn on extended OOF - Secondary OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            bool result = false;
+            if (((Button)sender).Tag.ToString()=="Enable")
+            {
+                OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
+            }
             else
             {
-
-                OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
-
-                //actually go OOF now
-                bool result = System.Threading.Tasks.Task.Run(() => RunSetOofO365()).Result;
-
-                //if we fail to set OOF, disable PermaOOF
                 OOFData.Instance.PermaOOFDate = DateTime.Now;
-
-                ConfigurePermaOOFUI();
-                //SetUIforSecondary();
-
-                OOFSponderInsights.Track("Went PermaOOF");
             }
 
+            //actually go OOF now
+            result = await RunSetOofO365();
+
+            if (result)
+            {
+                if (((Button)sender).Tag.ToString() == "Enable")
+                {
+                    OOFSponderInsights.Track("Enabled PermaOOF");
+                }
+                else
+                {
+                    OOFSponderInsights.Track("Disabled PermaOOF");
+                }
+            }
+            else
+            {
+                //if we fail to set OOF, disable PermaOOF to reset the UI
+                OOFData.Instance.PermaOOFDate = DateTime.Now;
+
+            }
+
+
+            ConfigurePermaOOFUI();
 
         }
 
@@ -982,10 +999,14 @@ namespace OOFScheduling
             if (OOFData.Instance.IsPermaOOFOn)
             {
                 btnPermaOOF.Text = "Disable Extended OOF";
+                btnPermaOOF.Tag = "Disable";
+                dtPermaOOF.Enabled = false;
             }
             else
             {
                 btnPermaOOF.Text = "Enable Extended OOF";
+                btnPermaOOF.Tag = "Enable";
+                dtPermaOOF.Enabled = (dtPermaOOF.Value.Date != DateTime.Now.Date);
             }
         }
 
@@ -1012,6 +1033,7 @@ namespace OOFScheduling
             //lastly, enable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = true;
             dtPermaOOF.Enabled = true;
+            dtPermaOOF.Value = DateTime.Now.AddDays(1);
 
             ConfigurePermaOOFUI();
 
@@ -1048,6 +1070,7 @@ namespace OOFScheduling
             //lastly, disable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = false;
             dtPermaOOF.Enabled = false;
+            dtPermaOOF.Value = DateTime.Now;
 
             ConfigurePermaOOFUI();
 
