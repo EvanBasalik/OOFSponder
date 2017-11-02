@@ -69,7 +69,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>OOFSponderIcon.ico</ApplicationIcon>
+    <ApplicationIcon>OOFSponderLogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ApplicationInsights, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -203,6 +203,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="OOFSponderIcon.ico" />
+    <Content Include="OOFSponderLogo.ico" />
     <EmbeddedResource Include="Resources\OOFSponderIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
