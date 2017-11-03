@@ -618,7 +618,7 @@
             this.btnPermaOOF.Location = new System.Drawing.Point(308, 719);
             this.btnPermaOOF.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnPermaOOF.Name = "btnPermaOOF";
-            this.btnPermaOOF.Size = new System.Drawing.Size(121, 23);
+            this.btnPermaOOF.Size = new System.Drawing.Size(130, 23);
             this.btnPermaOOF.TabIndex = 54;
             this.btnPermaOOF.Text = "Go OOF now until:";
             this.btnPermaOOF.UseVisualStyleBackColor = true;
