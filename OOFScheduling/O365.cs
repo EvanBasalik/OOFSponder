@@ -29,6 +29,15 @@ namespace OOFScheduling
             SignIn, SignOut, ForceSignIn
         }
 
+        internal static bool isLoggedIn
+        {
+            get
+            {
+                //return authResult.ExpiresOn >= DateTime.UtcNow;
+                return PublicClientApp.Users.Any();
+            }
+        }
+
         /// <summary>
         /// Call AcquireTokenAsync - to acquire a token requiring user to sign-in
         /// </summary>

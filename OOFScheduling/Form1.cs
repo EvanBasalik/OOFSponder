@@ -87,7 +87,7 @@ namespace OOFScheduling
             System.Threading.Tasks.Task AuthTask = null;
             AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
 
-#if DEBUG
+#if DEBUGFLOW
             MessageBox.Show("Attach now", "OOFSponder", MessageBoxButtons.OK);
 #endif
 
@@ -199,13 +199,36 @@ namespace OOFScheduling
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
+            fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
+        }
+
+        private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            if (!O365.isLoggedIn)
+            {
+                saveToolStripMenuItem.Tag = "LoggedOut";
+                saveToolStripMenuItem.Text = "Sign in";
+            }
+            else
+            {
+                saveToolStripMenuItem.Tag = "LoggedIn";
+                saveToolStripMenuItem.Text = "Sign out";
+            }
         }
 
         void signOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //prep for async work
             System.Threading.Tasks.Task AuthTask = null;
-            AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignOut); }));
+            
+            if (saveToolStripMenuItem.Tag.ToString() == "LoggedIn")
+            {
+                AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignOut); }));
+            }
+            else
+            {
+                AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+            }
 
             //wait on async auth stuff if not null
             if (AuthTask != null)
