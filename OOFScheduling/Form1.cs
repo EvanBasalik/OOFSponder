@@ -410,7 +410,7 @@ namespace OOFScheduling
 
         private async System.Threading.Tasks.Task<bool> RunSetOofO365()
         {
-            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            OOFSponderInsights.TrackInfo(MethodBase.GetCurrentMethod().Name);
             bool haveNecessaryData = false;
 
             //if CredMan is turned on, then we don't need the email or password
@@ -462,16 +462,6 @@ namespace OOFScheduling
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
 #else
                     result = true;
-
-                    //update UI status bar
-                    if (result)
-                    {
-                        UpdateStatusLabel(toolStripStatusLabel1, "Set OOF Message - Start: " + oofTimes[0] + " - End: " + oofTimes[1]);
-                    }
-                    else
-                    {
-                        UpdateStatusLabel(toolStripStatusLabel1, "OOF Message not set");
-                    }
 #endif
                 }
                 else
@@ -499,15 +489,6 @@ namespace OOFScheduling
 #else
                     result = true;
 #endif
-                    //update UI status bar
-                    if (result)
-                    {
-                        UpdateStatusLabel(toolStripStatusLabel1, "Set OOF Message - Start: " + oofTimes[0] + " - End: " + oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays));
-                    }
-                    else
-                    {
-                        UpdateStatusLabel(toolStripStatusLabel1, "OOF Message not set");
-                    }
                 }
             }
 
