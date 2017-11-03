@@ -12,7 +12,7 @@ namespace OOFScheduling
     {
 
         private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
-        internal static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId, "https://login.microsoftonline.com/common", TokenCacheHelper.GetUserCache());
+        internal static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId, "https://login.microsoftonline.com/common");
         internal static string AutomatedReplySettingsURL = "/mailboxSettings/automaticRepliesSetting";
         internal static string MailboxSettingsURL = "/mailboxSettings";
 
@@ -27,6 +27,15 @@ namespace OOFScheduling
         internal enum AADAction
         {
             SignIn, SignOut, ForceSignIn
+        }
+
+        internal static bool isLoggedIn
+        {
+            get
+            {
+                //return authResult.ExpiresOn >= DateTime.UtcNow;
+                return PublicClientApp.Users.Any();
+            }
         }
 
         /// <summary>

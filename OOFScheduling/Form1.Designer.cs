@@ -67,6 +67,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
@@ -402,7 +403,6 @@
             this.radPrimary.Text = "Primary OOF";
             this.radPrimary.UseVisualStyleBackColor = true;
             this.radPrimary.Checked = true;
-            this.radPrimary.CheckedChanged += new System.EventHandler(this.radPrimary_CheckedChanged);
             // 
             // radSecondary
             // 
@@ -414,7 +414,6 @@
             this.radSecondary.TabStop = true;
             this.radSecondary.Text = "Secondary OOF";
             this.radSecondary.UseVisualStyleBackColor = true;
-            this.radPrimary.CheckedChanged += new System.EventHandler(this.radSecondary_CheckedChanged);
             // 
             // lblExternalMesage
             // 
@@ -462,7 +461,8 @@
             this.toolStripMenuItem1.CheckOnClick = true;
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.primaryToolStripMenuItem,
-            this.secondaryToolStripMenuItem});
+            this.secondaryToolStripMenuItem,
+            this.signOutToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(143, 22);
             this.toolStripMenuItem1.Text = "Message";
@@ -489,6 +489,13 @@
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.saveToolStripMenuItem.Text = "Save Settings";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            //
+            // AAD sign-out menu item
+            //
+            this.signOutToolStripMenuItem.Name = "AADToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.saveToolStripMenuItem.Text = "Sign out";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -611,11 +618,12 @@
             this.btnPermaOOF.Location = new System.Drawing.Point(308, 719);
             this.btnPermaOOF.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnPermaOOF.Name = "btnPermaOOF";
-            this.btnPermaOOF.Size = new System.Drawing.Size(121, 23);
+            this.btnPermaOOF.Size = new System.Drawing.Size(130, 23);
             this.btnPermaOOF.TabIndex = 54;
             this.btnPermaOOF.Text = "Go OOF now until:";
             this.btnPermaOOF.UseVisualStyleBackColor = true;
             this.btnPermaOOF.Click += new System.EventHandler(this.btnPermaOOF_Click);
+            this.btnPermaOOF.Tag = "Enable";
             // 
             // dtPermaOOF
             // 
@@ -624,7 +632,7 @@
             this.dtPermaOOF.Name = "dtPermaOOF";
             this.dtPermaOOF.Size = new System.Drawing.Size(185, 20);
             this.dtPermaOOF.TabIndex = 55;
-            this.dtPermaOOF.Value = new System.DateTime(2015, 9, 16, 0, 0, 0, 0);
+            this.dtPermaOOF.Enabled = false;
             // 
             // htmlEditorControl2
             // 
@@ -712,6 +720,11 @@
 
         }
 
+        private void SaveToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
         #endregion
 
         private System.Windows.Forms.NotifyIcon notifyIcon1;
@@ -769,6 +782,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem primaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secondaryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
 
