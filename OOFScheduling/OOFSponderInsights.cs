@@ -66,7 +66,7 @@ namespace OOFScheduling
 
             try
             {
-                AIClient.InstrumentationKey = "9eacd004-7944-4d2e-a978-d66104c67a49";
+                AIClient.InstrumentationKey = "880f3af5-d353-488a-b211-eb99e47d17dd";
 
 #if DEBUG
             Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
