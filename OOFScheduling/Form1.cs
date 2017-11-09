@@ -793,6 +793,7 @@ namespace OOFScheduling
                 notifyIcon1.Visible = true;
                 notifyIcon1.ShowBalloonTip(100);
                 this.ShowInTaskbar = false;
+                this.Hide();
             }
         }
 
@@ -801,6 +802,7 @@ namespace OOFScheduling
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
             notifyIcon1.Visible = false;
+            this.Show();
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -809,6 +811,7 @@ namespace OOFScheduling
             {
                 e.Cancel = true;
                 this.WindowState = FormWindowState.Minimized;
+                this.Hide();
             }
         }
 
