@@ -1015,6 +1015,9 @@ namespace OOFScheduling
                 btnPermaOOF.Tag = "Enable";
                 dtPermaOOF.Enabled = (dtPermaOOF.Value.Date != DateTime.Now.Date);
             }
+
+            radPrimary.Checked = !OOFData.Instance.IsPermaOOFOn;
+            radSecondary.Checked = OOFData.Instance.IsPermaOOFOn;
         }
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
