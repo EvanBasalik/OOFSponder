@@ -100,8 +100,6 @@ namespace OOFScheduling
                 SetUIforPrimary();
             }
 
-            ConfigurePermaOOFUI();
-
             if (OOFData.Instance.WorkingHours!= "")
             {
                 string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
@@ -142,24 +140,6 @@ namespace OOFScheduling
                 saturdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
             }
-
-            //if PermaOOF isn't on, then set up UI to show Primary
-            if (DateTime.Now > OOFData.Instance.PermaOOFDate)
-            {
-                SetUIforPrimary();
-            }
-            else
-            {
-                //else set up for Secondary
-                SetUIforSecondary();
-            }
-
-            ////set the PermaOOF date to something in the future
-            //OOFData.Instance.PermaOOFDate = DateTime.Now.AddDays(4);
-            //dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
-
-
-
 
             bool haveNecessaryData = false;
 
