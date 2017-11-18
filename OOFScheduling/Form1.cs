@@ -465,7 +465,7 @@ namespace OOFScheduling
 
                     OOFSponderInsights.Track("TrySetPermaOOF");
 #if !NOOOF
-                    bool OOFSet = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+                    result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
 #else
                     result = true;
 #endif
@@ -569,9 +569,22 @@ namespace OOFScheduling
 
                 bool externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
                 bool internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
+
                 //local and remote are both UTC, so just compare times
-                bool scheduledStartDateTimeEqual = remoteOOF.ScheduledStartDateTime.DateTime == localOOF.ScheduledStartDateTime.DateTime;
-                bool scheduledEndDateTimeEqual = remoteOOF.ScheduledEndDateTime.DateTime == localOOF.ScheduledEndDateTime.DateTime;
+                //Not sure it can ever happen to have the DateTime empty, but wrap this in a TryCatch just in case
+                //set both to false - that way, we don't care if either one blows up 
+                //because if one is false, the overall evaluation is false anyway
+                bool scheduledStartDateTimeEqual = false;
+                bool scheduledEndDateTimeEqual = false;
+                try
+                {
+                    scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
+                    scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
+                }
+                catch (Exception)
+                {
+                    //do nothing because we will just take the initialized false values;
+                }
 
                 if ( !externalReplyMessageEqual
                         || !internalReplyMessageEqual
@@ -975,29 +988,7 @@ namespace OOFScheduling
 
             }
 
-
-            ConfigurePermaOOFUI();
-
-        }
-
-        private void ConfigurePermaOOFUI()
-        {
-            //update the UI
-            if (OOFData.Instance.IsPermaOOFOn)
-            {
-                btnPermaOOF.Text = "Disable Extended OOF";
-                btnPermaOOF.Tag = "Disable";
-                dtPermaOOF.Enabled = false;
-            }
-            else
-            {
-                btnPermaOOF.Text = "Enable Extended OOF";
-                btnPermaOOF.Tag = "Enable";
-                dtPermaOOF.Enabled = (dtPermaOOF.Value.Date != DateTime.Now.Date);
-            }
-
-            radPrimary.Checked = !OOFData.Instance.IsPermaOOFOn;
-            radSecondary.Checked = OOFData.Instance.IsPermaOOFOn;
+            SetUIforSecondary();
         }
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1020,12 +1011,23 @@ namespace OOFScheduling
             htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
 
+            //update the UI
+            if (OOFData.Instance.IsPermaOOFOn)
+            {
+                btnPermaOOF.Text = "Disable Extended OOF";
+                btnPermaOOF.Tag = "Disable";
+                dtPermaOOF.Enabled = false;
+            }
+            else
+            {
+                btnPermaOOF.Text = "Enable Extended OOF";
+                btnPermaOOF.Tag = "Enable";
+                dtPermaOOF.Value = DateTime.Now.AddDays(1);
+                dtPermaOOF.Enabled = true;
+            }
+
             //lastly, enable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = true;
-            dtPermaOOF.Enabled = true;
-            dtPermaOOF.Value = DateTime.Now.AddDays(1);
-
-            ConfigurePermaOOFUI();
 
             OOFSponderInsights.Track("Configured for secondary");
         }
@@ -1061,8 +1063,6 @@ namespace OOFScheduling
             btnPermaOOF.Enabled = false;
             dtPermaOOF.Enabled = false;
             dtPermaOOF.Value = DateTime.Now;
-
-            ConfigurePermaOOFUI();
 
             OOFSponderInsights.Track("Configured for primary");
         }
