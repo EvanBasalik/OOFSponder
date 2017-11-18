@@ -154,12 +154,12 @@ namespace OOFScheduling
             if (haveNecessaryData)
             {
                 toolStripStatusLabel1.Text = "Ready";
-                OOFSponderInsights.Track("HaveNecessaryData");
+                OOFSponderInsights.TrackInfo("HaveNecessaryData");
             }
             else
             {
                 toolStripStatusLabel1.Text = "Please setup OOFsponder";
-                OOFSponderInsights.Track("MissingData");
+                OOFSponderInsights.TrackInfo("MissingData");
             }
 
             toolStripStatusLabel2.Text = "";
