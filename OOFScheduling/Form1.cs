@@ -932,17 +932,6 @@ namespace OOFScheduling
         {
             OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-            //persist the HTML text if it has been set
-            //assume the latest text in the HTML controls should win
-            //if (htmlEditorControl1.BodyHtml != DummyHTML)
-            //{
-            //    OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-            //}
-            //if (htmlEditorControl2.BodyHtml != DummyHTML)
-            //{
-            //    OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
-            //}
-
             //bail if permaOOF not in the future
             if (DateTime.Now >= dtPermaOOF.Value)
             {
