@@ -38,7 +38,6 @@ namespace OOFScheduling
         public static void TrackException(String message, Exception exception)
         {
             Dictionary<string, string> _properties = new Dictionary<string, string>();
-            _properties.Add("Application", AppName);
 
             Exception _exception = new Exception(message + ": " + exception.Message, exception);
             _properties.Add("Message", _exception.Message);
