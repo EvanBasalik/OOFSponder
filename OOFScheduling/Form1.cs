@@ -1083,13 +1083,13 @@ namespace OOFScheduling
         {
             if (radPrimary.Checked)
             {
-                System.Diagnostics.Trace.WriteLine("PermaOOF off - persisting primary messages");
+                OOFSponderInsights.Track("PermaOOF off - persisting primary messages");
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
             else
             {
-                System.Diagnostics.Trace.WriteLine("PermaOOF on - persisting secondary messages");
+                OOFSponderInsights.Track("PermaOOF on - persisting secondary messages");
                 OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
