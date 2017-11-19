@@ -41,8 +41,10 @@ namespace OOFScheduling
             _properties.Add("Application", AppName);
 
             Exception _exception = new Exception(message + ": " + exception.Message, exception);
+            _properties.Add("Message", _exception.Message);
+            _properties.Add("Call Stack", _exception.StackTrace);
 
-            AIClient.TrackException(_exception, _properties);
+            Track("Exception", _properties);
         }
 
         public static TelemetryClient AIClient
