@@ -43,6 +43,8 @@ namespace OOFScheduling
 
         private void ReadProperties()
         {
+            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+
             instance.PermaOOFDate = OOFScheduling.Properties.Settings.Default.PermaOOFDate;
             instance.WorkingHours = OOFScheduling.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
             instance.PrimaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFExternal;
@@ -116,6 +118,8 @@ namespace OOFScheduling
 
         public void WriteProperties(bool disposing=false)
         {
+            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+
             System.Diagnostics.Trace.TraceInformation("Persisting properties");
 
             Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;

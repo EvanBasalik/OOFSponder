@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
+using System.Runtime.CompilerServices;
 
 namespace OOFScheduling
 {
@@ -44,6 +45,11 @@ namespace OOFScheduling
             _properties.Add("Call Stack", _exception.StackTrace);
 
             Track("Exception", _properties);
+        }
+
+        internal static string CurrentMethod([CallerMemberName]string name = "")
+        {
+            return name;
         }
 
         public static TelemetryClient AIClient

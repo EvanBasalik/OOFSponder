@@ -43,7 +43,7 @@ namespace OOFScheduling
         /// </summary>
         internal async static Task<bool> MSALWork(AADAction action)
         {
-            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
 
             bool _result = false;
 
@@ -116,7 +116,7 @@ namespace OOFScheduling
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<string> GetHttpContentWithToken(string url)
         {
-            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary
             await O365.MSALWork(O365.AADAction.SignIn);
@@ -146,7 +146,7 @@ namespace OOFScheduling
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF )
         {
-            OOFSponderInsights.TrackInfo(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary
             await O365.MSALWork(O365.AADAction.SignIn);
