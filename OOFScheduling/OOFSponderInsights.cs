@@ -42,7 +42,7 @@ namespace OOFScheduling
 
             Exception _exception = new Exception(message + ": " + exception.Message, exception);
             _properties.Add("Message", _exception.Message);
-            _properties.Add("Call Stack", _exception.StackTrace);
+            _properties.Add("CallStack", _exception.StackTrace);
 
             Track("Exception", _properties);
         }
