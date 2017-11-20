@@ -56,8 +56,8 @@ namespace OOFScheduling
                 catch (MsalUiRequiredException ex)
                 {
                     // A MsalUiRequiredException happened on AcquireTokenSilentAsync. This indicates you need to call AcquireTokenAsync to acquire a token
-                    OOFSponder.Logger.Info($"MsalUiRequiredException: {ex.Message}");
-                    OOFSponderInsights.TrackException($"MsalUiRequiredException: {ex.Message}", ex);
+                    //Don't track this one since it can basically be considered expected.
+                    //OOFSponderInsights.TrackException($"MsalUiRequiredException: {ex.Message}", ex);
 
                     try
                     {
@@ -65,7 +65,6 @@ namespace OOFScheduling
                     }
                     catch (MsalException msalex)
                     {
-                        OOFSponder.Logger.Error(new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
                         OOFSponderInsights.TrackException("MsalException", new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
                     }
 
