@@ -245,7 +245,7 @@ namespace OOFScheduling
 
         private async System.Threading.Tasks.Task<bool> RunSetOofO365()
         {
-            OOFSponderInsights.TrackInfo(MethodBase.GetOOFSponderInsights.CurrentMethod().Name);
+            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
             bool haveNecessaryData = false;
 
             //if CredMan is turned on, then we don't need the email or password
