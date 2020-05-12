@@ -3,7 +3,7 @@
 ![Image of primary UI](https://github.com/EvanBasalik/OOFSponder/blob/master/ReadMeImages/Primary.png)
 **Getting Started**
 
-Install from [OOFSponder Install](https://oofsponderdeploy.blob.core.windows.net/install/install.htm). Note that Windows will throw a warning the first time you install OOFSponder, but if you select _Run anyway_ it will install properly. Future upgrades will not show the same warning.
+Install from [here](https://oofsponderdeploy.blob.core.windows.net/install/install.htm). Note that Windows will throw a warning the first time you install OOFSponder, but if you select _Run anyway_ it will install properly. Future upgrades will not show the same warning.
 
 Set the hours to when you work, if you don't work that day check Off Work.  
 
