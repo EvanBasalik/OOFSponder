@@ -569,7 +569,7 @@ namespace OOFScheduling
         #region Events
         private void OnExit(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -718,7 +718,7 @@ namespace OOFScheduling
         {
             OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
             minimize = false;
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         #endregion
