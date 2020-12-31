@@ -477,7 +477,7 @@ namespace OOFScheduling
                 currentWorkingTime = workingTimesArray[(int)currentCheckDate.DayOfWeek].Split('~');
             }
 
-            DateTime StartTime;
+            DateTime StartTime = DateTime.Now;
             if (currentWorkingTime[2] == "1")
             {
                 StartTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime[1]);
@@ -485,13 +485,14 @@ namespace OOFScheduling
             else
             {
                 int daysback = -1;
-                while (true)
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysback >= -30)
                 {
                     DateTime backday = currentCheckDate.AddDays(daysback);
                     string[] oldWorkingTime = workingTimesArray[(int)backday.DayOfWeek].Split('~');
+                    StartTime = DateTime.Parse(backday.ToString("D") + " " + oldWorkingTime[1]);
                     if (oldWorkingTime[2] == "1")
                     {
-                        StartTime = DateTime.Parse(backday.ToString("D") + " " + oldWorkingTime[1]);
                         break;
                     }
                     else
@@ -502,7 +503,7 @@ namespace OOFScheduling
             }
 
             string[] futureWorkingTime = workingTimesArray[(int)currentCheckDate.AddDays(1).DayOfWeek].Split('~');
-            DateTime EndTime;
+            DateTime EndTime = DateTime.Now;
             if (futureWorkingTime[2] == "1")
             {
                 EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime[0]);
@@ -510,13 +511,14 @@ namespace OOFScheduling
             else
             {
                 int daysforward = 1;
-                while (true)
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysforward <= 365)
                 {
                     DateTime comingday = currentCheckDate.AddDays(1).AddDays(daysforward);
                     string[] oldWorkingTime = workingTimesArray[(int)comingday.DayOfWeek].Split('~');
+                    EndTime = DateTime.Parse(comingday.ToString("D") + " " + oldWorkingTime[0]);
                     if (oldWorkingTime[2] == "1")
                     {
-                        EndTime = DateTime.Parse(comingday.ToString("D") + " " + oldWorkingTime[0]);
                         break;
                     }
                     else
@@ -528,6 +530,9 @@ namespace OOFScheduling
 
             OofTimes[0] = StartTime;
             OofTimes[1] = EndTime;
+
+            OOFSponderInsights.TrackInfo("Calculated OOF StartTime = " + StartTime.ToString());
+            OOFSponderInsights.TrackInfo("Calculated OOF EndTime = " + EndTime.ToString());
 
             return OofTimes;
         }
@@ -549,6 +554,7 @@ namespace OOFScheduling
             }
 
             OOFData.Instance.WorkingHours = ScheduleString();
+
             OOFData.Instance.WriteProperties();
 
             toolStripStatusLabel1.Text = "Settings Saved";
