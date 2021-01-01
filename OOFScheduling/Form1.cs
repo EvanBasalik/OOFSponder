@@ -21,6 +21,11 @@ namespace OOFScheduling
         //Track if force close or just hitting X to minimize
         private bool minimize = true;
 
+        //Track whether or not to run in OnCallMode
+        //When in this mode, the OOF times get flipped and instead of 
+        //tracking days on/days off, they will track a start/end for OOF *during* the working day
+        public bool bOnCallMode { get; private set; }
+
         public Form1()
         {
             OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
@@ -888,6 +893,13 @@ namespace OOFScheduling
                 OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
+        }
+
+        //enable/disable OnCallMode
+        private void enableOnCallModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bOnCallMode = !bOnCallMode;
+            enableOnCallModeToolStripMenuItem.Checked = bOnCallMode;
         }
     }
 
