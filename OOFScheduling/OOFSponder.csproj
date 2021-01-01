@@ -23,8 +23,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</InstallUrl>
-    <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</UpdateUrl>
+    <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/install/</InstallUrl>
+    <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/install/</UpdateUrl>
     <SupportUrl>http://codebox/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
     <PublisherName>Microsoft</PublisherName>
