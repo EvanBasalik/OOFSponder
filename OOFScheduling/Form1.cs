@@ -293,11 +293,11 @@ namespace OOFScheduling
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
                     OOFSponderInsights.Track("TrySetNormalOOF");
-#if !NOOOF
+//#if !NOOOF
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
-#else
-                    result = true;
-#endif
+//#else
+ //                   result = true;
+//#endif
                 }
                 else
                 //since permaOOF is on, need to adjust the end date such that is permaOOFDate

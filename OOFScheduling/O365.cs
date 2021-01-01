@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
-using Microsoft.Identity.Client.Extension;
+using mshtml;
 
 namespace OOFScheduling
 {
@@ -12,7 +12,11 @@ namespace OOFScheduling
     {
 
         private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
-        internal static PublicClientApplication PublicClientApp = new PublicClientApplication(ClientId, "https://login.microsoftonline.com/common");
+        private static string Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+        internal static IPublicClientApplication PublicClientApp = PublicClientApplicationBuilder.Create(ClientId)
+                .WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient")
+                .WithAuthority(AzureCloudInstance.AzurePublic, Tenant)
+                .Build();
         internal static string AutomatedReplySettingsURL = "/mailboxSettings/automaticRepliesSetting";
         internal static string MailboxSettingsURL = "/mailboxSettings";
 
@@ -34,7 +38,14 @@ namespace OOFScheduling
             get
             {
                 //return authResult.ExpiresOn >= DateTime.UtcNow;
-                return PublicClientApp.Users.Any();
+
+                //MSAL 1.0
+                //return PublicClientApp.Users.Any();
+
+                //MSAL 3.0
+                var accounts = Task.Run(() => PublicClientApp.GetAccountsAsync()).GetAwaiter().GetResult();
+                var firstAccount = accounts.FirstOrDefault();
+                return (firstAccount != null);
             }
         }
 
@@ -46,12 +57,18 @@ namespace OOFScheduling
             OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
 
             bool _result = false;
+            var accounts = await PublicClientApp.GetAccountsAsync();
+            var firstAccount = accounts.FirstOrDefault();
 
             if (action == AADAction.SignIn | action == AADAction.ForceSignIn)
             {
                 try
                 {
-                    authResult = await PublicClientApp.AcquireTokenSilentAsync(_scopes, PublicClientApp.Users.FirstOrDefault());
+                    //MSAL 1.0 style - deprecated
+                    //authResult = await PublicClientApp.AcquireTokenSilentAsync(_scopes, PublicClientApp.Users.FirstOrDefault());
+
+                    //MSAL 3.0 style
+                    authResult = await PublicClientApp.AcquireTokenSilent(_scopes, firstAccount).ExecuteAsync();
                 }
                 catch (MsalUiRequiredException ex)
                 {
@@ -61,7 +78,11 @@ namespace OOFScheduling
 
                     try
                     {
-                        authResult = await PublicClientApp.AcquireTokenAsync(_scopes);
+                        //MSAL 1.0 style
+                        //authResult = await PublicClientApp.AcquireTokenAsync(_scopes);
+
+                        //MSAL 3.0 style
+                        authResult = await PublicClientApp.AcquireTokenInteractive(_scopes).ExecuteAsync();
                     }
                     catch (MsalException msalex)
                     {
@@ -75,13 +96,21 @@ namespace OOFScheduling
                     return false;
                 }
 
-                if (PublicClientApp.Users.Count() > 0)
+                //MSAL 1.0 style
+                //if (PublicClientApp.Users.Count() > 0)
+
+                //MSAL 3.0 style
+                if (authResult != null)
                 {
-                    //BuddyOptions.authResult = BuddyOptions.authResult;
                     _result = true;
 
                     //also, update the Application Insights info with the authenticated user
-                   OOFSponderInsights.AIClient.Context.User.Id = authResult.User.DisplayableId.Split('@')[0];
+                    //MSAL 1.0 style
+                    //OOFSponderInsights.AIClient.Context.User.Id = authResult.User.DisplayableId.Split('@')[0];
+
+                    //MSAL 3.0 style
+                    OOFSponderInsights.AIClient.Context.User.Id = authResult.Account.Username;
+
                 }
                 else
                 {
@@ -90,11 +119,19 @@ namespace OOFScheduling
             }
             else
             {
-                if (PublicClientApp.Users.Any())
+                //MSAL 1.0
+                //if (PublicClientApp.Users.Any())
+
+                //MSAL 3.0
+                if (firstAccount != null)
                 {
                     try
                     {
-                        PublicClientApp.Remove(PublicClientApp.Users.FirstOrDefault());
+                        //MSAL 1.0
+                        //PublicClientApp.Remove(PublicClientApp.Users.FirstOrDefault());
+
+                        //MSAL 3.0
+                        await PublicClientApp.RemoveAsync(firstAccount);
                         _result = true;
                     }
                     catch (MsalException ex)
@@ -152,13 +189,16 @@ namespace OOFScheduling
 
             var httpClient = new System.Net.Http.HttpClient();
             System.Net.Http.HttpMethod method = new System.Net.Http.HttpMethod("PATCH");
-            System.Net.Http.HttpResponseMessage response;
+            System.Net.Http.HttpResponseMessage response = null;
 
             //         var response = client.PostAsync("api/AgentCollection", new StringContent(
             //new JavaScriptSerializer().Serialize(user), Encoding.UTF8, "application/json")).Result;
 
+
             try
             {
+
+#if !NOOOF
                 Microsoft.Graph.MailboxSettings mbox = new Microsoft.Graph.MailboxSettings();
                 mbox.AutomaticRepliesSetting = OOF;
 
@@ -169,7 +209,7 @@ namespace OOFScheduling
                 //Add the token in Authorization header
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
                 response = await httpClient.SendAsync(request);
-
+#endif
                 return response;
             }
             catch (Exception ex)
