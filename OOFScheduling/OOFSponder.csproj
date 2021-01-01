@@ -23,15 +23,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/install/</InstallUrl>
-    <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/install/</UpdateUrl>
+    <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</InstallUrl>
+    <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</UpdateUrl>
     <SupportUrl>http://codebox/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
     <PublisherName>Microsoft</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>install.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>12</ApplicationRevision>
+    <ApplicationRevision>13</ApplicationRevision>
     <ApplicationVersion>0.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
