@@ -14,6 +14,7 @@ namespace OOFScheduling
         internal string PrimaryOOFInternalMessage { get; set; }
         internal string SecondaryOOFExternalMessage { get; set; }
         internal string SecondaryOOFInternalMessage { get; set; }
+        internal bool IsOnCallModeOn { get; set; }
 
         private const string baseValue = "default";
         internal static string version;
@@ -51,6 +52,7 @@ namespace OOFScheduling
             instance.PrimaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFInternal;
             instance.SecondaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
             instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
+            instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode;
         }
 
         //internal string InternalOOFMessage
@@ -140,7 +142,12 @@ namespace OOFScheduling
             Properties.Settings.Default.workingHours = instance.WorkingHours;
             System.Diagnostics.Trace.TraceInformation("Persisting WorkingHours");
 
+            Properties.Settings.Default.enableOnCallMode = instance.IsOnCallModeOn;
+            OOFSponder.Logger.Info("Persisting enableOnCallMode = " + instance.IsOnCallModeOn.ToString());
+
+            OOFSponder.Logger.Info("Persisting settings");
             Properties.Settings.Default.Save();
+            OOFSponder.Logger.Info("Persisted settings");
 
             if (disposing)
             {

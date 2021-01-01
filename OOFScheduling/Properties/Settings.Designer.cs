@@ -106,5 +106,17 @@ namespace OOFScheduling.Properties {
                 this["SecondaryOOFInternal"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool enableOnCallMode {
+            get {
+                return ((bool)(this["enableOnCallMode"]));
+            }
+            set {
+                this["enableOnCallMode"] = value;
+            }
+        }
     }
 }

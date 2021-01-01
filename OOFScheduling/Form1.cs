@@ -106,6 +106,10 @@ namespace OOFScheduling
                 SetUIforPrimary();
             }
 
+            //Need to update the UI as appropriate based on On-Call mode
+            bOnCallMode = OOFData.Instance.IsOnCallModeOn;
+            SetUIforOnCallMode();
+
             if (OOFData.Instance.WorkingHours!= "")
             {
                 string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
@@ -899,7 +903,40 @@ namespace OOFScheduling
         private void enableOnCallModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bOnCallMode = !bOnCallMode;
+            OOFData.Instance.IsOnCallModeOn = bOnCallMode;
+            SetUIforOnCallMode();
+        }
+
+        //do all the work to update the UI when enabling/disabling OnCallMode
+        private void SetUIforOnCallMode()
+        {
+            OOFSponder.Logger.Info("Attempting to set OnCallModeUI for OnCallMode=" + bOnCallMode);
             enableOnCallModeToolStripMenuItem.Checked = bOnCallMode;
+
+            //rename all the working day checkbox labels - keep the control names
+            //a bit confusing, sure - but better than recreating a whole new set of controls
+            if (bOnCallMode)
+            {
+                sundayOffWorkCB.Text = "On-Call";
+                mondayOffWorkCB.Text = "On-Call";
+                tuesdayOffWorkCB.Text = "On-Call";
+                wednesdayOffWorkCB.Text = "On-Call";
+                thursdayOffWorkCB.Text = "On-Call";
+                fridayOffWorkCB.Text = "On-Call";
+                saturdayOffWorkCB.Text = "On-Call";
+            }
+            else
+            {
+                sundayOffWorkCB.Text = "Off Work";
+                mondayOffWorkCB.Text = "Off Work";
+                tuesdayOffWorkCB.Text = "Off Work";
+                wednesdayOffWorkCB.Text = "Off Work";
+                thursdayOffWorkCB.Text = "Off Work";
+                fridayOffWorkCB.Text = "Off Work";
+                saturdayOffWorkCB.Text = "Off Work";
+            }
+
+            OOFSponder.Logger.Info("Successfully set OnCallModeUI for OnCallMode=" + bOnCallMode);
         }
     }
 
