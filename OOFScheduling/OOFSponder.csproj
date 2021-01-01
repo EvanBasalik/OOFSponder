@@ -23,15 +23,15 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/install/</InstallUrl>
-    <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/install/</UpdateUrl>
+    <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</InstallUrl>
+    <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</UpdateUrl>
     <SupportUrl>http://codebox/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
     <PublisherName>Microsoft</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>install.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>0.3.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -43,7 +43,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NOOOF</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
