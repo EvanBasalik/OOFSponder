@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOFScheduling;
+using System;
 using System.Diagnostics;
 
 namespace OOFSponder
@@ -33,6 +34,14 @@ namespace OOFSponder
                                   type,
                                   module,
                                   message));
+
+            //also send everything to AppInsights
+            OOFSponderInsights.Track(
+                    string.Format("{0},{1},{2}",
+                                  type,
+                                  module,
+                                  message)
+                );
         }
     }
 }
