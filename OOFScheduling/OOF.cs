@@ -14,6 +14,10 @@ namespace OOFScheduling
         internal string PrimaryOOFInternalMessage { get; set; }
         internal string SecondaryOOFExternalMessage { get; set; }
         internal string SecondaryOOFInternalMessage { get; set; }
+
+        //Track whether or not to run in OnCallMode
+        //When in this mode, the OOF times get flipped and instead of 
+        //tracking days on/days off, they will track a start/end for OOF *during* the working day
         internal bool IsOnCallModeOn { get; set; }
 
         private const string baseValue = "default";

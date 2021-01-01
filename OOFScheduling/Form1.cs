@@ -21,11 +21,6 @@ namespace OOFScheduling
         //Track if force close or just hitting X to minimize
         private bool minimize = true;
 
-        //Track whether or not to run in OnCallMode
-        //When in this mode, the OOF times get flipped and instead of 
-        //tracking days on/days off, they will track a start/end for OOF *during* the working day
-        public bool bOnCallMode { get; private set; }
-
         public Form1()
         {
             OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
@@ -107,7 +102,6 @@ namespace OOFScheduling
             }
 
             //Need to update the UI as appropriate based on On-Call mode
-            bOnCallMode = OOFData.Instance.IsOnCallModeOn;
             SetUIforOnCallMode();
 
             if (OOFData.Instance.WorkingHours!= "")
@@ -902,20 +896,19 @@ namespace OOFScheduling
         //enable/disable OnCallMode
         private void enableOnCallModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            bOnCallMode = !bOnCallMode;
-            OOFData.Instance.IsOnCallModeOn = bOnCallMode;
+            OOFData.Instance.IsOnCallModeOn = !OOFData.Instance.IsOnCallModeOn;
             SetUIforOnCallMode();
         }
 
         //do all the work to update the UI when enabling/disabling OnCallMode
         private void SetUIforOnCallMode()
         {
-            OOFSponder.Logger.Info("Attempting to set OnCallModeUI for OnCallMode=" + bOnCallMode);
-            enableOnCallModeToolStripMenuItem.Checked = bOnCallMode;
+            OOFSponder.Logger.Info("Attempting to set OnCallModeUI for OnCallMode=" + OOFData.Instance.IsOnCallModeOn);
+            enableOnCallModeToolStripMenuItem.Checked = OOFData.Instance.IsOnCallModeOn;
 
             //rename all the working day checkbox labels - keep the control names
             //a bit confusing, sure - but better than recreating a whole new set of controls
-            if (bOnCallMode)
+            if (OOFData.Instance.IsOnCallModeOn)
             {
                 sundayOffWorkCB.Text = "On-Call";
                 mondayOffWorkCB.Text = "On-Call";
@@ -936,7 +929,7 @@ namespace OOFScheduling
                 saturdayOffWorkCB.Text = "Off Work";
             }
 
-            OOFSponder.Logger.Info("Successfully set OnCallModeUI for OnCallMode=" + bOnCallMode);
+            OOFSponder.Logger.Info("Successfully set OnCallModeUI for OnCallMode=" + OOFData.Instance.IsOnCallModeOn);
         }
     }
 
