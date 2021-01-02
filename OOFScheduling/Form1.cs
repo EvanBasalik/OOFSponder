@@ -296,11 +296,11 @@ namespace OOFScheduling
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
                     OOFSponderInsights.Track("TrySetNormalOOF");
-//#if !NOOOF
+#if !NOOOF
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
-//#else
- //                   result = true;
-//#endif
+#else
+                    result = true;
+#endif
                 }
                 else
                 //since permaOOF is on, need to adjust the end date such that is permaOOFDate
@@ -333,89 +333,89 @@ namespace OOFScheduling
             return result;
         }
 
-        public async System.Threading.Tasks.Task<bool> TrySetOOF365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
-        {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
-            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
+        //public async System.Threading.Tasks.Task<bool> TrySetOOF365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
+        //{
+        //    OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+        //    toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
-            //need to convert the times from local datetime to DateTimeTimeZone and UTC
-            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
-            DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
+        //    //need to convert the times from local datetime to DateTimeTimeZone and UTC
+        //    DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
+        //    DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
 
-            //create local OOF object
-            AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
-            localOOF.ExternalReplyMessage = oofMessageExternal;
-            localOOF.InternalReplyMessage = oofMessageInternal;
-            localOOF.ScheduledStartDateTime = oofStart;
-            localOOF.ScheduledEndDateTime = oofEnd;
-            localOOF.Status = AutomaticRepliesStatus.Scheduled;
+        //    //create local OOF object
+        //    AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
+        //    localOOF.ExternalReplyMessage = oofMessageExternal;
+        //    localOOF.InternalReplyMessage = oofMessageInternal;
+        //    localOOF.ScheduledStartDateTime = oofStart;
+        //    localOOF.ScheduledEndDateTime = oofEnd;
+        //    localOOF.Status = AutomaticRepliesStatus.Scheduled;
 
-            try
-            {
-                OOFSponderInsights.Track("Getting OOF settings from O365");
-                string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
-                AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
-                OOFSponderInsights.Track("Successfully got OOF settings");
+        //    try
+        //    {
+        //        OOFSponderInsights.Track("Getting OOF settings from O365");
+        //        string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
+        //        AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
+        //        OOFSponderInsights.Track("Successfully got OOF settings");
 
-                bool externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
-                bool internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
+        //        bool externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
+        //        bool internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
 
-                //local and remote are both UTC, so just compare times
-                //Not sure it can ever happen to have the DateTime empty, but wrap this in a TryCatch just in case
-                //set both to false - that way, we don't care if either one blows up 
-                //because if one is false, the overall evaluation is false anyway
-                bool scheduledStartDateTimeEqual = false;
-                bool scheduledEndDateTimeEqual = false;
-                try
-                {
-                    scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
-                    scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
-                }
-                catch (Exception)
-                {
-                    //do nothing because we will just take the initialized false values;
-                }
+        //        //local and remote are both UTC, so just compare times
+        //        //Not sure it can ever happen to have the DateTime empty, but wrap this in a TryCatch just in case
+        //        //set both to false - that way, we don't care if either one blows up 
+        //        //because if one is false, the overall evaluation is false anyway
+        //        bool scheduledStartDateTimeEqual = false;
+        //        bool scheduledEndDateTimeEqual = false;
+        //        try
+        //        {
+        //            scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
+        //            scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
+        //        }
+        //        catch (Exception)
+        //        {
+        //            //do nothing because we will just take the initialized false values;
+        //        }
 
-                if ( !externalReplyMessageEqual
-                        || !internalReplyMessageEqual
-                        || !scheduledStartDateTimeEqual
-                        || !scheduledEndDateTimeEqual
-                        )
-                {
-                    OOFSponderInsights.Track("Local OOF doesn't match remote OOF");
-                    System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
+        //        if ( !externalReplyMessageEqual
+        //                || !internalReplyMessageEqual
+        //                || !scheduledStartDateTimeEqual
+        //                || !scheduledEndDateTimeEqual
+        //                )
+        //        {
+        //            OOFSponderInsights.Track("Local OOF doesn't match remote OOF");
+        //            System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
 
-                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
+        //            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+        //            {
+        //                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
 
-                        //report back to AppInsights
-                        OOFSponderInsights.Track("Successfully set OOF");
-                        return true;
-                    }
-                    else
-                    {
-                        OOFSponderInsights.Track("Unable to set OOF");
-                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
-                        return false;
-                    }
-                }
-                else
-                {
-                    OOFSponderInsights.Track("Remote OOF matches - no changes");
-                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
-                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
-                OOFSponderInsights.TrackException("Unable to set OOF: " + ex.Message, ex);
+        //                //report back to AppInsights
+        //                OOFSponderInsights.Track("Successfully set OOF");
+        //                return true;
+        //            }
+        //            else
+        //            {
+        //                OOFSponderInsights.Track("Unable to set OOF");
+        //                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
+        //                return false;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            OOFSponderInsights.Track("Remote OOF matches - no changes");
+        //            UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
+        //            return true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
+        //        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
+        //        OOFSponderInsights.TrackException("Unable to set OOF: " + ex.Message, ex);
 
-                return false;
-            }
-        }
+        //        return false;
+        //    }
+        //}
 
         #endregion
         #endregion
@@ -466,8 +466,30 @@ namespace OOFScheduling
         private DateTime[] getOofTime(string workingHours)
         {
             DateTime[] OofTimes = new DateTime[2];
-            string[] workingTimesArray = workingHours.Split('|');
+            DateTime StartTime, EndTime;
 
+            //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
+            if (!OOFData.Instance.IsOnCallModeOn)
+            {
+                CalculateOOFTimes(OOFData.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
+            }
+            else
+            {
+                CalculateOOFTimes2(out StartTime, out EndTime, OOFData.Instance.IsOnCallModeOn);
+            }
+
+            OofTimes[0] = StartTime;
+            OofTimes[1] = EndTime;
+
+            OOFSponderInsights.TrackInfo("Calculated OOF StartTime = " + StartTime.ToString());
+            OOFSponderInsights.TrackInfo("Calculated OOF EndTime = " + EndTime.ToString());
+
+            return OofTimes;
+        }
+
+        //legacy method - STILL USED WHEN ONCALLMODE NOT ENABLED!!!!!!!
+        void CalculateOOFTimes(string[] workingTimesArray, out DateTime StartTime, out DateTime EndTime)
+        {
             //Hold now time (if our working time hasn't come yet but we are on the next day make now still be yesterday
             //Example: Your off at 5PM April 1st at 12:01 AM April 2nd we don't want to change our OOF to the one for April 2nd, we are still off from April 1st
             // To handle this if the time we get for the Beginning of our working time comes after the current time we fall back a day to use that days oof time.
@@ -480,7 +502,7 @@ namespace OOFScheduling
                 currentWorkingTime = workingTimesArray[(int)currentCheckDate.DayOfWeek].Split('~');
             }
 
-            DateTime StartTime = DateTime.Now;
+            StartTime = DateTime.Now;
             if (currentWorkingTime[2] == "1")
             {
                 StartTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime[1]);
@@ -506,7 +528,7 @@ namespace OOFScheduling
             }
 
             string[] futureWorkingTime = workingTimesArray[(int)currentCheckDate.AddDays(1).DayOfWeek].Split('~');
-            DateTime EndTime = DateTime.Now;
+            EndTime = DateTime.Now;
             if (futureWorkingTime[2] == "1")
             {
                 EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime[0]);
@@ -530,14 +552,151 @@ namespace OOFScheduling
                     }
                 }
             }
+        }
 
-            OofTimes[0] = StartTime;
-            OofTimes[1] = EndTime;
+        //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
+        void CalculateOOFTimes2(out DateTime StartTime, out DateTime EndTime, bool enableOnCallMode)
+        {
 
-            OOFSponderInsights.TrackInfo("Calculated OOF StartTime = " + StartTime.ToString());
-            OOFSponderInsights.TrackInfo("Calculated OOF EndTime = " + EndTime.ToString());
+            StartTime = DateTime.Now;
+            EndTime = DateTime.Now;
 
-            return OofTimes;
+            DateTime currentCheckDate = DateTime.Now;
+            OOFInstance currentWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.DayOfWeek];
+            OOFInstance LastDayPeriod = OOFData.Instance.OOFCollection[(int)currentCheckDate.AddDays(-1).DayOfWeek];
+            OOFInstance NextDayPeriod = OOFData.Instance.OOFCollection[(int)currentCheckDate.AddDays(1).DayOfWeek];
+
+            //between the end of the previous OOF period and the start of the next one
+            if (currentCheckDate > LastDayPeriod.StartTime && currentCheckDate < NextDayPeriod.StartTime)
+            {
+                if (enableOnCallMode)
+                {
+                    StartTime = NextDayPeriod.StartTime;
+                    EndTime = NextDayPeriod.EndTime;
+                }
+                else
+                {
+                    StartTime = LastDayPeriod.EndTime;
+                    EndTime = NextDayPeriod.StartTime;
+                }
+            }
+
+            //between the start of the current period and the end of the current period
+            if (currentCheckDate > currentWorkingTime.StartTime && currentCheckDate < currentWorkingTime.EndTime)
+            {
+                if (enableOnCallMode)
+                {
+                    StartTime = currentWorkingTime.StartTime;
+                    EndTime = currentWorkingTime.EndTime;
+                }
+                else
+                {
+                    StartTime = NextDayPeriod.StartTime;
+                    EndTime = NextDayPeriod.EndTime;
+                }
+            }
+
+            if (currentCheckDate > currentWorkingTime.EndTime)
+            {
+                if (enableOnCallMode)
+                {
+                    StartTime = NextDayPeriod.StartTime;
+                    EndTime = NextDayPeriod.EndTime;
+                }
+                else
+                {
+                    StartTime = currentWorkingTime.EndTime;
+                    EndTime = NextDayPeriod.StartTime;
+                }
+            }
+
+
+
+            //Hold now time. if we are doing traditional OOF and if our working time hasn't come yet but we are on the next day make now still be yesterday
+            //Example: Your off at 5PM April 1st at 12:01 AM April 2nd we don't want to change our OOF to the one for April 2nd, we are still off from April 1st
+            // To handle this if the time we get for the Beginning of our working time comes after the current time we fall back a day to use that days oof time.
+
+            if (DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime.StartTime.ToShortTimeString()) > DateTime.Now)
+            {
+                currentCheckDate = DateTime.Now.AddDays(-1);
+                currentWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.DayOfWeek];
+            }
+
+            //figure out the StartTime for the OOF period
+            if (currentWorkingTime.IsOOF)
+            {
+                if (!enableOnCallMode)
+                {
+                    //for standard OOF mode, the endTime is the start of the OOF period
+                    StartTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime.EndTime.ToShortTimeString());
+                }
+                else
+                {
+                    //if in OnCallMode, then we treat the startTime as the start of the OOF period
+                    StartTime = DateTime.Parse(currentCheckDate.ToString("D") + " " +currentWorkingTime.StartTime.ToShortTimeString());
+                }
+            }
+            else
+            {
+                int daysback = -1;
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysback >= -30)
+                {
+                    DateTime backday = currentCheckDate.AddDays(daysback);
+                    OOFInstance oldWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.DayOfWeek];
+                    StartTime = DateTime.Parse(backday.ToString("D") + " " + oldWorkingTime.EndTime);
+                    if (oldWorkingTime.IsOOF)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        daysback--;
+                    }
+                }
+            }
+
+            //figure out the end time for the OOF period
+            if (DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime.EndTime.ToShortTimeString()) > DateTime.Now)
+            {
+                currentCheckDate = DateTime.Now.AddDays(-1);
+                currentWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.DayOfWeek];
+            }
+            OOFInstance futureWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.AddDays(1).DayOfWeek];
+            if (futureWorkingTime.IsOOF)
+            {
+
+                //EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime.startTime);
+                if (!enableOnCallMode)
+                {
+                    //for standard OOF mode, the endTime is the start of the OOF period
+                    EndTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + futureWorkingTime.StartTime.ToShortTimeString());
+                }
+                else
+                {
+                    //if in OnCallMode, then we treat the startTime as the start of the OOF period
+                    EndTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + futureWorkingTime.EndTime.ToShortTimeString());
+                }
+            }
+            else
+            {
+                int daysforward = 1;
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysforward <= 365)
+                {
+                    DateTime comingday = currentCheckDate.AddDays(1).AddDays(daysforward);
+                    OOFInstance oldWorkingTime = OOFData.Instance.OOFCollection[(int)comingday.DayOfWeek];
+                    EndTime = DateTime.Parse(comingday.ToString("D") + " " + oldWorkingTime.StartTime);
+                    if (oldWorkingTime.IsOOF)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        daysforward++;
+                    }
+                }
+            }
         }
 
         private void saveSettings()

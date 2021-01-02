@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace OOFScheduling
 {
@@ -14,6 +17,45 @@ namespace OOFScheduling
         internal string PrimaryOOFInternalMessage { get; set; }
         internal string SecondaryOOFExternalMessage { get; set; }
         internal string SecondaryOOFInternalMessage { get; set; }
+
+        internal Collection<OOFInstance> _OOFCollection;
+        internal Collection<OOFInstance> OOFCollection
+        {
+            get
+            {
+                if (_OOFCollection == null)
+                {
+                    _OOFCollection = new Collection<OOFInstance>();
+                }
+
+                if (_OOFCollection.Count != 7)
+                {
+                    //convert the array of string objects to real objects
+                    string[] workingTimes = WorkingHours.Split('|');
+                    for (int i = 0; i < 7; i++)
+                    {
+                        string[] currentWorkingTime = workingTimes[i].Split('~');
+                        OOFInstance OOFItem = new OOFInstance();
+                        OOFItem.dayOfWeek = (DayOfWeek)i;
+                        OOFItem.StartTime = DateTime.Parse(currentWorkingTime[0]);
+                        OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
+                        if (currentWorkingTime[2] == "0")
+                        {
+                            OOFItem.IsOOF = false;
+                        }
+                        else
+                        {
+                            OOFItem.IsOOF = true;
+                        }
+                        OOFItem.isOnCallModeEnabled = this.IsOnCallModeOn;
+
+                        _OOFCollection.Add(OOFItem);
+                    }
+                }
+
+                return _OOFCollection;
+            }
+        }
 
         //Track whether or not to run in OnCallMode
         //When in this mode, the OOF times get flipped and instead of 
@@ -58,64 +100,6 @@ namespace OOFScheduling
             instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
             instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode;
         }
-
-        //internal string InternalOOFMessage
-        //{
-        //    get
-        //    {
-        //        //decided whether to return primary or secondary message
-        //        if (!instance.IsPermaOOFOn)
-        //        {
-        //            return instance.PrimaryOOFInternalMessage;
-        //        }
-        //        else
-        //        {
-        //            return instance.SecondaryOOFInternalMessage;
-        //        }
-        //    }
-
-        //    set
-        //    {
-        //        //decided whether to return primary or secondary message
-        //        if (!instance.IsPermaOOFOn)
-        //        {
-        //            instance.PrimaryOOFInternalMessage = value;
-        //        }
-        //        else
-        //        {
-        //            instance.SecondaryOOFInternalMessage = value;
-        //        }
-        //    }
-        //}
-
-        //internal string ExternalOOFMessage
-        //{
-        //    get
-        //    {
-        //        //decided whether to return primary or secondary message
-        //        if (!instance.IsPermaOOFOn)
-        //        {
-        //            return instance.PrimaryOOFExternalMessage;
-        //        }
-        //        else
-        //        {
-        //            return instance.SecondaryOOFExternalMessage;
-        //        }
-        //    }
-
-        //    set
-        //    {
-        //        //decided whether to return primary or secondary message
-        //        if (!instance.IsPermaOOFOn)
-        //        {
-        //            instance.PrimaryOOFExternalMessage=value;
-        //        }
-        //        else
-        //        {
-        //            instance.SecondaryOOFExternalMessage=value;
-        //        }
-        //    }
-        //}
 
         ~OOFData()
         {
@@ -184,5 +168,51 @@ namespace OOFScheduling
             WriteProperties(disposing);
         }
     }
+    public class OOFInstance
+    {
+        private DateTime _startTime;
+        private DateTime _endTime;
+        internal DayOfWeek dayOfWeek;
+        internal bool isOnCallModeEnabled = false;
 
+        private bool _isOOF;
+        public bool IsOOF {
+            get {
+                if (isOnCallModeEnabled)
+                {
+                    return !_isOOF;
+                }
+                else
+                {
+                    return _isOOF;
+                }
+            }
+            
+            set => _isOOF = value; }
+
+        internal DateTime StartTime {
+            get
+            {
+                //need to return the *actual* day and not just the day of week
+                return _startTime.EquivalentDateTime();
+            }
+            set => _startTime = value; }
+        internal DateTime EndTime {
+            get
+            {
+                //need to return the *actual* day and not just the day of week
+                return _endTime.EquivalentDateTime();
+            }
+            set => _endTime = value; }
+    }
+    public static class DateTimeExtensions
+    {
+        //figures out the actual day from a generic day of the week
+        public static DateTime EquivalentDateTime(this DateTime dtOld)
+        {
+            int num = (int)dtOld.DayOfWeek;
+            int num2 = (int)DateTime.Today.DayOfWeek;
+            return DateTime.Today.AddDays(num - num2).AddHours(dtOld.Hour).AddMinutes(dtOld.Minute);
+        }
+    }
 }
