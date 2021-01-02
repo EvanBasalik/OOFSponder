@@ -37,6 +37,7 @@ namespace OOFScheduling
             // 
             // btnOK
             // 
+            this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.btnOK.Location = new System.Drawing.Point(81, 184);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(184, 23);
@@ -47,6 +48,9 @@ namespace OOFScheduling
             // 
             // richTextBox1
             // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.Location = new System.Drawing.Point(12, 12);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(322, 166);
@@ -67,6 +71,7 @@ namespace OOFScheduling
             this.Controls.Add(this.btnOK);
             this.Name = "WhatsNew";
             this.Text = "What\'s New in OOFSponder";
+            this.Resize += new System.EventHandler(this.WhatsNew_Resize);
             this.ResumeLayout(false);
 
         }

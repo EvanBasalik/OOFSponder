@@ -57,5 +57,11 @@ namespace OOFScheduling
             tmDismiss.Stop();
             btnOK.Text = "OK";
         }
+
+        private void WhatsNew_Resize(object sender, EventArgs e)
+        {
+            tmDismiss.Stop();
+            btnOK.Text = "OK";
+        }
     }
 }
