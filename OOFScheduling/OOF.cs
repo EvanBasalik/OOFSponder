@@ -131,7 +131,7 @@ namespace OOFScheduling
 
         private void ReadProperties()
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info("Reading settings");
 
             instance.PermaOOFDate = OOFScheduling.Properties.Settings.Default.PermaOOFDate;
             instance.WorkingHours = OOFScheduling.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
@@ -140,6 +140,8 @@ namespace OOFScheduling
             instance.SecondaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
             instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
             instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode;
+
+            OOFSponder.Logger.Info("Successfully read settings");
         }
 
         ~OOFData()
@@ -149,32 +151,29 @@ namespace OOFScheduling
 
         public void WriteProperties(bool disposing=false)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
-
-            System.Diagnostics.Trace.TraceInformation("Persisting properties");
+            OOFSponder.Logger.Info("Persisting settings");
 
             Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
-            System.Diagnostics.Trace.TraceInformation("Persisting PrimaryOOFExternalMessage");
+            OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
 
             Properties.Settings.Default.PrimaryOOFInternal = instance.PrimaryOOFInternalMessage;
-            System.Diagnostics.Trace.TraceInformation("Persisting PrimaryOOFInternalMessage");
+            OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
 
             Properties.Settings.Default.SecondaryOOFExternal = instance.SecondaryOOFExternalMessage;
-            System.Diagnostics.Trace.TraceInformation("Persisting SecondaryOOFExternalMessage");
+            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
 
             Properties.Settings.Default.SecondaryOOFInternal = instance.SecondaryOOFInternalMessage;
-            System.Diagnostics.Trace.TraceInformation("Persisting SecondaryOOFInternalMessage");
+            OOFSponder.Logger.Info("Persisted SecondaryOOFInternalMessage");
 
             Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
-            System.Diagnostics.Trace.TraceInformation("Persisting PermaOOFDate");
+            OOFSponder.Logger.Info("Persisted PermaOOFDate");
 
             Properties.Settings.Default.workingHours = instance.WorkingHours;
-            System.Diagnostics.Trace.TraceInformation("Persisting WorkingHours");
+            OOFSponder.Logger.Info("Persisted WorkingHours");
 
             Properties.Settings.Default.enableOnCallMode = instance.IsOnCallModeOn;
-            OOFSponder.Logger.Info("Persisting enableOnCallMode = " + instance.IsOnCallModeOn.ToString());
+            OOFSponder.Logger.Info("Persisted enableOnCallMode = " + instance.IsOnCallModeOn.ToString());
 
-            OOFSponder.Logger.Info("Persisting settings");
             Properties.Settings.Default.Save();
             OOFSponder.Logger.Info("Persisted settings");
 

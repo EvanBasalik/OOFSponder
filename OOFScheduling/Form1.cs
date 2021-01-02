@@ -557,21 +557,33 @@ namespace OOFScheduling
         //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
         void CalculateOOFTimes2(out DateTime StartTime, out DateTime EndTime, bool enableOnCallMode)
         {
-            OOFSponder.Logger.
+            OOFSponder.Logger.Info("Using CalculationOOFTimes2");
+
             StartTime = DateTime.Now;
             EndTime = DateTime.Now;
 
 
             DateTime currentCheckDate = DateTime.Now;
+            OOFSponder.Logger.Info("currentCheckDate = " + currentCheckDate.ToString());
 
             OOFInstance currentWorkingTime = OOFData.Instance.currentOOFPeriod;
+            OOFSponder.Logger.Info("currentWorkingTime.StartTime = " + currentWorkingTime.StartTime);
+            OOFSponder.Logger.Info("currentWorkingtime.Endtime = " + currentWorkingTime.EndTime);
+
             DateTime previousDayPeriodEnd = OOFData.Instance.previousOOFPeriodEnd;
+            OOFSponder.Logger.Info("previousDayPeriodEnd = " + previousDayPeriodEnd);
+
             DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriodStart;
+            OOFSponder.Logger.Info("nextDayPeriodState = " + nextDayPeriodStart);
+            
             DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriodEnd;
+            OOFSponder.Logger.Info("nextDayPeriodEnd =" + nextDayPeriodEnd);
 
             //between the end of the previous OOF period and the start of the next one
             if (currentCheckDate > previousDayPeriodEnd && currentCheckDate < nextDayPeriodStart)
             {
+                OOFSponder.Logger.Info("currentCheckDate greater than previousDayPeriodEnd and less than nextDayPeriodStart");
+                OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
                 if (enableOnCallMode)
                 {
                     StartTime = nextDayPeriodStart;
@@ -587,6 +599,8 @@ namespace OOFScheduling
             //between the start of the current period and the end of the current period
             if (currentCheckDate > currentWorkingTime.StartTime && currentCheckDate < currentWorkingTime.EndTime)
             {
+                OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingTime.StartTime and less than currentWorkingTime.EndTime");
+                OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
                 if (enableOnCallMode)
                 {
                     StartTime = currentWorkingTime.StartTime;
@@ -601,6 +615,8 @@ namespace OOFScheduling
 
             if (currentCheckDate > currentWorkingTime.EndTime)
             {
+                OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingTime.EndTime");
+                OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
                 if (enableOnCallMode)
                 {
                     StartTime = nextDayPeriodStart;
@@ -610,94 +626,6 @@ namespace OOFScheduling
                 {
                     StartTime = currentWorkingTime.EndTime;
                     EndTime = nextDayPeriodStart;
-                }
-            }
-
-
-
-            //Hold now time. if we are doing traditional OOF and if our working time hasn't come yet but we are on the next day make now still be yesterday
-            //Example: Your off at 5PM April 1st at 12:01 AM April 2nd we don't want to change our OOF to the one for April 2nd, we are still off from April 1st
-            // To handle this if the time we get for the Beginning of our working time comes after the current time we fall back a day to use that days oof time.
-
-            if (DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime.StartTime.ToShortTimeString()) > DateTime.Now)
-            {
-                currentCheckDate = DateTime.Now.AddDays(-1);
-                currentWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.DayOfWeek];
-            }
-
-            //figure out the StartTime for the OOF period
-            if (currentWorkingTime.IsOOF)
-            {
-                if (!enableOnCallMode)
-                {
-                    //for standard OOF mode, the endTime is the start of the OOF period
-                    StartTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime.EndTime.ToShortTimeString());
-                }
-                else
-                {
-                    //if in OnCallMode, then we treat the startTime as the start of the OOF period
-                    StartTime = DateTime.Parse(currentCheckDate.ToString("D") + " " +currentWorkingTime.StartTime.ToShortTimeString());
-                }
-            }
-            else
-            {
-                int daysback = -1;
-                //create a way to exit if someone has all 7 days marked as OOF
-                while (daysback >= -30)
-                {
-                    DateTime backday = currentCheckDate.AddDays(daysback);
-                    OOFInstance oldWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.DayOfWeek];
-                    StartTime = DateTime.Parse(backday.ToString("D") + " " + oldWorkingTime.EndTime);
-                    if (oldWorkingTime.IsOOF)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        daysback--;
-                    }
-                }
-            }
-
-            //figure out the end time for the OOF period
-            if (DateTime.Parse(currentCheckDate.ToString("D") + " " + currentWorkingTime.EndTime.ToShortTimeString()) > DateTime.Now)
-            {
-                currentCheckDate = DateTime.Now.AddDays(-1);
-                currentWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.DayOfWeek];
-            }
-            OOFInstance futureWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.AddDays(1).DayOfWeek];
-            if (futureWorkingTime.IsOOF)
-            {
-
-                //EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime.startTime);
-                if (!enableOnCallMode)
-                {
-                    //for standard OOF mode, the endTime is the start of the OOF period
-                    EndTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + futureWorkingTime.StartTime.ToShortTimeString());
-                }
-                else
-                {
-                    //if in OnCallMode, then we treat the startTime as the start of the OOF period
-                    EndTime = DateTime.Parse(currentCheckDate.ToString("D") + " " + futureWorkingTime.EndTime.ToShortTimeString());
-                }
-            }
-            else
-            {
-                int daysforward = 1;
-                //create a way to exit if someone has all 7 days marked as OOF
-                while (daysforward <= 365)
-                {
-                    DateTime comingday = currentCheckDate.AddDays(1).AddDays(daysforward);
-                    OOFInstance oldWorkingTime = OOFData.Instance.OOFCollection[(int)comingday.DayOfWeek];
-                    EndTime = DateTime.Parse(comingday.ToString("D") + " " + oldWorkingTime.StartTime);
-                    if (oldWorkingTime.IsOOF)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        daysforward++;
-                    }
                 }
             }
         }
