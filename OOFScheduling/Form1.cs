@@ -228,7 +228,11 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info("Setting up Loopy");
             //Every 10 minutes for automation
+#if !FASTLOOP
             var timer = new System.Timers.Timer(600000);
+#else
+            var timer = new System.Timers.Timer(600000);
+#endif
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timer.Start();
@@ -238,14 +242,16 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info("Loopy elapsed - saving settings and running RunSetOofO365");
             saveSettings();
-            await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
+
+            //no longer necessary - we are doing it inside the saveSettings call above
+            //await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
             //await checkOOFStatus();
         }
-        #endregion
+#endregion
 
-        #region Oof/EWS interaction
+#region Oof/EWS interaction
 
-        #region Oof Set
+#region Oof Set
 
         private async System.Threading.Tasks.Task<bool> RunSetOofO365()
         {
@@ -418,10 +424,10 @@ namespace OOFScheduling
             }
         }
 
-        #endregion
-        #endregion
+#endregion
+#endregion
 
-        #region Utilities
+#region Utilities
         public void UpdateStatusLabel(ToolStripStatusLabel ourLabel, String status_text)
         {
             MethodInvoker mi = new MethodInvoker(() => ourLabel.Text = status_text);
@@ -660,9 +666,9 @@ namespace OOFScheduling
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
         }
 
-        #endregion
+#endregion
 
-        #region Events
+#region Events
         private void OnExit(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
@@ -703,7 +709,7 @@ namespace OOFScheduling
         }
 
 
-        #region WorkingDaysControls
+#region WorkingDaysControls
         private void sundayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
             //if (sundayOffWorkCB.Checked)
@@ -817,7 +823,7 @@ namespace OOFScheduling
             System.Windows.Forms.Application.Exit();
         }
 
-        #endregion
+#endregion
 
         private async void btnPermaOOF_Click(object sender, EventArgs e)
         {
