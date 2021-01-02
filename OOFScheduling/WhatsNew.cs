@@ -20,6 +20,8 @@ namespace OOFScheduling
             InitializeComponent();
 
             this.Icon = Properties.Resources.OOFSponderIcon;
+
+            richTextBox1.LoadFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "whatsnew.rtf"));
             
             //set up the self-destruct
             iCountdown = _iCountdown;
