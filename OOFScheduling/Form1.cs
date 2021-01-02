@@ -23,7 +23,7 @@ namespace OOFScheduling
 
         public Form1()
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             InitializeComponent();
 
@@ -158,12 +158,12 @@ namespace OOFScheduling
             if (haveNecessaryData)
             {
                 toolStripStatusLabel1.Text = "Ready";
-                OOFSponderInsights.TrackInfo("HaveNecessaryData");
+                OOFSponder.Logger.Info("HaveNecessaryData");
             }
             else
             {
                 toolStripStatusLabel1.Text = "Please setup OOFsponder";
-                OOFSponderInsights.TrackInfo("MissingData");
+                OOFSponder.Logger.Info("MissingData");
             }
 
             toolStripStatusLabel2.Text = "";
@@ -188,7 +188,7 @@ namespace OOFScheduling
 
         private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
             if (!O365.isLoggedIn)
             {
                 saveToolStripMenuItem.Tag = "LoggedOut";
@@ -203,7 +203,7 @@ namespace OOFScheduling
 
         void signOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
             //prep for async work
             System.Threading.Tasks.Task AuthTask = null;
             
@@ -226,7 +226,7 @@ namespace OOFScheduling
         #region Set Oof Timed Loop
         void Loopy()
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info("Setting up Loopy");
             //Every 10 minutes for automation
             var timer = new System.Timers.Timer(600000);
             timer.Enabled = true;
@@ -249,7 +249,7 @@ namespace OOFScheduling
 
         private async System.Threading.Tasks.Task<bool> RunSetOofO365()
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
             bool haveNecessaryData = false;
 
             //if CredMan is turned on, then we don't need the email or password
@@ -336,7 +336,7 @@ namespace OOFScheduling
 
         public async System.Threading.Tasks.Task<bool> TrySetOOF365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
             //need to convert the times from local datetime to DateTimeTimeZone and UTC
@@ -482,8 +482,8 @@ namespace OOFScheduling
             OofTimes[0] = StartTime;
             OofTimes[1] = EndTime;
 
-            OOFSponderInsights.TrackInfo("Calculated OOF StartTime = " + StartTime.ToString());
-            OOFSponderInsights.TrackInfo("Calculated OOF EndTime = " + EndTime.ToString());
+            OOFSponder.Logger.Info("Calculated OOF StartTime = " + StartTime.ToString());
+            OOFSponder.Logger.Info("Calculated OOF EndTime = " + EndTime.ToString());
 
             return OofTimes;
         }
@@ -633,16 +633,18 @@ namespace OOFScheduling
 
         private void saveSettings()
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info("Saving settings");
 
             if (primaryToolStripMenuItem.Checked)
             {
+                OOFSponder.Logger.Info("Saving Primary OOF message");
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
             else
             //since customer is editing Secondary message, save text in Secondary
             {
+                OOFSponder.Logger.Info("Saving Secondary OOF message");
                 OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
@@ -652,7 +654,7 @@ namespace OOFScheduling
             OOFData.Instance.WriteProperties();
 
             toolStripStatusLabel1.Text = "Settings Saved";
-            OOFSponderInsights.TrackInfo("Settings saved");
+            OOFSponder.Logger.Info("Settings saved");
 
             //go implement the settings if possible
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
@@ -803,14 +805,14 @@ namespace OOFScheduling
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
             saveSettings();
         }
 
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
             minimize = false;
             System.Windows.Forms.Application.Exit();
         }
@@ -819,7 +821,7 @@ namespace OOFScheduling
 
         private async void btnPermaOOF_Click(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //bail if permaOOF not in the future
             if (DateTime.Now >= dtPermaOOF.Value)
@@ -871,7 +873,7 @@ namespace OOFScheduling
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //now, set up the UI for PermaOOF
             SetUIforSecondary();
@@ -879,7 +881,7 @@ namespace OOFScheduling
 
         private void SetUIforSecondary()
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
@@ -912,7 +914,7 @@ namespace OOFScheduling
 
         private void primaryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //now, set up the UI for primary
             SetUIforPrimary();
@@ -920,7 +922,7 @@ namespace OOFScheduling
 
         private void SetUIforPrimary()
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //since we are in the process of flipping from secondary to primary
             //we know that the UI is currently in Secondary mode (or first run)
@@ -947,7 +949,7 @@ namespace OOFScheduling
 
         private void radPrimary_CheckedChanged(object sender, EventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             if (radPrimary.Checked)
             {
