@@ -703,100 +703,100 @@ namespace OOFScheduling
         #region WorkingDaysControls
         private void sundayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            if (sundayOffWorkCB.Checked)
-            {
-                sundayStartTimepicker.Enabled = false;
-                sundayEndTimepicker.Enabled = false;
-            }
-            else
-            {
-                sundayStartTimepicker.Enabled = true;
-                sundayEndTimepicker.Enabled = true;
-            }
+            //if (sundayOffWorkCB.Checked)
+            //{
+            //    sundayStartTimepicker.Enabled = false;
+            //    sundayEndTimepicker.Enabled = false;
+            //}
+            //else
+            //{
+            //    sundayStartTimepicker.Enabled = true;
+            //    sundayEndTimepicker.Enabled = true;
+            //}
         }
 
         private void mondayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            if (mondayOffWorkCB.Checked)
-            {
-                mondayStartTimepicker.Enabled = false;
-                mondayEndTimepicker.Enabled = false;
-            }
-            else
-            {
-                mondayStartTimepicker.Enabled = true;
-                mondayEndTimepicker.Enabled = true;
-            }
+            //if (mondayOffWorkCB.Checked)
+            //{
+            //    mondayStartTimepicker.Enabled = false;
+            //    mondayEndTimepicker.Enabled = false;
+            //}
+            //else
+            //{
+            //    mondayStartTimepicker.Enabled = true;
+            //    mondayEndTimepicker.Enabled = true;
+            //}
         }
 
         private void tuesdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            if (tuesdayOffWorkCB.Checked)
-            {
-                tuesdayStartTimepicker.Enabled = false;
-                tuesdayEndTimepicker.Enabled = false;
-            }
-            else
-            {
-                tuesdayStartTimepicker.Enabled = true;
-                tuesdayEndTimepicker.Enabled = true;
-            }
+            //if (tuesdayOffWorkCB.Checked)
+            //{
+            //    tuesdayStartTimepicker.Enabled = false;
+            //    tuesdayEndTimepicker.Enabled = false;
+            //}
+            //else
+            //{
+            //    tuesdayStartTimepicker.Enabled = true;
+            //    tuesdayEndTimepicker.Enabled = true;
+            //}
         }
 
         private void wednesdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            if (wednesdayOffWorkCB.Checked)
-            {
-                wednesdayStartTimepicker.Enabled = false;
-                wednesdayEndTimepicker.Enabled = false;
-            }
-            else
-            {
-                wednesdayStartTimepicker.Enabled = true;
-                wednesdayEndTimepicker.Enabled = true;
-            }
+            //if (wednesdayOffWorkCB.Checked)
+            //{
+            //    wednesdayStartTimepicker.Enabled = false;
+            //    wednesdayEndTimepicker.Enabled = false;
+            //}
+            //else
+            //{
+            //    wednesdayStartTimepicker.Enabled = true;
+            //    wednesdayEndTimepicker.Enabled = true;
+            //}
         }
 
         private void thursdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            if (thursdayOffWorkCB.Checked)
-            {
-                thursdayStartTimepicker.Enabled = false;
-                thursdayEndTimepicker.Enabled = false;
-            }
-            else
-            {
-                thursdayStartTimepicker.Enabled = true;
-                thursdayEndTimepicker.Enabled = true;
-            }
+            //if (thursdayOffWorkCB.Checked)
+            //{
+            //    thursdayStartTimepicker.Enabled = false;
+            //    thursdayEndTimepicker.Enabled = false;
+            //}
+            //else
+            //{
+            //    thursdayStartTimepicker.Enabled = true;
+            //    thursdayEndTimepicker.Enabled = true;
+            //}
         }
 
         private void fridayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            if (fridayOffWorkCB.Checked)
-            {
-                fridayStartTimepicker.Enabled = false;
-                fridayEndTimepicker.Enabled = false;
-            }
-            else
-            {
-                fridayStartTimepicker.Enabled = true;
-                fridayEndTimepicker.Enabled = true;
-            }
+            //if (fridayOffWorkCB.Checked)
+            //{
+            //    fridayStartTimepicker.Enabled = false;
+            //    fridayEndTimepicker.Enabled = false;
+            //}
+            //else
+            //{
+            //    fridayStartTimepicker.Enabled = true;
+            //    fridayEndTimepicker.Enabled = true;
+            //}
         }
 
         private void saturdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            if (saturdayOffWorkCB.Checked)
-            {
-                saturdayStartTimepicker.Enabled = false;
-                saturdayEndTimepicker.Enabled = false;
-            }
-            else
-            {
-                saturdayStartTimepicker.Enabled = true;
-                saturdayEndTimepicker.Enabled = true;
-            }
+            //if (saturdayOffWorkCB.Checked)
+            //{
+            //    saturdayStartTimepicker.Enabled = false;
+            //    saturdayEndTimepicker.Enabled = false;
+            //}
+            //else
+            //{
+            //    saturdayStartTimepicker.Enabled = true;
+            //    saturdayEndTimepicker.Enabled = true;
+            //}
         }
 #endregion
 
