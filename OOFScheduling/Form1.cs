@@ -333,89 +333,89 @@ namespace OOFScheduling
             return result;
         }
 
-        //public async System.Threading.Tasks.Task<bool> TrySetOOF365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
-        //{
-        //    OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
-        //    toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
+        public async System.Threading.Tasks.Task<bool> TrySetOOF365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
+        {
+            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
-        //    //need to convert the times from local datetime to DateTimeTimeZone and UTC
-        //    DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
-        //    DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
+            //need to convert the times from local datetime to DateTimeTimeZone and UTC
+            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
+            DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
 
-        //    //create local OOF object
-        //    AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
-        //    localOOF.ExternalReplyMessage = oofMessageExternal;
-        //    localOOF.InternalReplyMessage = oofMessageInternal;
-        //    localOOF.ScheduledStartDateTime = oofStart;
-        //    localOOF.ScheduledEndDateTime = oofEnd;
-        //    localOOF.Status = AutomaticRepliesStatus.Scheduled;
+            //create local OOF object
+            AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
+            localOOF.ExternalReplyMessage = oofMessageExternal;
+            localOOF.InternalReplyMessage = oofMessageInternal;
+            localOOF.ScheduledStartDateTime = oofStart;
+            localOOF.ScheduledEndDateTime = oofEnd;
+            localOOF.Status = AutomaticRepliesStatus.Scheduled;
 
-        //    try
-        //    {
-        //        OOFSponderInsights.Track("Getting OOF settings from O365");
-        //        string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
-        //        AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
-        //        OOFSponderInsights.Track("Successfully got OOF settings");
+            try
+            {
+                OOFSponderInsights.Track("Getting OOF settings from O365");
+                string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
+                AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
+                OOFSponderInsights.Track("Successfully got OOF settings");
 
-        //        bool externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
-        //        bool internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
+                bool externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
+                bool internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
 
-        //        //local and remote are both UTC, so just compare times
-        //        //Not sure it can ever happen to have the DateTime empty, but wrap this in a TryCatch just in case
-        //        //set both to false - that way, we don't care if either one blows up 
-        //        //because if one is false, the overall evaluation is false anyway
-        //        bool scheduledStartDateTimeEqual = false;
-        //        bool scheduledEndDateTimeEqual = false;
-        //        try
-        //        {
-        //            scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
-        //            scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
-        //        }
-        //        catch (Exception)
-        //        {
-        //            //do nothing because we will just take the initialized false values;
-        //        }
+                //local and remote are both UTC, so just compare times
+                //Not sure it can ever happen to have the DateTime empty, but wrap this in a TryCatch just in case
+                //set both to false - that way, we don't care if either one blows up 
+                //because if one is false, the overall evaluation is false anyway
+                bool scheduledStartDateTimeEqual = false;
+                bool scheduledEndDateTimeEqual = false;
+                try
+                {
+                    scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
+                    scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
+                }
+                catch (Exception)
+                {
+                    //do nothing because we will just take the initialized false values;
+                }
 
-        //        if ( !externalReplyMessageEqual
-        //                || !internalReplyMessageEqual
-        //                || !scheduledStartDateTimeEqual
-        //                || !scheduledEndDateTimeEqual
-        //                )
-        //        {
-        //            OOFSponderInsights.Track("Local OOF doesn't match remote OOF");
-        //            System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
+                if (!externalReplyMessageEqual
+                        || !internalReplyMessageEqual
+                        || !scheduledStartDateTimeEqual
+                        || !scheduledEndDateTimeEqual
+                        )
+                {
+                    OOFSponderInsights.Track("Local OOF doesn't match remote OOF");
+                    System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
 
-        //            if (result.StatusCode == System.Net.HttpStatusCode.OK)
-        //            {
-        //                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
+                    if (result.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
 
-        //                //report back to AppInsights
-        //                OOFSponderInsights.Track("Successfully set OOF");
-        //                return true;
-        //            }
-        //            else
-        //            {
-        //                OOFSponderInsights.Track("Unable to set OOF");
-        //                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
-        //                return false;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            OOFSponderInsights.Track("Remote OOF matches - no changes");
-        //            UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
-        //            return true;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
-        //        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
-        //        OOFSponderInsights.TrackException("Unable to set OOF: " + ex.Message, ex);
+                        //report back to AppInsights
+                        OOFSponderInsights.Track("Successfully set OOF");
+                        return true;
+                    }
+                    else
+                    {
+                        OOFSponderInsights.Track("Unable to set OOF");
+                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
+                        return false;
+                    }
+                }
+                else
+                {
+                    OOFSponderInsights.Track("Remote OOF matches - no changes");
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
+                UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
+                OOFSponderInsights.TrackException("Unable to set OOF: " + ex.Message, ex);
 
-        //        return false;
-        //    }
-        //}
+                return false;
+            }
+        }
 
         #endregion
         #endregion
