@@ -87,7 +87,7 @@ namespace OOFScheduling
                     {
                         // A MsalUiRequiredException happened on AcquireTokenSilentAsync. This indicates you need to call AcquireTokenAsync to acquire a token
                         //Don't track this one since it can basically be considered expected.
-                        //OOFSponderInsights.TrackException($"MsalUiRequiredException: {ex.Message}", ex);
+                        OOFSponder.Logger.Warning(new Exception($"Unable to acquire token silently: ", ex));
 
                         try
                         {
@@ -99,12 +99,12 @@ namespace OOFScheduling
                         }
                         catch (MsalException msalex)
                         {
-                            OOFSponderInsights.TrackException("MsalException", new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
+                            OOFSponder.Logger.Error(new Exception($"Error acquiring token interactively: ", msalex));
                         }
                     }
                     catch (Exception ex)
                     {
-                        OOFSponderInsights.TrackException("Error Acquiring Token Silently", ex);
+                        OOFSponder.Logger.Error(new Exception($"Error acquiring token: ", ex));
                         return false;
                     }
 
@@ -148,15 +148,14 @@ namespace OOFScheduling
                         }
                         catch (MsalException ex)
                         {
-                            OOFSponder.Logger.Error($"Error signing-out user: {ex.Message}");
-                            OOFSponderInsights.TrackException($"Error signing-out user: {ex.Message}", ex);
+                            OOFSponder.Logger.Error(new Exception("Error signing out user: ", ex));
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                OOFSponder.Logger.Error($"MSAL code failed miserably for user: {ex.Message}");
+                OOFSponder.Logger.Error(new Exception("MSAL code failed miserably for user: ", ex));
             }
             finally
             {
