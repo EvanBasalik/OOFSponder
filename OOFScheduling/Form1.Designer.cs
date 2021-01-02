@@ -67,6 +67,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -451,6 +452,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.saveToolStripMenuItem,
+            this.enableOnCallModeToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -489,6 +491,13 @@
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
             this.saveToolStripMenuItem.Text = "Save Settings";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // enableOnCallModeToolStripMenuItem
+            // 
+            this.enableOnCallModeToolStripMenuItem.Name = "enableOnCallModelToolStripMenuItem";
+            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.enableOnCallModeToolStripMenuItem.Text = "Enable On-Call Mode";
+            this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
             //
             // AAD sign-out menu item
             //
@@ -782,6 +791,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem primaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secondaryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableOnCallModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;

@@ -60,7 +60,7 @@ namespace OOFScheduling
         /// </summary>
         internal async static Task<bool> MSALWork(AADAction action)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //lock this so we don't get multiple auth prompts
             OOFSponder.Logger.Info("Attempting to enter critical section for auth code");
@@ -101,7 +101,6 @@ namespace OOFScheduling
                         {
                             OOFSponderInsights.TrackException("MsalException", new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
                         }
-
                     }
                     catch (Exception ex)
                     {
@@ -177,7 +176,7 @@ namespace OOFScheduling
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<string> GetHttpContentWithToken(string url)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary
             await O365.MSALWork(O365.AADAction.SignIn);
@@ -195,6 +194,7 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
+                OOFSponder.Logger.Error(ex);
                 return ex.ToString();
             }
         }
@@ -207,7 +207,7 @@ namespace OOFScheduling
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF )
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary
             await O365.MSALWork(O365.AADAction.SignIn);

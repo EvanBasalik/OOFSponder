@@ -8,17 +8,28 @@ namespace OOFSponder
     {
         public static void Error(string message)
         {
-            WriteEntry(message, "error", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+            StackFrame fr = new StackFrame(1, true);
+            StackTrace st = new StackTrace(fr);
+            WriteEntry(message, "error", fr.GetMethod().Name + ":" + st.ToString());
         }
 
         public static void Error(Exception ex)
         {
-            WriteEntry(ex.Message, "error", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+            StackFrame fr = new StackFrame(1, true);
+            StackTrace st = new StackTrace(fr);
+            WriteEntry(ex.Message + " due to " + ex.InnerException.Message, "error", fr.GetMethod().Name + ":" + st.ToString());
         }
 
         public static void Warning(string message)
         {
             WriteEntry(message, "warning", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+        }
+
+        public static void Warning(Exception ex)
+        {
+            StackFrame fr = new StackFrame(1, true);
+            StackTrace st = new StackTrace(fr);
+            WriteEntry(ex.Message + " due to " + ex.InnerException.Message, "warning", fr.GetMethod().Name + ":" + st.ToString());
         }
 
         public static void Info(string message)
