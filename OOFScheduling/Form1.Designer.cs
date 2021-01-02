@@ -67,9 +67,8 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -393,29 +392,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // radPrimary
-            // 
-            this.radPrimary.AutoSize = true;
-            this.radPrimary.Location = new System.Drawing.Point(110, 722);
-            this.radPrimary.Name = "radPrimary";
-            this.radPrimary.Size = new System.Drawing.Size(126, 24);
-            this.radPrimary.TabIndex = 56;
-            this.radPrimary.TabStop = true;
-            this.radPrimary.Text = "Primary OOF";
-            this.radPrimary.UseVisualStyleBackColor = true;
-            this.radPrimary.Checked = true;
-            // 
-            // radSecondary
-            // 
-            this.radSecondary.AutoSize = true;
-            this.radSecondary.Location = new System.Drawing.Point(202, 722);
-            this.radSecondary.Name = "radSecondary";
-            this.radSecondary.Size = new System.Drawing.Size(126, 24);
-            this.radSecondary.TabIndex = 56;
-            this.radSecondary.TabStop = true;
-            this.radSecondary.Text = "Secondary OOF";
-            this.radSecondary.UseVisualStyleBackColor = true;
-            // 
             // lblExternalMesage
             // 
             this.lblExternalMesage.AutoSize = true;
@@ -451,7 +427,7 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.saveToolStripMenuItem,
+            this.signoutToolStripMenuItem,
             this.enableOnCallModeToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -463,10 +439,9 @@
             this.toolStripMenuItem1.CheckOnClick = true;
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.primaryToolStripMenuItem,
-            this.secondaryToolStripMenuItem,
-            this.signOutToolStripMenuItem});
+            this.secondaryToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(143, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(187, 22);
             this.toolStripMenuItem1.Text = "Message";
             // 
             // primaryToolStripMenuItem
@@ -474,42 +449,35 @@
             this.primaryToolStripMenuItem.Checked = true;
             this.primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
-            this.primaryToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.primaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.primaryToolStripMenuItem.Text = "Primary";
             this.primaryToolStripMenuItem.Click += new System.EventHandler(this.primaryToolStripMenuItem_Click);
             // 
             // secondaryToolStripMenuItem
             // 
             this.secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
-            this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.secondaryToolStripMenuItem.Text = "Secondary";
             this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
             // 
-            // saveToolStripMenuItem
+            // signoutToolStripMenuItem
             // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.saveToolStripMenuItem.Text = "Save Settings";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            this.signoutToolStripMenuItem.Name = "signoutToolStripMenuItem";
+            this.signoutToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.signoutToolStripMenuItem.Text = "Sign out";
+            this.signoutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
             // enableOnCallModeToolStripMenuItem
             // 
-            this.enableOnCallModeToolStripMenuItem.Name = "enableOnCallModelToolStripMenuItem";
-            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
+            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.enableOnCallModeToolStripMenuItem.Text = "Enable On-Call Mode";
             this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
-            //
-            // AAD sign-out menu item
-            //
-            this.signOutToolStripMenuItem.Name = "AADToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
-            this.saveToolStripMenuItem.Text = "Sign out";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -625,23 +593,46 @@
             // btnPermaOOF
             // 
             this.btnPermaOOF.Location = new System.Drawing.Point(308, 719);
-            this.btnPermaOOF.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             this.btnPermaOOF.Name = "btnPermaOOF";
             this.btnPermaOOF.Size = new System.Drawing.Size(130, 23);
             this.btnPermaOOF.TabIndex = 54;
+            this.btnPermaOOF.Tag = "Enable";
             this.btnPermaOOF.Text = "Go OOF now until:";
             this.btnPermaOOF.UseVisualStyleBackColor = true;
             this.btnPermaOOF.Click += new System.EventHandler(this.btnPermaOOF_Click);
-            this.btnPermaOOF.Tag = "Enable";
             // 
             // dtPermaOOF
             // 
+            this.dtPermaOOF.Enabled = false;
             this.dtPermaOOF.Location = new System.Drawing.Point(438, 721);
-            this.dtPermaOOF.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             this.dtPermaOOF.Name = "dtPermaOOF";
             this.dtPermaOOF.Size = new System.Drawing.Size(185, 20);
             this.dtPermaOOF.TabIndex = 55;
-            this.dtPermaOOF.Enabled = false;
+            // 
+            // radPrimary
+            // 
+            this.radPrimary.AutoSize = true;
+            this.radPrimary.Checked = true;
+            this.radPrimary.Location = new System.Drawing.Point(110, 722);
+            this.radPrimary.Name = "radPrimary";
+            this.radPrimary.Size = new System.Drawing.Size(84, 17);
+            this.radPrimary.TabIndex = 56;
+            this.radPrimary.TabStop = true;
+            this.radPrimary.Text = "Primary OOF";
+            this.radPrimary.UseVisualStyleBackColor = true;
+            // 
+            // radSecondary
+            // 
+            this.radSecondary.AutoSize = true;
+            this.radSecondary.Location = new System.Drawing.Point(202, 722);
+            this.radSecondary.Name = "radSecondary";
+            this.radSecondary.Size = new System.Drawing.Size(101, 17);
+            this.radSecondary.TabIndex = 56;
+            this.radSecondary.TabStop = true;
+            this.radSecondary.Text = "Secondary OOF";
+            this.radSecondary.UseVisualStyleBackColor = true;
             // 
             // htmlEditorControl2
             // 
@@ -773,7 +764,7 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem signoutToolStripMenuItem;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
@@ -792,7 +783,6 @@
         private System.Windows.Forms.ToolStripMenuItem primaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem secondaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableOnCallModeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
 

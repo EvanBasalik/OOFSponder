@@ -201,13 +201,13 @@ namespace OOFScheduling
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
             if (!O365.isLoggedIn)
             {
-                saveToolStripMenuItem.Tag = "LoggedOut";
-                saveToolStripMenuItem.Text = "Sign in";
+                signoutToolStripMenuItem.Tag = "LoggedOut";
+                signoutToolStripMenuItem.Text = "Sign in";
             }
             else
             {
-                saveToolStripMenuItem.Tag = "LoggedIn";
-                saveToolStripMenuItem.Text = "Sign out";
+                signoutToolStripMenuItem.Tag = "LoggedIn";
+                signoutToolStripMenuItem.Text = "Sign out";
             }
         }
 
@@ -217,7 +217,7 @@ namespace OOFScheduling
             //prep for async work
             System.Threading.Tasks.Task AuthTask = null;
             
-            if (saveToolStripMenuItem.Tag.ToString() == "LoggedIn")
+            if (signoutToolStripMenuItem.Tag.ToString() == "LoggedIn")
             {
                 AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignOut); }));
             }
