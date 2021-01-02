@@ -1079,6 +1079,13 @@ namespace OOFScheduling
 
             OOFSponder.Logger.Info("Successfully set OnCallModeUI for OnCallMode=" + OOFData.Instance.IsOnCallModeOn);
         }
+
+        private void showLogsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
+            System.Diagnostics.Process.Start(strWorkPath);
+        }
     }
 
     internal static class Extensions

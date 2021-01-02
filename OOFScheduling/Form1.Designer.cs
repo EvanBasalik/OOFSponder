@@ -88,6 +88,7 @@
             this.radSecondary = new System.Windows.Forms.RadioButton();
             this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
+            this.showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -429,6 +430,7 @@
             this.toolStripMenuItem1,
             this.signoutToolStripMenuItem,
             this.enableOnCallModeToolStripMenuItem,
+            this.showLogsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -650,6 +652,13 @@
             this.htmlEditorControl1.Size = new System.Drawing.Size(667, 277);
             this.htmlEditorControl1.TabIndex = 31;
             // 
+            // showLogsToolStripMenuItem
+            // 
+            this.showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
+            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.showLogsToolStripMenuItem.Text = "Show logs";
+            this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -785,7 +794,7 @@
         private System.Windows.Forms.ToolStripMenuItem enableOnCallModeToolStripMenuItem;
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
-
+        private System.Windows.Forms.ToolStripMenuItem showLogsToolStripMenuItem;
     }
 }
 
