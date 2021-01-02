@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using mshtml;
+using Windows.Phone.Notification.Management;
 
 namespace OOFScheduling
 {
@@ -25,6 +28,9 @@ namespace OOFScheduling
 
         //Set the scope for API call to user.read
         static string[] _scopes = new string[] { "user.read", "MailboxSettings.ReadWrite" };
+
+        //create something we can lock against
+        internal static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
         internal static AuthenticationResult authResult = null;
 
@@ -56,89 +62,108 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
+            //lock this so we don't get multiple auth prompts
+            OOFSponder.Logger.Info("Attempting to enter critical section for auth code");
+            await semaphoreSlim.WaitAsync();
+            OOFSponder.Logger.Info("Inside critical section for auth code");
+
             bool _result = false;
             var accounts = await PublicClientApp.GetAccountsAsync();
             var firstAccount = accounts.FirstOrDefault();
 
-            if (action == AADAction.SignIn | action == AADAction.ForceSignIn)
+            try
             {
-                try
+                if (action == AADAction.SignIn | action == AADAction.ForceSignIn)
                 {
-                    //MSAL 1.0 style - deprecated
-                    //authResult = await PublicClientApp.AcquireTokenSilentAsync(_scopes, PublicClientApp.Users.FirstOrDefault());
-
-                    //MSAL 3.0 style
-                    authResult = await PublicClientApp.AcquireTokenSilent(_scopes, firstAccount).ExecuteAsync();
-                }
-                catch (MsalUiRequiredException ex)
-                {
-                    // A MsalUiRequiredException happened on AcquireTokenSilentAsync. This indicates you need to call AcquireTokenAsync to acquire a token
-                    //OOFSponderInsights.TrackException($"MsalUiRequiredException: {ex.Message}", ex);
-                    OOFSponder.Logger.Warning(new Exception($"Unable to acquire token silently: ", ex));
-
                     try
                     {
-                        //MSAL 1.0 style
-                        //authResult = await PublicClientApp.AcquireTokenAsync(_scopes);
+                        //MSAL 1.0 style - deprecated
+                        //authResult = await PublicClientApp.AcquireTokenSilentAsync(_scopes, PublicClientApp.Users.FirstOrDefault());
 
                         //MSAL 3.0 style
-                        authResult = await PublicClientApp.AcquireTokenInteractive(_scopes).ExecuteAsync();
+                        authResult = await PublicClientApp.AcquireTokenSilent(_scopes, firstAccount).ExecuteAsync();
                     }
-                    catch (MsalException msalex)
+                    catch (MsalUiRequiredException ex)
                     {
-                        OOFSponder.Logger.Error(new Exception($"Error acquiring token interactively: ", msalex));
+                        // A MsalUiRequiredException happened on AcquireTokenSilentAsync. This indicates you need to call AcquireTokenAsync to acquire a token
+                        //Don't track this one since it can basically be considered expected.
+                        //OOFSponderInsights.TrackException($"MsalUiRequiredException: {ex.Message}", ex);
+
+                        try
+                        {
+                            //MSAL 1.0 style
+                            //authResult = await PublicClientApp.AcquireTokenAsync(_scopes);
+
+                            //MSAL 3.0 style
+                            authResult = await PublicClientApp.AcquireTokenInteractive(_scopes).ExecuteAsync();
+                        }
+                        catch (MsalException msalex)
+                        {
+                            OOFSponderInsights.TrackException("MsalException", new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        OOFSponderInsights.TrackException("Error Acquiring Token Silently", ex);
+                        return false;
                     }
 
-                }
-                catch (Exception ex)
-                {
-                    OOFSponder.Logger.Error(new Exception($"Error acquiring token:{System.Environment.NewLine}", ex));
-                    return false;
-                }
-
-                //MSAL 1.0 style
-                //if (PublicClientApp.Users.Count() > 0)
-
-                //MSAL 3.0 style
-                if (authResult != null)
-                {
-                    _result = true;
-
-                    //also, update the Application Insights info with the authenticated user
                     //MSAL 1.0 style
-                    //OOFSponderInsights.AIClient.Context.User.Id = authResult.User.DisplayableId.Split('@')[0];
+                    //if (PublicClientApp.Users.Count() > 0)
 
                     //MSAL 3.0 style
-                    OOFSponderInsights.AIClient.Context.User.Id = authResult.Account.Username;
+                    if (authResult != null)
+                    {
+                        _result = true;
 
+                        //also, update the Application Insights info with the authenticated user
+                        //MSAL 1.0 style
+                        //OOFSponderInsights.AIClient.Context.User.Id = authResult.User.DisplayableId.Split('@')[0];
+
+                        //MSAL 3.0 style
+                        OOFSponderInsights.AIClient.Context.User.Id = authResult.Account.Username;
+
+                    }
+                    else
+                    {
+                        _result = false;
+                    }
                 }
                 else
                 {
-                    _result = false;
+                    //MSAL 1.0
+                    //if (PublicClientApp.Users.Any())
+
+                    //MSAL 3.0
+                    if (firstAccount != null)
+                    {
+                        try
+                        {
+                            //MSAL 1.0
+                            //PublicClientApp.Remove(PublicClientApp.Users.FirstOrDefault());
+
+                            //MSAL 3.0
+                            await PublicClientApp.RemoveAsync(firstAccount);
+                            _result = true;
+                        }
+                        catch (MsalException ex)
+                        {
+                            OOFSponder.Logger.Error($"Error signing-out user: {ex.Message}");
+                            OOFSponderInsights.TrackException($"Error signing-out user: {ex.Message}", ex);
+                        }
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                //MSAL 1.0
-                //if (PublicClientApp.Users.Any())
-
-                //MSAL 3.0
-                if (firstAccount != null)
-                {
-                    try
-                    {
-                        //MSAL 1.0
-                        //PublicClientApp.Remove(PublicClientApp.Users.FirstOrDefault());
-
-                        //MSAL 3.0
-                        await PublicClientApp.RemoveAsync(firstAccount);
-                        _result = true;
-                    }
-                    catch (MsalException ex)
-                    {
-                        OOFSponder.Logger.Error($"Error signing-out user: {ex.Message}");
-                    }
-                }
+                OOFSponder.Logger.Error($"MSAL code failed miserably for user: {ex.Message}");
+            }
+            finally
+            {
+                //release the critical section we are using to prevent multiple auth prompts
+                OOFSponder.Logger.Info("Leaving critical section for auth code");
+                semaphoreSlim.Release();
+                OOFSponder.Logger.Info("Left critical section for auth code");
             }
 
             return _result;
