@@ -4,7 +4,7 @@
     <PublishUrlHistory>publish\|\\tkfiltoolbox\tools\oofsponder\</PublishUrlHistory>
     <InstallUrlHistory>https://oofsponderdeploy.blob.core.windows.net/insider/|https://oofsponderdeploy.blob.core.windows.net/install/</InstallUrlHistory>
     <SupportUrlHistory>http://codebox/oofsponder</SupportUrlHistory>
-    <UpdateUrlHistory>https://oofsponderdeploy.blob.core.windows.net/install/|https://oofsponderdeploy.blob.core.windows.net/insider/</UpdateUrlHistory>
+    <UpdateUrlHistory>https://oofsponderdeploy.blob.core.windows.net/insider/|https://oofsponderdeploy.blob.core.windows.net/install/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
     <FallbackCulture>en-US</FallbackCulture>
