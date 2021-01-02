@@ -20,6 +20,11 @@ namespace OOFSponder
             WriteEntry(message, "warning", new System.Diagnostics.StackFrame(1).GetMethod().Name);
         }
 
+        public static void Warning(Exception ex)
+        {
+            WriteEntry(ex.Message, "warning", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+        }
+
         public static void Info(string message)
         {
             WriteEntry(message, "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
