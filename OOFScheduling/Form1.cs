@@ -27,6 +27,16 @@ namespace OOFScheduling
 
             InitializeComponent();
 
+            //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
+            var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
+            foreach (var checkBox in listOfCheckBoxControls)
+            {
+                if (checkBox.Name.Contains("OffWorkCB"))
+                {
+                    ((CheckBox)checkBox).CheckedChanged += OffWorkCB_CheckedChanged;
+                }
+            }
+
             #region SetBuildInfo
             foreach (Assembly a in Thread.GetDomain().GetAssemblies())
             {
@@ -227,11 +237,12 @@ namespace OOFScheduling
         void Loopy()
         {
             OOFSponder.Logger.Info("Setting up Loopy");
-            //Every 10 minutes for automation
 #if !FASTLOOP
+            //Every 10 minutes for automation
             var timer = new System.Timers.Timer(600000);
 #else
-            var timer = new System.Timers.Timer(600000);
+            //Every 30 seconds for testing
+            var timer = new System.Timers.Timer(30000);
 #endif
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
@@ -586,20 +597,21 @@ namespace OOFScheduling
             DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriodEnd;
             OOFSponder.Logger.Info("nextDayPeriodEnd =" + nextDayPeriodEnd);
 
+            OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
+
             //between the end of the previous OOF period and the start of the next one
-            if (currentCheckDate > previousDayPeriodEnd && currentCheckDate < nextDayPeriodStart)
+            if (currentCheckDate > previousDayPeriodEnd && currentCheckDate < currentWorkingTime.StartTime)
             {
-                OOFSponder.Logger.Info("currentCheckDate greater than previousDayPeriodEnd and less than nextDayPeriodStart");
-                OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
+                OOFSponder.Logger.Info("currentCheckDate greater than previousDayPeriodEnd and less than currentWorkingTime.StartTime");
                 if (enableOnCallMode)
                 {
-                    StartTime = nextDayPeriodStart;
-                    EndTime = nextDayPeriodEnd;
+                    StartTime = currentWorkingTime.StartTime;
+                    EndTime = currentWorkingTime.EndTime;
                 }
                 else
                 {
                     StartTime = previousDayPeriodEnd;
-                    EndTime = nextDayPeriodStart;
+                    EndTime = currentWorkingTime.StartTime;
                 }
             }
 
@@ -607,7 +619,6 @@ namespace OOFScheduling
             if (currentCheckDate > currentWorkingTime.StartTime && currentCheckDate < currentWorkingTime.EndTime)
             {
                 OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingTime.StartTime and less than currentWorkingTime.EndTime");
-                OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
                 if (enableOnCallMode)
                 {
                     StartTime = currentWorkingTime.StartTime;
@@ -623,7 +634,6 @@ namespace OOFScheduling
             if (currentCheckDate > currentWorkingTime.EndTime)
             {
                 OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingTime.EndTime");
-                OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
                 if (enableOnCallMode)
                 {
                     StartTime = nextDayPeriodStart;
@@ -709,7 +719,46 @@ namespace OOFScheduling
         }
 
 
-#region WorkingDaysControls
+        #region WorkingDaysControls
+
+        public static System.Collections.Generic.List<Control> GetControlsOfSpecificType(Control container, Type type)
+        {
+            var controls = new System.Collections.Generic.List<Control>();
+
+            foreach (Control ctrl in container.Controls)
+            {
+                if (ctrl.GetType() == type)
+                    controls.Add(ctrl);
+
+                controls.AddRange(GetControlsOfSpecificType(ctrl, type));
+            }
+
+            return controls;
+        }
+
+        //generic handler for making sure that the various daily CheckBoxes
+        //enable/disable the various daily DateTimePickers as appropriate
+        private void OffWorkCB_CheckedChanged(object sender, EventArgs e)
+        {
+            var listofDataTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
+            foreach (var dateTimePicker in listofDataTimePickers)
+            {
+                CheckBox cb = ((CheckBox)sender);
+                DateTimePicker dt = ((DateTimePicker)dateTimePicker);
+                string cbName = cb.Name.Replace("OffWorkCB","");
+                string dtpName = dt.Name.Replace("StartTimepicker","").Replace("EndTimepicker","");
+                if (cbName == dtpName)
+                {
+                    if (!OOFData.Instance.IsOnCallModeOn)
+                    {
+                        dt.Enabled = !cb.Checked;
+                    }
+                }
+            }
+
+        }
+
+        //these are all deprecated, but leaving to not have to mess with the base event handlers
         private void sundayOffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
             //if (sundayOffWorkCB.Checked)

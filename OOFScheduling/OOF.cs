@@ -12,7 +12,21 @@ namespace OOFScheduling
     public class OOFData
     {
         internal DateTime PermaOOFDate { get; set; }
-        internal string WorkingHours { get; set; }
+
+        private string _workingHours;
+        internal string WorkingHours
+        {
+            get
+            {
+                return _workingHours;
+            }
+            set
+            {
+                _workingHours = value;
+                //if we update WorkingHours, then blow away OOFCollection
+                _OOFCollection = null;
+            }
+        }
         internal string PrimaryOOFExternalMessage { get; set;}
         internal string PrimaryOOFInternalMessage { get; set; }
         internal string SecondaryOOFExternalMessage { get; set; }
