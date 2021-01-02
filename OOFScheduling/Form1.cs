@@ -27,6 +27,13 @@ namespace OOFScheduling
 
             InitializeComponent();
 
+            // Display release notes so user knows what's new
+            if (ClickOnceTracker.IsFirstRun)
+            {
+                WhatsNew wn = new WhatsNew(10);
+                wn.Show();
+            }
+
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
             foreach (var checkBox in listOfCheckBoxControls)
@@ -1087,6 +1094,7 @@ namespace OOFScheduling
             System.Diagnostics.Process.Start(strWorkPath);
         }
     }
+
 
     internal static class Extensions
     {
