@@ -80,6 +80,14 @@ namespace OOFScheduling
             }
         }
 
+        internal OOFInstance currentOOFPeriod
+        {
+            get
+            {
+                return this.OOFCollection[(int)DateTime.Now.DayOfWeek];
+            }
+        }
+
         internal bool IsPermaOOFOn
         {
             get

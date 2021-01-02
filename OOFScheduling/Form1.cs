@@ -561,8 +561,7 @@ namespace OOFScheduling
             StartTime = DateTime.Now;
             EndTime = DateTime.Now;
 
-            DateTime currentCheckDate = DateTime.Now;
-            OOFInstance currentWorkingTime = OOFData.Instance.OOFCollection[(int)currentCheckDate.DayOfWeek];
+            OOFInstance currentWorkingTime = OOFData.Instance.currentOOFPeriod;
             OOFInstance LastDayPeriod = OOFData.Instance.OOFCollection[(int)currentCheckDate.AddDays(-1).DayOfWeek];
             OOFInstance NextDayPeriod = OOFData.Instance.OOFCollection[(int)currentCheckDate.AddDays(1).DayOfWeek];
 
