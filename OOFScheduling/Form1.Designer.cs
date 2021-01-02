@@ -69,13 +69,13 @@
             this.secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblBuild = new System.Windows.Forms.ToolStripStatusLabel();
-            this.label14 = new System.Windows.Forms.Label();
             this.passwordConfirmTB = new System.Windows.Forms.MaskedTextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.passwordTB = new System.Windows.Forms.MaskedTextBox();
@@ -88,7 +88,6 @@
             this.radSecondary = new System.Windows.Forms.RadioButton();
             this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
-            this.showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -451,14 +450,14 @@
             this.primaryToolStripMenuItem.Checked = true;
             this.primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
-            this.primaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.primaryToolStripMenuItem.Text = "Primary";
             this.primaryToolStripMenuItem.Click += new System.EventHandler(this.primaryToolStripMenuItem_Click);
             // 
             // secondaryToolStripMenuItem
             // 
             this.secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
-            this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.secondaryToolStripMenuItem.Text = "Secondary";
             this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
             // 
@@ -475,6 +474,13 @@
             this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.enableOnCallModeToolStripMenuItem.Text = "Enable On-Call Mode";
             this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
+            // 
+            // showLogsToolStripMenuItem
+            // 
+            this.showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
+            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.showLogsToolStripMenuItem.Text = "Show logs";
+            this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -524,17 +530,6 @@
             this.lblBuild.Name = "lblBuild";
             this.lblBuild.Size = new System.Drawing.Size(78, 19);
             this.lblBuild.Text = "BuildNumber";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(29, 751);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(170, 13);
-            this.label14.TabIndex = 53;
-            this.label14.Text = "Exchange/Email Credentials:";
-            this.label14.Visible = false;
             // 
             // passwordConfirmTB
             // 
@@ -652,13 +647,6 @@
             this.htmlEditorControl1.Size = new System.Drawing.Size(667, 277);
             this.htmlEditorControl1.TabIndex = 31;
             // 
-            // showLogsToolStripMenuItem
-            // 
-            this.showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
-            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.showLogsToolStripMenuItem.Text = "Show logs";
-            this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -666,7 +654,6 @@
             this.ClientSize = new System.Drawing.Size(689, 771);
             this.Controls.Add(this.dtPermaOOF);
             this.Controls.Add(this.btnPermaOOF);
-            this.Controls.Add(this.label14);
             this.Controls.Add(this.passwordConfirmTB);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.passwordTB);
@@ -778,7 +765,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.MaskedTextBox passwordConfirmTB;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.MaskedTextBox passwordTB;
