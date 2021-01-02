@@ -557,26 +557,30 @@ namespace OOFScheduling
         //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
         void CalculateOOFTimes2(out DateTime StartTime, out DateTime EndTime, bool enableOnCallMode)
         {
-
+            OOFSponder.Logger.
             StartTime = DateTime.Now;
             EndTime = DateTime.Now;
 
+
+            DateTime currentCheckDate = DateTime.Now;
+
             OOFInstance currentWorkingTime = OOFData.Instance.currentOOFPeriod;
-            OOFInstance LastDayPeriod = OOFData.Instance.OOFCollection[(int)currentCheckDate.AddDays(-1).DayOfWeek];
-            OOFInstance NextDayPeriod = OOFData.Instance.OOFCollection[(int)currentCheckDate.AddDays(1).DayOfWeek];
+            DateTime previousDayPeriodEnd = OOFData.Instance.previousOOFPeriodEnd;
+            DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriodStart;
+            DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriodEnd;
 
             //between the end of the previous OOF period and the start of the next one
-            if (currentCheckDate > LastDayPeriod.StartTime && currentCheckDate < NextDayPeriod.StartTime)
+            if (currentCheckDate > previousDayPeriodEnd && currentCheckDate < nextDayPeriodStart)
             {
                 if (enableOnCallMode)
                 {
-                    StartTime = NextDayPeriod.StartTime;
-                    EndTime = NextDayPeriod.EndTime;
+                    StartTime = nextDayPeriodStart;
+                    EndTime = nextDayPeriodEnd;
                 }
                 else
                 {
-                    StartTime = LastDayPeriod.EndTime;
-                    EndTime = NextDayPeriod.StartTime;
+                    StartTime = previousDayPeriodEnd;
+                    EndTime = nextDayPeriodStart;
                 }
             }
 
@@ -590,8 +594,8 @@ namespace OOFScheduling
                 }
                 else
                 {
-                    StartTime = NextDayPeriod.StartTime;
-                    EndTime = NextDayPeriod.EndTime;
+                    StartTime = nextDayPeriodStart;
+                    EndTime = nextDayPeriodEnd;
                 }
             }
 
@@ -599,13 +603,13 @@ namespace OOFScheduling
             {
                 if (enableOnCallMode)
                 {
-                    StartTime = NextDayPeriod.StartTime;
-                    EndTime = NextDayPeriod.EndTime;
+                    StartTime = nextDayPeriodStart;
+                    EndTime = nextDayPeriodEnd;
                 }
                 else
                 {
                     StartTime = currentWorkingTime.EndTime;
-                    EndTime = NextDayPeriod.StartTime;
+                    EndTime = nextDayPeriodStart;
                 }
             }
 

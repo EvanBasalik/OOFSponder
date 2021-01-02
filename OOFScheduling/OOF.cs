@@ -88,6 +88,39 @@ namespace OOFScheduling
             }
         }
 
+        internal DateTime previousOOFPeriodEnd
+        {
+            get
+            {
+                string datePart = DateTime.Now.AddDays(-1).ToShortDateString();
+                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(-1).DayOfWeek)].EndTime.ToShortTimeString();
+                DateTime _previousOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
+                return _previousOOFPeriodEnd;
+            }
+        }
+
+        internal DateTime nextOOFPeriodStart
+        {
+            get
+            {
+                string datePart = DateTime.Now.AddDays(1).ToShortDateString();
+                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].StartTime.ToShortTimeString();
+                DateTime _nextOOFPeriodStart = DateTime.Parse(datePart + " " + timePart);
+                return _nextOOFPeriodStart;
+            }
+        }
+
+        internal DateTime nextOOFPeriodEnd
+        {
+            get
+            {
+                string datePart = DateTime.Now.AddDays(1).ToShortDateString();
+                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].EndTime.ToShortTimeString();
+                DateTime _nextOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
+                return _nextOOFPeriodEnd;
+            }
+        }
+
         internal bool IsPermaOOFOn
         {
             get
