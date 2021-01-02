@@ -54,7 +54,7 @@ namespace OOFScheduling
         /// </summary>
         internal async static Task<bool> MSALWork(AADAction action)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             bool _result = false;
             var accounts = await PublicClientApp.GetAccountsAsync();
@@ -73,8 +73,8 @@ namespace OOFScheduling
                 catch (MsalUiRequiredException ex)
                 {
                     // A MsalUiRequiredException happened on AcquireTokenSilentAsync. This indicates you need to call AcquireTokenAsync to acquire a token
-                    //Don't track this one since it can basically be considered expected.
                     //OOFSponderInsights.TrackException($"MsalUiRequiredException: {ex.Message}", ex);
+                    OOFSponder.Logger.Warning(new Exception($"Unable to acquire token silently: ", ex));
 
                     try
                     {
@@ -86,13 +86,13 @@ namespace OOFScheduling
                     }
                     catch (MsalException msalex)
                     {
-                        OOFSponderInsights.TrackException("MsalException", new Exception($"Error Acquiring Token:{System.Environment.NewLine}", msalex));
+                        OOFSponder.Logger.Error(new Exception($"Error acquiring token interactively: ", msalex));
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    OOFSponderInsights.TrackException("Error Acquiring Token Silently", ex);
+                    OOFSponder.Logger.Error(new Exception($"Error acquiring token:{System.Environment.NewLine}", ex));
                     return false;
                 }
 
@@ -137,7 +137,6 @@ namespace OOFScheduling
                     catch (MsalException ex)
                     {
                         OOFSponder.Logger.Error($"Error signing-out user: {ex.Message}");
-                        OOFSponderInsights.TrackException($"Error signing-out user: {ex.Message}", ex);
                     }
                 }
             }
@@ -152,7 +151,7 @@ namespace OOFScheduling
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<string> GetHttpContentWithToken(string url)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary
             await O365.MSALWork(O365.AADAction.SignIn);
@@ -170,6 +169,7 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
+                OOFSponder.Logger.Error(ex);
                 return ex.ToString();
             }
         }
@@ -182,7 +182,7 @@ namespace OOFScheduling
         /// <returns>String containing the results of the GET operation</returns>
         public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF )
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary
             await O365.MSALWork(O365.AADAction.SignIn);
