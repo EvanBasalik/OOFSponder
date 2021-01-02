@@ -442,7 +442,7 @@
             this.primaryToolStripMenuItem,
             this.secondaryToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(187, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(224, 22);
             this.toolStripMenuItem1.Text = "Message";
             // 
             // primaryToolStripMenuItem
@@ -464,28 +464,28 @@
             // signoutToolStripMenuItem
             // 
             this.signoutToolStripMenuItem.Name = "signoutToolStripMenuItem";
-            this.signoutToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.signoutToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.signoutToolStripMenuItem.Text = "Sign out";
             this.signoutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
             // enableOnCallModeToolStripMenuItem
             // 
             this.enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
-            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.enableOnCallModeToolStripMenuItem.Text = "Enable On-Call Mode";
+            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
             this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
             // 
             // showLogsToolStripMenuItem
             // 
             this.showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
-            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.showLogsToolStripMenuItem.Text = "Show logs";
             this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
