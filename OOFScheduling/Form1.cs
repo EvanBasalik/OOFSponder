@@ -236,7 +236,8 @@ namespace OOFScheduling
 
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            OOFSponderInsights.TrackInfo(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info("Loopy elapsed - saving settings and running RunSetOofO365");
+            saveSettings();
             await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
             //await checkOOFStatus();
         }
