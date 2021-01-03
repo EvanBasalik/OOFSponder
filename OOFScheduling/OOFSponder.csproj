@@ -25,9 +25,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</InstallUrl>
     <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</UpdateUrl>
-    <SupportUrl>http://codebox/oofsponder</SupportUrl>
+    <SupportUrl>http://github.com/evanbasalik/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
-    <PublisherName>Microsoft</PublisherName>
+    <PublisherName>Evan Basalik</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>install.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
