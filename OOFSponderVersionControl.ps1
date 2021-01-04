@@ -116,17 +116,17 @@ foreach ($file in $AssemblyFiles) {
     [xml]$doc = Get-Content -Path $file.PSPath
     [bool]$modified = $false
     $currentDepVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
-    if ($currentDepVersion -eq $currentVersion) {
+    if ($currentDepVersion -ne $currentVersion) {
         $doc.Project.PropertyGroup[0].ApplicationVersion = $Version
         $modified = $true
     }
     $currentDepRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
-    if ($currentDepRevision -eq $currentRevision) {
+    if ($currentDepRevision -ne $currentRevision) {
         $doc.Project.PropertyGroup[0].ApplicationRevision = $Revision
         $modified = $true
     }
     if ($modified) {
-        $doc.Save("$convPath")
+        $doc.Save($convPath)
     }
 }
 Write-Host -ForegroundColor Green " Done."
