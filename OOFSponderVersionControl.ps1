@@ -126,7 +126,7 @@ foreach ($file in $AssemblyFiles) {
         $modified = $true
     }
     if ($modified) {
-        $doc.Save($convPath)
+        $doc.Save("$convPath")
     }
 }
 Write-Host -ForegroundColor Green " Done."
