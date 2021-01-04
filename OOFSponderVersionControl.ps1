@@ -14,7 +14,7 @@ Do not commit changes with Git, and don't ask for a confirmation.
 Sets OOFSponder version and deployment ring.
 .Example
 Set-OOFSponderVersion.ps1 1.1.1.30
-Update version to 1.1.1.30, and autodetect deployment ring (will be Production). Ask for confirmation to commit change with Git.
+Update version to 1.1.1.30, and autodetect deployment ring (will be Alpha). Ask for confirmation to commit change with Git.
 .Example
 Set-OOFSponderVersion.ps1 -Version 1.1.1.31 -NoCommit
 Update version to 1.1.1.31. Odd build numbers can be Alpha or Insider, so ask to select a deployment ring. Do not commit the change with Git, and don't ask about it.
@@ -39,8 +39,10 @@ $currentVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
 $currentRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
 $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
 $currentRing = (Get-Culture).TextInfo.ToTitleCase( (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/') )
-$expectedProd = $currentRevision % 2 -eq 0
-$isProduction = $currentRing -eq "production"
+
+##only even numbered builds can be production - safety check
+$expectedProd = $currentRevision % 2 -ne 0
+$isProduction = $currentRing -eq "Production"
 Write-Host "Current version: $currentVersion | r$currentRevision; ring: $currentRing"
 
 if ($expectedProd -ne $isProduction) {
@@ -78,28 +80,33 @@ elseif ($Ring -eq "") {
     }
 }
 $lcRing = $Ring.ToLower()
+
+##Publish URL
+$doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder$Ring\"
+
+##UpdateUrl and InstallUrl
 switch ($lcRing) {
-    { $lcRing -eq "Production" }
+    { $lcRing -eq "production" }
         {
-            $doc.Project.PropertyGroup[0].InstallUrl = "https://casebuddy.blob.core.windows.net/install/x64/$lcRing/"
-            $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\CaseBuddy64$Ring\"
+            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/install/"
+            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/install/"
             break
         }
-    { $lcRing -eq "Insider" }
+    { $lcRing -eq "insider" }
         {
-            $doc.Project.PropertyGroup[0].InstallUrl = "https://casebuddy.blob.core.windows.net/install/x64/$lcRing/"
-            $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\CaseBuddy64$Ring\"
+            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/insider/"
+            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/insider/"
             break
         }
    default  ##Default to Alpha
         {
-            $doc.Project.PropertyGroup[0].InstallUrl = "https://casebuddy.blob.core.windows.net/install/x64/$lcRing/"
-            $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\CaseBuddy64$Ring\"
+            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/alpha/"
+            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/alpha/"
             break
         }
 }
 
-$doc.Save("$pwd\Applications\CaseBuddy\CaseBuddy.csproj")
+$doc.Save($OOFSponderLocalPath)
 Write-Host -ForegroundColor Green "Deployment ring set to ""$Ring"""
 
 Write-Host -NoNewline "Updating csproj files..."
