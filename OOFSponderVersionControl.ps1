@@ -27,7 +27,7 @@ Interactive mode. Will display current version, prompt for new one, ask for depl
 #> 
 
 param (
-    [string]$Version,
+    [version]$Version,
     [ValidateSet("Alpha", "Insider", "Production")]
     [string]$Ring,
     [switch]$Commit,
@@ -36,47 +36,81 @@ param (
 $OOFSponderLocalPath = "$($pwd)\OOFScheduling\OOFSponder.csproj"
 [xml]$doc = Get-Content -Path $OOFSponderLocalPath
 [version]$currentVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
-$currentRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
+[int]$currentRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
 $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
 $currentRing = (Get-Culture).TextInfo.ToTitleCase( (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/') )
-
-##only even numbered builds can be production - safety check
-$isProduction = $currentRing -eq "Production"
 Write-Host "Current version: $currentVersion | r$currentRevision; ring: $currentRing"
 
-if ($expectedProd -ne $isProduction) {
-    if ($expectedProd -eq $true) {
-        $expectedRing = "Production" 
+if ($Ring -eq "") {
+    switch ($host.UI.PromptForChoice("Select deployment ring", "", [System.Management.Automation.Host.ChoiceDescription[]] @("&Alpha", "&Insider", "&Production"),0)) 
+    {
+        "1"
+        {
+            $Ring = "Insider"
+        }
+        "2"
+        {
+            Ring = "Production"
+        }
+        Default
+        {
+            Ring = "Alpha"
+        }
     }
-    else {
-        $expectedRing = "Alpha/Insider"
-    }
-    Write-Warning "Revision/ring mismatch: expected $expectedRing build, this is $currentRing"
 }
 
-$Revision = (Select-String '([\d]+$)' -Input $Version).Matches.Value
 Write-Host "Updating version to $Version"
-
-while ($Version -notmatch '(^[\d]+\.[\d]+\.[\d]+\.[\d]+$)') {
+while ($Version -notmatch '(^[\d]+\.[\d]+$)') 
+{
     [string]$Version = Read-Host "New Application version"
 
-if ($Revision % 2 -eq 0) {
-    if ($Ring -eq "Alpha" -or $Ring -eq "Insider") {
-        Write-Error "Alpha/Insider rings are not allowed for this revision"
-        Exit
+    #validate the inputted version against version rules
+    switch ($Ring) {
+        "Production" 
+        {  
+            #
+            [version]$Version += ".0.0"
+        }
+        "Insider" 
+        {  
+            if ($Version -ne "") {
+                Write-Error "Insider ring cannot have a specified version. Changing to nochange.nochange.increment.0"
+
+                #first, grab the existing version
+                $Version = $currentVersion
+
+                #increment Minor version
+                $Version.Minor = $currentVersion.Minor + 1
+
+                #set the Minor revision to 0
+                $Version.MinorRevision = 0
+            }
+        }
+        Default ##Alpha
+        {
+            if ($Version -ne "") {
+                Write-Error "Alpha ring cannot have a specified version. Changing to Revision increment only"
+                $Version = $currentVersion
+                $Revision = $currentRevision + 1
+            }
+        }
     }
-    $Ring = "Production"
-}
-elseif ($Ring -eq "Production") {
-    Write-Error "Production ring is not allowed for this revision"
-    Break
-}
-elseif ($Ring -eq "") {
-    $Ring = "Alpha"
-    if ($host.UI.PromptForChoice("Select deployment ring", "", [System.Management.Automation.Host.ChoiceDescription[]] @("&Alpha", "&Insider"), 0) -eq 1) {
-        $Ring = "Insider"
+    Write-Host "Version will be set to $($Version)"
+
+    if ($Revision % 2 -eq 0) {
+        if ($Ring -eq "Alpha" -or $Ring -eq "Insider") {
+            Write-Error "Alpha/Insider rings are not allowed for this revision"
+            Exit
+        }
+        $Ring = "Production"
     }
-}
+    elseif ($Ring -eq "Production") {
+        Write-Error "Production ring is not allowed for this revision"
+        Break
+    }
+    elseif ($Ring -eq "") {
+
+    }
 }
 $lcRing = $Ring.ToLower()
 
