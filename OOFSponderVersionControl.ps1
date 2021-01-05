@@ -35,13 +35,12 @@ param (
 )
 $OOFSponderLocalPath = "$($pwd)\OOFScheduling\OOFSponder.csproj"
 [xml]$doc = Get-Content -Path $OOFSponderLocalPath
-$currentVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
+[version]$currentVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
 $currentRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
 $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
 $currentRing = (Get-Culture).TextInfo.ToTitleCase( (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/') )
 
 ##only even numbered builds can be production - safety check
-$expectedProd = $currentRevision % 2 -ne 0
 $isProduction = $currentRing -eq "Production"
 Write-Host "Current version: $currentVersion | r$currentRevision; ring: $currentRing"
 
@@ -55,17 +54,16 @@ if ($expectedProd -ne $isProduction) {
     Write-Warning "Revision/ring mismatch: expected $expectedRing build, this is $currentRing"
 }
 
-while ($Version -notmatch '(^[\d]+\.[\d]+\.[\d]+\.[\d]+$)') {
-    [string]$Version = Read-Host "New Application version"
-}
-
 $Revision = (Select-String '([\d]+$)' -Input $Version).Matches.Value
 Write-Host "Updating version to $Version"
+
+while ($Version -notmatch '(^[\d]+\.[\d]+\.[\d]+\.[\d]+$)') {
+    [string]$Version = Read-Host "New Application version"
 
 if ($Revision % 2 -eq 0) {
     if ($Ring -eq "Alpha" -or $Ring -eq "Insider") {
         Write-Error "Alpha/Insider rings are not allowed for this revision"
-        Break
+        Exit
     }
     $Ring = "Production"
 }
@@ -79,7 +77,59 @@ elseif ($Ring -eq "") {
         $Ring = "Insider"
     }
 }
+}
 $lcRing = $Ring.ToLower()
+
+##We only want to update OOFSponder's project - dependencies get modified independently
+##Leave the logic in to grab everything in case the logic changes in the future
+Write-Host -NoNewline "Updating OOFSponder.csproj..."
+$AssemblyFiles = Get-ChildItem . *.csproj -rec
+foreach ($file in $AssemblyFiles) {
+    if ($file.Name -contains "OOFSponder.csproj")
+    {
+        $convPath = Convert-Path -Path $file.PSPath
+        [xml]$doc = Get-Content -Path $file.PSPath
+        [bool]$modified = $false
+        $currentDepVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
+
+        ##make sure the existing version is less than the new version
+        ##if not, bail
+        if ([version]$currentDepVersion -lt [version]$Version) {
+            $doc.Project.PropertyGroup[0].ApplicationVersion = $Version
+            $modified = $true
+        else {
+            Write-Host "New version less than or equal to old version. Please check the new version is correct" -ForegroundColor Red
+            Exit
+            }
+        }
+        $currentDepRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
+        if ($currentDepRevision -ne $currentRevision) {
+            $doc.Project.PropertyGroup[0].ApplicationRevision = $Revision
+            $modified = $true
+        }
+        if ($modified) {
+            $doc.Save($convPath)
+        }
+    }
+}
+Write-Host -ForegroundColor Green " Done."
+
+Write-Host -NoNewline "Updating AssemblyInfo..."
+$AssemblyFiles = Get-ChildItem . AssemblyInfo.cs -rec
+foreach ($file in $AssemblyFiles) {
+    (Get-Content $file.PSPath) | ForEach-Object {
+        if ($_ -match "\[assembly: AssemblyVersion\(""$currentVersion""\)\]") {
+            '[assembly: AssemblyVersion("{0}")]' -f $Version
+        }
+        elseif ($_ -match "\[assembly: AssemblyFileVersion\(""$currentVersion""\)\]") {
+            '[assembly: AssemblyFileVersion("{0}")]' -f $Version
+        }
+        else {
+            $_
+        }
+    } | Set-Content $file.PSPath -Encoding UTF8
+}
+Write-Host -ForegroundColor Green " Done."
 
 ##Publish URL
 $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder$Ring\"
@@ -109,44 +159,6 @@ switch ($lcRing) {
 $doc.Save($OOFSponderLocalPath)
 Write-Host -ForegroundColor Green "Deployment ring set to ""$Ring"""
 
-Write-Host -NoNewline "Updating csproj files..."
-$AssemblyFiles = Get-ChildItem . *.csproj -rec
-foreach ($file in $AssemblyFiles) {
-    $convPath = Convert-Path -Path $file.PSPath
-    [xml]$doc = Get-Content -Path $file.PSPath
-    [bool]$modified = $false
-    $currentDepVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
-    if ($currentDepVersion -ne $currentVersion) {
-        $doc.Project.PropertyGroup[0].ApplicationVersion = $Version
-        $modified = $true
-    }
-    $currentDepRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
-    if ($currentDepRevision -ne $currentRevision) {
-        $doc.Project.PropertyGroup[0].ApplicationRevision = $Revision
-        $modified = $true
-    }
-    if ($modified) {
-        $doc.Save("$convPath")
-    }
-}
-Write-Host -ForegroundColor Green " Done."
-
-Write-Host -NoNewline "Updating AssemblyInfo..."
-$AssemblyFiles = Get-ChildItem . AssemblyInfo.cs -rec
-foreach ($file in $AssemblyFiles) {
-    (Get-Content $file.PSPath) | ForEach-Object {
-        if ($_ -match "\[assembly: AssemblyVersion\(""$currentVersion""\)\]") {
-            '[assembly: AssemblyVersion("{0}")]' -f $Version
-        }
-        elseif ($_ -match "\[assembly: AssemblyFileVersion\(""$currentVersion""\)\]") {
-            '[assembly: AssemblyFileVersion("{0}")]' -f $Version
-        }
-        else {
-            $_
-        }
-    } | Set-Content $file.PSPath -Encoding UTF8
-}
-Write-Host -ForegroundColor Green " Done."
 if (!$NoCommit) {
     if ($Commit -or $host.UI.PromptForChoice("Would you like to commit the change now?", "", [System.Management.Automation.Host.ChoiceDescription[]] @("&Yes", "&No"), 0) -eq 0) {
         git commit -a -m "$Version $Ring release"
