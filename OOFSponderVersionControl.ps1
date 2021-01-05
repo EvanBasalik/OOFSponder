@@ -41,77 +41,49 @@ $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
 $currentRing = (Get-Culture).TextInfo.ToTitleCase( (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/') )
 Write-Host "Current version: $currentVersion | r$currentRevision; ring: $currentRing"
 
+Write-Warning "New version not specified. Calculating new version based on ring..."
+#get the Ring and based on the Ring, calculate the new version
 if ($Ring -eq "") {
     switch ($host.UI.PromptForChoice("Select deployment ring", "", [System.Management.Automation.Host.ChoiceDescription[]] @("&Alpha", "&Insider", "&Production"),0)) 
     {
         "1"
         {
             $Ring = "Insider"
+            if ($Version -ne "") {
+                Write-Warning "Insider ring cannot have a specified version. Changing to nochange.nochange.increment.0"
+            }
+
+            #first, grab the existing version
+            [version]$Version = $currentVersion
+
+            #increment Minor version
+            #set the Minor revision to 0
+            $Version = [version]::new($Version.Major,$Version.MajorRevision, $Version.Minor+1, 0)
         }
         "2"
         {
-            Ring = "Production"
+            $Ring = "Production"
+            if (($Version -notmatch '(^[\d]+\.[\d]+)') -and ($Ring -eq "Production")) 
+            {
+                [string]$Version = Read-Host "New Application version"
+            }
+            $Version += ".0.0"
+            [version]$Version = $Version
         }
         Default
         {
-            Ring = "Alpha"
+            $Ring = "Alpha"
+            if ($Version -ne "") {
+                Write-Warning "Alpha ring cannot have a specified version. Changing to autoincrement of minor revision"
+            }
+            [version]$Version = $currentVersion
+            $Version = [version]::new($Version.Major,$Version.MajorRevision, $Version.Minor, $Version.MinorRevision + 1)
         }
     }
 }
 
-Write-Host "Updating version to $Version"
-while ($Version -notmatch '(^[\d]+\.[\d]+$)') 
-{
-    [string]$Version = Read-Host "New Application version"
+Write-Host "Version will be set to $($Version.ToString())"
 
-    #validate the inputted version against version rules
-    switch ($Ring) {
-        "Production" 
-        {  
-            #
-            [version]$Version += ".0.0"
-        }
-        "Insider" 
-        {  
-            if ($Version -ne "") {
-                Write-Error "Insider ring cannot have a specified version. Changing to nochange.nochange.increment.0"
-
-                #first, grab the existing version
-                $Version = $currentVersion
-
-                #increment Minor version
-                $Version.Minor = $currentVersion.Minor + 1
-
-                #set the Minor revision to 0
-                $Version.MinorRevision = 0
-            }
-        }
-        Default ##Alpha
-        {
-            if ($Version -ne "") {
-                Write-Error "Alpha ring cannot have a specified version. Changing to Revision increment only"
-                $Version = $currentVersion
-                $Revision = $currentRevision + 1
-            }
-        }
-    }
-    Write-Host "Version will be set to $($Version)"
-
-    if ($Revision % 2 -eq 0) {
-        if ($Ring -eq "Alpha" -or $Ring -eq "Insider") {
-            Write-Error "Alpha/Insider rings are not allowed for this revision"
-            Exit
-        }
-        $Ring = "Production"
-    }
-    elseif ($Ring -eq "Production") {
-        Write-Error "Production ring is not allowed for this revision"
-        Break
-    }
-    elseif ($Ring -eq "") {
-
-    }
-}
 $lcRing = $Ring.ToLower()
 
 ##We only want to update OOFSponder's project - dependencies get modified independently
