@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace OOFScheduling
 {
@@ -27,7 +21,7 @@ namespace OOFScheduling
                 _OOFCollection = null;
             }
         }
-        internal string PrimaryOOFExternalMessage { get; set;}
+        internal string PrimaryOOFExternalMessage { get; set; }
         internal string PrimaryOOFInternalMessage { get; set; }
         internal string SecondaryOOFExternalMessage { get; set; }
         internal string SecondaryOOFInternalMessage { get; set; }
@@ -163,7 +157,7 @@ namespace OOFScheduling
             Dispose(false);
         }
 
-        public void WriteProperties(bool disposing=false)
+        public void WriteProperties(bool disposing = false)
         {
             OOFSponder.Logger.Info("Persisting settings");
 
@@ -230,8 +224,10 @@ namespace OOFScheduling
         internal bool isOnCallModeEnabled = false;
 
         private bool _isOOF;
-        public bool IsOOF {
-            get {
+        public bool IsOOF
+        {
+            get
+            {
                 if (isOnCallModeEnabled)
                 {
                     return !_isOOF;
@@ -241,23 +237,28 @@ namespace OOFScheduling
                     return _isOOF;
                 }
             }
-            
-            set => _isOOF = value; }
 
-        internal DateTime StartTime {
+            set => _isOOF = value;
+        }
+
+        internal DateTime StartTime
+        {
             get
             {
                 //need to return the *actual* day and not just the day of week
                 return _startTime.EquivalentDateTime();
             }
-            set => _startTime = value; }
-        internal DateTime EndTime {
+            set => _startTime = value;
+        }
+        internal DateTime EndTime
+        {
             get
             {
                 //need to return the *actual* day and not just the day of week
                 return _endTime.EquivalentDateTime();
             }
-            set => _endTime = value; }
+            set => _endTime = value;
+        }
     }
     public static class DateTimeExtensions
     {

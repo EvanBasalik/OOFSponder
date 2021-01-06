@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Identity.Client;
-using mshtml;
-using Windows.Phone.Notification.Management;
 
 namespace OOFScheduling
 {
@@ -204,7 +199,7 @@ namespace OOFScheduling
         /// <param name="url">The URL</param>
         /// <param name="token">The token</param>
         /// <returns>String containing the results of the GET operation</returns>
-        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF )
+        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
@@ -238,7 +233,7 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
-                throw new Exception ("Unable to set OOF: " + ex.Message, ex);
+                throw new Exception("Unable to set OOF: " + ex.Message, ex);
             }
         }
 
