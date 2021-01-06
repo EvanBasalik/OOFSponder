@@ -137,6 +137,8 @@ namespace OOFScheduling
             }
         }
 
+        public bool useNewOOFMath { get; internal set; }
+
         private void ReadProperties()
         {
             OOFSponder.Logger.Info("Reading settings");

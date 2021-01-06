@@ -88,6 +88,7 @@
             this.radSecondary = new System.Windows.Forms.RadioButton();
             this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
+            this.bETAEnableNewOOFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -430,7 +431,8 @@
             this.signoutToolStripMenuItem,
             this.enableOnCallModeToolStripMenuItem,
             this.showLogsToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.exitToolStripMenuItem,
+            this.bETAEnableNewOOFToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -442,7 +444,7 @@
             this.primaryToolStripMenuItem,
             this.secondaryToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(224, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(231, 22);
             this.toolStripMenuItem1.Text = "Message";
             // 
             // primaryToolStripMenuItem
@@ -464,28 +466,28 @@
             // signoutToolStripMenuItem
             // 
             this.signoutToolStripMenuItem.Name = "signoutToolStripMenuItem";
-            this.signoutToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.signoutToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.signoutToolStripMenuItem.Text = "Sign out";
             this.signoutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
             // enableOnCallModeToolStripMenuItem
             // 
             this.enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
-            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
             this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
             // 
             // showLogsToolStripMenuItem
             // 
             this.showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
-            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.showLogsToolStripMenuItem.Text = "Show logs";
             this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -647,6 +649,13 @@
             this.htmlEditorControl1.Size = new System.Drawing.Size(667, 277);
             this.htmlEditorControl1.TabIndex = 31;
             // 
+            // bETAEnableNewOOFToolStripMenuItem
+            // 
+            this.bETAEnableNewOOFToolStripMenuItem.Name = "bETAEnableNewOOFToolStripMenuItem";
+            this.bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
+            this.bETAEnableNewOOFToolStripMenuItem.Click += new System.EventHandler(this.bETAEnableNewOOFToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -781,6 +790,7 @@
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
         private System.Windows.Forms.ToolStripMenuItem showLogsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bETAEnableNewOOFToolStripMenuItem;
     }
 }
 

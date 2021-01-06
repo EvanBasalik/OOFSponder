@@ -492,7 +492,7 @@ namespace OOFScheduling
             DateTime StartTime, EndTime;
 
             //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
-            if (!OOFData.Instance.IsOnCallModeOn)
+            if (!OOFData.Instance.IsOnCallModeOn | !OOFData.Instance.useNewOOFMath)
             {
                 CalculateOOFTimes(OOFData.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
             }
@@ -1090,6 +1090,12 @@ namespace OOFScheduling
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
             System.Diagnostics.Process.Start(strWorkPath);
+        }
+
+        private void bETAEnableNewOOFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
+            OOFData.Instance.useNewOOFMath = true;
         }
     }
 
