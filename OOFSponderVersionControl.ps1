@@ -3,7 +3,7 @@
 Set-OOFSponderVersion is a version manipulation script for OOFSponder releases.
 It automatically updates version-related fields in dependent projects (both *.csproj and AssemblyInfo.cs), and switches between Deployment rings (Alpha/Insider/Production)
 .Parameter Version
-Target version that you want to update the build to. Should be in format of "1.1.1.12"
+Target version that you want to update the build to. Should be in format of "1.1"
 .Parameter Ring
 Deployment ring. Can be Insider or Production
 .Parameter Commit
@@ -13,14 +13,11 @@ Do not commit changes with Git, and don't ask for a confirmation.
 .Synopsis
 Sets OOFSponder version and deployment ring.
 .Example
-Set-OOFSponderVersion.ps1 1.1.1.30
-Update version to 1.1.1.30, and autodetect deployment ring (will be Alpha). Ask for confirmation to commit change with Git.
+Set-OOFSponderVersion.ps1 1.1
+Update version to just a single increment on the Revision, autodetect deployment ring (will be Alpha). Ask for confirmation to commit change with Git.
 .Example
-Set-OOFSponderVersion.ps1 -Version 1.1.1.31 -NoCommit
-Update version to 1.1.1.31. Odd build numbers can be Alpha or Insider, so ask to select a deployment ring. Do not commit the change with Git, and don't ask about it.
-.Example
-Set-OOFSponderVersion.ps1 -Version 1.1.1.31 -Ring Alpha -Commit
-Update version to 1.1.1.31, and set deployment ring to Alpha. Automatically commit change with Git.
+Set-OOFSponderVersion.ps1 -Version 1.1 -NoCommit
+Update version to 1.1.0.0, ask to select a deployment ring. Do not commit the change with Git, and don't ask about it.
 .Example
 Set-OOFSponderVersion.ps1
 Interactive mode. Will display current version, prompt for new one, ask for deployment ring if it is not Production, and ask for Git commit confirmation.
@@ -44,47 +41,48 @@ Write-Host "Current version: $currentVersion | r$currentRevision; ring: $current
 Write-Warning "New version not specified. Calculating new version based on ring..."
 #get the Ring and based on the Ring, calculate the new version
 if ($Ring -eq "") {
-    switch ($host.UI.PromptForChoice("Select deployment ring", "", [System.Management.Automation.Host.ChoiceDescription[]] @("&Alpha", "&Insider", "&Production"),0)) 
+    $result = $host.UI.PromptForChoice("Select deployment ring", "", [System.Management.Automation.Host.ChoiceDescription[]] @("&Alpha", "&Insider", "&Production"),0)
+}
+switch ($result) 
+{
+    "1"
     {
-        "1"
-        {
-            $Ring = "Insider"
-            if (![string]::IsNullOrEmpty($Version)) {
-                Write-Warning "Insider ring cannot have a specified version. Changing to nochange.nochange.increment.0"
-            }
+        $Ring = "Insider"
+        if (![string]::IsNullOrEmpty($Version)) {
+            Write-Warning "Insider ring cannot have a specified version. Changing to nochange.nochange.increment.0"
+        }
 
-            #first, grab the existing version
-            [version]$Version = $currentVersion
+        #first, grab the existing version
+        [version]$Version = $currentVersion
 
-            #increment Minor version
-            #set the Minor revision to 0
-            $Version = [version]::new($Version.Major,$Version.Minor, $Version.Build+1, 0)
-        }
-        "2"
+        #increment Minor version
+        #set the Minor revision to 0
+        $Version = [version]::new($Version.Major,$Version.Minor, $Version.Build+1, 0)
+    }
+    "2"
+    {
+        $Ring = "Production"
+        if (($Version -notmatch '(^[\d]+\.[\d]+)') -and ($Ring -eq "Production")) 
         {
-            $Ring = "Production"
-            if (($Version -notmatch '(^[\d]+\.[\d]+)') -and ($Ring -eq "Production")) 
-            {
-                [string]$Version = Read-Host "New Application version"
-            }
-            #can only specify the first two digits
-            if (!($Version -match '(^[\d]+\.[\d]+$)')) 
-            {
-                Write-Error "Version must be in the form of x.y"
-                Exit
-            }
-            $Version += ".0.0"
-            [version]$Version = $Version
+            [string]$Version = Read-Host "New Application version"
         }
-        Default
+        #can only specify the first two digits
+        if (!($Version -match '(^[\d]+\.[\d]+$)')) 
         {
-            $Ring = "Alpha"
-            if (![string]::IsNullOrEmpty($Version)) {
-                Write-Warning "Alpha ring cannot have a specified version. Changing to autoincrement of minor revision"
-            }
-            [version]$Version = $currentVersion
-            $Version = [version]::new($Version.Major,$Version.Minor, $Version.Build, $Version.Revision + 1)
+            Write-Error "Version must be in the form of x.y"
+            Exit
         }
+        $Version += ".0.0"
+        [version]$Version = $Version
+    }
+    Default
+    {
+        $Ring = "Alpha"
+        if (![string]::IsNullOrEmpty($Version)) {
+            Write-Warning "Alpha ring cannot have a specified version. Changing to autoincrement of minor revision"
+        }
+        [version]$Version = $currentVersion
+        $Version = [version]::new($Version.Major,$Version.Minor, $Version.Build, $Version.Revision + 1)
     }
 }
 
