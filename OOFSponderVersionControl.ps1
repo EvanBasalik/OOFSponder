@@ -24,11 +24,11 @@ Interactive mode. Will display current version, prompt for new one, ask for depl
 #> 
 
 param (
-    [version]$Version="1.1",
+    [string]$Version,
     [ValidateSet("Alpha", "Insider", "Production")]
-    [string]$Ring="Production",
+    [string]$Ring="Alpha",
     [switch]$Commit,
-    [switch]$NoCommit=$true
+    [switch]$NoCommit
 )
 $OOFSponderLocalPath = "$($pwd)\OOFScheduling\OOFSponder.csproj"
 [xml]$doc = Get-Content -Path $OOFSponderLocalPath
