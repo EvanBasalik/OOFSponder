@@ -120,19 +120,41 @@ Write-Host -ForegroundColor Green " Done."
 Write-Host -NoNewline "Updating AssemblyInfo..."
 $AssemblyFiles = Get-ChildItem . AssemblyInfo.cs -rec
 foreach ($file in $AssemblyFiles) {
-    (Get-Content $file.PSPath) | ForEach-Object {
-        if ($_ -match "\[assembly: AssemblyVersion\(""$currentVersion""\)\]") {
-            '[assembly: AssemblyVersion("{0}")]' -f $Version
-        }
-        elseif ($_ -match "\[assembly: AssemblyFileVersion\(""$currentVersion""\)\]") {
-            '[assembly: AssemblyFileVersion("{0}")]' -f $Version
-        }
-        else {
-            $_
-        }
-    } | Set-Content $file.PSPath -Encoding UTF8
+    if ($file.FullName.Contains("OOFScheduling"))
+    {
+        $fileContent=Get-Content $file.PSPath
+        ($fileContent) | ForEach-Object {
+
+            Write-Verbose "Evaluating $($_)"
+
+            ##need to include a catch for super old versions where this value was either never set or set manually
+            ##for the rest, just make sure existing = current, then bump to new
+            if (($_ -match "\[assembly: AssemblyVersion\(""$currentVersion""\)\]") -or ($_ -match "\[assembly: AssemblyVersion\(""1.0.*""\)\]")) {
+                if ($_ -notmatch "//") {
+                    '[assembly: AssemblyVersion("{0}")]' -f $Version.ToString()
+                }
+                else {
+                    $_
+                }
+
+            }
+            elseif (($_ -match "\[assembly: AssemblyFileVersion\(""$currentVersion""\)\]") -or ($_ -match "\[assembly: AssemblyFileVersion\(""1.0.0.0""\)\]")) {
+                if ($_ -notmatch "//") {
+                    '[assembly: AssemblyFileVersion("{0}")]' -f $Version.ToString()
+                }
+                else {
+                    $_
+                }
+            }
+            else {
+                $_
+            }
+        } | Set-Content $file.PSPath -Encoding UTF8
+    }
 }
 Write-Host -ForegroundColor Green " Done."
+
+Write-Host "Updateing Publish/Update/Install URLs" -NoNewline
 
 ##Publish URL
 $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder$Ring\"
