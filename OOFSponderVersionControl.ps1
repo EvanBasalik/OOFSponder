@@ -24,11 +24,11 @@ Interactive mode. Will display current version, prompt for new one, ask for depl
 #> 
 
 param (
-    [version]$Version,
+    [version]$Version="1.1",
     [ValidateSet("Alpha", "Insider", "Production")]
-    [string]$Ring,
+    [string]$Ring="Production",
     [switch]$Commit,
-    [switch]$NoCommit
+    [switch]$NoCommit=$true
 )
 $OOFSponderLocalPath = "$($pwd)\OOFScheduling\OOFSponder.csproj"
 [xml]$doc = Get-Content -Path $OOFSponderLocalPath
@@ -38,12 +38,20 @@ $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
 $currentRing = (Get-Culture).TextInfo.ToTitleCase( (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/') )
 Write-Host "Current version: $currentVersion | r$currentRevision; ring: $currentRing"
 
-Write-Warning "New version not specified. Calculating new version based on ring..."
+Write-Warning "Calculating new version based on ring being specified as $($Ring)..."
 #get the Ring and based on the Ring, calculate the new version
 if ($Ring -eq "") {
     $result = $host.UI.PromptForChoice("Select deployment ring", "", [System.Management.Automation.Host.ChoiceDescription[]] @("&Alpha", "&Insider", "&Production"),0)
 }
-switch ($result) 
+else {
+    switch ($Ring) {
+        "Alpha"{ $result = 0 }
+        "Insider" { $result = 1 }
+        "Production"{ $result = 2 }
+        Default { Write-Error "Unable to determine ring"}
+    }
+}
+switch ($result)
 {
     "1"
     {
