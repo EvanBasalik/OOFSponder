@@ -49,7 +49,7 @@ if ($Ring -eq "") {
         "1"
         {
             $Ring = "Insider"
-            if ($Version -ne "") {
+            if (![string]::IsNullOrEmpty($Version)) {
                 Write-Warning "Insider ring cannot have a specified version. Changing to nochange.nochange.increment.0"
             }
 
@@ -73,7 +73,7 @@ if ($Ring -eq "") {
         Default
         {
             $Ring = "Alpha"
-            if ($Version -ne "") {
+            if (![string]::IsNullOrEmpty($Version)) {
                 Write-Warning "Alpha ring cannot have a specified version. Changing to autoincrement of minor revision"
             }
             [version]$Version = $currentVersion
@@ -154,7 +154,7 @@ foreach ($file in $AssemblyFiles) {
 }
 Write-Host -ForegroundColor Green " Done."
 
-Write-Host "Updateing Publish/Update/Install URLs" -NoNewline
+Write-Host "Updating Publish/Update/Install URLs..." -NoNewline
 
 ##Publish URL
 $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder$Ring\"
