@@ -26,7 +26,7 @@ Interactive mode. Will display current version, prompt for new one, ask for depl
 param (
     [string]$Version,
     [ValidateSet("Alpha", "Insider", "Production")]
-    [string]$Ring="Alpha",
+    [string]$Ring,
     [switch]$Commit,
     [switch]$NoCommit
 )
