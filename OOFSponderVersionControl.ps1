@@ -67,6 +67,12 @@ if ($Ring -eq "") {
             {
                 [string]$Version = Read-Host "New Application version"
             }
+            #can only specify the first two digits
+            if (!($Version -match '(^[\d]+\.[\d]+$)')) 
+            {
+                Write-Error "Version must be in the form of x.y"
+                Exit
+            }
             $Version += ".0.0"
             [version]$Version = $Version
         }
