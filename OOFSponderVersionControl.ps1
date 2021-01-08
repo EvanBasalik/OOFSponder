@@ -169,7 +169,7 @@ Write-Host -ForegroundColor Green " Done."
 Write-Host "Updating Publish/Update/Install URLs..." -NoNewline
 
 ##Publish URL
-$doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder$Ring\"
+$doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder\$Ring\"
 
 ##UpdateUrl and InstallUrl
 switch ($lcRing) {
