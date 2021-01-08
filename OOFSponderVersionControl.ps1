@@ -58,7 +58,7 @@ if ($Ring -eq "") {
 
             #increment Minor version
             #set the Minor revision to 0
-            $Version = [version]::new($Version.Major,$Version.MajorRevision, $Version.Minor+1, 0)
+            $Version = [version]::new($Version.Major,$Version.Minor, $Version.Build+1, 0)
         }
         "2"
         {
@@ -77,7 +77,7 @@ if ($Ring -eq "") {
                 Write-Warning "Alpha ring cannot have a specified version. Changing to autoincrement of minor revision"
             }
             [version]$Version = $currentVersion
-            $Version = [version]::new($Version.Major,$Version.MajorRevision, $Version.Minor, $Version.MinorRevision + 1)
+            $Version = [version]::new($Version.Major,$Version.Minor, $Version.Build, $Version.Revision + 1)
         }
     }
 }
@@ -100,19 +100,16 @@ foreach ($file in $AssemblyFiles) {
 
         ##make sure the existing version is less than the new version
         ##if not, bail
-        if ([version]$currentDepVersion -lt [version]$Version) {
-            $doc.Project.PropertyGroup[0].ApplicationVersion = $Version
+        if (([version]$currentDepVersion) -lt [version]$Version) {
+            $doc.Project.PropertyGroup[0].ApplicationVersion = $Version.ToString()
             $modified = $true
-        else {
+        }
+        else 
+        {
             Write-Host "New version less than or equal to old version. Please check the new version is correct" -ForegroundColor Red
             Exit
-            }
         }
-        $currentDepRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
-        if ($currentDepRevision -ne $currentRevision) {
-            $doc.Project.PropertyGroup[0].ApplicationRevision = $Revision
-            $modified = $true
-        }
+
         if ($modified) {
             $doc.Save($convPath)
         }
