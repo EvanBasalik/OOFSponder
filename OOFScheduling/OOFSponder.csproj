@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>publish\</PublishUrl>
+    <PublishUrl>C:\Users\Public\OOFSponderInsider\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -25,14 +25,14 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</InstallUrl>
     <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/insider/</UpdateUrl>
-    <SupportUrl>http://codebox/oofsponder</SupportUrl>
+    <SupportUrl>http://github.com/evanbasalik/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
-    <PublisherName>Microsoft</PublisherName>
+    <PublisherName>Evan Basalik</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>install.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>13</ApplicationRevision>
-    <ApplicationVersion>0.3.0.%2a</ApplicationVersion>
+    <ApplicationRevision>15</ApplicationRevision>
+    <ApplicationVersion>1.1.2.0</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>

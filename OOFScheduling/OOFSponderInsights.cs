@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Microsoft.ApplicationInsights;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.ApplicationInsights;
 using System.Runtime.CompilerServices;
 
 namespace OOFScheduling
@@ -47,7 +44,7 @@ namespace OOFScheduling
             Track("Exception", _properties);
         }
 
-        internal static string CurrentMethod([CallerMemberName]string name = "")
+        internal static string CurrentMethod([CallerMemberName] string name = "")
         {
             return name;
         }
@@ -76,7 +73,7 @@ namespace OOFScheduling
                 AIClient.InstrumentationKey = "9eacd004-7944-4d2e-a978-d66104c67a49";
 
 #if DEBUG
-            Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
+                Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
 #endif
 
                 AIClient.Context.Properties["MachineName"] = Environment.MachineName;
