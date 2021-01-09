@@ -66,9 +66,10 @@ steps:
   displayName: 'Copy files to oofsponderdeploy Blob storage'
   inputs:
     SourcePath: '$(buildPath)\app.publish\*'
-    azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
+    azureSubscription: 'EvanBaCore(27b2ee0a-4093-4253-95b5-c595487ad66f)'
     Destination: 'AzureBlob'
-    storage: 'oofsponder'
+    storage: 'oofsponderdeploy'
     ContainerName: 'deploy'
     BlobPrefix: '$(deploymentRing)'
+    AdditionalArgumentsForVMCopy: '/DestSAS:******'
 
