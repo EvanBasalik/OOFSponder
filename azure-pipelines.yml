@@ -77,7 +77,7 @@ steps:
     azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
     scriptType: 'ps'
     scriptLocation: 'inlineScript'
-    inlineScript: 'azcopy copy cp "$(buildPath)\app.publish\*" "https://oofsponderdeploy.blob.core.windows.net/deploy/$(deploymentRing)?[SAS]" --recursive'
+    inlineScript: 'azcopy copy "$(buildPath)\app.publish\*" "https://oofsponderdeploy.blob.core.windows.net/deploy/$(deploymentRing)?[SAS]" --recursive'
 
 
 
