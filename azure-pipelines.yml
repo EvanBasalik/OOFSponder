@@ -48,75 +48,11 @@ steps:
   inputs:
     script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u "$(buildPath)\app.publish\Application Files\CaseBuddy64_$(clickOnceVersion)\CaseBuddy64.exe.manifest"'
 
-- task: EsrpCodeSigning@1
-  displayName: 'Codesign step 2 (manifest)'
-  condition: ne(variables['deploymentRing'], 'alpha')
-  inputs:
-    ConnectedServiceName: 'codesign'
-    FolderPath: '$(buildPath)\app.publish\Application Files\CaseBuddy64_$(clickOnceVersion)'
-    Pattern: '*.manifest'
-    signConfigType: 'inlineSignParams'
-    inlineOperation: |
-      [
-          {
-              "KeyCode" : "CP-232959",
-              "OperationCode" : "magesignsha256rfc3161",
-              "Parameters" : {
-                  "OpusName" : "Microsoft",
-                  "OpusInfo" : "http://www.microsoft.com"
-              },
-              "ToolName" : "sign",
-              "ToolVersion" : "1.0"
-          },
-          {
-              "KeyCode" : "CP-232959",
-              "OperationCode" : "MageVerifySHA256",
-              "Parameters" : {},
-              "ToolName" : "sign",
-              "ToolVersion" : "1.0"
-          }
-      ]
-    SessionTimeout: '60'
-    MaxConcurrency: '50'
-    MaxRetryAttempts: '5'
-
 - task: CmdLine@2
   displayName: 'Mage run 2 (clickonce)'
   condition: ne(variables['deploymentRing'], 'alpha')
   inputs:
     script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u $(buildPath)\app.publish\CaseBuddy64.application -appm "$(buildPath)\app.publish\Application Files\CaseBuddy64_$(clickOnceVersion)\CaseBuddy64.exe.manifest"'
-
-- task: EsrpCodeSigning@1
-  displayName: 'Codesign step 3 (clickonce)'
-  condition: ne(variables['deploymentRing'], 'alpha')
-  inputs:
-    ConnectedServiceName: 'codesign'
-    FolderPath: '$(buildPath)\app.publish'
-    Pattern: '*.application'
-    signConfigType: 'inlineSignParams'
-    inlineOperation: |
-      [
-          {
-              "KeyCode" : "CP-232959",
-              "OperationCode" : "magesignsha256rfc3161",
-              "Parameters" : {
-                  "OpusName" : "Microsoft",
-                  "OpusInfo" : "http://www.microsoft.com"
-              },
-              "ToolName" : "sign",
-              "ToolVersion" : "1.0"
-          },
-          {
-              "KeyCode" : "CP-232959",
-              "OperationCode" : "MageVerifySHA256",
-              "Parameters" : {},
-              "ToolName" : "sign",
-              "ToolVersion" : "1.0"
-          }
-      ]
-    SessionTimeout: '60'
-    MaxConcurrency: '50'
-    MaxRetryAttempts: '5'
 
 - task: DeleteFiles@1
   displayName: 'Remove obsolete files'
