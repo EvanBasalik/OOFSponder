@@ -10,10 +10,11 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-
+    solution: '$(solution)'
+    msbuildArgs: '/target:publish'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    
 steps:
 - task: PowerShell@2
   displayName: 'Get project version for ClickOnce'
