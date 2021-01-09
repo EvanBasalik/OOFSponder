@@ -1,0 +1,63 @@
+ # .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+- master
+
+pool: default
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'x64'
+  buildConfiguration: 'OOFSponder Release'
+  buildPath: '$(System.DefaultWorkingDirectory)\Applications\OOFScheduling\bin\$(buildPlatform)\Release'
+
+steps:
+- task: PowerShell@2
+  displayName: 'Get project version for ClickOnce'
+  inputs:
+    targetType: 'inline'
+    script: |
+      [xml]$doc = Get-Content -Path .\Applications\OOFScheduling\OOFSponder.csproj
+      $version = ([string]$doc.Project.PropertyGroup.ApplicationVersion -Replace "\.", "_").Trim()
+      $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
+      $ring = (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/')
+
+      Write-Output "##vso[task.setvariable variable=clickOnceVersion]$version"
+      Write-Output "##vso[task.setvariable variable=deploymentRing]$ring"
+
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: CmdLine@2
+  displayName: 'Mage run 1 (manifest)'
+  condition: ne(variables['deploymentRing'], 'alpha')
+  inputs:
+    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u "$(buildPath)\app.publish\Application Files\OOFSponder_$(clickOnceVersion)\OOFSponder.exe.manifest"'
+
+  displayName: 'Mage run 2 (clickonce)'
+  condition: ne(variables['deploymentRing'], 'alpha')
+  inputs:
+    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u $(buildPath)\app.publish\OOFSponder.application -appm "$(buildPath)\app.publish\Application Files\OOFSponder_$(clickOnceVersion)\OOFSponder.exe.manifest"'
+
+- task: DeleteFiles@1
+  displayName: 'Remove obsolete files'
+  inputs:
+    SourceFolder: '$(buildPath)\app.publish'
+    Contents: |
+      CodeSignSummary-*.md
+      **\CodeSignSummary-*.md
+
+- task: AzureFileCopy@4
+  inputs:
+    SourcePath: '$(buildPath)\app.publish\*'
+    azureSubscription: 'Azure Storage (OOFSponder)'
+    Destination: 'AzureBlob'
+    storage: 'casebuddy'
+    ContainerName: 'install'
+    BlobPrefix: 'x64/$(deploymentRing)'
