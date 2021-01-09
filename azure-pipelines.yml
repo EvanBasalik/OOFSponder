@@ -8,12 +8,6 @@
 
 pool:
   vmImage: 'windows-latest'
-
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'x64'
-  buildConfiguration: 'Release'
-  buildPath: '$(System.DefaultWorkingDirectory)\Applications\OOFSponder\bin\$(buildPlatform)\Release'
     
 steps:
 - task: PowerShell@2
@@ -38,13 +32,12 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: VSBuild@1
-  displayName: 'Build project'
+- task: MSBuild@1
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/target:publish'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    solution: '**/*.sln'
+    platform: 'Any CPU'
+    configuration: 'Release'
+    msbuildArguments: '/target:publish'
 
 - task: PowerShell@2
   displayName: List files and folders
