@@ -65,7 +65,7 @@ steps:
 
 - task: AzureFileCopy@4
   inputs:
-    SourcePath: '''$(buildPath)\app.publish\*'''
+    SourcePath: '$(buildPath)\app.publish\*'
     azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
     Destination: 'AzureBlob'
     storage: 'oofsponder'
