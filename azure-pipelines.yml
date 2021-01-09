@@ -68,19 +68,16 @@ steps:
     SourcePath: '$(buildPath)\app.publish\*'
     azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
     Destination: 'AzureBlob'
-    storage: 'oofsponderdeploy'
-    ContainerName: 'deploy'
-    BlobPrefix: '$(deploymentRing)'
-
-- task: AzureFileCopy@4
-  inputs:
-    SourcePath: '$(buildPath)\app.publish\*'
-    azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
-    Destination: 'AzureBlob'
     storage: 'oofsponder'
     ContainerName: 'deploy'
     BlobPrefix: '$(deploymentRing)'
-    AdditionalArgumentsForBlobCopy: '/DestSAS:******'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
+    scriptType: 'ps'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'azcopy copy SourcePath DestinationURI'
 
 
 
