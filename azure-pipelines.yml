@@ -20,7 +20,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      [xml]$doc = Get-Content -Path .\Applications\CaseBuddy\CaseBuddy.csproj
+      [xml]$doc = Get-Content -Path .\Applications\OOFSponder\OOFSponder.csproj
       $version = ([string]$doc.Project.PropertyGroup.ApplicationVersion -Replace "\.", "_").Trim()
       $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
       $ring = (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/')
