@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- main
+- master
 
 pool:
   vmImage: 'windows-latest'
@@ -15,6 +15,19 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: PowerShell@2
+  displayName: 'Get project version for ClickOnce'
+  inputs:
+    targetType: 'inline'
+    script: |
+      [xml]$doc = Get-Content -Path .\Applications\OOFScheduling\OOFSponder.csproj
+      $version = ([string]$doc.Project.PropertyGroup.ApplicationVersion -Replace "\.", "_").Trim()
+      $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
+      $ring = (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/')
+
+      Write-Output "##vso[task.setvariable variable=clickOnceVersion]$version"
+      Write-Output "##vso[task.setvariable variable=deploymentRing]$ring"
+      
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
