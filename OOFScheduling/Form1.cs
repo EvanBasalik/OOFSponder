@@ -1097,6 +1097,12 @@ namespace OOFScheduling
             bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
             OOFData.Instance.useNewOOFMath = true;
         }
+
+        private void authenticateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var AuthStateWindow = new Info_AuthState();
+            AuthStateWindow.Show();
+        }
     }
 
 

@@ -106,6 +106,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Info_AuthState.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Info_AuthState.designer.cs">
+      <DependentUpon>Info_AuthState.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="O365.cs" />
@@ -121,6 +127,9 @@
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Info_AuthState.resx">
+      <DependentUpon>Info_AuthState.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
