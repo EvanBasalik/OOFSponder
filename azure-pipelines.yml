@@ -56,13 +56,13 @@ steps:
   displayName: 'Mage run 1 (manifest)'
   condition: ne(variables['deploymentRing'], 'alpha')
   inputs:
-    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u "$(buildPath)\OOFScheduling\publish\Application Files\OOFSponder_$(clickOnceVersion)\OOFSponder.exe.manifest"'
+    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u "$(buildPath)\OOFScheduling\app.publish\Application Files\OOFSponder_$(clickOnceVersion)\OOFSponder.exe.manifest"'
 
 - task: CmdLine@2
   displayName: 'Mage run 2 (clickonce)'
   condition: ne(variables['deploymentRing'], 'alpha')
   inputs:
-    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u $(buildPath)\OOFScheduling\publish\OOFSponder.application -appm "$(buildPath)\app.publish\Application Files\OOFSponder_$(clickOnceVersion)\OOFSponder.exe.manifest"'
+    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u $(buildPath)\OOFScheduling\app.publish\OOFSponder.application -appm "$(buildPath)\app.publish\Application Files\OOFSponder_$(clickOnceVersion)\OOFSponder.exe.manifest"'
 
 - task: VSTest@2
   inputs:
