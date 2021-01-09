@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
 
 trigger:
-- master
+#- master
 
 pool:
   vmImage: 'windows-latest'
@@ -25,8 +25,8 @@ steps:
       $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
       $ring = (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/')
 
-      Write-host "clickOnceVersion = " + $env:$version
-      Write-host "Ring = " + $env:$ring
+      Write-host "clickOnceVersion = " + $version
+      Write-host "Ring = " + $ring
 
       Write-Output "##vso[task.setvariable variable=clickOnceVersion]$version"
       Write-Output "##vso[task.setvariable variable=deploymentRing]$ring"
