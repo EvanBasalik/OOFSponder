@@ -28,11 +28,6 @@ steps:
       Write-Output "##vso[task.setvariable variable=clickOnceVersion]$version"
       Write-Output "##vso[task.setvariable variable=deploymentRing]$ring"
 
-- task: CredScan@2
-  inputs:
-    toolMajorVersion: 'V2'
-    outputFormat: 'sarif'
-
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
@@ -46,49 +41,6 @@ steps:
     msbuildArgs: '/target:publish'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-
-- task: EsrpCodeSigning@1
-  displayName: 'Codesign step 1 (binaries)'
-  condition: ne(variables['deploymentRing'], 'alpha')
-  inputs:
-    ConnectedServiceName: 'codesign'
-    FolderPath: '$(buildPath)\app.publish\Application Files\CaseBuddy64_$(clickOnceVersion)'
-    Pattern: 'CaseBuddy64.exe,CaseSummary.dll,CSSVAAppLib.dll,DiagManager.dll,KWSharedUI.dll,MexBuddy.dll,MSDN.HtmlEditorControl.dll,QAMDashboard.dll,roster.dll,ServiceDeskAPI.dll,ServiceDeskUI.dll,UEXTitlerProxy.dll'
-    signConfigType: 'inlineSignParams'
-    inlineOperation: |
-      [
-        {
-          "keyCode": "CP-230012",
-          "operationSetCode": "SigntoolSign",
-          "parameters": [
-            {
-              "parameterName": "OpusName",
-              "parameterValue": "Microsoft"
-            },
-            {
-              "parameterName": "OpusInfo",
-              "parameterValue": "http://www.microsoft.com"
-            },
-            {
-              "parameterName": "PageHash",
-              "parameterValue": "/NPH"
-            },
-            {
-              "parameterName": "FileDigest",
-              "parameterValue": "/fd sha256"
-            },
-            {
-              "parameterName": "TimeStamp",
-              "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-            }
-          ],
-          "toolName": "signtool.exe",
-          "toolVersion": "6.2.9304.0"
-        }
-      ]
-    SessionTimeout: '60'
-    MaxConcurrency: '50'
-    MaxRetryAttempts: '5'
 
 - task: CmdLine@2
   displayName: 'Mage run 1 (manifest)'
