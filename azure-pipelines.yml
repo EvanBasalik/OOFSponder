@@ -11,8 +11,8 @@ pool: default
 variables:
   solution: '**/*.sln'
   buildPlatform: 'x64'
-  buildConfiguration: 'CaseBuddy Release'
-  buildPath: '$(System.DefaultWorkingDirectory)\Applications\CaseBuddy\bin\$(buildPlatform)\Release'
+  buildConfiguration: 'OOFSponder Release'
+  buildPath: '$(System.DefaultWorkingDirectory)\Applications\OOFSponder\bin\$(buildPlatform)\Release'
 
 steps:
 - task: PowerShell@2
