@@ -10,10 +10,10 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-    solution: '$(solution)'
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
     msbuildArgs: '/target:publish'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
     
 steps:
 - task: PowerShell@2
