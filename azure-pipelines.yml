@@ -1,0 +1,74 @@
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  buildPath: '$(System.DefaultWorkingDirectory)\OOFScheduling\bin\$(buildConfiguration)'
+    
+steps:
+- task: PowerShell@2
+  displayName: 'Get project version for ClickOnce'
+  inputs:
+    targetType: 'inline'
+    script: |
+      [xml]$doc = Get-Content -Path .\OOFScheduling\OOFSponder.csproj
+      $version = ([string]$doc.Project.PropertyGroup.ApplicationVersion -Replace "\.", "_").Trim()
+      $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
+      $ring = (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/')
+
+      Write-host "clickOnceVersion = $($version)"
+      Write-host "Ring = $($ring)"
+
+      Write-Output "##vso[task.setvariable variable=clickOnceVersion]$version"
+      Write-Output "##vso[task.setvariable variable=deploymentRing]$ring"
+      
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  displayName: 'Build project'
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/target:publish'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+- task: PowerShell@2
+  displayName: List files and folders
+  inputs:
+    targetType: 'inline'
+    script: 'Get-ChildItem -Recurse . | Where { ! $_.PSIsContainer } | Select FullName'
+
+#- task: CmdLine@2
+#  displayName: 'Mage run 1 (manifest)'
+#  inputs:
+#    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u "$(buildPath)\app.publish\Application Files\OOFScheduling_$(clickOnceVersion)\OOFScheduling.exe.manifest"'
+
+#- task: CmdLine@2
+#  displayName: 'Mage run 2 (clickonce)'
+#  inputs:
+#    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u $(buildPath)\app.publish\OOFScheduling.application -appm "$(buildPath)\app.publish\Application Files\OOFScheduling_$(clickOnceVersion)\OOFScheduling.exe.manifest"'
+
+- task: AzureFileCopy@4
+  displayName: 'Copy files to Free Trial oofsponder Blob storage'
+  inputs:
+    SourcePath: '$(buildPath)\app.publish\*'
+    azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
+    Destination: 'AzureBlob'
+    storage: 'oofsponder'
+    ContainerName: 'deploy'
+    BlobPrefix: '$(deploymentRing)'
+
