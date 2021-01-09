@@ -170,27 +170,10 @@ Write-Host "Updating Publish/Update/Install URLs..." -NoNewline
 
 ##Publish URL
 $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder\$Ring\"
+
 ##UpdateUrl and InstallUrl
-switch ($lcRing) {
-    { $lcRing -eq "production" }
-        {
-            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponder.blob.core.windows.net/deploy/production/"
-            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponder.blob.core.windows.net/deploy/production/"
-            break
-        }
-    { $lcRing -eq "insider" }
-        {
-            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponder.blob.core.windows.net/deploy/insider/"
-            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponder.blob.core.windows.net//deploy/insider/"
-            break
-        }
-   default  ##Default to Alpha
-        {
-            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponder.blob.core.windows.net//deploy/alpha/"
-            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponder.blob.core.windows.net//deploy/alpha/"
-            break
-        }
-    }
+$doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponder.blob.core.windows.net/deploy/$Ring/"
+$doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponder.blob.core.windows.net/deploy/$Ring/"
 
 $doc.Save($OOFSponderLocalPath)
 Write-Host -ForegroundColor Green "Deployment ring set to ""$Ring"""
