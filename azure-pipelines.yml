@@ -63,7 +63,9 @@ steps:
   inputs:
     script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u $(buildPath)\app.publish\OOFScheduling.application -appm "$(buildPath)\app.publish\Application Files\OOFScheduling_$(clickOnceVersion)\OOFScheduling.exe.manifest"'
 
-- task: AzureFileCopy@4
+- task: AzureFileCopy@
+  displayName: 'Copy Files to oofsponderdeploy Blob storage'
+  condition: ne(variables['deploymentRing'], 'alpha')
   inputs:
     SourcePath: '$(buildPath)\app.publish\*'
     azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
