@@ -20,7 +20,8 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      [xml]$doc = Get-Content -Path .\Applications\OOFScheduling\OOFSponder.csproj
+      Get-ChildItem -Recurse $pwd | Where { ! $_.PSIsContainer } | Select Name,FullName,Length
+      [xml]$doc = Get-Content -Path .\OOFScheduling\OOFSponder.csproj
       $version = ([string]$doc.Project.PropertyGroup.ApplicationVersion -Replace "\.", "_").Trim()
       $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
       $ring = (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/')
