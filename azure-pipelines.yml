@@ -50,7 +50,7 @@ steps:
   displayName: List files and folders
   inputs:
     targetType: 'inline'
-    script: 'Get-ChildItem -Recurse . | Where { ! $_.PSIsContainer } | Select Name,FullName,Length'
+    script: 'Get-ChildItem -Recurse . | Where { ! $_.PSIsContainer } | Select FullName'
 
 - task: CmdLine@2
   displayName: 'Mage run 1 (manifest)'
