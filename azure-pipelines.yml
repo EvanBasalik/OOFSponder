@@ -10,10 +10,10 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-    solution: '**/*.sln'
-    buildPlatform: 'Any CPU'
-    buildConfiguration: 'Release'
-    msbuildArgs: '/target:publish'
+  solution: '**/*.sln'
+  buildPlatform: 'x64'
+  buildConfiguration: 'CaseBuddy Release'
+  buildPath: '$(System.DefaultWorkingDirectory)\Applications\CaseBuddy\bin\$(buildPlatform)\Release'
     
 steps:
 - task: PowerShell@2
@@ -39,12 +39,15 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: VSBuild@1
+  displayName: 'Build project'
   inputs:
     solution: '$(solution)'
+    msbuildArgs: '/target:publish'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
 - task: PowerShell@2
+  displayName: List files and folders
   inputs:
     targetType: 'inline'
     script: 'Get-ChildItem -Recurse . | Where { ! $_.PSIsContainer } | Select Name,FullName,Length'
