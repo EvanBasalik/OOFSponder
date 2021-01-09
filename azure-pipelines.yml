@@ -25,8 +25,8 @@ steps:
       $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
       $ring = (Select-String '([^\/]+\/?$)' -Input $installUrl).Matches.Value.TrimEnd('/')
 
-      Write-host $env:$version
-      Write-host $env:$ring
+      Write-host "clickOnceVersion = " + $env:$version
+      Write-host "Ring = " + $env:$ring
 
       Write-Output "##vso[task.setvariable variable=clickOnceVersion]$version"
       Write-Output "##vso[task.setvariable variable=deploymentRing]$ring"
