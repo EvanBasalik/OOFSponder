@@ -29,7 +29,7 @@ steps:
       $ContainerName = 'deploy'
       $ring = '$(deploymentRing)'
 
-      $sasSecretKey=$OOFSponderDeployKey
+      $sasSecretKey=$env:sasSecretKey
       Write-Host $sasSecretKey
 
       Write-Host "Getting Storage Context..." -NoNewline
