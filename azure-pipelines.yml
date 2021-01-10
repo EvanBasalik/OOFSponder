@@ -14,6 +14,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   buildPath: '$(System.DefaultWorkingDirectory)\OOFScheduling\bin\$(buildConfiguration)'
+  sasSecretKey: $(OOFSponderDeploy Storage Account Key)
     
 steps:
 - task: PowerShell@2
@@ -84,9 +85,7 @@ steps:
       $ring = 'alpha'
       
       ##Create a storage context
-      $sasKey = '${env:OOFSPONDERDEPLOY_STORAGE_ACCOUNT_KEY}'
-      Write-Host "sasKey = $($sasKey)"
-      #$StorageContext =  $StorageAccountName -SasToken $sasToken
+      $sasKey = $sasSecretKey
       
       $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasKey
       $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
