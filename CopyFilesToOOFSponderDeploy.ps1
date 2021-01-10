@@ -1,15 +1,17 @@
-
-$localFolder = 'C:\Users\evanba\source\repos\OOFSponder-1\OOFScheduling\bin\Release\app.publish'
+#$localFolder = '$(buildPath)\app.publish\'
+$localFolder = "C:\Users\evanba\source\repos\OOFSponder-1\OOFScheduling\bin\Release\app.publish"
 $StorageAccountName = 'oofsponderdeploy'
 $ContainerName = 'deploy'
-$ring = 'alpha'
+#$ring = '$(deploymentRing)'
+$ring = "alpha"
+$sasSecretKey = "{OOFSponderDeployAccessKey}"
 
-##Create a storage context
-$sasKey = ''
-Write-Host "sasKey = $($sasKey)"
+###everything below here gets pasted into the Pipeline action
+###everthing above here shouldn't get copied
+Write-Host "Leading characters of sasSecretKey = $($sasSecretKey.Substring(0,6))"
 
 Write-Host "Getting Storage Context..." -NoNewline
-$ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasKey
+$ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
 Write-Host "Done" -ForegroundColor Green
 
 Write-Host "Getting container $($ContainerName)..." -NoNewline
@@ -26,9 +28,9 @@ if ($container) {
           $directoryName = $file.Directory.Name
           $filename = $file.Name
         
-          $blobName = $ring + "/" + $destfolder + $file.FullName.Substring($file.FullName.IndexOf($localFolder) + $localFolder.Length+1)
+          $blobName = $ring + "\" + $destfolder + $file.FullName.Substring($file.FullName.IndexOf($localFolder) + $localFolder.Length+1)
     
-          write-host "copying $directoryName\$filename to $blobName"
+          write-host "copying $directoryName\$filename to $blobName" -ForegroundColor Yellow
 
           #$Properties = @{"CacheControl" = "max-age=$maxAge"; "ContentType" = $mimeType}
           #Set-AzStorageBlobContent -File $file.FullName -Container $container.Name -Blob $blobName -Context $ctx -Force -Properties $Properties
