@@ -85,7 +85,7 @@ steps:
       $ContainerName = 'deploy'
       $ring = '$(deploymentRing)'
 
-      $sasSecretKey=$env:sasSecretKey
+      Write-Output "Leading characters of $($sasSecretKey.Substring(0,6))"
       Write-Output $sasSecretKey
 
       Write-Output "Getting Storage Context..."
