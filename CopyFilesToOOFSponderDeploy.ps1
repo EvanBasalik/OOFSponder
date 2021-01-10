@@ -5,13 +5,17 @@ $ContainerName = 'deploy'
 $ring = 'alpha'
 
 ##Create a storage context
-$sasKey = '{StorageAccountKey}'
-#$StorageContext =  $StorageAccountName -SasToken $sasToken
+$sasKey = ''
+Write-Host "sasKey = $($sasKey)"
 
+Write-Host "Getting Storage Context..." -NoNewline
 $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasKey
-$container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
+Write-Host "Done" -ForegroundColor Green
 
-$container.CloudBlobContainer.Uri.AbsoluteUri
+Write-Host "Getting container $($ContainerName)..." -NoNewline
+$container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
+Write-Host "Done" -ForegroundColor Green
+
 if ($container) {
 
         $filesToUpload = Get-ChildItem $localFolder -Recurse -File
