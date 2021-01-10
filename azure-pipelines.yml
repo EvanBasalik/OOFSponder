@@ -85,7 +85,7 @@ steps:
       
       ##Create a storage context
       $sasKey = '${env:OOFSPONDERDEPLOY_STORAGE_ACCOUNT_KEY}'
-      Write-Host "sasKey = $($sasKey)""
+      Write-Host "sasKey = $($sasKey)"
       #$StorageContext =  $StorageAccountName -SasToken $sasToken
       
       $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasKey
