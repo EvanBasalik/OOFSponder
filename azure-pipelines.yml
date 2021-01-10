@@ -74,6 +74,8 @@ steps:
 
 - task: AzurePowerShell@5
   displayName: "Copy files to EvanBaCore"
+  env:
+    sasSecretKey: $(OOFSponderDeployKey) # the recommended way to map to an env variable
   inputs:
     azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
     ScriptType: 'InlineScript'
@@ -81,17 +83,19 @@ steps:
       $localFolder = '$(buildPath)\app.publish\'
       $StorageAccountName = 'oofsponderdeploy'
       $ContainerName = 'deploy'
-      $ring = 'alpha'
-      
-      ##Create a storage context
-      $sasKey = '${env:OOFSPONDERDEPLOY_STORAGE_ACCOUNT_KEY}'
-      Write-Host "sasKey = $($sasKey)"
-      #$StorageContext =  $StorageAccountName -SasToken $sasToken
-      
-      $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasKey
+      $ring = '$(deploymentRing)'
+
+      $sasSecretKey=$env:sasSecretKey
+      Write-Output $sasSecretKey
+
+      Write-Output "Getting Storage Context..."
+      $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
+      Write-Output "Done"
+
+      Write-Output "Getting container $($ContainerName)..."
       $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-      
-      $container.CloudBlobContainer.Uri.AbsoluteUri
+      Write-Output "Done"
+
       if ($container) {
       
               $filesToUpload = Get-ChildItem $localFolder -Recurse -File
