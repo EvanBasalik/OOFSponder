@@ -85,9 +85,6 @@ steps:
       $ContainerName = 'deploy'
       $ring = '$(deploymentRing)'
 
-      Write-Output "Leading characters of $($sasSecretKey.Substring(0,6))"
-      Write-Output $sasSecretKey
-
       Write-Output "Getting Storage Context..."
       $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
       Write-Output "Done"
