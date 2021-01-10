@@ -14,7 +14,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   buildPath: '$(System.DefaultWorkingDirectory)\OOFScheduling\bin\$(buildConfiguration)'
-  sasSecretKey: $(OOFSponderDeploy Storage Account Key)
+  sasSecretKey: '$(OOFSponderDeploy Storage Account Key)'
     
 steps:
 - task: PowerShell@2
@@ -82,12 +82,11 @@ steps:
       $localFolder = '$(buildPath)\app.publish\'
       $StorageAccountName = 'oofsponderdeploy'
       $ContainerName = 'deploy'
-      $ring = 'alpha'
+      $ring = '$(deploymentRing)'
       
       ##Create a storage context
-      $sasKey = $sasSecretKey
       
-      $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasKey
+      $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
       $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
       
       $container.CloudBlobContainer.Uri.AbsoluteUri
