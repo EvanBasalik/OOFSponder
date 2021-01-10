@@ -171,9 +171,12 @@ Write-Host "Updating Publish/Update/Install URLs..." -NoNewline
 ##Publish URL
 $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder\$Ring\"
 
+##Use lowercase for the URLs
+$lcRing = $Ring.ToLower()
+
 ##UpdateUrl and InstallUrl
-$doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponder.blob.core.windows.net/deploy/$Ring/"
-$doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponder.blob.core.windows.net/deploy/$Ring/"
+$doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponder.blob.core.windows.net/deploy/$lcRing/"
+$doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponder.blob.core.windows.net/deploy/$lcRing/"
 
 $doc.Save($OOFSponderLocalPath)
 Write-Host -ForegroundColor Green "Deployment ring set to ""$Ring"""

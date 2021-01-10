@@ -28,7 +28,7 @@ if ($container) {
           $directoryName = $file.Directory.Name
           $filename = $file.Name
         
-          $blobName = $ring + "\" + $destfolder + $file.FullName.Substring($file.FullName.IndexOf($localFolder) + $localFolder.Length+1)
+          $blobName = $ring.ToLower() + "\" + $file.FullName.Substring($file.FullName.IndexOf($localFolder) + $localFolder.Length+1)
     
           write-host "copying $directoryName\$filename to $blobName" -ForegroundColor Yellow
 
