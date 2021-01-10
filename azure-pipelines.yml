@@ -17,6 +17,12 @@ variables:
   sasSecretKey: "$(OOFSponderDeployKey)"
     
 steps:
+- task: AzureKeyVault@1
+  inputs:
+    azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
+    KeyVaultName: 'KVOOFSponder'
+    SecretsFilter: 'OOFSponderDeploy'
+    RunAsPreJob: true
 
 - task: AzurePowerShell@5
   displayName: "Copy files to EvanBaCore"
@@ -29,6 +35,7 @@ steps:
       $ContainerName = 'deploy'
       $ring = '$(deploymentRing)'
 
+      $sasSecretKey=$(OOFSponderDeployKey)
       Write-Host "sasSecretKey = $($sasSecretKey)"
 
       Write-Host "Getting Storage Context..." -NoNewline
