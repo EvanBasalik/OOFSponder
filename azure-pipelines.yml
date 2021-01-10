@@ -84,16 +84,18 @@ steps:
       $StorageAccountName = 'oofsponderdeploy'
       $ContainerName = 'deploy'
       $ring = '$(deploymentRing)'
+
       $sasSecretKey=$env:sasSecretKey
-      Write-Output $sasSecretKey
-      Write-Output "Getting Storage Context..."
+      Write-Host "Leading characters of $($sasSecretKey.Substring(0,6))"
+
+      Write-Host "Getting Storage Context..." -NoNewline
       $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
-      Write-Output "Done"
-      Write-Output "Getting container $($ContainerName)..."
+      Write-Host "Done" -ForegroundColor Green
+
+      Write-Host "Getting container $($ContainerName)..." -NoNewline
       $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-      Write-Output "Done"
+      Write-Host "Done" -ForegroundColor Green
       
-      $container.CloudBlobContainer.Uri.AbsoluteUri
       if ($container) {
       
               $filesToUpload = Get-ChildItem $localFolder -Recurse -File
