@@ -14,7 +14,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   buildPath: '$(System.DefaultWorkingDirectory)\OOFScheduling\bin\$(buildConfiguration)'
-  sasSecretKey: $(OOFSponderDeploy Storage Account Key)
+  sasSecretKey: "$(OOFSponderDeployKey)"
     
 steps:
 - task: PowerShell@2
