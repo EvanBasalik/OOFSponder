@@ -14,11 +14,12 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   buildPath: '$(System.DefaultWorkingDirectory)\OOFScheduling\bin\$(buildConfiguration)'
-  sasSecretKey: $(OOFSponderDeployKey)
     
 steps:
 - task: AzurePowerShell@5
   displayName: "Copy files to EvanBaCore"
+  env:
+    sasSecretKey: $(OOFSponderDeployKey) # the recommended way to map to an env variable
   inputs:
     azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
     ScriptType: 'InlineScript'
@@ -60,7 +61,6 @@ steps:
               }
               write-host "All files in $localFolder uploaded to $($container.Name)!"
       }
-    azurePowerShellVersion: 'LatestVersion'
 
 - task: PowerShell@2
   displayName: 'Get project version for ClickOnce'
