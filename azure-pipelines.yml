@@ -86,12 +86,12 @@ steps:
       $ring = '$(deploymentRing)'
       $sasSecretKey=$env:sasSecretKey
       Write-Output $sasSecretKey
-      Write-Output "Getting Storage Context..." -NoNewline
+      Write-Output "Getting Storage Context..."
       $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
-      Write-Output "Done" -ForegroundColor Green
-      Write-Output "Getting container $($ContainerName)..." -NoNewline
+      Write-Output "Done"
+      Write-Output "Getting container $($ContainerName)..."
       $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-      Write-Output "Done" -ForegroundColor Green
+      Write-Output "Done"
       
       $container.CloudBlobContainer.Uri.AbsoluteUri
       if ($container) {
