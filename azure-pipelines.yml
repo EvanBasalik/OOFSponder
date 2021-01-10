@@ -61,6 +61,7 @@ steps:
               }
               write-host "All files in $localFolder uploaded to $($container.Name)!"
       }
+    azurePowerShellVersion: 'LatestVersion'
 
 - task: PowerShell@2
   displayName: 'Get project version for ClickOnce'
