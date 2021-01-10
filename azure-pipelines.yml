@@ -16,53 +16,6 @@ variables:
   buildPath: '$(System.DefaultWorkingDirectory)\OOFScheduling\bin\$(buildConfiguration)'
     
 steps:
-- task: AzurePowerShell@5
-  displayName: "Copy files to EvanBaCore"
-  env:
-    sasSecretKey: $(OOFSponderDeployKey) # the recommended way to map to an env variable
-  inputs:
-    azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
-    ScriptType: 'InlineScript'
-    Inline: |
-      $localFolder = '$(buildPath)\app.publish\'
-      $StorageAccountName = 'oofsponderdeploy'
-      $ContainerName = 'deploy'
-      $ring = '$(deploymentRing)'
-
-      $sasSecretKey=$env:sasSecretKey
-      Write-Output $sasSecretKey
-
-      Write-Output "Getting Storage Context..." -NoNewline
-      $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
-      Write-Output "Done" -ForegroundColor Green
-
-      Write-Output "Getting container $($ContainerName)..." -NoNewline
-      $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-      Write-Output "Done" -ForegroundColor Green
-      
-      $container.CloudBlobContainer.Uri.AbsoluteUri
-      if ($container) {
-      
-              $filesToUpload = Get-ChildItem $localFolder -Recurse -File
-      
-              foreach($file in $filesToUpload)
-              {
-                Write-Host "Processing " + $file.Name
-                $directoryName = $file.Directory.Name
-                $filename = $file.Name
-              
-                $blobName = $ring + "/" + $destfolder + $file.FullName.Substring($file.FullName.IndexOf($localFolder) + $localFolder.Length+1)
-          
-                write-host "copying $directoryName\$filename to $blobName"
-      
-                #$Properties = @{"CacheControl" = "max-age=$maxAge"; "ContentType" = $mimeType}
-                #Set-AzStorageBlobContent -File $file.FullName -Container $container.Name -Blob $blobName -Context $ctx -Force -Properties $Properties
-                Set-AzStorageBlobContent -Container $container.Name -File $file.FullName -Blob $blobName -Context $ctx -Force
-              }
-              write-host "All files in $localFolder uploaded to $($container.Name)!"
-      }
-    azurePowerShellVersion: 'LatestVersion'
-
 - task: PowerShell@2
   displayName: 'Get project version for ClickOnce'
   inputs:
@@ -121,6 +74,8 @@ steps:
 
 - task: AzurePowerShell@5
   displayName: "Copy files to EvanBaCore"
+  env:
+    sasSecretKey: $(OOFSponderDeployKey) # the recommended way to map to an env variable
   inputs:
     azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
     ScriptType: 'InlineScript'
@@ -129,13 +84,18 @@ steps:
       $StorageAccountName = 'oofsponderdeploy'
       $ContainerName = 'deploy'
       $ring = '$(deploymentRing)'
-      
-      ##Create a storage context
-      
+
+      $sasSecretKey=$env:sasSecretKey
+      Write-Output $sasSecretKey
+
+      Write-Output "Getting Storage Context..."
       $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
+      Write-Output "Done"
+
+      Write-Output "Getting container $($ContainerName)..."
       $container = Get-AzStorageContainer -Name $ContainerName -Context $ctx
-      
-      $container.CloudBlobContainer.Uri.AbsoluteUri
+      Write-Output "Done"
+
       if ($container) {
       
               $filesToUpload = Get-ChildItem $localFolder -Recurse -File
