@@ -41,7 +41,7 @@ if ($container) {
     $directoryName = $file.Directory.Name
     $filename = $file.Name
   
-    $blobName = $container.Name.ToLower() + "\" + $file.FullName.Replace($localFolder,"")
+    $blobName = $file.FullName.Replace($localFolder,"")
     Write-Host "New blob $($blobName)"
 
     write-host "copying $directoryName\$filename to $blobName" -ForegroundColor Yellow
