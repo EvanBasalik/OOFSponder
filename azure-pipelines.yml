@@ -94,7 +94,8 @@ steps:
       Write-Host "Done" -ForegroundColor Green
 
       switch ($ring) {
-        { $ring -eq "production" }  ##Special case for Production since it uses a different URL scheme
+        #Special case for Production since it uses a different URL scheme
+        { $ring -eq "production" }  
           {
             $containerName = "install"
             break
