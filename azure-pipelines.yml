@@ -62,15 +62,15 @@ steps:
 #  inputs:
 #    script: '"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\mage.exe" -u $(buildPath)\app.publish\OOFScheduling.application -appm "$(buildPath)\app.publish\Application Files\OOFScheduling_$(clickOnceVersion)\OOFScheduling.exe.manifest"'
 
-- task: AzureFileCopy@4
-  displayName: 'Copy files to Free Trial oofsponder Blob storage'
-  inputs:
-    SourcePath: '$(buildPath)\app.publish\*'
-    azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
-    Destination: 'AzureBlob'
-    storage: 'oofsponder'
-    ContainerName: 'deploy'
-    BlobPrefix: '$(deploymentRing)'
+#- task: AzureFileCopy@4
+#  displayName: 'Copy files to Free Trial oofsponder Blob storage'
+#  inputs:
+#    SourcePath: '$(buildPath)\app.publish\*'
+#    azureSubscription: 'Azure Free Trial(69b80647-f472-4a6c-b5d2-fd02dda66c77)'
+#    Destination: 'AzureBlob'
+#    storage: 'oofsponder'
+#    ContainerName: 'deploy'
+#    BlobPrefix: '$(deploymentRing)'
 
 - task: AzurePowerShell@5
   displayName: "Copy files to EvanBaCore"
