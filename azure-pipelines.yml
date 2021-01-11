@@ -104,7 +104,7 @@ steps:
           }
       default  ##Default to just using the ring name
           {
-            $containerName = $ring
+            $containerName = $ring.ToLower()
             break
           }
       }

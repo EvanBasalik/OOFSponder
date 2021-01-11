@@ -14,14 +14,15 @@ $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccou
 Write-Host "Done" -ForegroundColor Green
 
 switch ($ring) {
-  { $ring -eq "production" }  ##Special case for Production since it uses a different URL scheme
+  #Special case for Production since it uses a different URL scheme
+  { $ring -eq "production" }  
     {
       $containerName = "install"
       break
     }
  default  ##Default to just using the ring name
     {
-      $containerName = $ring
+      $containerName = $ring.ToLower()
       break
     }
 }
