@@ -175,8 +175,26 @@ $doc.Project.PropertyGroup[0].PublishUrl = "C:\Users\Public\OOFSponder\$Ring\"
 $lcRing = $Ring.ToLower()
 
 ##UpdateUrl and InstallUrl
-$doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponder.blob.core.windows.net/deploy/$lcRing/"
-$doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponder.blob.core.windows.net/deploy/$lcRing/"
+switch ($lcRing) {
+    { $lcRing -eq "production" }
+        {
+            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/install/"
+            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/install/"
+            break
+        }
+    { $lcRing -eq "insider" }
+        {
+            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/insider/"
+            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/insider/"
+            break
+        }
+   default  ##Default to Alpha
+        {
+            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/alpha/"
+            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/alpha/"
+            break
+        }
+    }
 
 $doc.Save($OOFSponderLocalPath)
 Write-Host -ForegroundColor Green "Deployment ring set to ""$Ring"""
