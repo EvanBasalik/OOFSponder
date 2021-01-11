@@ -89,8 +89,6 @@ steps:
       ##[debug]"Leading characters of $($sasSecretKey.Substring(0,6))"
       Write-Host "sasSecretKey = $($sasSecretKey.Substring(0,6))..."
 
-      Write-Host "sasSecretKey = $($sasSecretKey.Substring(0,6))..."
-
       Write-Host "Getting Storage Context..." -NoNewline
       $ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
       Write-Host "Done" -ForegroundColor Green
