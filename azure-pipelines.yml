@@ -108,7 +108,8 @@ steps:
                 $filename = $file.Name
               
                 $blobName = $ring.ToLower() + "\" + $file.FullName.Substring($file.FullName.IndexOf($localFolder) + $localFolder.Length+1)
-          
+                Write-Host $blobName
+
                 write-host "copying $directoryName\$filename to $blobName" -ForegroundColor Yellow
 
                 #$Properties = @{"CacheControl" = "max-age=$maxAge"; "ContentType" = $mimeType}
