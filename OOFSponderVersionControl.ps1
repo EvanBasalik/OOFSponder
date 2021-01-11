@@ -176,22 +176,16 @@ $lcRing = $Ring.ToLower()
 
 ##UpdateUrl and InstallUrl
 switch ($lcRing) {
-    { $lcRing -eq "production" }
+    { $lcRing -eq "production" }  ##Special case for Production since it already uses the install URL
         {
             $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/install/"
             $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/install/"
             break
         }
-    { $lcRing -eq "insider" }
+   default  ##Default to just using the ring name
         {
-            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/insider/"
-            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/insider/"
-            break
-        }
-   default  ##Default to Alpha
-        {
-            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/alpha/"
-            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/alpha/"
+            $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderdeploy.blob.core.windows.net/$lcRing/"
+            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderdeploy.blob.core.windows.net/$lcRing/"
             break
         }
     }
