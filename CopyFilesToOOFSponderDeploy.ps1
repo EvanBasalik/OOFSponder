@@ -1,10 +1,10 @@
 #$localFolder = '$(buildPath)\app.publish\'
-$localFolder = "C:\Users\evanba\source\repos\OOFSponder-1\OOFScheduling\bin\Release\app.publish"
+$localFolder = "C:\Users\evanba\source\repos\OOFSponder-1\OOFScheduling\bin\Release\app.publish\"
 $StorageAccountName = 'oofsponderdeploy'
 $ContainerName = 'deploy'
 #$ring = '$(deploymentRing)'
 $ring = "alpha"
-$sasSecretKey = "{OOFSponderDeployAccessKey}"
+$sasSecretKey = ""
 
 ###everything below here gets pasted into the Pipeline action
 ###everthing above here shouldn't get copied
@@ -24,12 +24,13 @@ if ($container) {
 
         foreach($file in $filesToUpload)
         {
-          Write-Host "Processing " + $file.Name
+          Write-Host "Processing $($file.Name)"
           $directoryName = $file.Directory.Name
           $filename = $file.Name
         
-          $blobName = $ring.ToLower() + "\" + $file.FullName.Substring($file.FullName.IndexOf($localFolder) + $localFolder.Length+1)
-    
+          $blobName = $ring.ToLower() + "\" + $file.FullName.Replace($localFolder,"")
+          Write-Host "New blob $($blobName)"
+
           write-host "copying $directoryName\$filename to $blobName" -ForegroundColor Yellow
 
           #$Properties = @{"CacheControl" = "max-age=$maxAge"; "ContentType" = $mimeType}
