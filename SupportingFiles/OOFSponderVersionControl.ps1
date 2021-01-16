@@ -31,8 +31,8 @@ param (
     [switch]$NoCommit
 )
 $supportingFiles=$pwd.ToString().replace("\SupportingFiles","")
-$OOFSponderLocalPath = "$($supportingFiles)\OOFScheduling\OOFSponder.csproj"
-[xml]$doc = Get-Content -Path $OOFSponderLocalPath
+$OOFSponderLocalPath = "$($supportingFiles)\OOFScheduling\"
+[xml]$doc = Get-Content -Path "$($OOFSponderLocalPath)\OOFSponder.csproj"
 [version]$currentVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
 [int]$currentRevision = ([string]$doc.Project.PropertyGroup.ApplicationRevision).Trim()
 $installUrl = ([string]$doc.Project.PropertyGroup.InstallUrl).Trim()
@@ -102,7 +102,7 @@ $lcRing = $Ring.ToLower()
 ##We only want to update OOFSponder's project - dependencies get modified independently
 ##Leave the logic in to grab everything in case the logic changes in the future
 Write-Host -NoNewline "Updating OOFSponder.csproj..."
-$AssemblyFiles = Get-ChildItem . *.csproj -rec
+$AssemblyFiles = Get-ChildItem -Path $OOFSponderLocalPath *.csproj -rec
 foreach ($file in $AssemblyFiles) {
     if ($file.Name -contains "OOFSponder.csproj")
     {
@@ -131,7 +131,7 @@ foreach ($file in $AssemblyFiles) {
 Write-Host -ForegroundColor Green " Done."
 
 Write-Host -NoNewline "Updating AssemblyInfo..."
-$AssemblyFiles = Get-ChildItem . AssemblyInfo.cs -rec
+$AssemblyFiles = Get-ChildItem -Path $OOFSponderLocalPath AssemblyInfo.cs -rec
 foreach ($file in $AssemblyFiles) {
     if ($file.FullName.Contains("OOFScheduling"))
     {
