@@ -38,9 +38,10 @@ namespace OOFScheduling
             // btnOK
             // 
             this.btnOK.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnOK.Location = new System.Drawing.Point(81, 184);
+            this.btnOK.Location = new System.Drawing.Point(272, 410);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(184, 23);
+            this.btnOK.Size = new System.Drawing.Size(429, 51);
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -51,9 +52,10 @@ namespace OOFScheduling
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(12, 12);
+            this.richTextBox1.Location = new System.Drawing.Point(28, 27);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(322, 166);
+            this.richTextBox1.Size = new System.Drawing.Size(911, 365);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             this.richTextBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.richTextBox1_MouseMove);
@@ -64,11 +66,12 @@ namespace OOFScheduling
             // 
             // WhatsNew
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(346, 219);
+            this.ClientSize = new System.Drawing.Size(972, 489);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.btnOK);
+            this.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.Name = "WhatsNew";
             this.Text = "What\'s New in OOFSponder";
             this.Resize += new System.EventHandler(this.WhatsNew_Resize);

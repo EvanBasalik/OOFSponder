@@ -176,22 +176,30 @@ namespace OOFScheduling
             //check and refresh token if necessary
             await O365.MSALWork(O365.AADAction.SignIn);
 
-            var httpClient = new System.Net.Http.HttpClient();
-            System.Net.Http.HttpResponseMessage response;
-            try
+            if (authResult != null)
             {
-                var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, UrlCombine(_graphAPIEndpoint, url));
-                //Add the token in Authorization header
-                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
-                response = await httpClient.SendAsync(request);
-                var content = await response.Content.ReadAsStringAsync();
-                return content;
+                var httpClient = new System.Net.Http.HttpClient();
+                System.Net.Http.HttpResponseMessage response;
+                try
+                {
+                    var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Get, UrlCombine(_graphAPIEndpoint, url));
+                    //Add the token in Authorization header
+                    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
+                    response = await httpClient.SendAsync(request);
+                    var content = await response.Content.ReadAsStringAsync();
+                    return content;
+                }
+                catch (Exception ex)
+                {
+                    OOFSponder.Logger.Error(ex);
+                    return ex.ToString();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                OOFSponder.Logger.Error(ex);
-                return ex.ToString();
+                return string.Empty;
             }
+
         }
 
         /// <summary>
