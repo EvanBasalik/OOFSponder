@@ -25,12 +25,15 @@ namespace OOFScheduling
 
             InitializeComponent();
 
+#if !DEBUG
             // Display release notes so user knows what's new
             if (ClickOnceTracker.IsFirstRun)
             {
                 WhatsNew wn = new WhatsNew(10);
                 wn.Show();
             }
+#endif
+
 
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
@@ -499,7 +502,7 @@ namespace OOFScheduling
             DateTime StartTime, EndTime;
 
             //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
-            if (!OOFData.Instance.IsOnCallModeOn | !OOFData.Instance.useNewOOFMath)
+            if (!OOFData.Instance.IsOnCallModeOn && !OOFData.Instance.useNewOOFMath)
             {
                 CalculateOOFTimes(OOFData.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
             }
@@ -1102,7 +1105,7 @@ namespace OOFScheduling
         private void bETAEnableNewOOFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
-            OOFData.Instance.useNewOOFMath = true;
+            OOFData.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
         }
     }
 
