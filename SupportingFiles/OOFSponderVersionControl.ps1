@@ -191,7 +191,7 @@ switch ($lcRing) {
         }
     }
 
-$doc.Save($OOFSponderLocalPath)
+$doc.Save("$($OOFSponderLocalPath)\OOFSponder.csproj")
 Write-Host -ForegroundColor Green "Deployment ring set to ""$Ring"""
 
 if (!$NoCommit) {
