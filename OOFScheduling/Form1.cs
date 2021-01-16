@@ -377,6 +377,13 @@ namespace OOFScheduling
             {
                 OOFSponderInsights.Track("Getting OOF settings from O365");
                 string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
+
+                if (getOOFraw == string.Empty)
+                {
+                    toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - unable to set OOF";
+                    return false;
+                }
+
                 AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
                 OOFSponderInsights.Track("Successfully got OOF settings");
 
