@@ -100,9 +100,30 @@ namespace OOFScheduling
         {
             get
             {
-                string datePart = DateTime.Now.AddDays(-1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(-1).DayOfWeek)].EndTime.ToShortTimeString();
-                DateTime _previousOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
+                string datePart=string.Empty;
+                string timePart=string.Empty;
+                DateTime _previousOOFPeriodEnd;
+
+                //if normal OOF, previous OOFPeriod is the previous day
+                //if onCallMode, then previous OOFPeriod is the last day with OOF on
+                if (IsOnCallModeOn)
+                {
+                    for (int i = 0; i < 7; i++)
+                    {
+                        if (this.OOFCollection[i].IsOOF)
+                        {
+                            datePart = this.OOFCollection[i].EndTime.ToShortDateString();
+                            timePart = this.OOFCollection[i].EndTime.ToShortTimeString();
+                        }
+                    }
+                }
+                else
+                {
+                    datePart = DateTime.Now.AddDays(-1).ToShortDateString();
+                    timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(-1).DayOfWeek)].EndTime.ToShortTimeString();
+                }
+
+                _previousOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
                 return _previousOOFPeriodEnd;
             }
         }
@@ -261,7 +282,7 @@ namespace OOFScheduling
             get
             {
                 //need to return the *actual* day and not just the day of week
-                return _startTime.EquivalentDateTime();
+                return _startTime.EquivalentDateTime(this.dayOfWeek);
             }
             set => _startTime = value;
         }
@@ -270,7 +291,7 @@ namespace OOFScheduling
             get
             {
                 //need to return the *actual* day and not just the day of week
-                return _endTime.EquivalentDateTime();
+                return _endTime.EquivalentDateTime(this.dayOfWeek);
             }
             set => _endTime = value;
         }
@@ -278,11 +299,14 @@ namespace OOFScheduling
     public static class DateTimeExtensions
     {
         //figures out the actual day from a generic day of the week
-        public static DateTime EquivalentDateTime(this DateTime dtOld)
+        public static DateTime EquivalentDateTime(this DateTime dtOld, DayOfWeek dayOfWeek)
         {
-            int num = (int)dtOld.DayOfWeek;
-            int num2 = (int)DateTime.Today.DayOfWeek;
-            return DateTime.Today.AddDays(num - num2).AddHours(dtOld.Hour).AddMinutes(dtOld.Minute);
+            int referenceDayofWeek = (int)dayOfWeek;
+            int todayDayofWeek = (int)DateTime.Today.DayOfWeek;
+            int deltaDayofWeek = referenceDayofWeek - toda;
+            if (deltaDayofWeek <0) {deltaDayofWeek += 7;} //if the day of the week is *before* today, then we are really talking about next week
+            DateTime _localDT = DateTime.Today.AddDays(deltaDayofWeek).AddHours(dtOld.Hour).AddMinutes(dtOld.Minute);
+            return _localDT;
         }
     }
 }
