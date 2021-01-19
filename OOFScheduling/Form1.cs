@@ -651,10 +651,10 @@ namespace OOFScheduling
             DateTime previousDayPeriodEnd = OOFData.Instance.previousOOFPeriodEnd;
             OOFSponder.Logger.Info("previousDayPeriodEnd = " + previousDayPeriodEnd);
 
-            DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriodStart;
+            DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriod.StartTime;
             OOFSponder.Logger.Info("nextDayPeriodState = " + nextDayPeriodStart);
 
-            DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriodEnd;
+            DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriod.EndTime;
             OOFSponder.Logger.Info("nextDayPeriodEnd =" + nextDayPeriodEnd);
 
             OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
@@ -736,9 +736,9 @@ namespace OOFScheduling
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
         }
 
-        #endregion
+#endregion
 
-        #region Events
+#region Events
         private void OnExit(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
@@ -779,7 +779,7 @@ namespace OOFScheduling
         }
 
 
-        #region WorkingDaysControls
+#region WorkingDaysControls
 
         public static System.Collections.Generic.List<Control> GetControlsOfSpecificType(Control container, Type type)
         {
@@ -916,7 +916,7 @@ namespace OOFScheduling
             //    saturdayEndTimepicker.Enabled = true;
             //}
         }
-        #endregion
+#endregion
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -932,7 +932,7 @@ namespace OOFScheduling
             System.Windows.Forms.Application.Exit();
         }
 
-        #endregion
+#endregion
 
         private async void btnPermaOOF_Click(object sender, EventArgs e)
         {

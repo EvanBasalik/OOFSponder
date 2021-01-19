@@ -1,5 +1,8 @@
-﻿using System;
+﻿using mshtml;
+using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 
 namespace OOFScheduling
 {
@@ -36,28 +39,35 @@ namespace OOFScheduling
                     _OOFCollection = new Collection<OOFInstance>();
                 }
 
-                if (_OOFCollection.Count != 7)
+                if (_OOFCollection.Count == 0)
                 {
-                    //convert the array of string objects to real objects
+                    //first, convert the array of string objects to real objects
+                    //next, continue to pattern 7 days into the future
+                    //plus, extend the pattern 7 days into the past
                     string[] workingTimes = WorkingHours.Split('|');
                     for (int i = 0; i < 7; i++)
                     {
                         string[] currentWorkingTime = workingTimes[i].Split('~');
-                        OOFInstance OOFItem = new OOFInstance();
-                        OOFItem.dayOfWeek = (DayOfWeek)i;
-                        OOFItem.StartTime = DateTime.Parse(currentWorkingTime[0]);
-                        OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
+                        OOFInstance OOFItemCurrent = new OOFInstance();
+                        OOFItemCurrent.DayOfWeek = (DayOfWeek)i;
+                        OOFItemCurrent.StartTime = DateTime.Parse(currentWorkingTime[0]).EquivalentDateTime(OOFItemCurrent.DayOfWeek);
+                        OOFItemCurrent.EndTime = DateTime.Parse(currentWorkingTime[1]).EquivalentDateTime(OOFItemCurrent.DayOfWeek);
                         if (currentWorkingTime[2] == "0")
                         {
-                            OOFItem.IsOOF = false;
+                            OOFItemCurrent.IsOOF = false;
                         }
                         else
                         {
-                            OOFItem.IsOOF = true;
+                            OOFItemCurrent.IsOOF = true;
                         }
-                        OOFItem.isOnCallModeEnabled = this.IsOnCallModeOn;
+                        OOFItemCurrent.isOnCallModeEnabled = this.IsOnCallModeOn;
 
-                        _OOFCollection.Add(OOFItem);
+                        OOFInstance OOFItemFuture = new OOFInstance(OOFItemCurrent, 7);
+                        OOFInstance OOFItemPast = new OOFInstance(OOFItemCurrent, -7);
+
+                        _OOFCollection.Add(OOFItemCurrent);
+                        _OOFCollection.Add(OOFItemPast);
+                        _OOFCollection.Add(OOFItemFuture);
                     }
                 }
 
@@ -92,7 +102,12 @@ namespace OOFScheduling
         {
             get
             {
-                return this.OOFCollection[(int)DateTime.Now.DayOfWeek];
+                //need to find the OOFInstance that matches today
+                OOFInstance _currentOOFInstance = this.OOFCollection
+                                                    .OrderBy(OOF => OOF.StartTime)
+                                                    .Where(OOF => OOF.StartTime.Date == DateTime.Now.Date)
+                                                    .First();
+                return _currentOOFInstance;
             }
         }
 
@@ -100,53 +115,26 @@ namespace OOFScheduling
         {
             get
             {
-                string datePart=string.Empty;
-                string timePart=string.Empty;
-                DateTime _previousOOFPeriodEnd;
-
-                //if normal OOF, previous OOFPeriod is the previous day
-                //if onCallMode, then previous OOFPeriod is the last day with OOF on
-                if (IsOnCallModeOn)
-                {
-                    for (int i = 0; i < 7; i++)
-                    {
-                        if (this.OOFCollection[i].IsOOF)
-                        {
-                            datePart = this.OOFCollection[i].EndTime.ToShortDateString();
-                            timePart = this.OOFCollection[i].EndTime.ToShortTimeString();
-                        }
-                    }
-                }
-                else
-                {
-                    datePart = DateTime.Now.AddDays(-1).ToShortDateString();
-                    timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(-1).DayOfWeek)].EndTime.ToShortTimeString();
-                }
-
-                _previousOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
-                return _previousOOFPeriodEnd;
+                //find the latest instance before this one
+                OOFInstance _previousOOFInstance = this.OOFCollection
+                                                    .OrderBy(OOF => OOF.StartTime)
+                                                    .Where(OOF => OOF.IsOOF)
+                                                    .Where(OOF => OOF.EndTime < currentOOFPeriod.StartTime)
+                                                    .Last();
+                return _previousOOFInstance.EndTime;
             }
         }
 
-        internal DateTime nextOOFPeriodStart
+        internal OOFInstance nextOOFPeriod
         {
             get
             {
-                string datePart = DateTime.Now.AddDays(1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].StartTime.ToShortTimeString();
-                DateTime _nextOOFPeriodStart = DateTime.Parse(datePart + " " + timePart);
-                return _nextOOFPeriodStart;
-            }
-        }
-
-        internal DateTime nextOOFPeriodEnd
-        {
-            get
-            {
-                string datePart = DateTime.Now.AddDays(1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].EndTime.ToShortTimeString();
-                DateTime _nextOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
-                return _nextOOFPeriodEnd;
+                //find the next instance after the current one
+                OOFInstance _nextOOFInstance = this.OOFCollection
+                                                    .OrderBy(OOF => OOF.StartTime)
+                                                    .Where(OOF => OOF.StartTime > currentOOFPeriod.EndTime && OOF.IsOOF)
+                                                    .First();
+                return _nextOOFInstance;
             }
         }
 
@@ -256,7 +244,7 @@ namespace OOFScheduling
     {
         private DateTime _startTime;
         private DateTime _endTime;
-        internal DayOfWeek dayOfWeek;
+        private DayOfWeek _dayofWeek;
         internal bool isOnCallModeEnabled = false;
 
         private bool _isOOF;
@@ -282,7 +270,7 @@ namespace OOFScheduling
             get
             {
                 //need to return the *actual* day and not just the day of week
-                return _startTime.EquivalentDateTime(this.dayOfWeek);
+                return _startTime;
             }
             set => _startTime = value;
         }
@@ -291,11 +279,28 @@ namespace OOFScheduling
             get
             {
                 //need to return the *actual* day and not just the day of week
-                return _endTime.EquivalentDateTime(this.dayOfWeek);
+                return _endTime;
             }
             set => _endTime = value;
         }
+
+        internal DayOfWeek DayOfWeek { get => _dayofWeek; set => _dayofWeek = value; }
+
+        internal OOFInstance()
+        {
+
+        }
+
+        internal OOFInstance (OOFInstance OOFInstance, int DaysToShift)
+        {
+            _startTime = OOFInstance.StartTime.AddDays(DaysToShift);
+            _endTime = OOFInstance.EndTime.AddDays(DaysToShift); ;
+            _dayofWeek = OOFInstance.DayOfWeek;
+            _isOOF = OOFInstance.IsOOF;
+
+        }
     }
+
     public static class DateTimeExtensions
     {
         //figures out the actual day from a generic day of the week
@@ -303,8 +308,8 @@ namespace OOFScheduling
         {
             int referenceDayofWeek = (int)dayOfWeek;
             int todayDayofWeek = (int)DateTime.Today.DayOfWeek;
-            int deltaDayofWeek = referenceDayofWeek - toda;
-            if (deltaDayofWeek <0) {deltaDayofWeek += 7;} //if the day of the week is *before* today, then we are really talking about next week
+            int deltaDayofWeek = referenceDayofWeek - todayDayofWeek;
+            //if (deltaDayofWeek <0) {deltaDayofWeek += 7;} //if the day of the week is *before* today, then we are really talking about next week
             DateTime _localDT = DateTime.Today.AddDays(deltaDayofWeek).AddHours(dtOld.Hour).AddMinutes(dtOld.Minute);
             return _localDT;
         }
