@@ -115,12 +115,25 @@ namespace OOFScheduling
         {
             get
             {
+
+                OOFInstance _previousOOFInstance = null;
+
                 //find the latest instance before this one
-                OOFInstance _previousOOFInstance = this.OOFCollection
-                                                    .OrderBy(OOF => OOF.StartTime)
-                                                    .Where(OOF => OOF.IsOOF)
-                                                    .Where(OOF => OOF.EndTime < currentOOFPeriod.StartTime)
-                                                    .Last();
+                if (IsOnCallModeOn)
+                {
+                    _previousOOFInstance = this.OOFCollection
+                                    .OrderBy(OOF => OOF.StartTime)
+                                    .Where(OOF => OOF.EndTime < currentOOFPeriod.StartTime && OOF.IsOOF)
+                                    .Last();
+                }
+                else
+                {
+                    _previousOOFInstance = this.OOFCollection
+                               .OrderBy(OOF => OOF.StartTime)
+                               .Where(OOF => OOF.EndTime < currentOOFPeriod.StartTime)
+                               .Last();
+                }
+
                 return _previousOOFInstance.EndTime;
             }
         }
@@ -129,11 +142,24 @@ namespace OOFScheduling
         {
             get
             {
+                
                 //find the next instance after the current one
-                OOFInstance _nextOOFInstance = this.OOFCollection
-                                                    .OrderBy(OOF => OOF.StartTime)
-                                                    .Where(OOF => OOF.StartTime > currentOOFPeriod.EndTime && OOF.IsOOF)
-                                                    .First();
+                OOFInstance _nextOOFInstance = null;
+                if (IsOnCallModeOn)
+                {
+                    _nextOOFInstance = this.OOFCollection
+                                           .OrderBy(OOF => OOF.StartTime)
+                                           .Where(OOF => OOF.StartTime > currentOOFPeriod.EndTime && OOF.IsOOF)
+                                           .First();
+                }
+                else
+                {
+                    _nextOOFInstance = this.OOFCollection
+                                           .OrderBy(OOF => OOF.StartTime)
+                                           .Where(OOF => OOF.StartTime > currentOOFPeriod.EndTime)
+                                           .First();
+                }
+
                 return _nextOOFInstance;
             }
         }
