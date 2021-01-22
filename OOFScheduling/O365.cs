@@ -12,10 +12,8 @@ namespace OOFScheduling
 
         private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
         private static string Tenant = "72f988bf-86f1-41af-91ab-2d7cd011db47";
-        internal static IPublicClientApplication PublicClientApp = PublicClientApplicationBuilder.Create(ClientId)
-                .WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient")
-                .WithAuthority(AzureCloudInstance.AzurePublic, Tenant)
-                .Build();
+        private static string logonUrl = "https://login.microsoftonline.com/organizations/";
+        internal static IPublicClientApplication PublicClientApp;
         internal static string AutomatedReplySettingsURL = "/mailboxSettings/automaticRepliesSetting";
         internal static string MailboxSettingsURL = "/mailboxSettings";
 
@@ -62,6 +60,12 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Attempting to enter critical section for auth code");
             await semaphoreSlim.WaitAsync();
             OOFSponder.Logger.Info("Inside critical section for auth code");
+
+            OOFSponder.Logger.Info("Attempting to build PublicClientApp with multitenant endpoint");
+            PublicClientApp = PublicClientApplicationBuilder.Create(ClientId)
+                .WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient")
+                .WithAuthority(logonUrl)
+                .Build();
 
             bool _result = false;
             var accounts = await PublicClientApp.GetAccountsAsync();
