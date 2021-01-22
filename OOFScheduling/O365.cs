@@ -144,8 +144,6 @@ namespace OOFScheduling
                     // MSAL service or client exception here is most likely down to need for UI
                     // even if it is not MsalUiRequiredException
                     {
-                        OOFSponder.Logger.Error(new Exception("GetTokenFromAAD: UI might be required for MSAL logon: ", ex));
-
                         //try
                         //{
                         //    if (!UPN.ToLower().EndsWith("@microsoft.com"))
@@ -156,7 +154,6 @@ namespace OOFScheduling
                         //}
                         //catch (Exception ex1)
                         //{
-                        OOFSponder.Logger.Error(new Exception("GetTokenFromAAD: Failed to get silent (or IWA) auth token: ", ex));
                         try
                         {
                             Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenInteractive(_scopes)
@@ -168,13 +165,15 @@ namespace OOFScheduling
                         }
                         catch (Exception ex2)
                         {
-                            OOFSponder.Logger.Error(new Exception("GetTokenFromAAD: Failed to get interactive auth token: ", ex2));
+                            string _error2 = "GetTokenFromAAD: Failed to get interactive auth token: " + ExceptionChain(ex2);
+                            OOFSponder.Logger.Error(new Exception(_error2, ex2));
                         }
                         //}
                     }
                     else
                     {
-                        OOFSponder.Logger.Error(new Exception("GetTokenFromAAD general failure: ** ", ex));
+                        string _error = "GetTokenFromAAD: UI might be required for MSAL logon: " + ExceptionChain(ex);
+                        OOFSponder.Logger.Error(new Exception(_error));
                     }
                 }
                 //}
@@ -296,6 +295,22 @@ namespace OOFScheduling
             }
             return retVal;
 
+        }
+
+        private static string ExceptionChain(Exception ex)
+        {
+            string _error = "** " + ex.GetType().ToString() + " ** " + ex.Message;
+
+            string verboseError = _error;
+            Exception inner = ex.InnerException;
+            while (inner != null)
+            {
+                verboseError += "\r\n** " + inner.GetType().ToString() + " ** " + inner.Message;
+                inner = inner.InnerException;
+            }
+
+            OOFSponder.Logger.Error(new Exception(_error, ex));
+            return _error;
         }
     }
 
