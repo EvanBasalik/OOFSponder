@@ -273,12 +273,16 @@ namespace OOFScheduling
                 request.Content = iContent;
                 //Add the token in Authorization header
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
+
+                OOFSponder.Logger.Info("Sending OOF request to O365");
                 response = await httpClient.SendAsync(request);
+                OOFSponder.Logger.Info("Got response back from O365");
 #endif
                 return response;
             }
             catch (Exception ex)
             {
+                OOFSponder.Logger.Error(new Exception("Unable to set OOF", ex));
                 throw new Exception("Unable to set OOF: " + ex.Message, ex);
             }
         }
