@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\Public\OOFSponder\Production\</PublishUrl>
+    <PublishUrl>C:\Users\Public\OOFSponder\Alpha\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -23,8 +23,8 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/install/</InstallUrl>
-    <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/install/</UpdateUrl>
+    <InstallUrl>https://oofsponderdeploy.blob.core.windows.net/alpha/</InstallUrl>
+    <UpdateUrl>https://oofsponderdeploy.blob.core.windows.net/alpha/</UpdateUrl>
     <SupportUrl>http://github.com/evanbasalik/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
     <PublisherName>Evan Basalik</PublisherName>
@@ -32,7 +32,7 @@
     <WebPage>install.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>2</ApplicationRevision>
-    <ApplicationVersion>2.1.0.2</ApplicationVersion>
+    <ApplicationVersion>2.1.0.3</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
