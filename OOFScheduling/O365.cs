@@ -242,6 +242,7 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
+                OOFSponder.Logger.Error(new Exception("Unable to set OOF", ex));
                 throw new Exception("Unable to set OOF: " + ex.Message, ex);
             }
         }
