@@ -76,12 +76,25 @@ switch ($result)
             [string]$Version = Read-Host "New Application version"
         }
         #can only specify the first two digits
-        if (!($Version -match '(^[\d]+\.[\d]+$)')) 
+        switch -Regex ($Version)
         {
-            Write-Error "Version must be in the form of x.y"
-            Exit
+            '(^[\d]+\.[\d]+\.0.[\d]+$)'
+            {
+                Write-Host "Hotfix"
+                $Version
+            } 
+            '(^[\d]+\.[\d]+$)'
+            {
+                Write-Host "Normal Production Release"
+                $Version += ".0.0"
+            } 
+            Default {
+                Write-Error "Version must be in the form of x.y (normal) or x.y.0.z (hotfix)"
+                Exit
+            }
         }
-        $Version += ".0.0"
+
+
         [version]$Version = $Version
     }
     Default
