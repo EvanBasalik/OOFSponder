@@ -388,7 +388,21 @@ namespace OOFScheduling
                 }
 
                 AutomaticRepliesSetting remoteOOF = JsonConvert.DeserializeObject<AutomaticRepliesSetting>(getOOFraw);
-                OOFSponderInsights.Track("Successfully got OOF settings");
+
+                //generalized check for an invalid grant
+                //if Status is null, we weren't able to get the OOF settings - don't care why to some extent
+                if (remoteOOF.Status == null)
+                {
+                    OOFSponder.Logger.Error("Unable to get OOF settings: " + getOOFraw);
+                    OOFSponder.Logger.Error("Hint - most common cause for the above is old OOFSponder auth flow with tenant without admin consent");
+                    toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - unable to set OOF";
+                    return false;
+                }
+                else
+                {
+                    OOFSponder.Logger.Info("Successfully got OOF settings");
+                }
+
 
                 bool externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
                 bool internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
