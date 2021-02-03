@@ -37,6 +37,11 @@ namespace OOFSponder
             WriteEntry(message, "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
         }
 
+        public static void InfoPotentialPII(string message)
+        {
+            WriteEntry(message.Substring(0,20), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+        }
+
         private static void WriteEntry(string message, string type, string module)
         {
             Trace.WriteLine(

@@ -58,7 +58,7 @@ namespace OOFScheduling
 
             OOFSponderInsights.ConfigureApplicationInsights();
 
-            OOFSponderInsights.Track("OOFSponderStart");
+            OOFSponder.Logger.Info("OOFSponderStart");
 
             //Set icon in code
             this.Icon = Properties.Resources.OOFSponderIcon;
@@ -75,6 +75,8 @@ namespace OOFScheduling
             rkApp.SetValue("OOFSponder", startPath);
             #endregion
             #region Tray Menu Initialize
+            OOFSponder.Logger.Info("Initializing tray menu");
+
             // Create a simple tray menu with only one item.
             trayMenu = new ContextMenu();
             trayMenu.MenuItems.Add("Exit", OnExit);
@@ -82,6 +84,8 @@ namespace OOFScheduling
             // Add menu to tray icon and show it.
             notifyIcon1.ContextMenu = trayMenu;
             notifyIcon1.Icon = Properties.Resources.OOFSponderIcon;
+
+            OOFSponder.Logger.Info("Done initializing tray menu");
             #endregion
             #region Read the list of teams to populate with templates
             //Read in the list of teams and build the dictionary list of team name
@@ -171,6 +175,13 @@ namespace OOFScheduling
                 && OOFData.Instance.WorkingHours != "")
             {
                 haveNecessaryData = true;
+            }
+            else
+            {
+                //we are missing data, so log the three we are checking
+                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage = " + OOFData.Instance.PrimaryOOFExternalMessage);
+                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage = " + OOFData.Instance.PrimaryOOFInternalMessage);
+                OOFSponder.Logger.InfoPotentialPII("WorkingHours = " + OOFData.Instance.WorkingHours);
             }
 
             if (haveNecessaryData)
