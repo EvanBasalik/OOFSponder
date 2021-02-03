@@ -81,6 +81,8 @@ namespace OOFScheduling
 
                 isConfigured = true;
                 OOFSponder.Logger.Info("Successfully configured ApplicationInsights");
+                OOFSponder.Logger.Info("MachineName: " + Environment.MachineName);
+                OOFSponder.Logger.Info("Version: " + OOFData.version);
             }
             catch (Exception ex)
             {
