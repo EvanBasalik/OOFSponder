@@ -71,6 +71,8 @@
             this.enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bETAEnableNewOOFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bETAEnableAlternativeBackendMethodToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label13 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -88,7 +90,6 @@
             this.radSecondary = new System.Windows.Forms.RadioButton();
             this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
-            this.bETAEnableNewOOFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -385,9 +386,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 719);
+            this.button2.Location = new System.Drawing.Point(12, 690);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(84, 23);
+            this.button2.Size = new System.Drawing.Size(122, 41);
             this.button2.TabIndex = 38;
             this.button2.Text = "Save Settings";
             this.button2.UseVisualStyleBackColor = true;
@@ -420,7 +421,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(689, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(679, 24);
             this.menuStrip1.TabIndex = 42;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -432,7 +433,8 @@
             this.enableOnCallModeToolStripMenuItem,
             this.showLogsToolStripMenuItem,
             this.exitToolStripMenuItem,
-            this.bETAEnableNewOOFToolStripMenuItem});
+            this.bETAEnableNewOOFToolStripMenuItem,
+            this.bETAEnableAlternativeBackendMethodToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -444,7 +446,7 @@
             this.primaryToolStripMenuItem,
             this.secondaryToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(231, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(299, 22);
             this.toolStripMenuItem1.Text = "Message";
             // 
             // primaryToolStripMenuItem
@@ -466,30 +468,45 @@
             // signoutToolStripMenuItem
             // 
             this.signoutToolStripMenuItem.Name = "signoutToolStripMenuItem";
-            this.signoutToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.signoutToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
             this.signoutToolStripMenuItem.Text = "Sign out";
             this.signoutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
             // enableOnCallModeToolStripMenuItem
             // 
             this.enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
-            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
             this.enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
             this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
             // 
             // showLogsToolStripMenuItem
             // 
             this.showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
-            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
             this.showLogsToolStripMenuItem.Text = "Show logs";
             this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // bETAEnableNewOOFToolStripMenuItem
+            // 
+            this.bETAEnableNewOOFToolStripMenuItem.Name = "bETAEnableNewOOFToolStripMenuItem";
+            this.bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
+            this.bETAEnableNewOOFToolStripMenuItem.Click += new System.EventHandler(this.bETAEnableNewOOFToolStripMenuItem_Click);
+            // 
+            // bETAEnableAlternativeBackendMethodToolStripMenuItem
+            // 
+            this.bETAEnableAlternativeBackendMethodToolStripMenuItem.CheckOnClick = true;
+            this.bETAEnableAlternativeBackendMethodToolStripMenuItem.Name = "bETAEnableAlternativeBackendMethodToolStripMenuItem";
+            this.bETAEnableAlternativeBackendMethodToolStripMenuItem.Size = new System.Drawing.Size(299, 22);
+            this.bETAEnableAlternativeBackendMethodToolStripMenuItem.Text = "(BETA) Enable Alternative Backend Method";
+            this.bETAEnableAlternativeBackendMethodToolStripMenuItem.Click += new System.EventHandler(this.bETAEnableAlternativeBackendMethodToolStripMenuItem_Click);
             // 
             // label13
             // 
@@ -508,9 +525,9 @@
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.lblBuild});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 747);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 719);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(689, 24);
+            this.statusStrip1.Size = new System.Drawing.Size(679, 24);
             this.statusStrip1.TabIndex = 45;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -638,7 +655,7 @@
             this.htmlEditorControl2.InnerText = null;
             this.htmlEditorControl2.Location = new System.Drawing.Point(12, 444);
             this.htmlEditorControl2.Name = "htmlEditorControl2";
-            this.htmlEditorControl2.Size = new System.Drawing.Size(667, 269);
+            this.htmlEditorControl2.Size = new System.Drawing.Size(667, 251);
             this.htmlEditorControl2.TabIndex = 39;
             // 
             // htmlEditorControl1
@@ -649,18 +666,11 @@
             this.htmlEditorControl1.Size = new System.Drawing.Size(667, 277);
             this.htmlEditorControl1.TabIndex = 31;
             // 
-            // bETAEnableNewOOFToolStripMenuItem
-            // 
-            this.bETAEnableNewOOFToolStripMenuItem.Name = "bETAEnableNewOOFToolStripMenuItem";
-            this.bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
-            this.bETAEnableNewOOFToolStripMenuItem.Click += new System.EventHandler(this.bETAEnableNewOOFToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(689, 771);
+            this.ClientSize = new System.Drawing.Size(679, 743);
             this.Controls.Add(this.dtPermaOOF);
             this.Controls.Add(this.btnPermaOOF);
             this.Controls.Add(this.passwordConfirmTB);
@@ -710,8 +720,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(705, 810);
-            this.MinimumSize = new System.Drawing.Size(705, 810);
+            this.MaximumSize = new System.Drawing.Size(695, 782);
+            this.MinimumSize = new System.Drawing.Size(585, 367);
             this.Name = "Form1";
             this.Text = "OOFSponder";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -791,6 +801,7 @@
         private System.Windows.Forms.RadioButton radSecondary;
         private System.Windows.Forms.ToolStripMenuItem showLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bETAEnableNewOOFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bETAEnableAlternativeBackendMethodToolStripMenuItem;
     }
 }
 

@@ -25,6 +25,7 @@ namespace OOFScheduling
         internal string PrimaryOOFInternalMessage { get; set; }
         internal string SecondaryOOFExternalMessage { get; set; }
         internal string SecondaryOOFInternalMessage { get; set; }
+        internal bool useAlternativeBackend { get; set; }
 
         internal Collection<OOFInstance> _OOFCollection;
         internal Collection<OOFInstance> OOFCollection
@@ -138,6 +139,7 @@ namespace OOFScheduling
         }
 
         public bool useNewOOFMath { get; internal set; }
+      
 
         private void ReadProperties()
         {
@@ -150,6 +152,7 @@ namespace OOFScheduling
             instance.SecondaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
             instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
             instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode;
+            instance.useAlternativeBackend = OOFScheduling.Properties.Settings.Default.alternativeBackend;
 
             OOFSponder.Logger.Info("Successfully read settings");
         }
@@ -183,6 +186,9 @@ namespace OOFScheduling
 
             Properties.Settings.Default.enableOnCallMode = instance.IsOnCallModeOn;
             OOFSponder.Logger.Info("Persisted enableOnCallMode = " + instance.IsOnCallModeOn.ToString());
+
+            Properties.Settings.Default.alternativeBackend = instance.useAlternativeBackend;
+            OOFSponder.Logger.Info("Persisted Alternative Backend = " + instance.IsOnCallModeOn.ToString());
 
             Properties.Settings.Default.Save();
             OOFSponder.Logger.Info("Persisted settings");

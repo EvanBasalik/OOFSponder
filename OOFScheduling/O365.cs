@@ -1,6 +1,10 @@
 ﻿using Microsoft.Identity.Client;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -201,15 +205,114 @@ namespace OOFScheduling
             }
 
         }
-
-        /// <summary>
-        /// Perform an HTTP GET request to a URL using an HTTP Authorization header
-        /// </summary>
-        /// <param name="url">The URL</param>
-        /// <param name="token">The token</param>
-        /// <returns>String containing the results of the GET operation</returns>
-        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF)
+  
+        public static async Task<int> PatchWithPowershell(Microsoft.Graph.AutomaticRepliesSetting OOF, String Tenant)
         {
+
+            string[] scopes = new string[] { "https://outlook.office365.com/AdminApi.AccessAsUser.All", "https://outlook.office365.com/FfoPowerShell.AccessAsUser.All", "https://outlook.office365.com/RemotePowerShell.AccessAsUser.All" };
+            IPublicClientApplication app;
+
+            app = PublicClientApplicationBuilder.Create("a0c73c16-a7e3-4564-9a95-2bdf47383716")
+                   .WithAuthority(AzureCloudInstance.AzurePublic, Tenant)
+                  .WithRedirectUri("urn:ietf:wg:oauth:2.0:oob")
+                  .Build();
+
+            var accounts = await app.GetAccountsAsync();
+
+            AuthenticationResult res = null;
+            if (accounts.Any())
+            {
+                res = await app.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
+                                  .ExecuteAsync();
+            }
+            else
+            {
+                try
+                {
+
+                    res = await app.AcquireTokenInteractive(scopes).ExecuteAsync();
+                    string tokenheader = "Bearer " + res.AccessToken;
+                    string connectionUri = "https://outlook.office365.com/PowerShell-LiveId?BasicAuthToOAuthConversion=true";
+
+                    SecureString secpassword = new SecureString();
+                    foreach (char c in tokenheader)
+                    {
+                        secpassword.AppendChar(c);
+                    }
+
+
+                    PSCredential credential = new PSCredential(res.Account.Username, secpassword);
+
+                    //CONNECT HTTPS POWERSHELL AUTHENTICATION POWERSHELL SESSION
+                    Runspace runspace = System.Management.Automation.Runspaces.RunspaceFactory.CreateRunspace();
+                    PowerShell powershell = PowerShell.Create();
+                    PSCommand command = new PSCommand();
+                    command.AddCommand("New-PSSession");
+                    command.AddParameter("ConfigurationName", "Microsoft.Exchange");
+                    command.AddParameter("ConnectionUri", new Uri(connectionUri));
+                    command.AddParameter("Credential", credential);
+                    command.AddParameter("Authentication", "Basic");
+                    command.AddParameter("AllowRedirection");
+                    powershell.Commands = command;
+                    runspace.Open();
+                    powershell.Runspace = runspace;
+                    Collection<System.Management.Automation.PSObject> result = powershell.Invoke();
+                    if (powershell.Streams.Error.Count > 0 || result.Count != 1)
+                    {
+
+                        return 400;
+                        //ERROR
+
+                    }
+
+                    // RUN COMMAND FOR SETTING THE OOF.
+                    powershell = PowerShell.Create();
+                    command = new PSCommand();
+                    command.AddCommand("Invoke-Command");
+                    string cmdlet = "";
+                    string[] col = res.Account.Username.Split('@');
+                    cmdlet += "Set-MailboxAutoReplyConfiguration -identity " + col[0];
+                    cmdlet += " -AutoReplyState Scheduled -StartTime \"2/9/2021 00:00:00\"";
+                    cmdlet += " -EndTime \"2/09/2021 15:00:00\"";
+                    cmdlet += " -InternalMessage \"" + OOF.InternalReplyMessage + "\"";
+                    cmdlet += " -ExternalMessage \"" + OOF.ExternalReplyMessage + "\"";
+
+
+                    command.AddParameter("ScriptBlock", System.Management.Automation.ScriptBlock.Create(cmdlet));
+                    command.AddParameter("Session", result[0]);
+                    powershell.Commands = command;
+                    powershell.Runspace = runspace;
+                    var mailBoxes = powershell.Invoke();
+                    if (powershell.Streams.Error.Count > 0)
+                    {
+                        return 400;
+                        //ERROR 
+                    }
+                    return 200;
+                   
+
+                }
+                catch (MsalException e)
+                {
+                    // Need to have logging with the already implemented logger class
+                    return 400;
+                }
+                
+
+            }
+            return 400; ;
+        }
+
+
+            /// <summary>
+            /// Perform an HTTP GET request to a URL using an HTTP Authorization header
+            /// </summary>
+            /// <param name="url">The URL</param>
+            /// <param name="token">The token</param>
+            /// <returns>String containing the results of the GET operation</returns>
+            /// 
+            public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF)
+            {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary

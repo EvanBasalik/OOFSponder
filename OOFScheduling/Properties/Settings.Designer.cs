@@ -46,6 +46,8 @@ namespace OOFScheduling.Properties {
                 this["IsPermaOOFOn"] = value;
             }
         }
+
+
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -116,6 +118,18 @@ namespace OOFScheduling.Properties {
             }
             set {
                 this["enableOnCallMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool alternativeBackend {
+            get {
+                return ((bool)(this["alternativeBackend"]));
+            }
+            set {
+                this["alternativeBackend"] = value;
             }
         }
     }

@@ -103,9 +103,12 @@ namespace OOFScheduling
 
 
             //prep for async work
-            System.Threading.Tasks.Task AuthTask = null;
-            AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
-
+           
+                System.Threading.Tasks.Task AuthTask = null;
+            if (!OOFData.Instance.useAlternativeBackend)
+            {
+                AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+            }
 #if DEBUGFLOW
             MessageBox.Show("Attach now", "OOFSponder", MessageBoxButtons.OK);
 #endif
@@ -165,7 +168,7 @@ namespace OOFScheduling
 
             bool haveNecessaryData = false;
 
-
+            bETAEnableNewOOFToolStripMenuItem.Checked = OOFData.Instance.useAlternativeBackend;
             //we need the OOF messages and working hours
             if (OOFData.Instance.PrimaryOOFExternalMessage != "" && OOFData.Instance.PrimaryOOFInternalMessage != ""
                 && OOFData.Instance.WorkingHours != "")
@@ -198,6 +201,7 @@ namespace OOFScheduling
             }
 
             //trigger a check on current status
+
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
@@ -378,6 +382,15 @@ namespace OOFScheduling
 
             try
             {
+                if (OOFData.Instance.useAlternativeBackend)
+                {
+                    MessageBox.Show("Please Select your MicrosoftSupport.com  User", "Select Tenant", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int resp = await O365.PatchWithPowershell(localOOF, "b4c546a4-7dac-46a6-a7dd-ed822a11efd3");
+                    MessageBox.Show("Please Select your Microsoft.com User", "Select Tenant", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int resp2 = await O365.PatchWithPowershell(localOOF, "72f988bf-86f1-41af-91ab-2d7cd011db47");
+                    return true;
+                }
+
                 OOFSponderInsights.Track("Getting OOF settings from O365");
                 string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
 
@@ -430,6 +443,18 @@ namespace OOFScheduling
                         )
                 {
                     OOFSponderInsights.Track("Local OOF doesn't match remote OOF");
+                    if (OOFData.Instance.useAlternativeBackend)
+                    {
+                        MessageBox.Show("Please Select your MicrosoftSupport.com  User", "Select Tenant", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        int resp = await O365.PatchWithPowershell(localOOF, "b4c546a4-7dac-46a6-a7dd-ed822a11efd3");
+                        MessageBox.Show("Please Select your Microsoft.com User", "Select Tenant", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        int resp2 = await O365.PatchWithPowershell(localOOF, "72f988bf-86f1-41af-91ab-2d7cd011db47");
+                        if (resp + resp2 == 400){
+                            UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
+                        }
+                    }
+
+                    // Original Method
                     System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
 
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
@@ -695,9 +720,9 @@ namespace OOFScheduling
             }
 
             OOFData.Instance.WorkingHours = ScheduleString();
-
+            
             OOFData.Instance.WriteProperties();
-
+           
             toolStripStatusLabel1.Text = "Settings Saved";
             OOFSponder.Logger.Info("Settings saved");
 
@@ -1120,6 +1145,20 @@ namespace OOFScheduling
         {
             bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
             OOFData.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
+        }
+
+        private void bETAEnableAlternativeBackendMethodToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!bETAEnableAlternativeBackendMethodToolStripMenuItem.Checked)
+            {
+                OOFData.Instance.useAlternativeBackend = true;
+            }
+            else
+            {
+                OOFData.Instance.useAlternativeBackend = true;
+            }
+            
+          
         }
     }
 
