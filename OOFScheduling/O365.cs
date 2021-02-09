@@ -8,6 +8,7 @@ using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace OOFScheduling
 {
@@ -205,7 +206,7 @@ namespace OOFScheduling
             }
 
         }
-  
+
         public static async Task<int> PatchWithPowershell(Microsoft.Graph.AutomaticRepliesSetting OOF, String Tenant)
         {
 
@@ -229,7 +230,6 @@ namespace OOFScheduling
             {
                 try
                 {
-
                     res = await app.AcquireTokenInteractive(scopes).ExecuteAsync();
                     string tokenheader = "Bearer " + res.AccessToken;
                     string connectionUri = "https://outlook.office365.com/PowerShell-LiveId?BasicAuthToOAuthConversion=true";
@@ -240,79 +240,54 @@ namespace OOFScheduling
                         secpassword.AppendChar(c);
                     }
 
-
                     PSCredential credential = new PSCredential(res.Account.Username, secpassword);
-
-                    //CONNECT HTTPS POWERSHELL AUTHENTICATION POWERSHELL SESSION
-                    Runspace runspace = System.Management.Automation.Runspaces.RunspaceFactory.CreateRunspace();
-                    PowerShell powershell = PowerShell.Create();
-                    PSCommand command = new PSCommand();
-                    command.AddCommand("New-PSSession");
-                    command.AddParameter("ConfigurationName", "Microsoft.Exchange");
-                    command.AddParameter("ConnectionUri", new Uri(connectionUri));
-                    command.AddParameter("Credential", credential);
-                    command.AddParameter("Authentication", "Basic");
-                    command.AddParameter("AllowRedirection");
-                    powershell.Commands = command;
-                    runspace.Open();
-                    powershell.Runspace = runspace;
-                    Collection<System.Management.Automation.PSObject> result = powershell.Invoke();
-                    if (powershell.Streams.Error.Count > 0 || result.Count != 1)
+                    WSManConnectionInfo connectionInfo = new WSManConnectionInfo(new Uri(connectionUri),
+                    "http://schemas.microsoft.com/powershell/Microsoft.Exchange", credential);
+                    connectionInfo.AuthenticationMechanism = AuthenticationMechanism.Basic;
+                    // create a runspace on a remote path
+                    // the returned instance must be of type RemoteRunspace
+                    using (Runspace runspace = System.Management.Automation.Runspaces.RunspaceFactory.CreateRunspace(connectionInfo))
                     {
-
-                        return 400;
-                        //ERROR
-
+                        runspace.Open();
+                        using (PowerShell powershell = PowerShell.Create())
+                        {
+                            powershell.Runspace = runspace;
+                            PSCommand command = new PSCommand();
+                            command.AddCommand("Set-MailboxAutoReplyConfiguration");
+                            string[] col = res.Account.Username.Split('@');
+                            command.AddParameter("identity", col[0]);
+                            command.AddParameter("AutoReplyState", "Scheduled");
+                            command.AddParameter("StartTime", OOF.ScheduledStartDateTime.DateTime);
+                            command.AddParameter("EndTime", OOF.ScheduledEndDateTime.DateTime);
+                            command.AddParameter("InternalMessage", OOF.InternalReplyMessage);
+                            command.AddParameter("ExternalMessage", OOF.ExternalReplyMessage);
+                            powershell.Commands = command;
+                            powershell.Invoke();
+                            if (!powershell.HadErrors)
+                            {
+                                return 200;
+                            }
+                        }
                     }
-
-                    // RUN COMMAND FOR SETTING THE OOF.
-                    powershell = PowerShell.Create();
-                    command = new PSCommand();
-                    command.AddCommand("Invoke-Command");
-                    string cmdlet = "";
-                    string[] col = res.Account.Username.Split('@');
-                    cmdlet += "Set-MailboxAutoReplyConfiguration -identity " + col[0];
-                    cmdlet += " -AutoReplyState Scheduled -StartTime \"2/9/2021 00:00:00\"";
-                    cmdlet += " -EndTime \"2/09/2021 15:00:00\"";
-                    cmdlet += " -InternalMessage \"" + OOF.InternalReplyMessage + "\"";
-                    cmdlet += " -ExternalMessage \"" + OOF.ExternalReplyMessage + "\"";
-
-
-                    command.AddParameter("ScriptBlock", System.Management.Automation.ScriptBlock.Create(cmdlet));
-                    command.AddParameter("Session", result[0]);
-                    powershell.Commands = command;
-                    powershell.Runspace = runspace;
-                    var mailBoxes = powershell.Invoke();
-                    if (powershell.Streams.Error.Count > 0)
-                    {
-                        return 400;
-                        //ERROR 
-                    }
-                    return 200;
-                   
-
                 }
-                catch (MsalException e)
+                catch (Exception e)
                 {
-                    // Need to have logging with the already implemented logger class
                     return 400;
                 }
-                
-
             }
             return 400; ;
         }
 
 
-            /// <summary>
-            /// Perform an HTTP GET request to a URL using an HTTP Authorization header
-            /// </summary>
-            /// <param name="url">The URL</param>
-            /// <param name="token">The token</param>
-            /// <returns>String containing the results of the GET operation</returns>
-            /// 
-            public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF)
-            {
+        /// <summary>
+        /// Perform an HTTP GET request to a URL using an HTTP Authorization header
+        /// </summary>
+        /// <param name="url">The URL</param>
+        /// <param name="token">The token</param>
+        /// <returns>String containing the results of the GET operation</returns>
+        /// 
+        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF)
+        {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //check and refresh token if necessary

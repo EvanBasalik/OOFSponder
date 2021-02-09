@@ -388,7 +388,12 @@ namespace OOFScheduling
                     int resp = await O365.PatchWithPowershell(localOOF, "b4c546a4-7dac-46a6-a7dd-ed822a11efd3");
                     MessageBox.Show("Please Select your Microsoft.com User", "Select Tenant", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     int resp2 = await O365.PatchWithPowershell(localOOF, "72f988bf-86f1-41af-91ab-2d7cd011db47");
-                    return true;
+                    if (resp + resp2 == 400)
+                    {
+                        UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
+                        return true;
+                    }
+                    return false;
                 }
 
                 OOFSponderInsights.Track("Getting OOF settings from O365");
@@ -451,7 +456,9 @@ namespace OOFScheduling
                         int resp2 = await O365.PatchWithPowershell(localOOF, "72f988bf-86f1-41af-91ab-2d7cd011db47");
                         if (resp + resp2 == 400){
                             UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
+                            return true;
                         }
+                        return false;
                     }
 
                     // Original Method
