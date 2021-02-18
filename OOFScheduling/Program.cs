@@ -65,8 +65,9 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
-                OOFSponderInsights.TrackException("Fatal error on startup", ex);
-                MessageBox.Show("Uh oh! Fatal error for OOFSponder. Please try again.");
+                OOFSponder.Logger.Error("Fatal error on startup");
+                OOFSponder.Logger.Error(ex);
+                MessageBox.Show("Uh oh! Fatal error for OOFSponder. Please review the logs for potential reasons.");
                 return;
             }
 

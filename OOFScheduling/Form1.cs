@@ -180,9 +180,9 @@ namespace OOFScheduling
             else
             {
                 //we are missing data, so log the three we are checking
-                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage = " + OOFData.Instance.PrimaryOOFExternalMessage);
-                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage = " + OOFData.Instance.PrimaryOOFInternalMessage);
-                OOFSponder.Logger.InfoPotentialPII("WorkingHours = " + OOFData.Instance.WorkingHours);
+                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
+                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
+                OOFSponder.Logger.InfoPotentialPII("WorkingHours", OOFData.Instance.WorkingHours);
             }
 
             if (haveNecessaryData)
