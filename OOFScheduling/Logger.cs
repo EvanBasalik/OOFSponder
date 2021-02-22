@@ -37,6 +37,19 @@ namespace OOFSponder
             WriteEntry(message, "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
         }
 
+        public static void InfoPotentialPII(string property, string value)
+        {
+            if (value.Length >= 21)
+            {
+                WriteEntry(property + " = " + value.Substring(0, 20), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+            }
+            else
+            {
+                WriteEntry(property + " = " + "Value too short to trim", "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+            }
+
+        }
+
         private static void WriteEntry(string message, string type, string module)
         {
             Trace.WriteLine(

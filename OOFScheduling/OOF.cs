@@ -139,6 +139,17 @@ namespace OOFScheduling
 
         public bool useNewOOFMath { get; internal set; }
 
+        private void LogProperties()
+        {
+            OOFSponder.Logger.InfoPotentialPII("PermaOOFDate", PermaOOFDate.ToString());
+            OOFSponder.Logger.InfoPotentialPII("WorkingHours", WorkingHours);
+            OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", PrimaryOOFExternalMessage);
+            OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", PrimaryOOFInternalMessage);
+            OOFSponder.Logger.InfoPotentialPII("SecondaryOOFExternalMessage", SecondaryOOFExternalMessage);
+            OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", SecondaryOOFInternalMessage);
+            OOFSponder.Logger.Info("IsOnCallModeOn: " + IsOnCallModeOn);
+        }
+
         private void ReadProperties()
         {
             OOFSponder.Logger.Info("Reading settings");
@@ -150,6 +161,8 @@ namespace OOFScheduling
             instance.SecondaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
             instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
             instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode;
+
+            LogProperties();
 
             OOFSponder.Logger.Info("Successfully read settings");
         }

@@ -33,7 +33,8 @@ namespace OOFScheduling
                 wn.Show();
             }
 #endif
-
+            //removed sign out capability now that we are using MSAL
+            this.signoutToolStripMenuItem.Visible = false;
 
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
@@ -58,7 +59,7 @@ namespace OOFScheduling
 
             OOFSponderInsights.ConfigureApplicationInsights();
 
-            OOFSponderInsights.Track("OOFSponderStart");
+            OOFSponder.Logger.Info("OOFSponderStart");
 
             //Set icon in code
             this.Icon = Properties.Resources.OOFSponderIcon;
@@ -75,6 +76,8 @@ namespace OOFScheduling
             rkApp.SetValue("OOFSponder", startPath);
             #endregion
             #region Tray Menu Initialize
+            OOFSponder.Logger.Info("Initializing tray menu");
+
             // Create a simple tray menu with only one item.
             trayMenu = new ContextMenu();
             trayMenu.MenuItems.Add("Exit", OnExit);
@@ -82,6 +85,8 @@ namespace OOFScheduling
             // Add menu to tray icon and show it.
             notifyIcon1.ContextMenu = trayMenu;
             notifyIcon1.Icon = Properties.Resources.OOFSponderIcon;
+
+            OOFSponder.Logger.Info("Done initializing tray menu");
             #endregion
             #region Read the list of teams to populate with templates
             //Read in the list of teams and build the dictionary list of team name
@@ -172,6 +177,13 @@ namespace OOFScheduling
             {
                 haveNecessaryData = true;
             }
+            else
+            {
+                //we are missing data, so log the three we are checking
+                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
+                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
+                OOFSponder.Logger.InfoPotentialPII("WorkingHours", OOFData.Instance.WorkingHours);
+            }
 
             if (haveNecessaryData)
             {
@@ -221,24 +233,24 @@ namespace OOFScheduling
 
         void signOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
-            //prep for async work
-            System.Threading.Tasks.Task AuthTask = null;
+            //OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+            ////prep for async work
+            //System.Threading.Tasks.Task AuthTask = null;
 
-            if (signoutToolStripMenuItem.Tag.ToString() == "LoggedIn")
-            {
-                AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignOut); }));
-            }
-            else
-            {
-                AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
-            }
+            //if (signoutToolStripMenuItem.Tag.ToString() == "LoggedIn")
+            //{
+            //    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignOut); }));
+            //}
+            //else
+            //{
+            //    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+            //}
 
-            //wait on async auth stuff if not null
-            if (AuthTask != null)
-            {
-                AuthTask.Wait();
-            }
+            ////wait on async auth stuff if not null
+            //if (AuthTask != null)
+            //{
+            //    AuthTask.Wait();
+            //}
         }
 
         #region Set Oof Timed Loop
@@ -275,6 +287,7 @@ namespace OOFScheduling
         private async System.Threading.Tasks.Task<bool> RunSetOofO365()
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             bool haveNecessaryData = false;
 
             //if CredMan is turned on, then we don't need the email or password
@@ -317,6 +330,24 @@ namespace OOFScheduling
                 //    OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 //    OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
                 //}
+
+                //if not logged in, give the user a chance to log in
+                if (!O365.isLoggedIn)
+                {
+                    OOFSponder.Logger.Error("Not logged in when trying to Save Settings. Giving them one more try.");
+
+                    System.Threading.Tasks.Task AuthTask = null;
+                    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+                    AuthTask.Wait(10000);
+
+                    //if still not logged in, bail
+                    if (!O365.isLoggedIn)
+                    {
+                        OOFSponder.Logger.Error("STILL not logged in, so stopping from saving");
+                        MessageBox.Show("Not logged in!. Please hit Save Settings again and log in with a valid user");
+                        return false;
+                    }
+                }
 
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
