@@ -1,4 +1,4 @@
-﻿using Microsoft.Graph;
+﻿using Microsoft.Graph.Models;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -290,8 +290,7 @@ namespace OOFScheduling
 
             bool haveNecessaryData = false;
 
-            //if CredMan is turned on, then we don't need the email or password
-            //but we still need the OOF messages and working hours
+            //we need the OOF messages and working hours
             //also, don't need to check SecondaryOOF messages for two reasons:
             //1) they won't always be set
             //2) the UI flow won't let you get here with permaOOF if they aren't set
@@ -396,7 +395,7 @@ namespace OOFScheduling
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
             //need to convert the times from local datetime to DateTimeTimeZone and UTC
-            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
+            Microsoft.Graph.Models.DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
             DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
 
             //create local OOF object
