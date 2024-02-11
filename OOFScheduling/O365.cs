@@ -264,7 +264,7 @@ namespace OOFScheduling
             {
 
 #if !NOOOF
-                Microsoft.Graph.MailboxSettings mbox = new Microsoft.Graph.MailboxSettings();
+                Microsoft.Graph.Models.MailboxSettings mbox = new Microsoft.Graph.Models.MailboxSettings();
                 mbox.AutomaticRepliesSetting = OOF;
 
                 var request = new System.Net.Http.HttpRequestMessage(method, UrlCombine(_graphAPIEndpoint, url));
