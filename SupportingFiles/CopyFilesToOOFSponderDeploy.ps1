@@ -1,8 +1,8 @@
-#$localFolder = '$(buildPath)\app.publish\'
-$localFolder = "C:\Users\evanba\source\repos\OOFSponder-1\OOFScheduling\bin\Release\app.publish\"
+$localFolder = '$(buildPath)\app.publish\'
+#$localFolder = "C:\Users\evanba\source\repos\EvanBasalik\OOFSponder\OOFScheduling\bin\Release\app.publish\"
 $StorageAccountName = 'oofsponderdeploy'
-#$ring = '$(deploymentRing)'
-$ring = "alpha"
+$ring = '$(deploymentRing)'
+#$ring = "alpha"
 $sasSecretKey = Get-Content ".\SASKey.ignore"
 
 ###everthing above here shouldn't get copied
