@@ -104,11 +104,13 @@ namespace OOFScheduling
                 accountTask.Wait(10000);
 
                 //  give UserTokenCache a go
+                OOFSponder.Logger.Info("give UserTokenCache a go");
                 IAccount account = null;
                 try { account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower()); } catch (Exception) { }
 
                 if (account != null && account.Username.ToLower() == DefaultUserUPN.ToLower())
                 {
+                    OOFSponder.Logger.Info("Found user in UserTokenCache that matches DefaultUserUPN");
                     try
                     {
                         Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenSilent(_scopes, account)
@@ -126,57 +128,51 @@ namespace OOFScheduling
                         OOFSponder.Logger.Error("AcquireTokenSilent -> " + x.GetType().ToString());
                     }
                 }
-                try
+                else  //couldn't get token silently - need to use the UI
                 {
-                    Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenInteractive(_scopes)
-                        .WithLoginHint(DefaultUserUPN)
-                        .WithPrompt(Prompt.NoPrompt)
-                        .ExecuteAsync();
-                    authUITask.Wait(10000);
-                    authResult = authUITask.Result;
-                    _result = true;
-                }
-                catch (Exception ex)
-                {
-                    if (ex is MsalUiRequiredException || ex.InnerException is MsalUiRequiredException ||
-                        ex is MsalClientException || ex.InnerException is MsalClientException ||
-                        ex is MsalServiceException || ex.InnerException is MsalServiceException)
-                    // MSAL service or client exception here is most likely down to need for UI
-                    // even if it is not MsalUiRequiredException
+                    OOFSponder.Logger.Info("couldn't get token silently - need to use the UI");
+                    try
                     {
-                        //try
-                        //{
-                        //    if (!UPN.ToLower().EndsWith("@microsoft.com"))
-                        //        throw new Exception("Skip IWA for outsourcer logon");
-                        //    Task<AuthenticationResult> authIWATask = PublicClientApp.AcquireTokenByIntegratedWindowsAuth(scopes).ExecuteAsync();
-                        //    authIWATask.Wait(10000);
-                        //    authResult = authIWATask.Result;
-                        //}
-                        //catch (Exception ex1)
-                        //{
-                        try
-                        {
-                            Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenInteractive(_scopes)
-                                .WithPrompt(Prompt.NoPrompt)
-                                .WithLoginHint(DefaultUserUPN).ExecuteAsync();
-                            authUITask.Wait(10000);
-                            authResult = authUITask.Result;
-                            _result = true;
-                        }
-                        catch (Exception ex2)
-                        {
-                            string _error2 = "GetTokenFromAAD: Failed to get interactive auth token: " + ExceptionChain(ex2);
-                            OOFSponder.Logger.Error(new Exception(_error2, ex2));
-                        }
-                        //}
+                        Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenInteractive(_scopes)
+                            .WithLoginHint(DefaultUserUPN)
+                            .WithPrompt(Prompt.NoPrompt)
+                            .ExecuteAsync();
+                        authUITask.Wait(10000);
+                        authResult = authUITask.Result;
+                        _result = true;
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        string _error = "GetTokenFromAAD: UI might be required for MSAL logon: " + ExceptionChain(ex);
-                        OOFSponder.Logger.Error(new Exception(_error));
+                        OOFSponder.Logger.Info("Got an exception when using the UI");
+                        OOFSponder.Logger.Info(ex.Message);
+                        if (ex is MsalUiRequiredException || ex.InnerException is MsalUiRequiredException ||
+                            ex is MsalClientException || ex.InnerException is MsalClientException ||
+                            ex is MsalServiceException || ex.InnerException is MsalServiceException)
+                        // MSAL service or client exception here is most likely down to need for UI
+                        // even if it is not MsalUiRequiredException
+                        {
+                            try
+                            {
+                                Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenInteractive(_scopes)
+                                    .WithPrompt(Prompt.NoPrompt)
+                                    .WithLoginHint(DefaultUserUPN).ExecuteAsync();
+                                authUITask.Wait(10000);
+                                authResult = authUITask.Result;
+                                _result = true;
+                            }
+                            catch (Exception ex2)
+                            {
+                                string _error2 = "GetTokenFromAAD: Failed to get interactive auth token: " + ExceptionChain(ex2);
+                                OOFSponder.Logger.Error(new Exception(_error2, ex2));
+                            }
+                        }
+                        else
+                        {
+                            string _error = "GetTokenFromAAD: UI might be required for MSAL logon: " + ExceptionChain(ex);
+                            OOFSponder.Logger.Error(new Exception(_error));
+                        }
                     }
                 }
-                //}
             }
             catch (Exception ex)
             {
