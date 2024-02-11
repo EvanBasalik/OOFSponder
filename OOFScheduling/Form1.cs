@@ -290,8 +290,7 @@ namespace OOFScheduling
 
             bool haveNecessaryData = false;
 
-            //if CredMan is turned on, then we don't need the email or password
-            //but we still need the OOF messages and working hours
+            //we need the OOF messages and working hours
             //also, don't need to check SecondaryOOF messages for two reasons:
             //1) they won't always be set
             //2) the UI flow won't let you get here with permaOOF if they aren't set
