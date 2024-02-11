@@ -3,7 +3,8 @@ $localFolder = '$(buildPath)\app.publish\'
 $StorageAccountName = 'oofsponderdeploy'
 $ring = '$(deploymentRing)'
 #$ring = "alpha"
-$sasSecretKey = Get-Content ".\SASKey.ignore"
+$sasSecretKey = $(OOFSponderDeployKey)
+#$sasSecretKey = Get-Content ".\SASKey.ignore"
 
 ###everthing above here shouldn't get copied
 ###everything below here gets pasted into the Pipeline action
