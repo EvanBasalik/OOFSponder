@@ -1,4 +1,4 @@
-﻿using Microsoft.Graph;
+﻿using Microsoft.Graph.Models;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -396,7 +396,7 @@ namespace OOFScheduling
             toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
 
             //need to convert the times from local datetime to DateTimeTimeZone and UTC
-            DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
+            Microsoft.Graph.Models.DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
             DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
 
             //create local OOF object

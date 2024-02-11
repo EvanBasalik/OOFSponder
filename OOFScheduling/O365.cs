@@ -245,7 +245,7 @@ namespace OOFScheduling
         /// <param name="url">The URL</param>
         /// <param name="token">The token</param>
         /// <returns>String containing the results of the GET operation</returns>
-        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF)
+        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.Models.AutomaticRepliesSetting OOF)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
