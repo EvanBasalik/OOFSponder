@@ -3,15 +3,19 @@ $localFolder = '$(buildPath)\app.publish\'
 $StorageAccountName = 'oofsponderdeploy'
 $ring = '$(deploymentRing)'
 #$ring = "alpha"
-$sasSecretKey = $(OOFSponderDeployKey)
-#$sasSecretKey = Get-Content ".\SASKey.ignore"
+
+#if running in DevOps, use the Pipeline variable. Otherwise, use the local file
+if ($TF_BUILD) 
+    {$sasSecretKey = $(OOFSponderDeployKey)} 
+else 
+    {$sasSecretKey = Get-Content ".\SASKey.ignore"}
 
 ###everthing above here shouldn't get copied
 ###everything below here gets pasted into the Pipeline action
 Write-Host "sasSecretKey = $($sasSecretKey.Substring(0,6))..."
 
 Write-Host "Getting Storage Context..." -NoNewline
-$ctx =New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
+$ctx = New-AzStorageContext -StorageAccountName $StorageAccountName -StorageAccountKey $sasSecretKey
 Write-Host "Done" -ForegroundColor Green
 
 switch ($ring) {
