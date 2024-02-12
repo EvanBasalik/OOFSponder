@@ -85,10 +85,7 @@ steps:
       $ContainerName = 'deploy'
       $ring = '$(deploymentRing)'
 
-      if ($TF_BUILD) 
-          {$sasSecretKey = $(OOFSponderDeployKey)} 
-      else 
-          {$sasSecretKey = Get-Content ".\SASKey.ignore"}
+      $sasSecretKey = $(OOFSponderDeployKey)
     
       ##[debug]"Leading characters of $($sasSecretKey.Substring(0,6))"
       Write-Host "sasSecretKey = $($sasSecretKey.Substring(0,6))..."
