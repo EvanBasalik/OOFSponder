@@ -466,27 +466,26 @@ namespace OOFScheduling
                         || !scheduledEndDateTimeEqual
                         )
                 {
-                    OOFSponderInsights.Track("Local OOF doesn't match remote OOF");
+                    OOFSponder.Logger.Info("Local OOF doesn't match remote OOF");
                     System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
 
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
 
-                        //report back to AppInsights
-                        OOFSponderInsights.Track("Successfully set OOF");
+                        OOFSponder.Logger.Info("Successfully set OOF");
                         return true;
                     }
                     else
                     {
-                        OOFSponderInsights.Track("Unable to set OOF");
+                        OOFSponder.Logger.Error("Unable to set OOF");
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
                         return false;
                     }
                 }
                 else
                 {
-                    OOFSponderInsights.Track("Remote OOF matches - no changes");
+                    OOFSponder.Logger.Info("Remote OOF matches - no changes");
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
                     return true;
                 }
@@ -495,7 +494,7 @@ namespace OOFScheduling
             {
                 notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
-                OOFSponderInsights.TrackException("Unable to set OOF: " + ex.Message, ex);
+                OOFSponder.Logger.Error("Unable to set OOF: " + ex.Message, ex);
 
                 return false;
             }
