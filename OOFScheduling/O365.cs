@@ -241,7 +241,7 @@ namespace OOFScheduling
         /// <param name="url">The URL</param>
         /// <param name="token">The token</param>
         /// <returns>String containing the results of the GET operation</returns>
-        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.Models.AutomaticRepliesSetting OOF)
+        public static async Task<System.Net.Http.HttpResponseMessage> PatchHttpContentWithToken(string url, Microsoft.Graph.AutomaticRepliesSetting OOF)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
@@ -260,7 +260,7 @@ namespace OOFScheduling
             {
 
 #if !NOOOF
-                Microsoft.Graph.Models.MailboxSettings mbox = new Microsoft.Graph.Models.MailboxSettings();
+                Microsoft.Graph.MailboxSettings mbox = new Microsoft.Graph.MailboxSettings();
                 mbox.AutomaticRepliesSetting = OOF;
 
                 var request = new System.Net.Http.HttpRequestMessage(method, UrlCombine(_graphAPIEndpoint, url));
