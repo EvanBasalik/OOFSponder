@@ -257,12 +257,19 @@ namespace OOFScheduling
         void Loopy()
         {
             OOFSponder.Logger.Info("Setting up Loopy");
-#if !FASTLOOP
+
+            //normal logic
             //Every 10 minutes for automation
             var timer = new System.Timers.Timer(600000);
-#else
-            //Every 30 seconds for testing
-            var timer = new System.Timers.Timer(30000);
+
+#if FASTLOOP
+            //Every 30 seconds for rapid testing
+            timer = new System.Timers.Timer(30000);
+#endif
+
+#if MEDIUMLOOP
+            //Every 5 min for human-based testing
+            timer = new System.Timers.Timer(300000);
 #endif
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
