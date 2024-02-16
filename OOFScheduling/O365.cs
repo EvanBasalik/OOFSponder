@@ -50,7 +50,6 @@ namespace OOFScheduling
                     if (_defaultUserUPN.Contains("\\"))
                     {
                         _defaultUserUPN = _defaultUserUPN.Split('\\').Last();
-                        _defaultUserUPN = "hi";
                     }
                 }
                 return _defaultUserUPN;
