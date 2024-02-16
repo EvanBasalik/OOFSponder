@@ -42,7 +42,17 @@ namespace OOFScheduling
             get
             {
                 if (string.IsNullOrEmpty(_defaultUserUPN))
+                {
                     _defaultUserUPN = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToLower();
+
+                    //when on a domain-joined machine, it will be in the domain\user structure
+                    //in that case, just return the user for pattern matching
+                    if (_defaultUserUPN.Contains("\\"))
+                    {
+                        _defaultUserUPN = _defaultUserUPN.Split('\\').Last();
+                        _defaultUserUPN = "hi";
+                    }
+                }
                 return _defaultUserUPN;
             }
             set
@@ -64,6 +74,7 @@ namespace OOFScheduling
                 Task<IEnumerable<IAccount>> accountTask = PublicClientApp.GetAccountsAsync();
                 accountTask.Wait(10000);
 
+                //for checking if logged in, want to do an exact match
                 IAccount account = null;
                 try { account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower()); } catch (Exception) { }
 
@@ -104,11 +115,12 @@ namespace OOFScheduling
                 accountTask.Wait(10000);
 
                 //  give UserTokenCache a go
+                //in this case, we are OK doing some pattern matching since we jsut want to find the right user in the cache
                 OOFSponder.Logger.Info("give UserTokenCache a go");
                 IAccount account = null;
-                try { account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower()); } catch (Exception) { }
+                try { account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower().Contains(DefaultUserUPN.ToLower())); } catch (Exception) { }
 
-                if (account != null && account.Username.ToLower() == DefaultUserUPN.ToLower())
+                if (account != null && account.Username.ToLower().Contains(DefaultUserUPN.ToLower()))
                 {
                     OOFSponder.Logger.Info("Found user in UserTokenCache that matches DefaultUserUPN");
                     try
@@ -128,7 +140,9 @@ namespace OOFScheduling
                         OOFSponder.Logger.Error("AcquireTokenSilent -> " + x.GetType().ToString());
                     }
                 }
-                else  //couldn't get token silently - need to use the UI
+
+                //couldn't get token silently - need to use the UI
+                if (!_result)
                 {
                     OOFSponder.Logger.Info("couldn't get token silently - need to use the UI");
                     try
@@ -173,6 +187,7 @@ namespace OOFScheduling
                         }
                     }
                 }
+
             }
             catch (Exception ex)
             {

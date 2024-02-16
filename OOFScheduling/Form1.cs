@@ -358,12 +358,8 @@ namespace OOFScheduling
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
-                    OOFSponderInsights.Track("TrySetNormalOOF");
-#if !NOOOF
+                    OOFSponder.Logger.Info("TrySetNormalOOF");
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
-#else
-                    result = true;
-#endif
                 }
                 else
                 //since permaOOF is on, need to adjust the end date such that is permaOOFDate
@@ -415,7 +411,7 @@ namespace OOFScheduling
 
             try
             {
-                OOFSponderInsights.Track("Getting OOF settings from O365");
+                OOFSponder.Logger.Info("Getting OOF settings from O365");
                 string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
 
                 if (getOOFraw == string.Empty)
