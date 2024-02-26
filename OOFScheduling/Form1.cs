@@ -381,11 +381,8 @@ namespace OOFScheduling
                     }
 
                     OOFSponderInsights.Track("TrySetPermaOOF");
-#if !NOOOF
+
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
-#else
-                    result = true;
-#endif
                 }
             }
 
@@ -463,6 +460,10 @@ namespace OOFScheduling
                         )
                 {
                     OOFSponder.Logger.Info("Local OOF doesn't match remote OOF");
+
+#if NOOOF
+                    return true;
+#endif
                     System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
 
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)

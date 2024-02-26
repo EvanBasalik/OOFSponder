@@ -113,6 +113,7 @@ namespace OOFScheduling
                 Task<IEnumerable<IAccount>> accountTask = PublicClientApp.GetAccountsAsync();
                 accountTask.Wait(10000);
 
+
                 //  give UserTokenCache a go
                 //in this case, we are OK doing some pattern matching since we jsut want to find the right user in the cache
                 OOFSponder.Logger.Info("give UserTokenCache a go");
@@ -207,6 +208,8 @@ namespace OOFScheduling
                 OOFSponder.Logger.Info("Left critical section for auth code");
             }
 
+            OOFSponderInsights.UserGUID = authResult.UniqueId;
+            OOFSponder.Logger.Info("UserGUID: " + OOFSponderInsights.UserGUID);
 
             return _result;
         }
