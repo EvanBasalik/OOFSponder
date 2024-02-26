@@ -1,14 +1,12 @@
 $localFolder = '$(buildPath)\app.publish\'
 #$localFolder = "C:\Users\evanba\source\repos\EvanBasalik\OOFSponder\OOFScheduling\bin\Release\app.publish\"
 $StorageAccountName = 'oofsponderdeploy'
-$ring = '$(deploymentRing)'
-#$ring = "alpha"
+#$ring = '$(deploymentRing)'
+$ring = "insider"
 
 #if running in DevOps, use the Pipeline variable. Otherwise, use the local file
-if ($TF_BUILD) 
-    {$sasSecretKey = $(OOFSponderDeployKey)} 
-else 
-    {$sasSecretKey = Get-Content ".\SASKey.ignore"}
+{$sasSecretKey = $(OOFSponderDeployKey)} 
+#{$sasSecretKey = Get-Content ".\SASKey.ignore"}
 
 ###everthing above here shouldn't get copied
 ###everything below here gets pasted into the Pipeline action
