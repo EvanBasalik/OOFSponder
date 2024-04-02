@@ -1,6 +1,3 @@
-# <font color="red">IMPORTANT!!!! </font>
-Effective 3/31, OOFSponder has been disabled in the MS corp tenant. Working is ongoing to reenable it, but no ETA.
-
 ## ReadMe
 
 ![Image of primary UI](https://github.com/EvanBasalik/OOFSponder/blob/master/ReadMeImages/Primary.png)
