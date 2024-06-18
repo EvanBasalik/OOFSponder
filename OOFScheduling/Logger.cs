@@ -20,6 +20,13 @@ namespace OOFSponder
             WriteEntry(ex.Message + " due to " + ex.InnerException.Message, "error", fr.GetMethod().Name + ":" + st.ToString());
         }
 
+        public static void Error(string message, Exception ex)
+        {
+            StackFrame fr = new StackFrame(1, true);
+            StackTrace st = new StackTrace(fr);
+            WriteEntry(message + ": " + ex.Message + " due to " + ex.InnerException.Message, "error", fr.GetMethod().Name + ":" + st.ToString());
+        }
+
         public static void Warning(string message)
         {
             WriteEntry(message, "warning", new System.Diagnostics.StackFrame(1).GetMethod().Name);

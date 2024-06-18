@@ -257,12 +257,19 @@ namespace OOFScheduling
         void Loopy()
         {
             OOFSponder.Logger.Info("Setting up Loopy");
-#if !FASTLOOP
+
+            //normal logic
             //Every 10 minutes for automation
             var timer = new System.Timers.Timer(600000);
-#else
-            //Every 30 seconds for testing
-            var timer = new System.Timers.Timer(30000);
+
+#if FASTLOOP
+            //Every 30 seconds for rapid testing
+            timer = new System.Timers.Timer(30000);
+#endif
+
+#if MEDIUMLOOP
+            //Every 5 min for human-based testing
+            timer = new System.Timers.Timer(300000);
 #endif
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
@@ -290,8 +297,7 @@ namespace OOFScheduling
 
             bool haveNecessaryData = false;
 
-            //if CredMan is turned on, then we don't need the email or password
-            //but we still need the OOF messages and working hours
+            //we need the OOF messages and working hours
             //also, don't need to check SecondaryOOF messages for two reasons:
             //1) they won't always be set
             //2) the UI flow won't let you get here with permaOOF if they aren't set
@@ -352,12 +358,8 @@ namespace OOFScheduling
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
-                    OOFSponderInsights.Track("TrySetNormalOOF");
-#if !NOOOF
+                    OOFSponder.Logger.Info("TrySetNormalOOF");
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
-#else
-                    result = true;
-#endif
                 }
                 else
                 //since permaOOF is on, need to adjust the end date such that is permaOOFDate
@@ -379,11 +381,8 @@ namespace OOFScheduling
                     }
 
                     OOFSponderInsights.Track("TrySetPermaOOF");
-#if !NOOOF
+
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
-#else
-                    result = true;
-#endif
                 }
             }
 
@@ -409,7 +408,7 @@ namespace OOFScheduling
 
             try
             {
-                OOFSponderInsights.Track("Getting OOF settings from O365");
+                OOFSponder.Logger.Info("Getting OOF settings from O365");
                 string getOOFraw = await O365.GetHttpContentWithToken(O365.AutomatedReplySettingsURL);
 
                 if (getOOFraw == string.Empty)
@@ -460,27 +459,30 @@ namespace OOFScheduling
                         || !scheduledEndDateTimeEqual
                         )
                 {
-                    OOFSponderInsights.Track("Local OOF doesn't match remote OOF");
+                    OOFSponder.Logger.Info("Local OOF doesn't match remote OOF");
+
+#if NOOOF
+                    return true;
+#endif
                     System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
 
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
 
-                        //report back to AppInsights
-                        OOFSponderInsights.Track("Successfully set OOF");
+                        OOFSponder.Logger.Info("Successfully set OOF");
                         return true;
                     }
                     else
                     {
-                        OOFSponderInsights.Track("Unable to set OOF");
+                        OOFSponder.Logger.Error("Unable to set OOF");
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
                         return false;
                     }
                 }
                 else
                 {
-                    OOFSponderInsights.Track("Remote OOF matches - no changes");
+                    OOFSponder.Logger.Info("Remote OOF matches - no changes");
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
                     return true;
                 }
@@ -489,7 +491,7 @@ namespace OOFScheduling
             {
                 notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
-                OOFSponderInsights.TrackException("Unable to set OOF: " + ex.Message, ex);
+                OOFSponder.Logger.Error("Unable to set OOF: " + ex.Message, ex);
 
                 return false;
             }
