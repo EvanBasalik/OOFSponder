@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PublishUrlHistory>C:\Users\Public\OOFSponder\Production\|C:\Users\Public\OOFSponder\Insider\|C:\Users\Public\OOFSponder\Alpha\|C:\Users\Public\OOFSponderInsider\|publish\</PublishUrlHistory>
     <InstallUrlHistory>https://oofsponderinstall.blob.core.windows.net/install/|https://oofsponderdeploy.blob.core.windows.net/install/|https://oofsponderdeploy.blob.core.windows.net/insider/|https://oofsponderdeploy.blob.core.windows.net/alpha/</InstallUrlHistory>
-    <SupportUrlHistory>http://codebox/oofsponder</SupportUrlHistory>
+    <SupportUrlHistory>http://github.com/evanbasalik/oofsponder|http://codebox/oofsponder</SupportUrlHistory>
     <UpdateUrlHistory>https://oofsponderinstall.blob.core.windows.net/install/|https://oofsponderinstall.blob.core.windows.net/insider/|https://oofsponderinstall.blob.core.windows.net/alpha/|https://oofsponderdeploy.blob.core.windows.net/install/|https://oofsponderdeploy.blob.core.windows.net/insider/</UpdateUrlHistory>
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
