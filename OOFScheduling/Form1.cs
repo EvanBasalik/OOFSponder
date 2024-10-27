@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Win32;
+using MSDN.Html.Editor;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -38,7 +39,6 @@ namespace OOFScheduling
             this.signoutToolStripMenuItem.Visible = false;
 
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
-            //as well as the AccessibleName
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
             foreach (var checkBox in listOfCheckBoxControls)
             {
@@ -50,22 +50,8 @@ namespace OOFScheduling
                 }
             }
 
-            //set the AccessibleName for all the start/end time pickers
-            var listofTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
-            foreach (var timePicker in listofTimePickers)
-            {
-                //day start times
-                if (timePicker.Name.Contains("StartTimepicker"))
-                {
-                    timePicker.AccessibleName = timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper() + "Start Time";
-                }
-
-                //day end times
-                if (timePicker.Name.Contains("EndTimepicker"))
-                {
-                    timePicker.AccessibleName = timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper() + "End Time";
-                }
-            }
+            //pull all the runtime accessibility work into one place
+            DoAccessibilityUIWork();
 
             #region SetBuildInfo
             foreach (Assembly a in Thread.GetDomain().GetAssemblies())
@@ -235,6 +221,44 @@ namespace OOFScheduling
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
             fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
+        }
+
+        private void DoAccessibilityUIWork()
+        {
+            //set the AccessibleName for all the start/end time pickers
+            var listofTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
+            foreach (var timePicker in listofTimePickers)
+            {
+                //day start times
+                if (timePicker.Name.Contains("StartTimepicker"))
+                {
+                    timePicker.AccessibleName = timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper() + "Start Time";
+                }
+
+                //day end times
+                if (timePicker.Name.Contains("EndTimepicker"))
+                {
+                    timePicker.AccessibleName = timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper() + "End Time";
+                }
+            }
+
+            //set the AccessibleName for all the working day checkboxes
+            var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
+            foreach (var checkBox in listOfCheckBoxControls)
+            {
+                if (checkBox.Name.Contains("OffWorkCB"))
+                {
+                    checkBox.AccessibleName = checkBox.Name.Replace("OffWorkCB", "").FirstCharToUpper() + "Off Work";
+                }
+            }
+
+            //set the AccessibleName for the OOF message controls
+            //External
+            htmlEditorControl1.AccessibleName = "Primary OOF Message";
+
+
+            //Internal
+            htmlEditorControl2.AccessibleName = "Secondary OOF Message";
         }
 
         private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
