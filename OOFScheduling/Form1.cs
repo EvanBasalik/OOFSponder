@@ -1047,8 +1047,8 @@ namespace OOFScheduling
 
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
-            lblExternalMesage.Text = "Extended OOF External Message";
-            lblInternalMessage.Text = "Extended OOF Internal Message";
+            lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Extended OOF External Message";
+            lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Extended OOF Internal Message";
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
@@ -1095,8 +1095,9 @@ namespace OOFScheduling
 
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
-            lblExternalMesage.Text = "Primary External Message";
-            lblInternalMessage.Text = "Primary Internal Message";
+
+            lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Primary OOF External Message";
+            lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Primary OOF Internal Message";
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
