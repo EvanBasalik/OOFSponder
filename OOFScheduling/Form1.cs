@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -37,12 +38,32 @@ namespace OOFScheduling
             this.signoutToolStripMenuItem.Visible = false;
 
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
+            //as well as the AccessibleName
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
             foreach (var checkBox in listOfCheckBoxControls)
             {
                 if (checkBox.Name.Contains("OffWorkCB"))
                 {
                     ((CheckBox)checkBox).CheckedChanged += OffWorkCB_CheckedChanged;
+
+                    checkBox.AccessibleName = checkBox.Name.Replace("OffWorkCB", "").FirstCharToUpper() + "Off Work";
+                }
+            }
+
+            //set the AccessibleName for all the start/end time pickers
+            var listofTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
+            foreach (var timePicker in listofTimePickers)
+            {
+                //day start times
+                if (timePicker.Name.Contains("StartTimepicker"))
+                {
+                    timePicker.AccessibleName = timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper() + "Start Time";
+                }
+
+                //day end times
+                if (timePicker.Name.Contains("EndTimepicker"))
+                {
+                    timePicker.AccessibleName = timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper() + "End Time";
                 }
             }
 
@@ -1162,6 +1183,19 @@ namespace OOFScheduling
         internal static string CleanReplyMessage(this string input)
         {
             return Regex.Replace(input, @"\r\n|\n\r|\n|\r", "\r\n");
+        }
+    }
+
+    public static class StringExtensions
+    {
+        internal static string FirstCharToUpper(this string input)
+        {
+            switch (input)
+            {
+                case null: throw new ArgumentNullException(nameof(input));
+                case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
+                default: return input[0].ToString().ToUpper() + input.Substring(1);
+            }
         }
     }
 }
