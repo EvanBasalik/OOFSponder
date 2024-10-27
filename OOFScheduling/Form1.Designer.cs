@@ -183,7 +183,7 @@
             this.mondayStartTimepicker.Name = "mondayStartTimepicker";
             this.mondayStartTimepicker.ShowUpDown = true;
             this.mondayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.mondayStartTimepicker.TabIndex = 8;
+            this.mondayStartTimepicker.TabIndex = 10;
             this.mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // tuesdayStartTimepicker
@@ -193,7 +193,7 @@
             this.tuesdayStartTimepicker.Name = "tuesdayStartTimepicker";
             this.tuesdayStartTimepicker.ShowUpDown = true;
             this.tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.tuesdayStartTimepicker.TabIndex = 9;
+            this.tuesdayStartTimepicker.TabIndex = 13;
             this.tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // wednesdayStartTimepicker
@@ -203,7 +203,7 @@
             this.wednesdayStartTimepicker.Name = "wednesdayStartTimepicker";
             this.wednesdayStartTimepicker.ShowUpDown = true;
             this.wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.wednesdayStartTimepicker.TabIndex = 10;
+            this.wednesdayStartTimepicker.TabIndex = 16;
             this.wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // thursdayStartTimepicker
@@ -213,7 +213,7 @@
             this.thursdayStartTimepicker.Name = "thursdayStartTimepicker";
             this.thursdayStartTimepicker.ShowUpDown = true;
             this.thursdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.thursdayStartTimepicker.TabIndex = 11;
+            this.thursdayStartTimepicker.TabIndex = 19;
             this.thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // fridayStartTimepicker
@@ -223,7 +223,7 @@
             this.fridayStartTimepicker.Name = "fridayStartTimepicker";
             this.fridayStartTimepicker.ShowUpDown = true;
             this.fridayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.fridayStartTimepicker.TabIndex = 12;
+            this.fridayStartTimepicker.TabIndex = 22;
             this.fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // saturdayStartTimepicker
@@ -233,7 +233,7 @@
             this.saturdayStartTimepicker.Name = "saturdayStartTimepicker";
             this.saturdayStartTimepicker.ShowUpDown = true;
             this.saturdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.saturdayStartTimepicker.TabIndex = 13;
+            this.saturdayStartTimepicker.TabIndex = 25;
             this.saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // saturdayEndTimepicker
@@ -243,7 +243,7 @@
             this.saturdayEndTimepicker.Name = "saturdayEndTimepicker";
             this.saturdayEndTimepicker.ShowUpDown = true;
             this.saturdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.saturdayEndTimepicker.TabIndex = 20;
+            this.saturdayEndTimepicker.TabIndex = 26;
             this.saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // fridayEndTimepicker
@@ -253,7 +253,7 @@
             this.fridayEndTimepicker.Name = "fridayEndTimepicker";
             this.fridayEndTimepicker.ShowUpDown = true;
             this.fridayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.fridayEndTimepicker.TabIndex = 19;
+            this.fridayEndTimepicker.TabIndex = 23;
             this.fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // thursdayEndTimepicker
@@ -263,7 +263,7 @@
             this.thursdayEndTimepicker.Name = "thursdayEndTimepicker";
             this.thursdayEndTimepicker.ShowUpDown = true;
             this.thursdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.thursdayEndTimepicker.TabIndex = 18;
+            this.thursdayEndTimepicker.TabIndex = 20;
             this.thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // wednesdayEndTimepicker
@@ -283,7 +283,7 @@
             this.tuesdayEndTimepicker.Name = "tuesdayEndTimepicker";
             this.tuesdayEndTimepicker.ShowUpDown = true;
             this.tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.tuesdayEndTimepicker.TabIndex = 16;
+            this.tuesdayEndTimepicker.TabIndex = 14;
             this.tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // mondayEndTimepicker
@@ -293,7 +293,7 @@
             this.mondayEndTimepicker.Name = "mondayEndTimepicker";
             this.mondayEndTimepicker.ShowUpDown = true;
             this.mondayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.mondayEndTimepicker.TabIndex = 15;
+            this.mondayEndTimepicker.TabIndex = 11;
             this.mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // sundayEndTimepicker
@@ -303,7 +303,7 @@
             this.sundayEndTimepicker.Name = "sundayEndTimepicker";
             this.sundayEndTimepicker.ShowUpDown = true;
             this.sundayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.sundayEndTimepicker.TabIndex = 14;
+            this.sundayEndTimepicker.TabIndex = 8;
             this.sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // sundayOffWorkCB
@@ -312,7 +312,7 @@
             this.sundayOffWorkCB.Location = new System.Drawing.Point(15, 107);
             this.sundayOffWorkCB.Name = "sundayOffWorkCB";
             this.sundayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.sundayOffWorkCB.TabIndex = 21;
+            this.sundayOffWorkCB.TabIndex = 9;
             this.sundayOffWorkCB.Text = "Off Work";
             this.sundayOffWorkCB.UseVisualStyleBackColor = true;
             this.sundayOffWorkCB.CheckedChanged += new System.EventHandler(this.sundayOffWorkCB_CheckedChanged);
@@ -323,7 +323,7 @@
             this.mondayOffWorkCB.Location = new System.Drawing.Point(111, 107);
             this.mondayOffWorkCB.Name = "mondayOffWorkCB";
             this.mondayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.mondayOffWorkCB.TabIndex = 22;
+            this.mondayOffWorkCB.TabIndex = 12;
             this.mondayOffWorkCB.Text = "Off Work";
             this.mondayOffWorkCB.UseVisualStyleBackColor = true;
             this.mondayOffWorkCB.CheckedChanged += new System.EventHandler(this.mondayOffWorkCB_CheckedChanged);
@@ -334,7 +334,7 @@
             this.tuesdayOffWorkCB.Location = new System.Drawing.Point(207, 107);
             this.tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
             this.tuesdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.tuesdayOffWorkCB.TabIndex = 23;
+            this.tuesdayOffWorkCB.TabIndex = 15;
             this.tuesdayOffWorkCB.Text = "Off Work";
             this.tuesdayOffWorkCB.UseVisualStyleBackColor = true;
             this.tuesdayOffWorkCB.CheckedChanged += new System.EventHandler(this.tuesdayOffWorkCB_CheckedChanged);
@@ -345,7 +345,7 @@
             this.wednesdayOffWorkCB.Location = new System.Drawing.Point(303, 107);
             this.wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
             this.wednesdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.wednesdayOffWorkCB.TabIndex = 24;
+            this.wednesdayOffWorkCB.TabIndex = 18;
             this.wednesdayOffWorkCB.Text = "Off Work";
             this.wednesdayOffWorkCB.UseVisualStyleBackColor = true;
             this.wednesdayOffWorkCB.CheckedChanged += new System.EventHandler(this.wednesdayOffWorkCB_CheckedChanged);
@@ -356,7 +356,7 @@
             this.thursdayOffWorkCB.Location = new System.Drawing.Point(399, 107);
             this.thursdayOffWorkCB.Name = "thursdayOffWorkCB";
             this.thursdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.thursdayOffWorkCB.TabIndex = 25;
+            this.thursdayOffWorkCB.TabIndex = 21;
             this.thursdayOffWorkCB.Text = "Off Work";
             this.thursdayOffWorkCB.UseVisualStyleBackColor = true;
             this.thursdayOffWorkCB.CheckedChanged += new System.EventHandler(this.thursdayOffWorkCB_CheckedChanged);
@@ -367,7 +367,7 @@
             this.fridayOffWorkCB.Location = new System.Drawing.Point(495, 107);
             this.fridayOffWorkCB.Name = "fridayOffWorkCB";
             this.fridayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.fridayOffWorkCB.TabIndex = 26;
+            this.fridayOffWorkCB.TabIndex = 24;
             this.fridayOffWorkCB.Text = "Off Work";
             this.fridayOffWorkCB.UseVisualStyleBackColor = true;
             this.fridayOffWorkCB.CheckedChanged += new System.EventHandler(this.fridayOffWorkCB_CheckedChanged);
