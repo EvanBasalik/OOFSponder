@@ -232,13 +232,13 @@ namespace OOFScheduling
                 //day start times
                 if (timePicker.Name.Contains("StartTimepicker"))
                 {
-                    timePicker.AccessibleName = timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper() + "Start Time";
+                    timePicker.AccessibleName = "Enter your Start Time for " + timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper();
                 }
 
                 //day end times
                 if (timePicker.Name.Contains("EndTimepicker"))
                 {
-                    timePicker.AccessibleName = timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper() + "End Time";
+                    timePicker.AccessibleName = "Enter your End Time for " + timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper();
                 }
             }
 
@@ -248,7 +248,7 @@ namespace OOFScheduling
             {
                 if (checkBox.Name.Contains("OffWorkCB"))
                 {
-                    checkBox.AccessibleName = checkBox.Name.Replace("OffWorkCB", "").FirstCharToUpper() + "Off Work";
+                    checkBox.AccessibleName = "Check if you are off work on " + checkBox.Name.Replace("OffWorkCB", "").FirstCharToUpper();
                 }
             }
 
