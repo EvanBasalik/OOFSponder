@@ -449,9 +449,9 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(231, 22);
             this.toolStripMenuItem1.Text = "Message";
-            this.toolStripMenuItem1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.toolStripMenuItem1.AccessibleName = "Message selection";
-            this.toolStripMenuItem1.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
+            this.toolStripMenuItem1.AccessibleDefaultActionDescription = "Sets the OOF message to the primary or secondary";
+            this.toolStripMenuItem1.AccessibleName = "Message selection" + " " + "1 of 5";
+            this.toolStripMenuItem1.AccessibleDescription = "A menu item with text 'Message'";
             // 
             // primaryToolStripMenuItem
             // 
@@ -462,8 +462,9 @@
             this.primaryToolStripMenuItem.Text = "Primary";
             this.primaryToolStripMenuItem.Click += new System.EventHandler(this.primaryToolStripMenuItem_Click);
             this.primaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.primaryToolStripMenuItem.AccessibleName = "Primary message";
-            this.primaryToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
+            this.primaryToolStripMenuItem.AccessibleDefaultActionDescription = "Sets the OOF message to the primary message";
+            this.primaryToolStripMenuItem.AccessibleName = "Primary message" + " " + "1 of 2";
+            this.primaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Primary'";
             // 
             // secondaryToolStripMenuItem
             // 
@@ -472,8 +473,9 @@
             this.secondaryToolStripMenuItem.Text = "Secondary";
             this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
             this.secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.secondaryToolStripMenuItem.AccessibleName = "Secondary message";
-            this.secondaryToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
+            this.secondaryToolStripMenuItem.AccessibleDefaultActionDescription = "Sets the OOF message to the secondary message";
+            this.secondaryToolStripMenuItem.AccessibleName = "Secondary message" + " " + "2 of 2";
+            this.secondaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Secondary'";
             // 
             // signoutToolStripMenuItem
             // 
@@ -482,8 +484,9 @@
             this.signoutToolStripMenuItem.Text = "Sign out";
             this.signoutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             this.signoutToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.signoutToolStripMenuItem.AccessibleName = "Sign out";
-            this.signoutToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
+            this.signoutToolStripMenuItem.AccessibleDefaultActionDescription = "Signs you out";
+            this.signoutToolStripMenuItem.AccessibleName = "Sign out" + " " + "2 of 5";
+            this.signoutToolStripMenuItem.AccessibleDescription = "A menu item with text 'Sign out'";
 
             // 
             // enableOnCallModeToolStripMenuItem
@@ -493,8 +496,9 @@
             this.enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
             this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
             this.enableOnCallModeToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode";
-            this.enableOnCallModeToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
+            this.enableOnCallModeToolStripMenuItem.AccessibleDefaultActionDescription = "Enables on-call mode";
+            this.enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode" + " " + "3 of 5";
+            this.enableOnCallModeToolStripMenuItem.AccessibleDescription = "A menu item with text '(BETA) Enable On-Call Mode'";
             // 
             // showLogsToolStripMenuItem
             // 
@@ -503,8 +507,9 @@
             this.showLogsToolStripMenuItem.Text = "Show logs";
             this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
             this.showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.showLogsToolStripMenuItem.AccessibleName = "Show logs";
-            this.showLogsToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
+            this.showLogsToolStripMenuItem.AccessibleDefaultActionDescription = "Open the folder containing the log file";
+            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text + " " + "4 of 5";
+            this.showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text '" + this.showLogsToolStripMenuItem.Text + "'";
             // 
             // exitToolStripMenuItem
             // 
@@ -512,10 +517,10 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            this.exitToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.exitToolStripMenuItem.AccessibleName = "Exit menu";
-            this.exitToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
-
+            this.showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.showLogsToolStripMenuItem.AccessibleDefaultActionDescription = "Exit";
+            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text + " " + "5 of 5";
+            this.showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text '" + this.showLogsToolStripMenuItem.Text + "'";
             // 
             // label13
             // 
