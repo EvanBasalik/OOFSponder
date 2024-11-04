@@ -111,6 +111,9 @@
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Sunday";
+            this.label1.AccessibleName = this.label1.Text + " working hours";
+            this.label1.AccessibleDescription = "A label with the text " + this.label1.Text;
+
             // 
             // label2
             // 
@@ -120,6 +123,8 @@
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Monday";
+            this.label2.AccessibleName = this.label2.Text + " working hours";
+            this.label2.AccessibleDescription = "A label with the text " + this.label2.Text;
             // 
             // label3
             // 
@@ -129,6 +134,8 @@
             this.label3.Size = new System.Drawing.Size(48, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Tuesday";
+            this.label3.AccessibleName = this.label3.Text + " working hours";
+            this.label3.AccessibleDescription = "A label with the text " + this.label3.Text;
             // 
             // label4
             // 
@@ -138,6 +145,8 @@
             this.label4.Size = new System.Drawing.Size(64, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Wednesday";
+            this.label4.AccessibleName = this.label4.Text + " working hours";
+            this.label4.AccessibleDescription = "A label with the text " + this.label4.Text;
             // 
             // label5
             // 
@@ -147,6 +156,8 @@
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Thursday";
+            this.label5.AccessibleName = this.label5.Text + " working hours";
+            this.label5.AccessibleDescription = "A label with the text " + this.label5.Text;
             // 
             // label6
             // 
@@ -156,6 +167,8 @@
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "Friday";
+            this.label6.AccessibleName = this.label6.Text + " working hours";
+            this.label6.AccessibleDescription = "A label with the text " + this.label6.Text;
             // 
             // label7
             // 
@@ -165,6 +178,8 @@
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 6;
             this.label7.Text = "Saturday";
+            this.label7.AccessibleName = this.label7.Text + " working hours";
+            this.label7.AccessibleDescription = "A label with the text " + this.label7.Text;
             // 
             // sundayStartTimepicker
             // 
