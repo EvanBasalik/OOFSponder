@@ -531,6 +531,9 @@
             this.label13.Size = new System.Drawing.Size(157, 13);
             this.label13.TabIndex = 43;
             this.label13.Text = "Enter your Working Hours:";
+            this.label13.AccessibleRole = System.Windows.Forms.AccessibleRole.Text;
+            this.label13.AccessibleName = "Enter your Working Hours";
+            this.label13.AccessibleDescription = "A label saying '" + this.label13.Text + "'";
             // 
             // statusStrip1
             // 
