@@ -465,7 +465,7 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(231, 22);
             this.toolStripMenuItem1.Text = "Message";
             this.toolStripMenuItem1.AccessibleDefaultActionDescription = "Sets the OOF message to the primary or secondary";
-            this.toolStripMenuItem1.AccessibleName = "Message selection" + " " + "1 of 5";
+            this.toolStripMenuItem1.AccessibleName = "Message selection"; // + " " + "1 of 5";
             this.toolStripMenuItem1.AccessibleDescription = "A menu item with text 'Message'";
             // 
             // primaryToolStripMenuItem
@@ -478,7 +478,7 @@
             this.primaryToolStripMenuItem.Click += new System.EventHandler(this.primaryToolStripMenuItem_Click);
             this.primaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.primaryToolStripMenuItem.AccessibleDefaultActionDescription = "Sets the OOF message to the primary message";
-            this.primaryToolStripMenuItem.AccessibleName = "Primary message" + " " + "1 of 2";
+            this.primaryToolStripMenuItem.AccessibleName = "Primary message"; // + " " + "1 of 2";
             this.primaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Primary'";
             // 
             // secondaryToolStripMenuItem
@@ -489,7 +489,7 @@
             this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
             this.secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.secondaryToolStripMenuItem.AccessibleDefaultActionDescription = "Sets the OOF message to the secondary message";
-            this.secondaryToolStripMenuItem.AccessibleName = "Secondary message" + " " + "2 of 2";
+            this.secondaryToolStripMenuItem.AccessibleName = "Secondary message"; // + " " + "2 of 2";
             this.secondaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Secondary'";
             // 
             // signoutToolStripMenuItem
@@ -500,7 +500,7 @@
             this.signoutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             this.signoutToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.signoutToolStripMenuItem.AccessibleDefaultActionDescription = "Signs you out";
-            this.signoutToolStripMenuItem.AccessibleName = "Sign out" + " " + "2 of 5";
+            this.signoutToolStripMenuItem.AccessibleName = "Sign out"; // + " " + "2 of 5";
             this.signoutToolStripMenuItem.AccessibleDescription = "A menu item with text 'Sign out'";
 
             // 
@@ -512,7 +512,7 @@
             this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
             this.enableOnCallModeToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.enableOnCallModeToolStripMenuItem.AccessibleDefaultActionDescription = "Enables on-call mode";
-            this.enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode" + " " + "3 of 5";
+            this.enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode"; // + " " + "3 of 5";
             this.enableOnCallModeToolStripMenuItem.AccessibleDescription = "A menu item with text '(BETA) Enable On-Call Mode'";
             // 
             // showLogsToolStripMenuItem
@@ -523,7 +523,7 @@
             this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
             this.showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.showLogsToolStripMenuItem.AccessibleDefaultActionDescription = "Open the folder containing the log file";
-            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text + " " + "4 of 5";
+            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text; // + " " + "4 of 5";
             this.showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text '" + this.showLogsToolStripMenuItem.Text + "'";
             // 
             // exitToolStripMenuItem
@@ -534,7 +534,7 @@
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             this.showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             this.showLogsToolStripMenuItem.AccessibleDefaultActionDescription = "Exit";
-            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text + " " + "5 of 5";
+            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text; // + " " + "5 of 5";
             this.showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text '" + this.showLogsToolStripMenuItem.Text + "'";
             // 
             // label13
