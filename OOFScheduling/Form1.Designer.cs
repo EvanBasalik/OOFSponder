@@ -190,6 +190,7 @@
             this.sundayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.sundayStartTimepicker.TabIndex = 7;
             this.sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.sundayStartTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // mondayStartTimepicker
             // 
@@ -200,6 +201,7 @@
             this.mondayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.mondayStartTimepicker.TabIndex = 10;
             this.mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.mondayStartTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // tuesdayStartTimepicker
             // 
@@ -210,6 +212,7 @@
             this.tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.tuesdayStartTimepicker.TabIndex = 13;
             this.tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.tuesdayStartTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // wednesdayStartTimepicker
             // 
@@ -220,6 +223,7 @@
             this.wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.wednesdayStartTimepicker.TabIndex = 16;
             this.wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.wednesdayStartTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // thursdayStartTimepicker
             // 
@@ -230,6 +234,7 @@
             this.thursdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.thursdayStartTimepicker.TabIndex = 19;
             this.thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.thursdayStartTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // fridayStartTimepicker
             // 
@@ -240,6 +245,7 @@
             this.fridayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.fridayStartTimepicker.TabIndex = 22;
             this.fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.fridayStartTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // saturdayStartTimepicker
             // 
@@ -250,6 +256,7 @@
             this.saturdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.saturdayStartTimepicker.TabIndex = 25;
             this.saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.saturdayStartTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // saturdayEndTimepicker
             // 
@@ -260,6 +267,7 @@
             this.saturdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.saturdayEndTimepicker.TabIndex = 26;
             this.saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.saturdayEndTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // fridayEndTimepicker
             // 
@@ -270,6 +278,7 @@
             this.fridayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.fridayEndTimepicker.TabIndex = 23;
             this.fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.fridayEndTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // thursdayEndTimepicker
             // 
@@ -280,6 +289,7 @@
             this.thursdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.thursdayEndTimepicker.TabIndex = 20;
             this.thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.thursdayEndTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // wednesdayEndTimepicker
             // 
@@ -290,6 +300,7 @@
             this.wednesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.wednesdayEndTimepicker.TabIndex = 17;
             this.wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.wednesdayEndTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // tuesdayEndTimepicker
             // 
@@ -300,6 +311,7 @@
             this.tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.tuesdayEndTimepicker.TabIndex = 14;
             this.tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.tuesdayEndTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // mondayEndTimepicker
             // 
@@ -310,6 +322,7 @@
             this.mondayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.mondayEndTimepicker.TabIndex = 11;
             this.mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.mondayEndTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // sundayEndTimepicker
             // 
@@ -320,6 +333,7 @@
             this.sundayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.sundayEndTimepicker.TabIndex = 8;
             this.sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.sundayEndTimepicker.AccessibleRole = AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             // 
             // sundayOffWorkCB
             // 
