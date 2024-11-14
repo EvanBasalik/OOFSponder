@@ -225,22 +225,23 @@ namespace OOFScheduling
 
         private void DoAccessibilityUIWork()
         {
+            //moved to setting at design time. Shouldn't matter, but...
             //set the AccessibleName for all the start/end time pickers
-            var listofTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
-            foreach (var timePicker in listofTimePickers)
-            {
-                //day start times
-                if (timePicker.Name.Contains("StartTimepicker"))
-                {
-                    timePicker.AccessibleName = "Enter your Start Time for " + timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper();
-                }
+            //var listofTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
+            //foreach (var timePicker in listofTimePickers)
+            //{
+            //    //day start times
+            //    if (timePicker.Name.Contains("StartTimepicker"))
+            //    {
+            //        timePicker.AccessibleName = "Enter your Start Time for " + timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper();
+            //    }
 
-                //day end times
-                if (timePicker.Name.Contains("EndTimepicker"))
-                {
-                    timePicker.AccessibleName = "Enter your End Time for " + timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper();
-                }
-            }
+            //    //day end times
+            //    if (timePicker.Name.Contains("EndTimepicker"))
+            //    {
+            //        timePicker.AccessibleName = "Enter your End Time for " + timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper();
+            //    }
+            //}
 
             //set the AccessibleName for all the working day checkboxes
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
