@@ -192,7 +192,7 @@ namespace OOFScheduling
             this.sundayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.sundayStartTimepicker.TabIndex = 7;
             this.sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.sundayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.sundayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.sundayStartTimepicker.AccessibleName = "Enter your Start Time for Sunday";
             // 
             // mondayStartTimepicker
@@ -204,7 +204,7 @@ namespace OOFScheduling
             this.mondayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.mondayStartTimepicker.TabIndex = 10;
             this.mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.mondayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.mondayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.mondayStartTimepicker.AccessibleName = "Enter your Start Time for Monday";
             // 
             // tuesdayStartTimepicker
@@ -216,7 +216,7 @@ namespace OOFScheduling
             this.tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.tuesdayStartTimepicker.TabIndex = 13;
             this.tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.tuesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.tuesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.tuesdayStartTimepicker.AccessibleName = "Enter your Start Time for Tuesday";
             // 
             // wednesdayStartTimepicker
@@ -228,7 +228,7 @@ namespace OOFScheduling
             this.wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.wednesdayStartTimepicker.TabIndex = 16;
             this.wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.wednesdayStartTimepicker.AccessibleRole =  System.Windows.Forms.AccessibleRole.Clock;
+            this.wednesdayStartTimepicker.AccessibleRole =  System.Windows.Forms.AccessibleRole.SpinButton;
             this.wednesdayStartTimepicker.AccessibleName = "Enter your Start Time for Wednesday";
             // 
             // thursdayStartTimepicker
@@ -240,7 +240,7 @@ namespace OOFScheduling
             this.thursdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.thursdayStartTimepicker.TabIndex = 19;
             this.thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.thursdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.thursdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.thursdayStartTimepicker.AccessibleName = "Enter your Start Time for Thursday";
             // 
             // fridayStartTimepicker
@@ -252,7 +252,7 @@ namespace OOFScheduling
             this.fridayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.fridayStartTimepicker.TabIndex = 22;
             this.fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.fridayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.fridayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.fridayStartTimepicker.AccessibleName = "Enter your Start Time for Friday";
             // 
             // saturdayStartTimepicker
@@ -264,7 +264,7 @@ namespace OOFScheduling
             this.saturdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.saturdayStartTimepicker.TabIndex = 25;
             this.saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.saturdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.saturdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.saturdayStartTimepicker.AccessibleName = "Enter your Start Time for Saturday";
             // 
             // saturdayEndTimepicker
@@ -276,7 +276,7 @@ namespace OOFScheduling
             this.saturdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.saturdayEndTimepicker.TabIndex = 26;
             this.saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.saturdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.saturdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.saturdayEndTimepicker.AccessibleName = "Enter your End Time for Saturday";
             // 
             // fridayEndTimepicker
@@ -288,7 +288,7 @@ namespace OOFScheduling
             this.fridayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.fridayEndTimepicker.TabIndex = 23;
             this.fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.fridayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.fridayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.fridayEndTimepicker.AccessibleName = "Enter your End Time for Friday";
             // 
             // thursdayEndTimepicker
@@ -300,7 +300,7 @@ namespace OOFScheduling
             this.thursdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.thursdayEndTimepicker.TabIndex = 20;
             this.thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.thursdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.thursdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.thursdayEndTimepicker.AccessibleName = "Enter your End Time for Thursday";
             // 
             // wednesdayEndTimepicker
@@ -312,7 +312,7 @@ namespace OOFScheduling
             this.wednesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.wednesdayEndTimepicker.TabIndex = 17;
             this.wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.wednesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.wednesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.wednesdayEndTimepicker.AccessibleName = "Enter your End Time for Wednesday";
             // 
             // tuesdayEndTimepicker
@@ -324,7 +324,7 @@ namespace OOFScheduling
             this.tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.tuesdayEndTimepicker.TabIndex = 14;
             this.tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.tuesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.tuesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.tuesdayEndTimepicker.AccessibleName = "Enter your End Time for Tuesday";
             // 
             // mondayEndTimepicker
@@ -336,7 +336,7 @@ namespace OOFScheduling
             this.mondayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.mondayEndTimepicker.TabIndex = 11;
             this.mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.mondayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.mondayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.mondayEndTimepicker.AccessibleName = "Enter your End Time for Monday";
             // 
             // sundayEndTimepicker
@@ -348,7 +348,7 @@ namespace OOFScheduling
             this.sundayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.sundayEndTimepicker.TabIndex = 8;
             this.sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.sundayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
+            this.sundayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             this.sundayEndTimepicker.AccessibleName = "Enter your End Time for Sunday";
             // 
             // sundayOffWorkCB
