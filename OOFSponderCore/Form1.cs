@@ -16,7 +16,6 @@ namespace OOFScheduling
     {
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
 
-        // TODO ContextMenu is no longer supported. Use ContextMenuStrip instead. For more details see https://docs.microsoft.com/en-us/dotnet/core/compatibility/winforms#removed-controls
         private ContextMenuStrip trayMenu;
 
         //Track if force close or just hitting X to minimize
@@ -86,8 +85,7 @@ namespace OOFScheduling
             #region Tray Menu Initialize
             OOFSponder.Logger.Info("Initializing tray menu");
 
-            // Create a simple tray menu with only one item.
-            // TODO ContextMenu is no longer supported. Use ContextMenuStrip instead. For more details see https://docs.microsoft.com/en-us/dotnet/core/compatibility/winforms#removed-controls
+            // Create a simple tray menu with only one item
             trayMenu = new ContextMenuStrip();
             trayMenu.Items.Add(new ToolStripMenuItem("Exit", null, OnExit));
 
@@ -436,7 +434,9 @@ namespace OOFScheduling
         public async System.Threading.Tasks.Task<bool> TrySetOOF365(string oofMessageExternal, string oofMessageInternal, DateTime StartTime, DateTime EndTime)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
-            toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
+            //need to account for background threads
+            //toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - Sending to O365";
+            UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Sending to O365");
 
             //need to convert the times from local datetime to DateTimeTimeZone and UTC
             DateTimeTimeZone oofStart = new DateTimeTimeZone { DateTime = StartTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
@@ -457,7 +457,10 @@ namespace OOFScheduling
 
                 if (getOOFraw == string.Empty)
                 {
-                    toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - unable to set OOF";
+                    //need to account for background threads
+                    //toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - unable to set OOF";
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - unable to set OOF");
+
                     return false;
                 }
 
@@ -469,7 +472,11 @@ namespace OOFScheduling
                 {
                     OOFSponder.Logger.Error("Unable to get OOF settings: " + getOOFraw);
                     OOFSponder.Logger.Error("Hint - most common cause for the above is old OOFSponder auth flow with tenant without admin consent");
-                    toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - unable to set OOF";
+
+                    //need to account for background thread
+                    //toolStripStatusLabel1.Text = DateTime.Now.ToString() + " - unable to set OOF";
+                    UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - unable to set OOF");
+
                     return false;
                 }
                 else
