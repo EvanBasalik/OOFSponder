@@ -108,6 +108,9 @@
     <Content Include="firstrunafterupgrade.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="OOFSponderIcon.ico" />
+    <Content Include="OOFSponderLogo.ico" />
+    <EmbeddedResource Include="Resources\OOFSponderIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights">
@@ -132,9 +135,6 @@
     <PackageReference Include="System.Diagnostics.DiagnosticSource">
       <Version>8.0.1</Version>
     </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>del OOFScheduling.exemsalcache.txt</PostBuildEvent>
