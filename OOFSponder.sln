@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35431.28
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOFSponder", "OOFScheduling\OOFSponder.csproj", "{134672C0-60F8-42D8-BC10-B9E69F66A1F6}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OOFSponder", "OOFScheduling
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HTMLEditorControl", "HtmlEditorControl\HTMLEditorControl.csproj", "{5873DE0F-6853-4C8E-91A4-7A6861069A9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOFSponderCore", "OOFSponderCore\OOFSponderCore.csproj", "{FC314DC7-AACF-4E35-8BE7-0A82AFC66CF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,12 @@ Global
 		{5873DE0F-6853-4C8E-91A4-7A6861069A9A}.Release without Sending OOF|Any CPU.Build.0 = Release without Sending OOF|Any CPU
 		{5873DE0F-6853-4C8E-91A4-7A6861069A9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5873DE0F-6853-4C8E-91A4-7A6861069A9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC314DC7-AACF-4E35-8BE7-0A82AFC66CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC314DC7-AACF-4E35-8BE7-0A82AFC66CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC314DC7-AACF-4E35-8BE7-0A82AFC66CF7}.Release without Sending OOF|Any CPU.ActiveCfg = Release|Any CPU
+		{FC314DC7-AACF-4E35-8BE7-0A82AFC66CF7}.Release without Sending OOF|Any CPU.Build.0 = Release|Any CPU
+		{FC314DC7-AACF-4E35-8BE7-0A82AFC66CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC314DC7-AACF-4E35-8BE7-0A82AFC66CF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
