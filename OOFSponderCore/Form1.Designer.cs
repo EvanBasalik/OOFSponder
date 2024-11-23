@@ -30,780 +30,799 @@ namespace OOFScheduling
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.sundayStartTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.mondayStartTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.tuesdayStartTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.wednesdayStartTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.thursdayStartTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.fridayStartTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.saturdayStartTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.saturdayEndTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.fridayEndTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.thursdayEndTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.wednesdayEndTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.tuesdayEndTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.mondayEndTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.sundayEndTimepicker = new System.Windows.Forms.DateTimePicker();
-            this.sundayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.mondayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.tuesdayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.wednesdayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.thursdayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.fridayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.saturdayOffWorkCB = new System.Windows.Forms.CheckBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.lblExternalMesage = new System.Windows.Forms.Label();
-            this.lblInternalMessage = new System.Windows.Forms.Label();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label13 = new System.Windows.Forms.Label();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblBuild = new System.Windows.Forms.ToolStripStatusLabel();
-            this.passwordConfirmTB = new System.Windows.Forms.MaskedTextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.passwordTB = new System.Windows.Forms.MaskedTextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.emailAddressTB = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.btnPermaOOF = new System.Windows.Forms.Button();
-            this.dtPermaOOF = new System.Windows.Forms.DateTimePicker();
-            this.radPrimary = new System.Windows.Forms.RadioButton();
-            this.radSecondary = new System.Windows.Forms.RadioButton();
-            this.htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
-            this.htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
-            this.bETAEnableNewOOFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
-            this.SuspendLayout();
+            notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
+            label1 = new System.Windows.Forms.Label();
+            label2 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            label4 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            label6 = new System.Windows.Forms.Label();
+            label7 = new System.Windows.Forms.Label();
+            sundayStartTimepicker = new System.Windows.Forms.DateTimePicker();
+            mondayStartTimepicker = new System.Windows.Forms.DateTimePicker();
+            tuesdayStartTimepicker = new System.Windows.Forms.DateTimePicker();
+            wednesdayStartTimepicker = new System.Windows.Forms.DateTimePicker();
+            thursdayStartTimepicker = new System.Windows.Forms.DateTimePicker();
+            fridayStartTimepicker = new System.Windows.Forms.DateTimePicker();
+            saturdayStartTimepicker = new System.Windows.Forms.DateTimePicker();
+            saturdayEndTimepicker = new System.Windows.Forms.DateTimePicker();
+            fridayEndTimepicker = new System.Windows.Forms.DateTimePicker();
+            thursdayEndTimepicker = new System.Windows.Forms.DateTimePicker();
+            wednesdayEndTimepicker = new System.Windows.Forms.DateTimePicker();
+            tuesdayEndTimepicker = new System.Windows.Forms.DateTimePicker();
+            mondayEndTimepicker = new System.Windows.Forms.DateTimePicker();
+            sundayEndTimepicker = new System.Windows.Forms.DateTimePicker();
+            sundayOffWorkCB = new System.Windows.Forms.CheckBox();
+            mondayOffWorkCB = new System.Windows.Forms.CheckBox();
+            tuesdayOffWorkCB = new System.Windows.Forms.CheckBox();
+            wednesdayOffWorkCB = new System.Windows.Forms.CheckBox();
+            thursdayOffWorkCB = new System.Windows.Forms.CheckBox();
+            fridayOffWorkCB = new System.Windows.Forms.CheckBox();
+            saturdayOffWorkCB = new System.Windows.Forms.CheckBox();
+            button2 = new System.Windows.Forms.Button();
+            lblExternalMesage = new System.Windows.Forms.Label();
+            lblInternalMessage = new System.Windows.Forms.Label();
+            menuStrip1 = new System.Windows.Forms.MenuStrip();
+            fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            bETAEnableNewOOFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            label13 = new System.Windows.Forms.Label();
+            statusStrip1 = new System.Windows.Forms.StatusStrip();
+            toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            lblBuild = new System.Windows.Forms.ToolStripStatusLabel();
+            passwordConfirmTB = new System.Windows.Forms.MaskedTextBox();
+            label10 = new System.Windows.Forms.Label();
+            passwordTB = new System.Windows.Forms.MaskedTextBox();
+            label9 = new System.Windows.Forms.Label();
+            emailAddressTB = new System.Windows.Forms.TextBox();
+            label8 = new System.Windows.Forms.Label();
+            btnPermaOOF = new System.Windows.Forms.Button();
+            dtPermaOOF = new System.Windows.Forms.DateTimePicker();
+            radPrimary = new System.Windows.Forms.RadioButton();
+            radSecondary = new System.Windows.Forms.RadioButton();
+            htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
+            htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
+            menuStrip1.SuspendLayout();
+            statusStrip1.SuspendLayout();
+            SuspendLayout();
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.notifyIcon1.BalloonTipText = "OOFScheduling will make sure your OOF message is set for you in the background!";
-            this.notifyIcon1.BalloonTipTitle = "OOFScheduling is still working";
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "OOFScheduling";
-            this.notifyIcon1.Visible = true;
-            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
+            notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            notifyIcon1.BalloonTipText = "OOFScheduling will make sure your OOF message is set for you in the background!";
+            notifyIcon1.BalloonTipTitle = "OOFScheduling is still working";
+            notifyIcon1.Icon = (System.Drawing.Icon)resources.GetObject("notifyIcon1.Icon");
+            notifyIcon1.Text = "OOFScheduling";
+            notifyIcon1.Visible = true;
+            notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 39);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Sunday";
-            this.label1.AccessibleName = this.label1.Text + " working hours";
-            this.label1.AccessibleDescription = "A label with the text " + this.label1.Text;
-
+            label1.AccessibleDescription = "A label with the text Sunday";
+            label1.AccessibleName = "Sunday working hours";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(24, 90);
+            label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(81, 30);
+            label1.TabIndex = 0;
+            label1.Text = "Sunday";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(108, 39);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Monday";
-            this.label2.AccessibleName = this.label2.Text + " working hours";
-            this.label2.AccessibleDescription = "A label with the text " + this.label2.Text;
+            label2.AccessibleDescription = "A label with the text Monday";
+            label2.AccessibleName = "Monday working hours";
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(216, 90);
+            label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(89, 30);
+            label2.TabIndex = 1;
+            label2.Text = "Monday";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(204, 39);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Tuesday";
-            this.label3.AccessibleName = this.label3.Text + " working hours";
-            this.label3.AccessibleDescription = "A label with the text " + this.label3.Text;
+            label3.AccessibleDescription = "A label with the text Tuesday";
+            label3.AccessibleName = "Tuesday working hours";
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(408, 90);
+            label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(89, 30);
+            label3.TabIndex = 2;
+            label3.Text = "Tuesday";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(300, 39);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(64, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "Wednesday";
-            this.label4.AccessibleName = this.label4.Text + " working hours";
-            this.label4.AccessibleDescription = "A label with the text " + this.label4.Text;
+            label4.AccessibleDescription = "A label with the text Wednesday";
+            label4.AccessibleName = "Wednesday working hours";
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(600, 90);
+            label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(120, 30);
+            label4.TabIndex = 3;
+            label4.Text = "Wednesday";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(396, 39);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 13);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Thursday";
-            this.label5.AccessibleName = this.label5.Text + " working hours";
-            this.label5.AccessibleDescription = "A label with the text " + this.label5.Text;
+            label5.AccessibleDescription = "A label with the text Thursday";
+            label5.AccessibleName = "Thursday working hours";
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(792, 90);
+            label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(97, 30);
+            label5.TabIndex = 4;
+            label5.Text = "Thursday";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(492, 39);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Friday";
-            this.label6.AccessibleName = this.label6.Text + " working hours";
-            this.label6.AccessibleDescription = "A label with the text " + this.label6.Text;
+            label6.AccessibleDescription = "A label with the text Friday";
+            label6.AccessibleName = "Friday working hours";
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(984, 90);
+            label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(68, 30);
+            label6.TabIndex = 5;
+            label6.Text = "Friday";
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(588, 39);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(49, 13);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "Saturday";
-            this.label7.AccessibleName = this.label7.Text + " working hours";
-            this.label7.AccessibleDescription = "A label with the text " + this.label7.Text;
+            label7.AccessibleDescription = "A label with the text Saturday";
+            label7.AccessibleName = "Saturday working hours";
+            label7.AutoSize = true;
+            label7.Location = new System.Drawing.Point(1176, 90);
+            label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label7.Name = "label7";
+            label7.Size = new System.Drawing.Size(94, 30);
+            label7.TabIndex = 6;
+            label7.Text = "Saturday";
             // 
             // sundayStartTimepicker
             // 
-            this.sundayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.sundayStartTimepicker.Location = new System.Drawing.Point(12, 55);
-            this.sundayStartTimepicker.Name = "sundayStartTimepicker";
-            this.sundayStartTimepicker.ShowUpDown = true;
-            this.sundayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.sundayStartTimepicker.TabIndex = 7;
-            this.sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.sundayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.sundayStartTimepicker.AccessibleName = "Enter your working hours start time for Sunday";
+            sundayStartTimepicker.AccessibleName = "Enter your working hours start time for Sunday";
+            sundayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            sundayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            sundayStartTimepicker.Location = new System.Drawing.Point(24, 127);
+            sundayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            sundayStartTimepicker.Name = "sundayStartTimepicker";
+            sundayStartTimepicker.ShowUpDown = true;
+            sundayStartTimepicker.Size = new System.Drawing.Size(176, 35);
+            sundayStartTimepicker.TabIndex = 7;
+            sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // mondayStartTimepicker
             // 
-            this.mondayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.mondayStartTimepicker.Location = new System.Drawing.Point(108, 55);
-            this.mondayStartTimepicker.Name = "mondayStartTimepicker";
-            this.mondayStartTimepicker.ShowUpDown = true;
-            this.mondayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.mondayStartTimepicker.TabIndex = 10;
-            this.mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.mondayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.mondayStartTimepicker.AccessibleName = "Enter your working hours start time for Monday";
+            mondayStartTimepicker.AccessibleName = "Enter your working hours start time for Monday";
+            mondayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            mondayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            mondayStartTimepicker.Location = new System.Drawing.Point(216, 127);
+            mondayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            mondayStartTimepicker.Name = "mondayStartTimepicker";
+            mondayStartTimepicker.ShowUpDown = true;
+            mondayStartTimepicker.Size = new System.Drawing.Size(176, 35);
+            mondayStartTimepicker.TabIndex = 10;
+            mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // tuesdayStartTimepicker
             // 
-            this.tuesdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.tuesdayStartTimepicker.Location = new System.Drawing.Point(204, 55);
-            this.tuesdayStartTimepicker.Name = "tuesdayStartTimepicker";
-            this.tuesdayStartTimepicker.ShowUpDown = true;
-            this.tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.tuesdayStartTimepicker.TabIndex = 13;
-            this.tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.tuesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.tuesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Tuesday";
+            tuesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Tuesday";
+            tuesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            tuesdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            tuesdayStartTimepicker.Location = new System.Drawing.Point(408, 127);
+            tuesdayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            tuesdayStartTimepicker.Name = "tuesdayStartTimepicker";
+            tuesdayStartTimepicker.ShowUpDown = true;
+            tuesdayStartTimepicker.Size = new System.Drawing.Size(176, 35);
+            tuesdayStartTimepicker.TabIndex = 13;
+            tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // wednesdayStartTimepicker
             // 
-            this.wednesdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.wednesdayStartTimepicker.Location = new System.Drawing.Point(300, 55);
-            this.wednesdayStartTimepicker.Name = "wednesdayStartTimepicker";
-            this.wednesdayStartTimepicker.ShowUpDown = true;
-            this.wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.wednesdayStartTimepicker.TabIndex = 16;
-            this.wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.wednesdayStartTimepicker.AccessibleRole =  System.Windows.Forms.AccessibleRole.SpinButton;
-            this.wednesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Wednesday";
+            wednesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Wednesday";
+            wednesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            wednesdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            wednesdayStartTimepicker.Location = new System.Drawing.Point(600, 127);
+            wednesdayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            wednesdayStartTimepicker.Name = "wednesdayStartTimepicker";
+            wednesdayStartTimepicker.ShowUpDown = true;
+            wednesdayStartTimepicker.Size = new System.Drawing.Size(176, 35);
+            wednesdayStartTimepicker.TabIndex = 16;
+            wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // thursdayStartTimepicker
             // 
-            this.thursdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.thursdayStartTimepicker.Location = new System.Drawing.Point(396, 55);
-            this.thursdayStartTimepicker.Name = "thursdayStartTimepicker";
-            this.thursdayStartTimepicker.ShowUpDown = true;
-            this.thursdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.thursdayStartTimepicker.TabIndex = 19;
-            this.thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.thursdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.thursdayStartTimepicker.AccessibleName = "Enter your working hours start time for Thursday";
+            thursdayStartTimepicker.AccessibleName = "Enter your working hours start time for Thursday";
+            thursdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            thursdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            thursdayStartTimepicker.Location = new System.Drawing.Point(792, 127);
+            thursdayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            thursdayStartTimepicker.Name = "thursdayStartTimepicker";
+            thursdayStartTimepicker.ShowUpDown = true;
+            thursdayStartTimepicker.Size = new System.Drawing.Size(176, 35);
+            thursdayStartTimepicker.TabIndex = 19;
+            thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // fridayStartTimepicker
             // 
-            this.fridayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.fridayStartTimepicker.Location = new System.Drawing.Point(492, 55);
-            this.fridayStartTimepicker.Name = "fridayStartTimepicker";
-            this.fridayStartTimepicker.ShowUpDown = true;
-            this.fridayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.fridayStartTimepicker.TabIndex = 22;
-            this.fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.fridayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.fridayStartTimepicker.AccessibleName = "Enter your working hours start time for Friday";
+            fridayStartTimepicker.AccessibleName = "Enter your working hours start time for Friday";
+            fridayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            fridayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            fridayStartTimepicker.Location = new System.Drawing.Point(984, 127);
+            fridayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            fridayStartTimepicker.Name = "fridayStartTimepicker";
+            fridayStartTimepicker.ShowUpDown = true;
+            fridayStartTimepicker.Size = new System.Drawing.Size(176, 35);
+            fridayStartTimepicker.TabIndex = 22;
+            fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // saturdayStartTimepicker
             // 
-            this.saturdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.saturdayStartTimepicker.Location = new System.Drawing.Point(588, 55);
-            this.saturdayStartTimepicker.Name = "saturdayStartTimepicker";
-            this.saturdayStartTimepicker.ShowUpDown = true;
-            this.saturdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.saturdayStartTimepicker.TabIndex = 25;
-            this.saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
-            this.saturdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.saturdayStartTimepicker.AccessibleName = "Enter your working hours start time for Saturday";
+            saturdayStartTimepicker.AccessibleName = "Enter your working hours start time for Saturday";
+            saturdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            saturdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            saturdayStartTimepicker.Location = new System.Drawing.Point(1176, 127);
+            saturdayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            saturdayStartTimepicker.Name = "saturdayStartTimepicker";
+            saturdayStartTimepicker.ShowUpDown = true;
+            saturdayStartTimepicker.Size = new System.Drawing.Size(176, 35);
+            saturdayStartTimepicker.TabIndex = 25;
+            saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // saturdayEndTimepicker
             // 
-            this.saturdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.saturdayEndTimepicker.Location = new System.Drawing.Point(588, 81);
-            this.saturdayEndTimepicker.Name = "saturdayEndTimepicker";
-            this.saturdayEndTimepicker.ShowUpDown = true;
-            this.saturdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.saturdayEndTimepicker.TabIndex = 26;
-            this.saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.saturdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.saturdayEndTimepicker.AccessibleName = "Enter your working hours end time for Saturday";
+            saturdayEndTimepicker.AccessibleName = "Enter your working hours end time for Saturday";
+            saturdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            saturdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            saturdayEndTimepicker.Location = new System.Drawing.Point(1176, 187);
+            saturdayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            saturdayEndTimepicker.Name = "saturdayEndTimepicker";
+            saturdayEndTimepicker.ShowUpDown = true;
+            saturdayEndTimepicker.Size = new System.Drawing.Size(176, 35);
+            saturdayEndTimepicker.TabIndex = 26;
+            saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // fridayEndTimepicker
             // 
-            this.fridayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.fridayEndTimepicker.Location = new System.Drawing.Point(492, 81);
-            this.fridayEndTimepicker.Name = "fridayEndTimepicker";
-            this.fridayEndTimepicker.ShowUpDown = true;
-            this.fridayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.fridayEndTimepicker.TabIndex = 23;
-            this.fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.fridayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.fridayEndTimepicker.AccessibleName = "Enter your working hours end time for Friday";
+            fridayEndTimepicker.AccessibleName = "Enter your working hours end time for Friday";
+            fridayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            fridayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            fridayEndTimepicker.Location = new System.Drawing.Point(984, 187);
+            fridayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            fridayEndTimepicker.Name = "fridayEndTimepicker";
+            fridayEndTimepicker.ShowUpDown = true;
+            fridayEndTimepicker.Size = new System.Drawing.Size(176, 35);
+            fridayEndTimepicker.TabIndex = 23;
+            fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // thursdayEndTimepicker
             // 
-            this.thursdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.thursdayEndTimepicker.Location = new System.Drawing.Point(396, 81);
-            this.thursdayEndTimepicker.Name = "thursdayEndTimepicker";
-            this.thursdayEndTimepicker.ShowUpDown = true;
-            this.thursdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.thursdayEndTimepicker.TabIndex = 20;
-            this.thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.thursdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.thursdayEndTimepicker.AccessibleName = "Enter your working hours end time for Thursday";
+            thursdayEndTimepicker.AccessibleName = "Enter your working hours end time for Thursday";
+            thursdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            thursdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            thursdayEndTimepicker.Location = new System.Drawing.Point(792, 187);
+            thursdayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            thursdayEndTimepicker.Name = "thursdayEndTimepicker";
+            thursdayEndTimepicker.ShowUpDown = true;
+            thursdayEndTimepicker.Size = new System.Drawing.Size(176, 35);
+            thursdayEndTimepicker.TabIndex = 20;
+            thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // wednesdayEndTimepicker
             // 
-            this.wednesdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.wednesdayEndTimepicker.Location = new System.Drawing.Point(300, 81);
-            this.wednesdayEndTimepicker.Name = "wednesdayEndTimepicker";
-            this.wednesdayEndTimepicker.ShowUpDown = true;
-            this.wednesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.wednesdayEndTimepicker.TabIndex = 17;
-            this.wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.wednesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.wednesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Wednesday";
+            wednesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Wednesday";
+            wednesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            wednesdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            wednesdayEndTimepicker.Location = new System.Drawing.Point(600, 187);
+            wednesdayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            wednesdayEndTimepicker.Name = "wednesdayEndTimepicker";
+            wednesdayEndTimepicker.ShowUpDown = true;
+            wednesdayEndTimepicker.Size = new System.Drawing.Size(176, 35);
+            wednesdayEndTimepicker.TabIndex = 17;
+            wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // tuesdayEndTimepicker
             // 
-            this.tuesdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.tuesdayEndTimepicker.Location = new System.Drawing.Point(204, 81);
-            this.tuesdayEndTimepicker.Name = "tuesdayEndTimepicker";
-            this.tuesdayEndTimepicker.ShowUpDown = true;
-            this.tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.tuesdayEndTimepicker.TabIndex = 14;
-            this.tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.tuesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.tuesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Tuesday";
+            tuesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Tuesday";
+            tuesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            tuesdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            tuesdayEndTimepicker.Location = new System.Drawing.Point(408, 187);
+            tuesdayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            tuesdayEndTimepicker.Name = "tuesdayEndTimepicker";
+            tuesdayEndTimepicker.ShowUpDown = true;
+            tuesdayEndTimepicker.Size = new System.Drawing.Size(176, 35);
+            tuesdayEndTimepicker.TabIndex = 14;
+            tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // mondayEndTimepicker
             // 
-            this.mondayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.mondayEndTimepicker.Location = new System.Drawing.Point(108, 81);
-            this.mondayEndTimepicker.Name = "mondayEndTimepicker";
-            this.mondayEndTimepicker.ShowUpDown = true;
-            this.mondayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.mondayEndTimepicker.TabIndex = 11;
-            this.mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.mondayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.mondayEndTimepicker.AccessibleName = "Enter your working hours end time for Monday";
+            mondayEndTimepicker.AccessibleName = "Enter your working hours end time for Monday";
+            mondayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            mondayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            mondayEndTimepicker.Location = new System.Drawing.Point(216, 187);
+            mondayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            mondayEndTimepicker.Name = "mondayEndTimepicker";
+            mondayEndTimepicker.ShowUpDown = true;
+            mondayEndTimepicker.Size = new System.Drawing.Size(176, 35);
+            mondayEndTimepicker.TabIndex = 11;
+            mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // sundayEndTimepicker
             // 
-            this.sundayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.sundayEndTimepicker.Location = new System.Drawing.Point(12, 81);
-            this.sundayEndTimepicker.Name = "sundayEndTimepicker";
-            this.sundayEndTimepicker.ShowUpDown = true;
-            this.sundayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.sundayEndTimepicker.TabIndex = 8;
-            this.sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
-            this.sundayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            this.sundayEndTimepicker.AccessibleName = "Enter your working hours end time for Sunday";
+            sundayEndTimepicker.AccessibleName = "Enter your working hours end time for Sunday";
+            sundayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            sundayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            sundayEndTimepicker.Location = new System.Drawing.Point(24, 187);
+            sundayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            sundayEndTimepicker.Name = "sundayEndTimepicker";
+            sundayEndTimepicker.ShowUpDown = true;
+            sundayEndTimepicker.Size = new System.Drawing.Size(176, 35);
+            sundayEndTimepicker.TabIndex = 8;
+            sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // sundayOffWorkCB
             // 
-            this.sundayOffWorkCB.AutoSize = true;
-            this.sundayOffWorkCB.Location = new System.Drawing.Point(15, 107);
-            this.sundayOffWorkCB.Name = "sundayOffWorkCB";
-            this.sundayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.sundayOffWorkCB.TabIndex = 9;
-            this.sundayOffWorkCB.Text = "Off Work";
-            this.sundayOffWorkCB.UseVisualStyleBackColor = true;
-            this.sundayOffWorkCB.CheckedChanged += new System.EventHandler(this.sundayOffWorkCB_CheckedChanged);
+            sundayOffWorkCB.AutoSize = true;
+            sundayOffWorkCB.Location = new System.Drawing.Point(30, 247);
+            sundayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            sundayOffWorkCB.Name = "sundayOffWorkCB";
+            sundayOffWorkCB.Size = new System.Drawing.Size(123, 34);
+            sundayOffWorkCB.TabIndex = 9;
+            sundayOffWorkCB.Text = "Off Work";
+            sundayOffWorkCB.UseVisualStyleBackColor = true;
+            sundayOffWorkCB.CheckedChanged += sundayOffWorkCB_CheckedChanged;
             // 
             // mondayOffWorkCB
             // 
-            this.mondayOffWorkCB.AutoSize = true;
-            this.mondayOffWorkCB.Location = new System.Drawing.Point(111, 107);
-            this.mondayOffWorkCB.Name = "mondayOffWorkCB";
-            this.mondayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.mondayOffWorkCB.TabIndex = 12;
-            this.mondayOffWorkCB.Text = "Off Work";
-            this.mondayOffWorkCB.UseVisualStyleBackColor = true;
-            this.mondayOffWorkCB.CheckedChanged += new System.EventHandler(this.mondayOffWorkCB_CheckedChanged);
+            mondayOffWorkCB.AutoSize = true;
+            mondayOffWorkCB.Location = new System.Drawing.Point(222, 247);
+            mondayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            mondayOffWorkCB.Name = "mondayOffWorkCB";
+            mondayOffWorkCB.Size = new System.Drawing.Size(123, 34);
+            mondayOffWorkCB.TabIndex = 12;
+            mondayOffWorkCB.Text = "Off Work";
+            mondayOffWorkCB.UseVisualStyleBackColor = true;
+            mondayOffWorkCB.CheckedChanged += mondayOffWorkCB_CheckedChanged;
             // 
             // tuesdayOffWorkCB
             // 
-            this.tuesdayOffWorkCB.AutoSize = true;
-            this.tuesdayOffWorkCB.Location = new System.Drawing.Point(207, 107);
-            this.tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
-            this.tuesdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.tuesdayOffWorkCB.TabIndex = 15;
-            this.tuesdayOffWorkCB.Text = "Off Work";
-            this.tuesdayOffWorkCB.UseVisualStyleBackColor = true;
-            this.tuesdayOffWorkCB.CheckedChanged += new System.EventHandler(this.tuesdayOffWorkCB_CheckedChanged);
+            tuesdayOffWorkCB.AutoSize = true;
+            tuesdayOffWorkCB.Location = new System.Drawing.Point(414, 247);
+            tuesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
+            tuesdayOffWorkCB.Size = new System.Drawing.Size(123, 34);
+            tuesdayOffWorkCB.TabIndex = 15;
+            tuesdayOffWorkCB.Text = "Off Work";
+            tuesdayOffWorkCB.UseVisualStyleBackColor = true;
+            tuesdayOffWorkCB.CheckedChanged += tuesdayOffWorkCB_CheckedChanged;
             // 
             // wednesdayOffWorkCB
             // 
-            this.wednesdayOffWorkCB.AutoSize = true;
-            this.wednesdayOffWorkCB.Location = new System.Drawing.Point(303, 107);
-            this.wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
-            this.wednesdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.wednesdayOffWorkCB.TabIndex = 18;
-            this.wednesdayOffWorkCB.Text = "Off Work";
-            this.wednesdayOffWorkCB.UseVisualStyleBackColor = true;
-            this.wednesdayOffWorkCB.CheckedChanged += new System.EventHandler(this.wednesdayOffWorkCB_CheckedChanged);
+            wednesdayOffWorkCB.AutoSize = true;
+            wednesdayOffWorkCB.Location = new System.Drawing.Point(606, 247);
+            wednesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
+            wednesdayOffWorkCB.Size = new System.Drawing.Size(123, 34);
+            wednesdayOffWorkCB.TabIndex = 18;
+            wednesdayOffWorkCB.Text = "Off Work";
+            wednesdayOffWorkCB.UseVisualStyleBackColor = true;
+            wednesdayOffWorkCB.CheckedChanged += wednesdayOffWorkCB_CheckedChanged;
             // 
             // thursdayOffWorkCB
             // 
-            this.thursdayOffWorkCB.AutoSize = true;
-            this.thursdayOffWorkCB.Location = new System.Drawing.Point(399, 107);
-            this.thursdayOffWorkCB.Name = "thursdayOffWorkCB";
-            this.thursdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.thursdayOffWorkCB.TabIndex = 21;
-            this.thursdayOffWorkCB.Text = "Off Work";
-            this.thursdayOffWorkCB.UseVisualStyleBackColor = true;
-            this.thursdayOffWorkCB.CheckedChanged += new System.EventHandler(this.thursdayOffWorkCB_CheckedChanged);
+            thursdayOffWorkCB.AutoSize = true;
+            thursdayOffWorkCB.Location = new System.Drawing.Point(798, 247);
+            thursdayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            thursdayOffWorkCB.Name = "thursdayOffWorkCB";
+            thursdayOffWorkCB.Size = new System.Drawing.Size(123, 34);
+            thursdayOffWorkCB.TabIndex = 21;
+            thursdayOffWorkCB.Text = "Off Work";
+            thursdayOffWorkCB.UseVisualStyleBackColor = true;
+            thursdayOffWorkCB.CheckedChanged += thursdayOffWorkCB_CheckedChanged;
             // 
             // fridayOffWorkCB
             // 
-            this.fridayOffWorkCB.AutoSize = true;
-            this.fridayOffWorkCB.Location = new System.Drawing.Point(495, 107);
-            this.fridayOffWorkCB.Name = "fridayOffWorkCB";
-            this.fridayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.fridayOffWorkCB.TabIndex = 24;
-            this.fridayOffWorkCB.Text = "Off Work";
-            this.fridayOffWorkCB.UseVisualStyleBackColor = true;
-            this.fridayOffWorkCB.CheckedChanged += new System.EventHandler(this.fridayOffWorkCB_CheckedChanged);
+            fridayOffWorkCB.AutoSize = true;
+            fridayOffWorkCB.Location = new System.Drawing.Point(990, 247);
+            fridayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            fridayOffWorkCB.Name = "fridayOffWorkCB";
+            fridayOffWorkCB.Size = new System.Drawing.Size(123, 34);
+            fridayOffWorkCB.TabIndex = 24;
+            fridayOffWorkCB.Text = "Off Work";
+            fridayOffWorkCB.UseVisualStyleBackColor = true;
+            fridayOffWorkCB.CheckedChanged += fridayOffWorkCB_CheckedChanged;
             // 
             // saturdayOffWorkCB
             // 
-            this.saturdayOffWorkCB.AutoSize = true;
-            this.saturdayOffWorkCB.Location = new System.Drawing.Point(591, 107);
-            this.saturdayOffWorkCB.Name = "saturdayOffWorkCB";
-            this.saturdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.saturdayOffWorkCB.TabIndex = 27;
-            this.saturdayOffWorkCB.Text = "Off Work";
-            this.saturdayOffWorkCB.UseVisualStyleBackColor = true;
-            this.saturdayOffWorkCB.CheckedChanged += new System.EventHandler(this.saturdayOffWorkCB_CheckedChanged);
+            saturdayOffWorkCB.AutoSize = true;
+            saturdayOffWorkCB.Location = new System.Drawing.Point(1182, 247);
+            saturdayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            saturdayOffWorkCB.Name = "saturdayOffWorkCB";
+            saturdayOffWorkCB.Size = new System.Drawing.Size(123, 34);
+            saturdayOffWorkCB.TabIndex = 27;
+            saturdayOffWorkCB.Text = "Off Work";
+            saturdayOffWorkCB.UseVisualStyleBackColor = true;
+            saturdayOffWorkCB.CheckedChanged += saturdayOffWorkCB_CheckedChanged;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 719);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(84, 23);
-            this.button2.TabIndex = 38;
-            this.button2.Text = "Save Settings";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            button2.Location = new System.Drawing.Point(24, 1024);
+            button2.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(168, 53);
+            button2.TabIndex = 38;
+            button2.Text = "Save Settings";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // lblExternalMesage
             // 
-            this.lblExternalMesage.AutoSize = true;
-            this.lblExternalMesage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExternalMesage.Location = new System.Drawing.Point(14, 132);
-            this.lblExternalMesage.Name = "lblExternalMesage";
-            this.lblExternalMesage.Size = new System.Drawing.Size(107, 13);
-            this.lblExternalMesage.TabIndex = 40;
-            this.lblExternalMesage.Text = "External Message";
+            lblExternalMesage.AutoSize = true;
+            lblExternalMesage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            lblExternalMesage.Location = new System.Drawing.Point(28, 305);
+            lblExternalMesage.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            lblExternalMesage.Name = "lblExternalMesage";
+            lblExternalMesage.Size = new System.Drawing.Size(185, 25);
+            lblExternalMesage.TabIndex = 40;
+            lblExternalMesage.Text = "External Message";
             // 
             // lblInternalMessage
             // 
-            this.lblInternalMessage.AutoSize = true;
-            this.lblInternalMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblInternalMessage.Location = new System.Drawing.Point(14, 428);
-            this.lblInternalMessage.Name = "lblInternalMessage";
-            this.lblInternalMessage.Size = new System.Drawing.Size(104, 13);
-            this.lblInternalMessage.TabIndex = 41;
-            this.lblInternalMessage.Text = "Internal Message";
+            lblInternalMessage.AutoSize = true;
+            lblInternalMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            lblInternalMessage.Location = new System.Drawing.Point(28, 670);
+            lblInternalMessage.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            lblInternalMessage.Name = "lblInternalMessage";
+            lblInternalMessage.Size = new System.Drawing.Size(178, 25);
+            lblInternalMessage.TabIndex = 41;
+            lblInternalMessage.Text = "Internal Message";
             // 
             // menuStrip1
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(689, 24);
-            this.menuStrip1.TabIndex = 42;
-            this.menuStrip1.Text = "menuStrip1";
+            menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem });
+            menuStrip1.Location = new System.Drawing.Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Padding = new System.Windows.Forms.Padding(12, 5, 0, 5);
+            menuStrip1.Size = new System.Drawing.Size(1366, 44);
+            menuStrip1.TabIndex = 42;
+            menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.signoutToolStripMenuItem,
-            this.enableOnCallModeToolStripMenuItem,
-            this.showLogsToolStripMenuItem,
-            this.exitToolStripMenuItem,
-            this.bETAEnableNewOOFToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            this.fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.fileToolStripMenuItem.AccessibleName = "File";
-            this.fileToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
+            fileToolStripMenuItem.AccessibleDescription = "File";
+            fileToolStripMenuItem.AccessibleName = "File";
+            fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, signoutToolStripMenuItem, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new System.Drawing.Size(62, 34);
+            fileToolStripMenuItem.Text = "File";
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.CheckOnClick = true;
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.primaryToolStripMenuItem,
-            this.secondaryToolStripMenuItem});
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(231, 22);
-            this.toolStripMenuItem1.Text = "Message";
-            this.toolStripMenuItem1.AccessibleDefaultActionDescription = "Sets the OOF message to the primary or secondary";
-            this.toolStripMenuItem1.AccessibleName = "Message selection"; // + " " + "1 of 5";
-            this.toolStripMenuItem1.AccessibleDescription = "A menu item with text 'Message'";
+            toolStripMenuItem1.AccessibleDescription = "A menu item with text 'Message'";
+            toolStripMenuItem1.AccessibleName = "Message selection";
+            toolStripMenuItem1.CheckOnClick = true;
+            toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { primaryToolStripMenuItem, secondaryToolStripMenuItem });
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new System.Drawing.Size(409, 40);
+            toolStripMenuItem1.Text = "Message";
             // 
             // primaryToolStripMenuItem
             // 
-            this.primaryToolStripMenuItem.Checked = true;
-            this.primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
-            this.primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.primaryToolStripMenuItem.Text = "Primary";
-            this.primaryToolStripMenuItem.Click += new System.EventHandler(this.primaryToolStripMenuItem_Click);
-            this.primaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.primaryToolStripMenuItem.AccessibleDefaultActionDescription = "Sets the OOF message to the primary message";
-            this.primaryToolStripMenuItem.AccessibleName = "Primary message"; // + " " + "1 of 2";
-            this.primaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Primary'";
+            primaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Primary'";
+            primaryToolStripMenuItem.AccessibleName = "Primary message";
+            primaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            primaryToolStripMenuItem.Checked = true;
+            primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
+            primaryToolStripMenuItem.Size = new System.Drawing.Size(227, 40);
+            primaryToolStripMenuItem.Text = "Primary";
+            primaryToolStripMenuItem.Click += primaryToolStripMenuItem_Click;
             // 
             // secondaryToolStripMenuItem
             // 
-            this.secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
-            this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            this.secondaryToolStripMenuItem.Text = "Secondary";
-            this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
-            this.secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.secondaryToolStripMenuItem.AccessibleDefaultActionDescription = "Sets the OOF message to the secondary message";
-            this.secondaryToolStripMenuItem.AccessibleName = "Secondary message"; // + " " + "2 of 2";
-            this.secondaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Secondary'";
+            secondaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Secondary'";
+            secondaryToolStripMenuItem.AccessibleName = "Secondary message";
+            secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
+            secondaryToolStripMenuItem.Size = new System.Drawing.Size(227, 40);
+            secondaryToolStripMenuItem.Text = "Secondary";
+            secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
             // signoutToolStripMenuItem
             // 
-            this.signoutToolStripMenuItem.Name = "signoutToolStripMenuItem";
-            this.signoutToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.signoutToolStripMenuItem.Text = "Sign out";
-            this.signoutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
-            this.signoutToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.signoutToolStripMenuItem.AccessibleDefaultActionDescription = "Signs you out";
-            this.signoutToolStripMenuItem.AccessibleName = "Sign out"; // + " " + "2 of 5";
-            this.signoutToolStripMenuItem.AccessibleDescription = "A menu item with text 'Sign out'";
-
+            signoutToolStripMenuItem.AccessibleDescription = "A menu item with text 'Sign out'";
+            signoutToolStripMenuItem.AccessibleName = "Sign out";
+            signoutToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            signoutToolStripMenuItem.Name = "signoutToolStripMenuItem";
+            signoutToolStripMenuItem.Size = new System.Drawing.Size(409, 40);
+            signoutToolStripMenuItem.Text = "Sign out";
+            signoutToolStripMenuItem.Click += signOutToolStripMenuItem_Click;
             // 
             // enableOnCallModeToolStripMenuItem
             // 
-            this.enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
-            this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
-            this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
-            this.enableOnCallModeToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.enableOnCallModeToolStripMenuItem.AccessibleDefaultActionDescription = "Enables on-call mode";
-            this.enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode"; // + " " + "3 of 5";
-            this.enableOnCallModeToolStripMenuItem.AccessibleDescription = "A menu item with text '(BETA) Enable On-Call Mode'";
+            enableOnCallModeToolStripMenuItem.AccessibleDescription = "A menu item with text '(BETA) Enable On-Call Mode'";
+            enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode";
+            enableOnCallModeToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
+            enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(409, 40);
+            enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
+            enableOnCallModeToolStripMenuItem.Click += enableOnCallModeToolStripMenuItem_Click;
             // 
             // showLogsToolStripMenuItem
             // 
-            this.showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
-            this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.showLogsToolStripMenuItem.Text = "Show logs";
-            this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
-            this.showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.showLogsToolStripMenuItem.AccessibleDefaultActionDescription = "Open the folder containing the log file";
-            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text; // + " " + "4 of 5";
-            this.showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text '" + this.showLogsToolStripMenuItem.Text + "'";
+            showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text 'Show logs'";
+            showLogsToolStripMenuItem.AccessibleName = "Show logs";
+            showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
+            showLogsToolStripMenuItem.Size = new System.Drawing.Size(409, 40);
+            showLogsToolStripMenuItem.Text = "Show logs";
+            showLogsToolStripMenuItem.Click += showLogsToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            this.showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            this.showLogsToolStripMenuItem.AccessibleDefaultActionDescription = "Exit";
-            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text; // + " " + "5 of 5";
-            this.showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text '" + this.showLogsToolStripMenuItem.Text + "'";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(12, 25);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(157, 13);
-            this.label13.TabIndex = 43;
-            this.label13.Text = "Enter your Working Hours:";
-            this.label13.AccessibleName = "Enter your Working Hours";
-            this.label13.AccessibleDescription = "A label saying '" + this.label13.Text + "'";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2,
-            this.lblBuild});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 747);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(689, 24);
-            this.statusStrip1.TabIndex = 45;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 19);
-            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(122, 19);
-            this.toolStripStatusLabel2.Text = "toolStripStatusLabel2";
-            // 
-            // lblBuild
-            // 
-            this.lblBuild.Name = "lblBuild";
-            this.lblBuild.Size = new System.Drawing.Size(78, 19);
-            this.lblBuild.Text = "BuildNumber";
-            // 
-            // passwordConfirmTB
-            // 
-            this.passwordConfirmTB.Location = new System.Drawing.Point(442, 771);
-            this.passwordConfirmTB.Name = "passwordConfirmTB";
-            this.passwordConfirmTB.Size = new System.Drawing.Size(100, 20);
-            this.passwordConfirmTB.TabIndex = 52;
-            this.passwordConfirmTB.UseSystemPasswordChar = true;
-            this.passwordConfirmTB.Visible = false;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(342, 774);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(94, 13);
-            this.label10.TabIndex = 51;
-            this.label10.Text = "Confirm Password:";
-            this.label10.Visible = false;
-            // 
-            // passwordTB
-            // 
-            this.passwordTB.Location = new System.Drawing.Point(235, 771);
-            this.passwordTB.Name = "passwordTB";
-            this.passwordTB.Size = new System.Drawing.Size(100, 20);
-            this.passwordTB.TabIndex = 50;
-            this.passwordTB.UseSystemPasswordChar = true;
-            this.passwordTB.Visible = false;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(173, 774);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(56, 13);
-            this.label9.TabIndex = 49;
-            this.label9.Text = "Password:";
-            this.label9.Visible = false;
-            // 
-            // emailAddressTB
-            // 
-            this.emailAddressTB.Location = new System.Drawing.Point(67, 771);
-            this.emailAddressTB.Name = "emailAddressTB";
-            this.emailAddressTB.Size = new System.Drawing.Size(100, 20);
-            this.emailAddressTB.TabIndex = 48;
-            this.emailAddressTB.Visible = false;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(26, 774);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(35, 13);
-            this.label8.TabIndex = 47;
-            this.label8.Text = "Email:";
-            this.label8.Visible = false;
-            // 
-            // btnPermaOOF
-            // 
-            this.btnPermaOOF.Location = new System.Drawing.Point(308, 719);
-            this.btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
-            this.btnPermaOOF.Name = "btnPermaOOF";
-            this.btnPermaOOF.Size = new System.Drawing.Size(130, 23);
-            this.btnPermaOOF.TabIndex = 54;
-            this.btnPermaOOF.Tag = "Enable";
-            this.btnPermaOOF.Text = "Go OOF now until:";
-            this.btnPermaOOF.UseVisualStyleBackColor = true;
-            this.btnPermaOOF.Click += new System.EventHandler(this.btnPermaOOF_Click);
-            // 
-            // dtPermaOOF
-            // 
-            this.dtPermaOOF.Enabled = false;
-            this.dtPermaOOF.Location = new System.Drawing.Point(438, 721);
-            this.dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
-            this.dtPermaOOF.Name = "dtPermaOOF";
-            this.dtPermaOOF.Size = new System.Drawing.Size(185, 20);
-            this.dtPermaOOF.TabIndex = 55;
-            // 
-            // radPrimary
-            // 
-            this.radPrimary.AutoSize = true;
-            this.radPrimary.Checked = true;
-            this.radPrimary.Location = new System.Drawing.Point(110, 722);
-            this.radPrimary.Name = "radPrimary";
-            this.radPrimary.Size = new System.Drawing.Size(84, 17);
-            this.radPrimary.TabIndex = 56;
-            this.radPrimary.TabStop = true;
-            this.radPrimary.Text = "Primary OOF";
-            this.radPrimary.UseVisualStyleBackColor = true;
-            // 
-            // radSecondary
-            // 
-            this.radSecondary.AutoSize = true;
-            this.radSecondary.Location = new System.Drawing.Point(202, 722);
-            this.radSecondary.Name = "radSecondary";
-            this.radSecondary.Size = new System.Drawing.Size(101, 17);
-            this.radSecondary.TabIndex = 56;
-            this.radSecondary.TabStop = true;
-            this.radSecondary.Text = "Secondary OOF";
-            this.radSecondary.UseVisualStyleBackColor = true;
-            // 
-            // htmlEditorControl2
-            // 
-            this.htmlEditorControl2.InnerText = null;
-            this.htmlEditorControl2.Location = new System.Drawing.Point(12, 444);
-            this.htmlEditorControl2.Name = "htmlEditorControl2";
-            this.htmlEditorControl2.Size = new System.Drawing.Size(667, 269);
-            this.htmlEditorControl2.TabIndex = 39;
-            // 
-            // htmlEditorControl1
-            // 
-            this.htmlEditorControl1.InnerText = null;
-            this.htmlEditorControl1.Location = new System.Drawing.Point(12, 148);
-            this.htmlEditorControl1.Name = "htmlEditorControl1";
-            this.htmlEditorControl1.Size = new System.Drawing.Size(667, 277);
-            this.htmlEditorControl1.TabIndex = 31;
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new System.Drawing.Size(409, 40);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // bETAEnableNewOOFToolStripMenuItem
             // 
-            this.bETAEnableNewOOFToolStripMenuItem.Name = "bETAEnableNewOOFToolStripMenuItem";
-            this.bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
-            this.bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
-            this.bETAEnableNewOOFToolStripMenuItem.Click += new System.EventHandler(this.bETAEnableNewOOFToolStripMenuItem_Click);
-            this.bETAEnableNewOOFToolStripMenuItem.AccessibleName = "(BETA) Enable new OOF math";
-            this.bETAEnableNewOOFToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
-            this.bETAEnableNewOOFToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            bETAEnableNewOOFToolStripMenuItem.AccessibleName = "(BETA) Enable new OOF math";
+            bETAEnableNewOOFToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            bETAEnableNewOOFToolStripMenuItem.Name = "bETAEnableNewOOFToolStripMenuItem";
+            bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(409, 40);
+            bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
+            bETAEnableNewOOFToolStripMenuItem.Click += bETAEnableNewOOFToolStripMenuItem_Click;
+            // 
+            // label13
+            // 
+            label13.AccessibleDescription = "A label saying 'Enter your Working Hours:'";
+            label13.AccessibleName = "Enter your Working Hours";
+            label13.AutoSize = true;
+            label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            label13.Location = new System.Drawing.Point(24, 58);
+            label13.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label13.Name = "label13";
+            label13.Size = new System.Drawing.Size(267, 25);
+            label13.TabIndex = 43;
+            label13.Text = "Enter your Working Hours:";
+            // 
+            // statusStrip1
+            // 
+            statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, lblBuild });
+            statusStrip1.Location = new System.Drawing.Point(0, 1816);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 28, 0);
+            statusStrip1.Size = new System.Drawing.Size(1366, 43);
+            statusStrip1.TabIndex = 45;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            toolStripStatusLabel1.Size = new System.Drawing.Size(206, 34);
+            toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
+            // toolStripStatusLabel2
+            // 
+            toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            toolStripStatusLabel2.Size = new System.Drawing.Size(210, 34);
+            toolStripStatusLabel2.Text = "toolStripStatusLabel2";
+            // 
+            // lblBuild
+            // 
+            lblBuild.Name = "lblBuild";
+            lblBuild.Size = new System.Drawing.Size(135, 34);
+            lblBuild.Text = "BuildNumber";
+            // 
+            // passwordConfirmTB
+            // 
+            passwordConfirmTB.Location = new System.Drawing.Point(884, 1779);
+            passwordConfirmTB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            passwordConfirmTB.Name = "passwordConfirmTB";
+            passwordConfirmTB.Size = new System.Drawing.Size(196, 35);
+            passwordConfirmTB.TabIndex = 52;
+            passwordConfirmTB.UseSystemPasswordChar = true;
+            passwordConfirmTB.Visible = false;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new System.Drawing.Point(684, 1786);
+            label10.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(184, 30);
+            label10.TabIndex = 51;
+            label10.Text = "Confirm Password:";
+            label10.Visible = false;
+            // 
+            // passwordTB
+            // 
+            passwordTB.Location = new System.Drawing.Point(470, 1779);
+            passwordTB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            passwordTB.Name = "passwordTB";
+            passwordTB.Size = new System.Drawing.Size(196, 35);
+            passwordTB.TabIndex = 50;
+            passwordTB.UseSystemPasswordChar = true;
+            passwordTB.Visible = false;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new System.Drawing.Point(346, 1786);
+            label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label9.Name = "label9";
+            label9.Size = new System.Drawing.Size(104, 30);
+            label9.TabIndex = 49;
+            label9.Text = "Password:";
+            label9.Visible = false;
+            // 
+            // emailAddressTB
+            // 
+            emailAddressTB.Location = new System.Drawing.Point(134, 1779);
+            emailAddressTB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            emailAddressTB.Name = "emailAddressTB";
+            emailAddressTB.Size = new System.Drawing.Size(196, 35);
+            emailAddressTB.TabIndex = 48;
+            emailAddressTB.Visible = false;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new System.Drawing.Point(52, 1786);
+            label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            label8.Name = "label8";
+            label8.Size = new System.Drawing.Size(68, 30);
+            label8.TabIndex = 47;
+            label8.Text = "Email:";
+            label8.Visible = false;
+            // 
+            // btnPermaOOF
+            // 
+            btnPermaOOF.Location = new System.Drawing.Point(649, 1024);
+            btnPermaOOF.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            btnPermaOOF.Name = "btnPermaOOF";
+            btnPermaOOF.Size = new System.Drawing.Size(260, 53);
+            btnPermaOOF.TabIndex = 54;
+            btnPermaOOF.Tag = "Enable";
+            btnPermaOOF.Text = "Go OOF now until:";
+            btnPermaOOF.UseVisualStyleBackColor = true;
+            btnPermaOOF.Click += btnPermaOOF_Click;
+            // 
+            // dtPermaOOF
+            // 
+            dtPermaOOF.Enabled = false;
+            dtPermaOOF.Location = new System.Drawing.Point(917, 1033);
+            dtPermaOOF.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            dtPermaOOF.Name = "dtPermaOOF";
+            dtPermaOOF.Size = new System.Drawing.Size(366, 35);
+            dtPermaOOF.TabIndex = 55;
+            // 
+            // radPrimary
+            // 
+            radPrimary.AutoSize = true;
+            radPrimary.Checked = true;
+            radPrimary.Location = new System.Drawing.Point(204, 1033);
+            radPrimary.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            radPrimary.Name = "radPrimary";
+            radPrimary.Size = new System.Drawing.Size(156, 34);
+            radPrimary.TabIndex = 56;
+            radPrimary.TabStop = true;
+            radPrimary.Text = "Primary OOF";
+            radPrimary.UseVisualStyleBackColor = true;
+            // 
+            // radSecondary
+            // 
+            radSecondary.AutoSize = true;
+            radSecondary.Location = new System.Drawing.Point(372, 1033);
+            radSecondary.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            radSecondary.Name = "radSecondary";
+            radSecondary.Size = new System.Drawing.Size(182, 34);
+            radSecondary.TabIndex = 56;
+            radSecondary.TabStop = true;
+            radSecondary.Text = "Secondary OOF";
+            radSecondary.UseVisualStyleBackColor = true;
+            // 
+            // htmlEditorControl2
+            // 
+            htmlEditorControl2.InnerText = null;
+            htmlEditorControl2.Location = new System.Drawing.Point(24, 702);
+            htmlEditorControl2.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            htmlEditorControl2.Name = "htmlEditorControl2";
+            htmlEditorControl2.Size = new System.Drawing.Size(1334, 300);
+            htmlEditorControl2.TabIndex = 39;
+            // 
+            // htmlEditorControl1
+            // 
+            htmlEditorControl1.InnerText = null;
+            htmlEditorControl1.Location = new System.Drawing.Point(24, 342);
+            htmlEditorControl1.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            htmlEditorControl1.Name = "htmlEditorControl1";
+            htmlEditorControl1.Size = new System.Drawing.Size(1334, 300);
+            htmlEditorControl1.TabIndex = 31;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(689, 771);
-            this.Controls.Add(this.dtPermaOOF);
-            this.Controls.Add(this.btnPermaOOF);
-            this.Controls.Add(this.passwordConfirmTB);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.passwordTB);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.emailAddressTB);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.lblInternalMessage);
-            this.Controls.Add(this.lblExternalMesage);
-            this.Controls.Add(this.htmlEditorControl2);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.htmlEditorControl1);
-            this.Controls.Add(this.saturdayOffWorkCB);
-            this.Controls.Add(this.fridayOffWorkCB);
-            this.Controls.Add(this.thursdayOffWorkCB);
-            this.Controls.Add(this.wednesdayOffWorkCB);
-            this.Controls.Add(this.tuesdayOffWorkCB);
-            this.Controls.Add(this.mondayOffWorkCB);
-            this.Controls.Add(this.sundayOffWorkCB);
-            this.Controls.Add(this.saturdayEndTimepicker);
-            this.Controls.Add(this.fridayEndTimepicker);
-            this.Controls.Add(this.thursdayEndTimepicker);
-            this.Controls.Add(this.wednesdayEndTimepicker);
-            this.Controls.Add(this.tuesdayEndTimepicker);
-            this.Controls.Add(this.mondayEndTimepicker);
-            this.Controls.Add(this.sundayEndTimepicker);
-            this.Controls.Add(this.saturdayStartTimepicker);
-            this.Controls.Add(this.fridayStartTimepicker);
-            this.Controls.Add(this.thursdayStartTimepicker);
-            this.Controls.Add(this.wednesdayStartTimepicker);
-            this.Controls.Add(this.tuesdayStartTimepicker);
-            this.Controls.Add(this.mondayStartTimepicker);
-            this.Controls.Add(this.sundayStartTimepicker);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.radPrimary);
-            this.Controls.Add(this.radSecondary);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(705, 810);
-            this.MinimumSize = new System.Drawing.Size(705, 810);
-            this.Name = "Form1";
-            this.Text = "OOFSponder";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
-            this.Resize += new System.EventHandler(this.Form1_Resize);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScroll = true;
+            ClientSize = new System.Drawing.Size(1396, 1136);
+            Controls.Add(dtPermaOOF);
+            Controls.Add(btnPermaOOF);
+            Controls.Add(passwordConfirmTB);
+            Controls.Add(label10);
+            Controls.Add(passwordTB);
+            Controls.Add(label9);
+            Controls.Add(emailAddressTB);
+            Controls.Add(label8);
+            Controls.Add(statusStrip1);
+            Controls.Add(label13);
+            Controls.Add(lblInternalMessage);
+            Controls.Add(lblExternalMesage);
+            Controls.Add(htmlEditorControl2);
+            Controls.Add(button2);
+            Controls.Add(htmlEditorControl1);
+            Controls.Add(saturdayOffWorkCB);
+            Controls.Add(fridayOffWorkCB);
+            Controls.Add(thursdayOffWorkCB);
+            Controls.Add(wednesdayOffWorkCB);
+            Controls.Add(tuesdayOffWorkCB);
+            Controls.Add(mondayOffWorkCB);
+            Controls.Add(sundayOffWorkCB);
+            Controls.Add(saturdayEndTimepicker);
+            Controls.Add(fridayEndTimepicker);
+            Controls.Add(thursdayEndTimepicker);
+            Controls.Add(wednesdayEndTimepicker);
+            Controls.Add(tuesdayEndTimepicker);
+            Controls.Add(mondayEndTimepicker);
+            Controls.Add(sundayEndTimepicker);
+            Controls.Add(saturdayStartTimepicker);
+            Controls.Add(fridayStartTimepicker);
+            Controls.Add(thursdayStartTimepicker);
+            Controls.Add(wednesdayStartTimepicker);
+            Controls.Add(tuesdayStartTimepicker);
+            Controls.Add(mondayStartTimepicker);
+            Controls.Add(sundayStartTimepicker);
+            Controls.Add(label7);
+            Controls.Add(label6);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(menuStrip1);
+            Controls.Add(radPrimary);
+            Controls.Add(radSecondary);
+            MainMenuStrip = menuStrip1;
+            Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            MaximizeBox = false;
+            MaximumSize = new System.Drawing.Size(1420, 1200);
+            MinimumSize = new System.Drawing.Size(1420, 300);
+            Name = "Form1";
+            Text = "OOFSponder";
+            FormClosing += Form1_FormClosing;
+            Resize += Form1_Resize;
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         private void SaveToolStripMenuItem_Click(object sender, System.EventArgs e)
