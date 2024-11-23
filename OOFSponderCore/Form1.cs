@@ -1199,7 +1199,13 @@ namespace OOFScheduling
         {
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
-            System.Diagnostics.Process.Start(strWorkPath);
+
+            var psi = new System.Diagnostics.ProcessStartInfo()
+            {
+                FileName = System.IO.Path.Combine(strWorkPath,"OOFSponder.log"),
+                UseShellExecute = true
+            };
+            System.Diagnostics.Process.Start(psi);
         }
 
         private void bETAEnableNewOOFToolStripMenuItem_Click(object sender, EventArgs e)
