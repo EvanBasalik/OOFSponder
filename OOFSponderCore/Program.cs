@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Diagnostics;
 
 namespace OOFScheduling
 {
@@ -19,6 +20,8 @@ namespace OOFScheduling
         [STAThread]
         static void Main()
         {
+
+            TraceConfiguration.Register();
 
             try
             {

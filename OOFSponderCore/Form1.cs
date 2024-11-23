@@ -1202,7 +1202,8 @@ namespace OOFScheduling
 
             var psi = new System.Diagnostics.ProcessStartInfo()
             {
-                FileName = System.IO.Path.Combine(strWorkPath,"OOFSponder.log"),
+                //TODO - figure out a way to make this name dynamic to match the trace file name
+                FileName = System.IO.Path.Combine(strWorkPath, "OOFSponder.log"),
                 UseShellExecute = true
             };
             System.Diagnostics.Process.Start(psi);
