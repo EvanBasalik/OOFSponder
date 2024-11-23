@@ -54,14 +54,9 @@ namespace OOFScheduling
             DoAccessibilityUIWork();
 
             #region SetBuildInfo
-            foreach (Assembly a in Thread.GetDomain().GetAssemblies())
-            {
-                if (a.GetName().Name == "OOFScheduling")
-                {
-                    OOFData.version = lblBuild.Text = a.GetName().Version.ToString();
-                    break;
-                }
-            }
+
+            OOFData.version = lblBuild.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
+
             #endregion
 
             OOFSponderInsights.ConfigureApplicationInsights();
