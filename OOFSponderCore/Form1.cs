@@ -987,8 +987,19 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
+            //to be thread-safe, grab the value of dtPermaOOF here and store it
+            DateTime dtPermaOOFValue = new DateTime();
+            if (dtPermaOOF.InvokeRequired)
+            {
+                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate { dtPermaOOFValue = dtPermaOOF.Value; }));
+            }
+            else
+            {
+                dtPermaOOFValue = dtPermaOOF.Value;
+            }
+
             //bail if permaOOF not in the future
-            if (DateTime.Now >= dtPermaOOF.Value)
+            if (DateTime.Now >= dtPermaOOFValue)
             {
                 MessageBox.Show("You must pick a date in future", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -1004,7 +1015,7 @@ namespace OOFScheduling
             bool result = false;
             if (((Button)sender).Tag.ToString() == "Enable")
             {
-                OOFData.Instance.PermaOOFDate = dtPermaOOF.Value;
+                OOFData.Instance.PermaOOFDate = dtPermaOOFValue;
             }
             else
             {
@@ -1060,14 +1071,37 @@ namespace OOFScheduling
             {
                 btnPermaOOF.Text = "Disable Extended OOF";
                 btnPermaOOF.Tag = "Disable";
-                dtPermaOOF.Enabled = false;
+
+                //need to be thread-safe
+                if (dtPermaOOF.InvokeRequired)
+                {
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate { dtPermaOOF.Enabled=false; }));
+                }
+                else
+                {
+                    dtPermaOOF.Enabled=false;
+                }
+
             }
             else
             {
                 btnPermaOOF.Text = "Enable Extended OOF";
                 btnPermaOOF.Tag = "Enable";
-                dtPermaOOF.Value = DateTime.Now.AddDays(1);
-                dtPermaOOF.Enabled = true;
+
+                //need to be thread-safe
+                if (dtPermaOOF.InvokeRequired)
+                {
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate {
+                        dtPermaOOF.Value = DateTime.Now.AddDays(1);
+                        dtPermaOOF.Enabled = true;
+                    }));
+                }
+                else
+                {
+                    dtPermaOOF.Value = DateTime.Now.AddDays(1);
+                    dtPermaOOF.Enabled = true;
+                }
+
             }
 
             //lastly, enable the permaOOF controls to help with some UI flow issues
@@ -1106,8 +1140,20 @@ namespace OOFScheduling
 
             //lastly, disable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = false;
-            dtPermaOOF.Enabled = false;
-            dtPermaOOF.Value = DateTime.Now;
+
+            //need to be thread-safe
+            if (dtPermaOOF.InvokeRequired)
+            {
+                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate {
+                    dtPermaOOF.Enabled = false;
+                    dtPermaOOF.Value = DateTime.Now;
+                }));
+            }
+            else
+            {
+                dtPermaOOF.Enabled = false;
+                dtPermaOOF.Value = DateTime.Now;
+            }
 
             OOFSponderInsights.Track("Configured for primary");
         }
