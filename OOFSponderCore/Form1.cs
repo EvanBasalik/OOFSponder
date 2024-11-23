@@ -805,7 +805,7 @@ namespace OOFScheduling
                 notifyIcon1.Visible = true;
                 notifyIcon1.ShowBalloonTip(100);
                 this.ShowInTaskbar = false;
-                this.Hide();
+                //this.Hide();
             }
         }
 
@@ -823,7 +823,7 @@ namespace OOFScheduling
             {
                 e.Cancel = true;
                 this.WindowState = FormWindowState.Minimized;
-                this.Hide();
+                //this.Hide();
             }
         }
 
