@@ -225,24 +225,6 @@ namespace OOFScheduling
 
         private void DoAccessibilityUIWork()
         {
-            //moved to setting at design time. Shouldn't matter, but...
-            //set the AccessibleName for all the start/end time pickers
-            //var listofTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
-            //foreach (var timePicker in listofTimePickers)
-            //{
-            //    //day start times
-            //    if (timePicker.Name.Contains("StartTimepicker"))
-            //    {
-            //        timePicker.AccessibleName = "Enter your Start Time for " + timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper();
-            //    }
-
-            //    //day end times
-            //    if (timePicker.Name.Contains("EndTimepicker"))
-            //    {
-            //        timePicker.AccessibleName = "Enter your End Time for " + timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper();
-            //    }
-            //}
-
             //set the AccessibleName for all the working day checkboxes
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
             foreach (var checkBox in listOfCheckBoxControls)
@@ -255,11 +237,25 @@ namespace OOFScheduling
 
             //set the AccessibleName for the OOF message controls
             //External
-            htmlEditorControl1.AccessibleName = "Primary OOF Message";
+            htmlEditorControl1.AccessibleName = "External OOF Message";
+            foreach (Control item in htmlEditorControl1.Controls)
+            {
+                if (item.GetType() == typeof(ToolStrip))
+                {
+                    item.AccessibleName = "External " + item.AccessibleName;
+                }
+            }
 
 
             //Internal
-            htmlEditorControl2.AccessibleName = "Secondary OOF Message";
+            htmlEditorControl2.AccessibleName = "Internal OOF Message";
+            foreach (Control item in htmlEditorControl2.Controls)
+            {
+                if (item.GetType() == typeof(ToolStrip))
+                {
+                    item.AccessibleName = "Internal " + item.AccessibleName;
+                }
+            }
         }
 
         private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
