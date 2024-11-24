@@ -40,6 +40,9 @@ namespace MSDN.Html.Editor
             this.htmlText.Text = string.Empty;
             this.ReadOnly = true;
 
+            this.AccessibleDescription = this.AccessibleName = "blah2";
+
+
         } //EditHtmlForm
 
         /// <summary>

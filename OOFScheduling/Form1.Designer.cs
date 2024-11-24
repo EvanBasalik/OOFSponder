@@ -1,4 +1,6 @@
-﻿namespace OOFScheduling
+﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+
+namespace OOFScheduling
 {
     partial class Form1
     {
@@ -111,6 +113,9 @@
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Sunday";
+            this.label1.AccessibleName = this.label1.Text + " working hours";
+            this.label1.AccessibleDescription = "A label with the text " + this.label1.Text;
+
             // 
             // label2
             // 
@@ -120,6 +125,8 @@
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Monday";
+            this.label2.AccessibleName = this.label2.Text + " working hours";
+            this.label2.AccessibleDescription = "A label with the text " + this.label2.Text;
             // 
             // label3
             // 
@@ -129,6 +136,8 @@
             this.label3.Size = new System.Drawing.Size(48, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Tuesday";
+            this.label3.AccessibleName = this.label3.Text + " working hours";
+            this.label3.AccessibleDescription = "A label with the text " + this.label3.Text;
             // 
             // label4
             // 
@@ -138,6 +147,8 @@
             this.label4.Size = new System.Drawing.Size(64, 13);
             this.label4.TabIndex = 3;
             this.label4.Text = "Wednesday";
+            this.label4.AccessibleName = this.label4.Text + " working hours";
+            this.label4.AccessibleDescription = "A label with the text " + this.label4.Text;
             // 
             // label5
             // 
@@ -147,6 +158,8 @@
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 4;
             this.label5.Text = "Thursday";
+            this.label5.AccessibleName = this.label5.Text + " working hours";
+            this.label5.AccessibleDescription = "A label with the text " + this.label5.Text;
             // 
             // label6
             // 
@@ -156,6 +169,8 @@
             this.label6.Size = new System.Drawing.Size(35, 13);
             this.label6.TabIndex = 5;
             this.label6.Text = "Friday";
+            this.label6.AccessibleName = this.label6.Text + " working hours";
+            this.label6.AccessibleDescription = "A label with the text " + this.label6.Text;
             // 
             // label7
             // 
@@ -165,6 +180,8 @@
             this.label7.Size = new System.Drawing.Size(49, 13);
             this.label7.TabIndex = 6;
             this.label7.Text = "Saturday";
+            this.label7.AccessibleName = this.label7.Text + " working hours";
+            this.label7.AccessibleDescription = "A label with the text " + this.label7.Text;
             // 
             // sundayStartTimepicker
             // 
@@ -175,6 +192,8 @@
             this.sundayStartTimepicker.Size = new System.Drawing.Size(90, 20);
             this.sundayStartTimepicker.TabIndex = 7;
             this.sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.sundayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.sundayStartTimepicker.AccessibleName = "Enter your working hours start time for Sunday";
             // 
             // mondayStartTimepicker
             // 
@@ -183,8 +202,10 @@
             this.mondayStartTimepicker.Name = "mondayStartTimepicker";
             this.mondayStartTimepicker.ShowUpDown = true;
             this.mondayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.mondayStartTimepicker.TabIndex = 8;
+            this.mondayStartTimepicker.TabIndex = 10;
             this.mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.mondayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.mondayStartTimepicker.AccessibleName = "Enter your working hours start time for Monday";
             // 
             // tuesdayStartTimepicker
             // 
@@ -193,8 +214,10 @@
             this.tuesdayStartTimepicker.Name = "tuesdayStartTimepicker";
             this.tuesdayStartTimepicker.ShowUpDown = true;
             this.tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.tuesdayStartTimepicker.TabIndex = 9;
+            this.tuesdayStartTimepicker.TabIndex = 13;
             this.tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.tuesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.tuesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Tuesday";
             // 
             // wednesdayStartTimepicker
             // 
@@ -203,8 +226,10 @@
             this.wednesdayStartTimepicker.Name = "wednesdayStartTimepicker";
             this.wednesdayStartTimepicker.ShowUpDown = true;
             this.wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.wednesdayStartTimepicker.TabIndex = 10;
+            this.wednesdayStartTimepicker.TabIndex = 16;
             this.wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.wednesdayStartTimepicker.AccessibleRole =  System.Windows.Forms.AccessibleRole.SpinButton;
+            this.wednesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Wednesday";
             // 
             // thursdayStartTimepicker
             // 
@@ -213,8 +238,10 @@
             this.thursdayStartTimepicker.Name = "thursdayStartTimepicker";
             this.thursdayStartTimepicker.ShowUpDown = true;
             this.thursdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.thursdayStartTimepicker.TabIndex = 11;
+            this.thursdayStartTimepicker.TabIndex = 19;
             this.thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.thursdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.thursdayStartTimepicker.AccessibleName = "Enter your working hours start time for Thursday";
             // 
             // fridayStartTimepicker
             // 
@@ -223,8 +250,10 @@
             this.fridayStartTimepicker.Name = "fridayStartTimepicker";
             this.fridayStartTimepicker.ShowUpDown = true;
             this.fridayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.fridayStartTimepicker.TabIndex = 12;
+            this.fridayStartTimepicker.TabIndex = 22;
             this.fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.fridayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.fridayStartTimepicker.AccessibleName = "Enter your working hours start time for Friday";
             // 
             // saturdayStartTimepicker
             // 
@@ -233,8 +262,10 @@
             this.saturdayStartTimepicker.Name = "saturdayStartTimepicker";
             this.saturdayStartTimepicker.ShowUpDown = true;
             this.saturdayStartTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.saturdayStartTimepicker.TabIndex = 13;
+            this.saturdayStartTimepicker.TabIndex = 25;
             this.saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            this.saturdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.saturdayStartTimepicker.AccessibleName = "Enter your working hours start time for Saturday";
             // 
             // saturdayEndTimepicker
             // 
@@ -243,8 +274,10 @@
             this.saturdayEndTimepicker.Name = "saturdayEndTimepicker";
             this.saturdayEndTimepicker.ShowUpDown = true;
             this.saturdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.saturdayEndTimepicker.TabIndex = 20;
+            this.saturdayEndTimepicker.TabIndex = 26;
             this.saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.saturdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.saturdayEndTimepicker.AccessibleName = "Enter your working hours end time for Saturday";
             // 
             // fridayEndTimepicker
             // 
@@ -253,8 +286,10 @@
             this.fridayEndTimepicker.Name = "fridayEndTimepicker";
             this.fridayEndTimepicker.ShowUpDown = true;
             this.fridayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.fridayEndTimepicker.TabIndex = 19;
+            this.fridayEndTimepicker.TabIndex = 23;
             this.fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.fridayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.fridayEndTimepicker.AccessibleName = "Enter your working hours end time for Friday";
             // 
             // thursdayEndTimepicker
             // 
@@ -263,8 +298,10 @@
             this.thursdayEndTimepicker.Name = "thursdayEndTimepicker";
             this.thursdayEndTimepicker.ShowUpDown = true;
             this.thursdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.thursdayEndTimepicker.TabIndex = 18;
+            this.thursdayEndTimepicker.TabIndex = 20;
             this.thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.thursdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.thursdayEndTimepicker.AccessibleName = "Enter your working hours end time for Thursday";
             // 
             // wednesdayEndTimepicker
             // 
@@ -275,6 +312,8 @@
             this.wednesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
             this.wednesdayEndTimepicker.TabIndex = 17;
             this.wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.wednesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.wednesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Wednesday";
             // 
             // tuesdayEndTimepicker
             // 
@@ -283,8 +322,10 @@
             this.tuesdayEndTimepicker.Name = "tuesdayEndTimepicker";
             this.tuesdayEndTimepicker.ShowUpDown = true;
             this.tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.tuesdayEndTimepicker.TabIndex = 16;
+            this.tuesdayEndTimepicker.TabIndex = 14;
             this.tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.tuesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.tuesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Tuesday";
             // 
             // mondayEndTimepicker
             // 
@@ -293,8 +334,10 @@
             this.mondayEndTimepicker.Name = "mondayEndTimepicker";
             this.mondayEndTimepicker.ShowUpDown = true;
             this.mondayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.mondayEndTimepicker.TabIndex = 15;
+            this.mondayEndTimepicker.TabIndex = 11;
             this.mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.mondayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.mondayEndTimepicker.AccessibleName = "Enter your working hours end time for Monday";
             // 
             // sundayEndTimepicker
             // 
@@ -303,8 +346,10 @@
             this.sundayEndTimepicker.Name = "sundayEndTimepicker";
             this.sundayEndTimepicker.ShowUpDown = true;
             this.sundayEndTimepicker.Size = new System.Drawing.Size(90, 20);
-            this.sundayEndTimepicker.TabIndex = 14;
+            this.sundayEndTimepicker.TabIndex = 8;
             this.sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            this.sundayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
+            this.sundayEndTimepicker.AccessibleName = "Enter your working hours end time for Sunday";
             // 
             // sundayOffWorkCB
             // 
@@ -312,7 +357,7 @@
             this.sundayOffWorkCB.Location = new System.Drawing.Point(15, 107);
             this.sundayOffWorkCB.Name = "sundayOffWorkCB";
             this.sundayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.sundayOffWorkCB.TabIndex = 21;
+            this.sundayOffWorkCB.TabIndex = 9;
             this.sundayOffWorkCB.Text = "Off Work";
             this.sundayOffWorkCB.UseVisualStyleBackColor = true;
             this.sundayOffWorkCB.CheckedChanged += new System.EventHandler(this.sundayOffWorkCB_CheckedChanged);
@@ -323,7 +368,7 @@
             this.mondayOffWorkCB.Location = new System.Drawing.Point(111, 107);
             this.mondayOffWorkCB.Name = "mondayOffWorkCB";
             this.mondayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.mondayOffWorkCB.TabIndex = 22;
+            this.mondayOffWorkCB.TabIndex = 12;
             this.mondayOffWorkCB.Text = "Off Work";
             this.mondayOffWorkCB.UseVisualStyleBackColor = true;
             this.mondayOffWorkCB.CheckedChanged += new System.EventHandler(this.mondayOffWorkCB_CheckedChanged);
@@ -334,7 +379,7 @@
             this.tuesdayOffWorkCB.Location = new System.Drawing.Point(207, 107);
             this.tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
             this.tuesdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.tuesdayOffWorkCB.TabIndex = 23;
+            this.tuesdayOffWorkCB.TabIndex = 15;
             this.tuesdayOffWorkCB.Text = "Off Work";
             this.tuesdayOffWorkCB.UseVisualStyleBackColor = true;
             this.tuesdayOffWorkCB.CheckedChanged += new System.EventHandler(this.tuesdayOffWorkCB_CheckedChanged);
@@ -345,7 +390,7 @@
             this.wednesdayOffWorkCB.Location = new System.Drawing.Point(303, 107);
             this.wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
             this.wednesdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.wednesdayOffWorkCB.TabIndex = 24;
+            this.wednesdayOffWorkCB.TabIndex = 18;
             this.wednesdayOffWorkCB.Text = "Off Work";
             this.wednesdayOffWorkCB.UseVisualStyleBackColor = true;
             this.wednesdayOffWorkCB.CheckedChanged += new System.EventHandler(this.wednesdayOffWorkCB_CheckedChanged);
@@ -356,7 +401,7 @@
             this.thursdayOffWorkCB.Location = new System.Drawing.Point(399, 107);
             this.thursdayOffWorkCB.Name = "thursdayOffWorkCB";
             this.thursdayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.thursdayOffWorkCB.TabIndex = 25;
+            this.thursdayOffWorkCB.TabIndex = 21;
             this.thursdayOffWorkCB.Text = "Off Work";
             this.thursdayOffWorkCB.UseVisualStyleBackColor = true;
             this.thursdayOffWorkCB.CheckedChanged += new System.EventHandler(this.thursdayOffWorkCB_CheckedChanged);
@@ -367,7 +412,7 @@
             this.fridayOffWorkCB.Location = new System.Drawing.Point(495, 107);
             this.fridayOffWorkCB.Name = "fridayOffWorkCB";
             this.fridayOffWorkCB.Size = new System.Drawing.Size(69, 17);
-            this.fridayOffWorkCB.TabIndex = 26;
+            this.fridayOffWorkCB.TabIndex = 24;
             this.fridayOffWorkCB.Text = "Off Work";
             this.fridayOffWorkCB.UseVisualStyleBackColor = true;
             this.fridayOffWorkCB.CheckedChanged += new System.EventHandler(this.fridayOffWorkCB_CheckedChanged);
@@ -436,6 +481,9 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            this.fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.fileToolStripMenuItem.AccessibleName = "File";
+            this.fileToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
             // 
             // toolStripMenuItem1
             // 
@@ -446,6 +494,9 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(231, 22);
             this.toolStripMenuItem1.Text = "Message";
+            this.toolStripMenuItem1.AccessibleDefaultActionDescription = "Sets the OOF message to the primary or secondary";
+            this.toolStripMenuItem1.AccessibleName = "Message selection"; // + " " + "1 of 5";
+            this.toolStripMenuItem1.AccessibleDescription = "A menu item with text 'Message'";
             // 
             // primaryToolStripMenuItem
             // 
@@ -455,6 +506,10 @@
             this.primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.primaryToolStripMenuItem.Text = "Primary";
             this.primaryToolStripMenuItem.Click += new System.EventHandler(this.primaryToolStripMenuItem_Click);
+            this.primaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.primaryToolStripMenuItem.AccessibleDefaultActionDescription = "Sets the OOF message to the primary message";
+            this.primaryToolStripMenuItem.AccessibleName = "Primary message"; // + " " + "1 of 2";
+            this.primaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Primary'";
             // 
             // secondaryToolStripMenuItem
             // 
@@ -462,6 +517,10 @@
             this.secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.secondaryToolStripMenuItem.Text = "Secondary";
             this.secondaryToolStripMenuItem.Click += new System.EventHandler(this.secondaryToolStripMenuItem_Click);
+            this.secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.secondaryToolStripMenuItem.AccessibleDefaultActionDescription = "Sets the OOF message to the secondary message";
+            this.secondaryToolStripMenuItem.AccessibleName = "Secondary message"; // + " " + "2 of 2";
+            this.secondaryToolStripMenuItem.AccessibleDescription = "A menu item with text 'Secondary'";
             // 
             // signoutToolStripMenuItem
             // 
@@ -469,6 +528,11 @@
             this.signoutToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.signoutToolStripMenuItem.Text = "Sign out";
             this.signoutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
+            this.signoutToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.signoutToolStripMenuItem.AccessibleDefaultActionDescription = "Signs you out";
+            this.signoutToolStripMenuItem.AccessibleName = "Sign out"; // + " " + "2 of 5";
+            this.signoutToolStripMenuItem.AccessibleDescription = "A menu item with text 'Sign out'";
+
             // 
             // enableOnCallModeToolStripMenuItem
             // 
@@ -476,6 +540,10 @@
             this.enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
             this.enableOnCallModeToolStripMenuItem.Click += new System.EventHandler(this.enableOnCallModeToolStripMenuItem_Click);
+            this.enableOnCallModeToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.enableOnCallModeToolStripMenuItem.AccessibleDefaultActionDescription = "Enables on-call mode";
+            this.enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode"; // + " " + "3 of 5";
+            this.enableOnCallModeToolStripMenuItem.AccessibleDescription = "A menu item with text '(BETA) Enable On-Call Mode'";
             // 
             // showLogsToolStripMenuItem
             // 
@@ -483,6 +551,10 @@
             this.showLogsToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.showLogsToolStripMenuItem.Text = "Show logs";
             this.showLogsToolStripMenuItem.Click += new System.EventHandler(this.showLogsToolStripMenuItem_Click);
+            this.showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.showLogsToolStripMenuItem.AccessibleDefaultActionDescription = "Open the folder containing the log file";
+            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text; // + " " + "4 of 5";
+            this.showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text '" + this.showLogsToolStripMenuItem.Text + "'";
             // 
             // exitToolStripMenuItem
             // 
@@ -490,6 +562,10 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            this.showLogsToolStripMenuItem.AccessibleDefaultActionDescription = "Exit";
+            this.showLogsToolStripMenuItem.AccessibleName = this.showLogsToolStripMenuItem.Text; // + " " + "5 of 5";
+            this.showLogsToolStripMenuItem.AccessibleDescription = "A menu item with text '" + this.showLogsToolStripMenuItem.Text + "'";
             // 
             // label13
             // 
@@ -500,6 +576,8 @@
             this.label13.Size = new System.Drawing.Size(157, 13);
             this.label13.TabIndex = 43;
             this.label13.Text = "Enter your Working Hours:";
+            this.label13.AccessibleName = "Enter your Working Hours";
+            this.label13.AccessibleDescription = "A label saying '" + this.label13.Text + "'";
             // 
             // statusStrip1
             // 
@@ -655,6 +733,9 @@
             this.bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
             this.bETAEnableNewOOFToolStripMenuItem.Click += new System.EventHandler(this.bETAEnableNewOOFToolStripMenuItem_Click);
+            this.bETAEnableNewOOFToolStripMenuItem.AccessibleName = "(BETA) Enable new OOF math";
+            this.bETAEnableNewOOFToolStripMenuItem.AccessibleDescription = this.fileToolStripMenuItem.AccessibleName;
+            this.bETAEnableNewOOFToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             // 
             // Form1
             // 

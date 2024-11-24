@@ -182,6 +182,8 @@
             this.toolstripDocumentPrint});
             this.toolstripEditor.Name = "toolstripEditor";
             this.toolstripEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolstripEditor.AccessibleName  = "OOF Message edit";
+            this.toolstripEditor.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
             // 
             // toolstripTextCut
             // 

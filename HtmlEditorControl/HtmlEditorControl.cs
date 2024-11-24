@@ -295,6 +295,8 @@ namespace MSDN.Html.Editor
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
 
+            var ctl = this.editorWebBrowser;
+
             // define the default values
             // browser constants and commands
             EMPTY_PARAMETER = System.Reflection.Missing.Value;

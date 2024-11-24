@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Win32;
+using MSDN.Html.Editor;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -38,7 +39,6 @@ namespace OOFScheduling
             this.signoutToolStripMenuItem.Visible = false;
 
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
-            //as well as the AccessibleName
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
             foreach (var checkBox in listOfCheckBoxControls)
             {
@@ -50,22 +50,8 @@ namespace OOFScheduling
                 }
             }
 
-            //set the AccessibleName for all the start/end time pickers
-            var listofTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
-            foreach (var timePicker in listofTimePickers)
-            {
-                //day start times
-                if (timePicker.Name.Contains("StartTimepicker"))
-                {
-                    timePicker.AccessibleName = timePicker.Name.Replace("StartTimepicker", "").FirstCharToUpper() + "Start Time";
-                }
-
-                //day end times
-                if (timePicker.Name.Contains("EndTimepicker"))
-                {
-                    timePicker.AccessibleName = timePicker.Name.Replace("EndTimepicker", "").FirstCharToUpper() + "End Time";
-                }
-            }
+            //pull all the runtime accessibility work into one place
+            DoAccessibilityUIWork();
 
             #region SetBuildInfo
             foreach (Assembly a in Thread.GetDomain().GetAssemblies())
@@ -235,6 +221,41 @@ namespace OOFScheduling
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
             fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
+        }
+
+        private void DoAccessibilityUIWork()
+        {
+            //set the AccessibleName for all the working day checkboxes
+            var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
+            foreach (var checkBox in listOfCheckBoxControls)
+            {
+                if (checkBox.Name.Contains("OffWorkCB"))
+                {
+                    checkBox.AccessibleName = "Check if you are off work on " + checkBox.Name.Replace("OffWorkCB", "").FirstCharToUpper();
+                }
+            }
+
+            //set the AccessibleName for the OOF message controls
+            //External
+            htmlEditorControl1.AccessibleName = "External OOF Message";
+            foreach (Control item in htmlEditorControl1.Controls)
+            {
+                if (item.GetType() == typeof(ToolStrip))
+                {
+                    item.AccessibleName = "External " + item.AccessibleName;
+                }
+            }
+
+
+            //Internal
+            htmlEditorControl2.AccessibleName = "Internal OOF Message";
+            foreach (Control item in htmlEditorControl2.Controls)
+            {
+                if (item.GetType() == typeof(ToolStrip))
+                {
+                    item.AccessibleName = "Internal " + item.AccessibleName;
+                }
+            }
         }
 
         private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
@@ -1023,8 +1044,8 @@ namespace OOFScheduling
 
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
-            lblExternalMesage.Text = "Extended OOF External Message";
-            lblInternalMessage.Text = "Extended OOF Internal Message";
+            lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Extended OOF External Message";
+            lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Extended OOF Internal Message";
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
@@ -1071,8 +1092,9 @@ namespace OOFScheduling
 
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
-            lblExternalMesage.Text = "Primary External Message";
-            lblInternalMessage.Text = "Primary Internal Message";
+
+            lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Primary OOF External Message";
+            lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Primary OOF Internal Message";
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
