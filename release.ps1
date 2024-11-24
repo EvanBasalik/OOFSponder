@@ -5,7 +5,7 @@ param (
     [switch]$OnlyBuild=$false
 )
 
-$appName = "OOFSponderCore" # 👈 Replace with your application project name.
+$appName = "OOFScheduling" # 👈 Replace with your application project name.
 $projDir = "OOFSponderCore" # 👈 Replace with your project directory (where .csproj resides).
 
 Set-StrictMode -version 2.0
