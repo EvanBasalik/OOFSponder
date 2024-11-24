@@ -6,7 +6,7 @@ param (
 )
 
 $appName = "OOFSponderCore" # 👈 Replace with your application project name.
-$projDir = "C:\Users\evanba\source\repos\OOFSponder" # 👈 Replace with your project directory (where .csproj resides).
+$projDir = "OOFSponder\OOFSponderCore" # 👈 Replace with your project directory (where .csproj resides).
 
 Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
