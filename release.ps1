@@ -23,8 +23,15 @@ Write-Output "MSBuild: $((Get-Command $msBuildPath).Path)"
 $tag = $(git describe --tags)
 Write-Output "Tag: $tag"
 
-# Parse tag into a four-number version.
+# Parse tag into a three-number version.
 $version = $tag.Split('-')[0].TrimStart('v')
+
+# Require major.minor.revision format
+if ($version.Split(".").Count -ne 3) {
+    Write-Error "Tag must have major.minor.revision format"
+}
+
+
 $version = "$version"
 Write-Output "Version: $version"
 
