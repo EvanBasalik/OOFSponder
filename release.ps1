@@ -6,7 +6,7 @@ param (
 )
 
 $appName = "OOFSponderCore" # 👈 Replace with your application project name.
-$projDir = "OOFSponder\OOFSponderCore" # 👈 Replace with your project directory (where .csproj resides).
+$projDir = "OOFSponderCore" # 👈 Replace with your project directory (where .csproj resides).
 
 Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
@@ -23,9 +23,9 @@ Write-Output "MSBuild: $((Get-Command $msBuildPath).Path)"
 $tag = $(git describe --tags)
 Write-Output "Tag: $tag"
 
-# Parse tag into a three-number version.
+# Parse tag into a four-number version.
 $version = $tag.Split('-')[0].TrimStart('v')
-$version = "$version.0"
+$version = "$version"
 Write-Output "Version: $version"
 
 # Clean output directory.
