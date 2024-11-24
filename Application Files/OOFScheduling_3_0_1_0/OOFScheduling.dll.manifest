@@ -150,7 +150,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>s3KBrMd1GuMa6qWqtFB4xhU8zDHckhyr+KITrxUU5Dc=</dsig:DigestValue>
+      <dsig:DigestValue>caI2HSIOYdAHp7rwz4nCxeUTbYtLMwSXsc16lwxdFCs=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Newtonsoft.Json.dll" size="712464">
@@ -162,13 +162,13 @@
       <dsig:DigestValue>IsZJ91/OW+fHzNqIgEc7Y072ns8z9dGritiSyvR9Wgc=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="OOFScheduling.deps.json" size="69124">
+  <file name="OOFScheduling.deps.json" size="69665">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>zf5mqYyakLSt90LMY06U6uCJOxZJQb+aQLBZ0w27RJM=</dsig:DigestValue>
+      <dsig:DigestValue>8S5ct4vPpWIfDllkr2yz1wkaPYPORG2JzIRsMTcI7tk=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.dll" size="570880">
@@ -177,7 +177,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ZYzs1U/p5QZcgwM2CZY86zrQRvWl9F9ed4crHOTzwIE=</dsig:DigestValue>
+      <dsig:DigestValue>2/5YCIZjDZbVrk4QisX0G0TFUhlRzPuWmmMBiz3Yz/0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.dll.config" size="2778">
@@ -195,7 +195,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>PPUJCmFroJMJtfF2Z/n7hxVxXpZ8D+SRVOmMZLsc5is=</dsig:DigestValue>
+      <dsig:DigestValue>F2Af3q3S/T2HlHw4z9ss5AFlEi72EKBDvdfr9CdQu0Y=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.runtimeconfig.json" size="515">
