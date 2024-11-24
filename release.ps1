@@ -31,8 +31,14 @@ if ($version.Split(".").Count -ne 3) {
     Write-Error "Tag must have major.minor.revision format"
 }
 
+# Use current date and time to generate build
+# Get the current date and time
+#$currentDate = Get-Date
 
-$version = "$version"
+# Format the date and time to create a unique identifier
+#$uniqueID = $currentDate.ToString("yyyyMMddHHmmss")
+
+$version = "$version.0"
 Write-Output "Version: $version"
 
 # Clean output directory.
