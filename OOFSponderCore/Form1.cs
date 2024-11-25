@@ -2,7 +2,10 @@
 using Microsoft.Win32;
 using MSDN.Html.Editor;
 using Newtonsoft.Json;
+using OOFSponder;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -1080,11 +1083,11 @@ namespace OOFScheduling
                 //need to be thread-safe
                 if (dtPermaOOF.InvokeRequired)
                 {
-                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate { dtPermaOOF.Enabled=false; }));
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate { dtPermaOOF.Enabled = false; }));
                 }
                 else
                 {
-                    dtPermaOOF.Enabled=false;
+                    dtPermaOOF.Enabled = false;
                 }
 
             }
@@ -1096,7 +1099,8 @@ namespace OOFScheduling
                 //need to be thread-safe
                 if (dtPermaOOF.InvokeRequired)
                 {
-                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate {
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                    {
                         dtPermaOOF.Value = DateTime.Now.AddDays(1);
                         dtPermaOOF.Enabled = true;
                     }));
@@ -1149,7 +1153,8 @@ namespace OOFScheduling
             //need to be thread-safe
             if (dtPermaOOF.InvokeRequired)
             {
-                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate {
+                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                {
                     dtPermaOOF.Enabled = false;
                     dtPermaOOF.Value = DateTime.Now;
                 }));
@@ -1241,15 +1246,39 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Successfully set OnCallModeUI for OnCallMode=" + OOFData.Instance.IsOnCallModeOn);
         }
 
-        private void showLogsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowLogs(object sender, EventArgs e)
         {
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
 
+            //should be this name, but we'll get it dynamically later just to check
+            string loggerFileName = "OOFSponder.log";
+
+            //getting ready to show logs, so force a flush
+            //while we are at it, get the file name
+            foreach (TextWriterTraceListener logger in Trace.Listeners)
+            {
+                logger.Flush();
+
+                FieldInfo fieldInfo = typeof(TextWriterTraceListener).GetField("_fileName", BindingFlags.NonPublic | BindingFlags.Instance);
+                loggerFileName = (string)fieldInfo.GetValue(logger);
+            }
+
+            //TODO: Add the ability to show the folder or the file
+            //folder = System.IO.Path.GetDirectoryName(loggerFileName)
+            //file = loggerFileName
+
+            //default to opening the file, but if the user
+            //picked the folder open in the UI, then switch to just the folder
+            string FileorFoldertoOpen = loggerFileName;
+            if (((ToolStripMenuItem) sender).Tag.ToString() == "Folder")
+            {
+                FileorFoldertoOpen = System.IO.Path.GetDirectoryName(loggerFileName);
+            }
+
             var psi = new System.Diagnostics.ProcessStartInfo()
             {
-                //TODO - figure out a way to make this name dynamic to match the trace file name
-                FileName = System.IO.Path.Combine(strWorkPath, "OOFSponder.log"),
+                FileName = FileorFoldertoOpen,
                 UseShellExecute = true
             };
             System.Diagnostics.Process.Start(psi);
@@ -1260,6 +1289,7 @@ namespace OOFScheduling
             bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
             OOFData.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
         }
+
     }
 
 
@@ -1269,6 +1299,15 @@ namespace OOFScheduling
         {
             return Regex.Replace(input, @"\r\n|\n\r|\n|\r", "\r\n");
         }
+
+        public static T GetPrivateField<T>(this object obj, string name)
+        {
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            Type type = obj.GetType();
+            FieldInfo field = type.GetField(name, flags);
+            return (T)field.GetValue(obj);
+        }
+
     }
 
     public static class StringExtensions
@@ -1283,4 +1322,5 @@ namespace OOFScheduling
             }
         }
     }
+
 }
