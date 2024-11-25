@@ -15,8 +15,6 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://oofsponderinstall.blob.core.windows.net/install/</InstallUrl>
-    <UpdateUrl>https://oofsponderinstall.blob.core.windows.net/install/</UpdateUrl>
     <SupportUrl>http://github.com/evanbasalik/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
     <PublisherName>Evan Basalik</PublisherName>

@@ -1,4 +1,5 @@
 ﻿# From https://janjones.me/posts/clickonce-installer-build-publish-github/.
+# Install location = https://evanbasalik.github.io/OOFSponder/OOFScheduling.application
 
 [CmdletBinding(PositionalBinding=$false)]
 param (
