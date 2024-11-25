@@ -2,7 +2,8 @@
 
 [CmdletBinding(PositionalBinding=$false)]
 param (
-    [switch]$OnlyBuild=$false
+    [switch]$OnlyBuild=$false,
+    [switch]$NoOOF=$false
 )
 
 $appName = "OOFScheduling" # 👈 Replace with your application project name.
@@ -48,6 +49,14 @@ if (Test-Path $outDir) {
     Remove-Item -Path $outDir -Recurse
 }
 
+# Get the right Publish profile
+$publishProfile = "ClickOnceProfile"
+if($NoOOF) {
+    $publishProfile = "ClickOnceProfileNoOOF"
+}
+
+Write-Output "Publish profile: $publishProfile"
+
 # Publish the application.
 Push-Location $projDir
 try {
@@ -58,10 +67,13 @@ try {
     if ($env:CI) {
         $msBuildVerbosityArg = ""
     }
-    & $msBuildPath /target:publish /p:PublishProfile=ClickOnceProfile `
+    
+    & $msBuildPath /target:publish /p:PublishProfile=$publishProfile `
         /p:ApplicationVersion=$version /p:Configuration=Release `
         /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
         $msBuildVerbosityArg
+
+
 
     # Measure publish size.
     $publishSize = (Get-ChildItem -Path "$publishDir/Application Files" -Recurse |
