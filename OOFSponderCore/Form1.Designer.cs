@@ -460,7 +460,7 @@ namespace OOFScheduling
             button2.Location = new System.Drawing.Point(24, 1024);
             button2.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(168, 53);
+            button2.Size = new System.Drawing.Size(228, 53);
             button2.TabIndex = 38;
             button2.Text = "Save Settings";
             button2.UseVisualStyleBackColor = true;
@@ -717,7 +717,7 @@ namespace OOFScheduling
             // 
             radPrimary.AutoSize = true;
             radPrimary.Checked = true;
-            radPrimary.Location = new System.Drawing.Point(204, 1033);
+            radPrimary.Location = new System.Drawing.Point(264, 1033);
             radPrimary.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             radPrimary.Name = "radPrimary";
             radPrimary.Size = new System.Drawing.Size(156, 34);
@@ -729,7 +729,7 @@ namespace OOFScheduling
             // radSecondary
             // 
             radSecondary.AutoSize = true;
-            radSecondary.Location = new System.Drawing.Point(372, 1033);
+            radSecondary.Location = new System.Drawing.Point(432, 1033);
             radSecondary.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             radSecondary.Name = "radSecondary";
             radSecondary.Size = new System.Drawing.Size(182, 34);
