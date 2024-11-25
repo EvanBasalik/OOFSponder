@@ -34,6 +34,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
+    <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <BaseAddress>285212672</BaseAddress>
     <Configurations>Debug;Release without Sending OOF;Release</Configurations>

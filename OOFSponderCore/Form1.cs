@@ -119,7 +119,7 @@ namespace OOFScheduling
 
 #if NOOOF
             //if a NOOOF build, then update the Save Settings button visibly
-            button2.Text = button2.Text + " (NoOOF)";
+            button2.Text = "Save NoOOF";
 #endif
 
             if (OOFData.Instance.IsPermaOOFOn)
