@@ -44,10 +44,10 @@ $version = "$version.0"
 Write-Output "Version: $version"
 
 # Clean output directory.
-$publishDir = "insider/bin/publish"
+$publishDir = "bin/publish"
 Write-Output "Publish directory: $publishDir"
 
-$outDir = "$projDir/insider/$publishDir"
+$outDir = "$projDir/$publishDir"
 Write-Output "Out directory: $outDir"
 
 if (Test-Path $outDir) {
@@ -106,6 +106,7 @@ try {
     # Remove previous application files.
     Write-Output "Removing previous files..."
     if (Test-Path "Application Files") {
+        Write-Output "Removing Application Files..."
         Remove-Item -Path "Application Files" -Recurse
     }
     if (Test-Path "$appName.application") {
@@ -114,7 +115,7 @@ try {
 
     # Copy new application files.
     Write-Output "Copying new files..."
-    Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
+    Copy-Item -Path "../$outDir/Application Files","../$outDir/insider/$appName.application" `
         -Destination . -Recurse
 
     # Stage and commit.
