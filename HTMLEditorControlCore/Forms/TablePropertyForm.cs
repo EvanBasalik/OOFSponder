@@ -20,6 +20,7 @@ namespace MSDN.Html.Editor
     /// Form used to enter an Html Table structure
     /// Input based on the HtmlTableProperty struct
     /// </summary>
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     internal partial class TablePropertyForm : Form
     {
 

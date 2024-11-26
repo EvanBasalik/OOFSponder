@@ -46,6 +46,7 @@ namespace MSDN.Html.Editor
     /// </summary>
     [Serializable]
     [TypeConverter(typeof(HtmlFontPropertyConverter))]
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public struct HtmlFontProperty
     {
         // properties defined for the Font
@@ -550,6 +551,7 @@ namespace MSDN.Html.Editor
     /// Allows it to be viewable from the property browser
     /// String format based on "Name, FontSize"
     /// </summary>
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public class HtmlFontPropertyConverter : ExpandableObjectConverter
     {
         // constants used for the property names
