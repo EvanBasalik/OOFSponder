@@ -44,9 +44,12 @@ $version = "$version.0"
 Write-Output "Version: $version"
 
 # Clean output directory.
-$publishDir = "bin/publish"
+$publishDir = "insider/bin/publish"
 Write-Output "Publish directory: $publishDir"
+
 $outDir = "$projDir/insider/$publishDir"
+Write-Output "Out directory: $outDir"
+
 if (Test-Path $outDir) {
     Remove-Item -Path $outDir -Recurse
 }
