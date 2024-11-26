@@ -77,7 +77,7 @@ try {
 
 
     # Measure publish size.
-    $publishSize = (Get-ChildItem -Path "$publishDir/Application Files" -Recurse |
+    $publishSize = (Get-ChildItem -Path "insider/$publishDir/Application Files" -Recurse |
         Measure-Object -Property Length -Sum).Sum / 1Mb
     Write-Output ("Published size: {0:N2} MB" -f $publishSize)
 }
