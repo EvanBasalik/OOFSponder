@@ -44,7 +44,7 @@ $version = "$version.0"
 Write-Output "Version: $version"
 
 # Clean output directory.
-$publishDir = "bin/publish"
+$publishDir = "insider/bin/publish"
 Write-Output "Publish directory: $publishDir"
 
 $outDir = "$projDir/$publishDir"
@@ -76,7 +76,7 @@ try {
     & $msBuildPath /target:publish /p:PublishProfile=$publishProfile `
         /p:ApplicationVersion=$version /p:Configuration=Release `
         /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
-        $msBuildVerbosityArg
+        /p:InstallUrl="https://evanbasalik.github.io/insider/" $msBuildVerbosityArg
 
 
 
