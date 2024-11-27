@@ -561,6 +561,7 @@ namespace OOFScheduling
             enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
             enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
+            enableOnCallModeToolStripMenuItem.Visible = false;
             enableOnCallModeToolStripMenuItem.Click += enableOnCallModeToolStripMenuItem_Click;
             // 
             // showLogsToolStripMenuItem
@@ -609,6 +610,7 @@ namespace OOFScheduling
             bETAEnableNewOOFToolStripMenuItem.Name = "bETAEnableNewOOFToolStripMenuItem";
             bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
+            bETAEnableNewOOFToolStripMenuItem.Visible = false;
             bETAEnableNewOOFToolStripMenuItem.Click += bETAEnableNewOOFToolStripMenuItem_Click;
             // 
             // label13
