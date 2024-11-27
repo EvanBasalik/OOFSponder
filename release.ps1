@@ -1,9 +1,9 @@
 ﻿# From https://janjones.me/posts/clickonce-installer-build-publish-github/.
-# Install location = https://evanbasalik.github.io/OOFSponder/OOFScheduling.application
+# Install location = https://evanbasalik.github.io/OOFSponder/insider/OOFScheduling.application
 
 [CmdletBinding(PositionalBinding=$false)]
 param (
-    [switch]$OnlyBuild=$false,
+    [switch]$BuildOnly=$false,
     [switch]$NoOOF=$false
 )
 
@@ -76,7 +76,7 @@ try {
     & $msBuildPath /target:publish /p:PublishProfile=$publishProfile `
         /p:ApplicationVersion=$version /p:Configuration=Release `
         /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
-        /p:InstallUrl="https://evanbasalik.github.io/insider/" $msBuildVerbosityArg
+        /p:InstallUrl="https://evanbasalik.github.io/OOFSponder/insider/" $msBuildVerbosityArg
 
 
 
