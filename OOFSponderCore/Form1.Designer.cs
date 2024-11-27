@@ -857,6 +857,7 @@ namespace OOFScheduling
             Name = "Form1";
             Text = "OOFSponder";
             FormClosing += Form1_FormClosing;
+            Load += Form1_Load;
             Resize += Form1_Resize;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

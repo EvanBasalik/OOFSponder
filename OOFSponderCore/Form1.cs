@@ -22,7 +22,7 @@ namespace OOFScheduling
         private ContextMenuStrip trayMenu;
 
         //Track if force close or just hitting X to minimize
-        private bool minimize = true;
+        //private bool minimize = true;
 
         public Form1()
         {
@@ -233,9 +233,14 @@ namespace OOFScheduling
             fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
 
             //if we have all the inputs and "start minimized" is checked in the menu, then minimize
+            //if we are missing some necessar input, then need to show the window regardless
             if (OOFData.Instance.StartMinimized && haveNecessaryData)
             {
-                //this.WindowState = FormWindowState.Minimized;
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
             }
         }
 
@@ -819,40 +824,51 @@ namespace OOFScheduling
 
         private void Form1_Resize(object sender, EventArgs e)
         {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
+            //if we are moving to Minimized, then make everything hidden
+            //plus show system tray stuff
             if (this.WindowState == FormWindowState.Minimized)
             {
                 notifyIcon1.Visible = true;
                 notifyIcon1.ShowBalloonTip(100);
                 this.ShowInTaskbar = false;
-                //this.Hide();
+            }
+
+            //if we are moving to Normal, then make everything visible
+            //plus hide system tray stuff
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+                this.Show();
             }
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            //show the main window
             if (this.WindowState == FormWindowState.Minimized)
             {
                 this.WindowState = FormWindowState.Normal;
                 this.ShowInTaskbar = true;
                 notifyIcon1.Visible = false;
                 this.Show();
-            }
-            else
-            {
-                //in here
-            }
 
-
+                //be sure to update the UI to match the stored value for Start Minized
+                this.tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (minimize && e.CloseReason != CloseReason.WindowsShutDown)
-            {
-                e.Cancel = true;
-                this.WindowState = FormWindowState.Minimized;
-                //this.Hide();
-            }
+            //if (minimize && e.CloseReason != CloseReason.WindowsShutDown)
+            //if (e.CloseReason != CloseReason.WindowsShutDown)
+            //{
+            //    e.Cancel = true;
+            //    this.WindowState = FormWindowState.Minimized;
+            //    //this.Hide();
+            //}
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1010,7 +1026,10 @@ namespace OOFScheduling
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
-            minimize = false;
+
+            //do one last save in case we missed any changes
+            saveSettings();
+
             System.Windows.Forms.Application.Exit();
         }
 
@@ -1317,7 +1336,13 @@ namespace OOFScheduling
 
         private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
         {
-            saveSettings();
+            //saveSettings();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //make sure to set the state of the Start Minimized menu item appropriately
+            tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
         }
     }
 
