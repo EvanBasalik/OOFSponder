@@ -89,7 +89,7 @@ finally {
     Pop-Location
 }
 
-if ($OnlyBuild) {
+if ($BuildOnly) {
     Write-Output "Build finished."
     exit
 }
