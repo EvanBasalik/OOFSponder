@@ -1,11 +1,16 @@
 ﻿# From https://janjones.me/posts/clickonce-installer-build-publish-github/.
-# Install location = https://evanbasalik.github.io/OOFSponder/insider/OOFScheduling.application
+# production location = https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.
+# insider location = https://evanbasalik.github.io/OOFSponder/insider/OOFScheduling.application
+# alpha location = https://evanbasalik.github.io/OOFSponder/alpha/OOFScheduling.application
 
 [CmdletBinding(PositionalBinding=$false)]
 param (
     [switch]$BuildOnly=$false,
-    [switch]$NoOOF=$false
+    [switch]$NoOOF=$false,
+    [parameter(mandatory)] [validateset("alpha","insider", "production")] [string] $ring 
 )
+
+Write-Output "Ring: $ring"
 
 $appName = "OOFScheduling" # 👈 Replace with your application project name.
 $projDir = "OOFSponderCore" # 👈 Replace with your project directory (where .csproj resides).
@@ -44,7 +49,7 @@ $version = "$version.0"
 Write-Output "Version: $version"
 
 # Clean output directory.
-$publishDir = "insider/bin/publish"
+$publishDir = "$ring/bin/publish"
 Write-Output "Publish directory: $publishDir"
 
 $outDir = "$projDir/$publishDir"
@@ -72,11 +77,13 @@ try {
     if ($env:CI) {
         $msBuildVerbosityArg = ""
     }
+
+    $installURL = "https://evanbasalik.github.io/OOFSponder/" + $ring +"/"
     
     & $msBuildPath /target:publish /p:PublishProfile=$publishProfile `
         /p:ApplicationVersion=$version /p:Configuration=Release `
         /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
-        /p:InstallUrl="https://evanbasalik.github.io/OOFSponder/insider/" $msBuildVerbosityArg
+        /p:InstallUrl=$installURL $msBuildVerbosityArg
 
 
 
@@ -105,18 +112,19 @@ Push-Location $ghPagesDir
 try {
     # Remove previous application files.
     Write-Output "Removing previous files..."
-    if (Test-Path "insider/Application Files") {
-        Write-Output "Removing insider/Application Files..."
-        Remove-Item -Path "insider/Application Files" -Recurse
+    if (Test-Path "$ring/Application Files") {
+        Write-Output "Removing $ring/Application Files..."
+        Remove-Item -Path "$ring/Application Files" -Recurse
     }
-    if (Test-Path "insider/$appName.application") {
-        Remove-Item -Path "insider/$appName.application"
+    if (Test-Path "$ring/$appName.application") {
+        Remove-Item -Path "$ring/$appName.application"
     }
 
     # Copy new application files.
+    $destination = "./$ring"
     Write-Output "Copying new files..."
     Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
-        -Destination ./insider -Recurse
+        -Destination $destination -Recurse
 
     # Stage and commit.
     Write-Output "Staging..."
