@@ -999,7 +999,7 @@ namespace OOFScheduling
             DateTime dtPermaOOFValue = new DateTime();
             if (dtPermaOOF.InvokeRequired)
             {
-                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate { dtPermaOOFValue = dtPermaOOF.Value; }));
+                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate () { dtPermaOOFValue = dtPermaOOF.Value; }));
             }
             else
             {
@@ -1083,7 +1083,7 @@ namespace OOFScheduling
                 //need to be thread-safe
                 if (dtPermaOOF.InvokeRequired)
                 {
-                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate { dtPermaOOF.Enabled = false; }));
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate () { dtPermaOOF.Enabled = false; }));
                 }
                 else
                 {
@@ -1099,7 +1099,7 @@ namespace OOFScheduling
                 //need to be thread-safe
                 if (dtPermaOOF.InvokeRequired)
                 {
-                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
                     {
                         dtPermaOOF.Value = DateTime.Now.AddDays(1);
                         dtPermaOOF.Enabled = true;
@@ -1153,7 +1153,7 @@ namespace OOFScheduling
             //need to be thread-safe
             if (dtPermaOOF.InvokeRequired)
             {
-                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate
+                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
                 {
                     dtPermaOOF.Enabled = false;
                     dtPermaOOF.Value = DateTime.Now;

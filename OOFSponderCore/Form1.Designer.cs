@@ -733,7 +733,7 @@ namespace OOFScheduling
             // dtPermaOOF
             // 
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(535, 516);
+            dtPermaOOF.Location = new System.Drawing.Point(535, 514);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
@@ -787,7 +787,7 @@ namespace OOFScheduling
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new System.Drawing.Size(819, 568);
+            ClientSize = new System.Drawing.Size(819, 586);
             Controls.Add(dtPermaOOF);
             Controls.Add(btnPermaOOF);
             Controls.Add(passwordConfirmTB);
@@ -837,8 +837,8 @@ namespace OOFScheduling
             MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4);
             MaximizeBox = false;
-            MaximumSize = new System.Drawing.Size(835, 619);
-            MinimumSize = new System.Drawing.Size(835, 169);
+            MaximumSize = new System.Drawing.Size(835, 625);
+            MinimumSize = new System.Drawing.Size(835, 160);
             Name = "Form1";
             Text = "OOFSponder";
             FormClosing += Form1_FormClosing;
