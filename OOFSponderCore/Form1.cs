@@ -30,7 +30,7 @@ namespace OOFScheduling
 
             InitializeComponent();
 
-            //TODO fix this a better way
+            // TODO figure out why the cross-thread access to dtPermaOOF is still happening
             //temporary fix since I cannot find where it is happening
             //with dtPermaOOF
             if (Debugger.IsAttached)
@@ -1307,10 +1307,6 @@ namespace OOFScheduling
                 FieldInfo fieldInfo = typeof(TextWriterTraceListener).GetField("_fileName", BindingFlags.NonPublic | BindingFlags.Instance);
                 loggerFileName = (string)fieldInfo.GetValue(logger);
             }
-
-            //TODO: Add the ability to show the folder or the file
-            //folder = System.IO.Path.GetDirectoryName(loggerFileName)
-            //file = loggerFileName
 
             //default to opening the file, but if the user
             //picked the folder open in the UI, then switch to just the folder
