@@ -30,6 +30,14 @@ namespace OOFScheduling
 
             InitializeComponent();
 
+            //TODO fix this a better way
+            //temporary fix since I cannot find where it is happening
+            //with dtPermaOOF
+            if (Debugger.IsAttached)
+            {
+                CheckForIllegalCrossThreadCalls = false;
+            }
+
 #if !DEBUG
             // Display release notes so user knows what's new
             if (ClickOnceTracker.IsFirstRun)
@@ -110,7 +118,6 @@ namespace OOFScheduling
             //this is definitely future work :)
 
             #endregion
-
 
             //prep for async work
             System.Threading.Tasks.Task AuthTask = null;
@@ -224,6 +231,12 @@ namespace OOFScheduling
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
             fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
+
+            //if we have all the inputs and "start minimized" is checked in the menu, then minimize
+            if (OOFData.Instance.StartMinimized && haveNecessaryData)
+            {
+                //this.WindowState = FormWindowState.Minimized;
+            }
         }
 
         private void DoAccessibilityUIWork()
@@ -781,6 +794,9 @@ namespace OOFScheduling
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
 
+            //persist if they want the UI minimized on start up
+            OOFData.Instance.StartMinimized = tsmiStartMinimized.Checked;
+
             OOFData.Instance.WorkingHours = ScheduleString();
 
             OOFData.Instance.WriteProperties();
@@ -814,10 +830,19 @@ namespace OOFScheduling
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-            notifyIcon1.Visible = false;
-            this.Show();
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+                this.Show();
+            }
+            else
+            {
+                //in here
+            }
+
+
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -1271,7 +1296,7 @@ namespace OOFScheduling
             //default to opening the file, but if the user
             //picked the folder open in the UI, then switch to just the folder
             string FileorFoldertoOpen = loggerFileName;
-            if (((ToolStripMenuItem) sender).Tag.ToString() == "Folder")
+            if (((ToolStripMenuItem)sender).Tag.ToString() == "Folder")
             {
                 FileorFoldertoOpen = System.IO.Path.GetDirectoryName(loggerFileName);
             }
@@ -1290,6 +1315,10 @@ namespace OOFScheduling
             OOFData.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
         }
 
+        private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
+        {
+            saveSettings();
+        }
     }
 
 

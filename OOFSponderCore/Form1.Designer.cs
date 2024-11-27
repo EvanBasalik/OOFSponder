@@ -69,6 +69,7 @@ namespace OOFScheduling
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
             signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -506,7 +507,7 @@ namespace OOFScheduling
             fileToolStripMenuItem.AccessibleDescription = "File";
             fileToolStripMenuItem.AccessibleName = "File";
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, signoutToolStripMenuItem, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiStartMinimized, signoutToolStripMenuItem, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             fileToolStripMenuItem.Text = "File";
@@ -542,6 +543,17 @@ namespace OOFScheduling
             secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             secondaryToolStripMenuItem.Text = "Secondary";
             secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
+            // 
+            // tsmiStartMinimized
+            // 
+            tsmiStartMinimized.AccessibleDescription = "A menu item that causes the app to start minimized when enabled";
+            tsmiStartMinimized.AccessibleName = "Start minimized";
+            tsmiStartMinimized.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiStartMinimized.CheckOnClick = true;
+            tsmiStartMinimized.Name = "tsmiStartMinimized";
+            tsmiStartMinimized.Size = new System.Drawing.Size(232, 22);
+            tsmiStartMinimized.Text = "Start minimized";
+            tsmiStartMinimized.CheckStateChanged += tsmiStartMinimized_CheckStateChanged;
             // 
             // signoutToolStripMenuItem
             // 
@@ -732,6 +744,9 @@ namespace OOFScheduling
             // 
             // dtPermaOOF
             // 
+            dtPermaOOF.AccessibleDescription = "DateTime picker that specifies when PermaOOF should end";
+            dtPermaOOF.AccessibleName = "Perma OOF date";
+            dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Enabled = false;
             dtPermaOOF.Location = new System.Drawing.Point(535, 514);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
@@ -919,6 +934,7 @@ namespace OOFScheduling
         private System.Windows.Forms.ToolStripMenuItem bETAEnableNewOOFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiStartMinimized;
     }
 }
 

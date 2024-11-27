@@ -71,6 +71,7 @@ namespace OOFScheduling
         internal bool IsOnCallModeOn { get; set; }
 
         private const string baseValue = "default";
+        private const bool baseBool = false;
         internal static string version;
         static OOFData instance;
 
@@ -138,6 +139,7 @@ namespace OOFScheduling
         }
 
         public bool useNewOOFMath { get; internal set; }
+        public bool StartMinimized { get; internal set; }
 
         private void LogProperties()
         {
@@ -148,6 +150,7 @@ namespace OOFScheduling
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFExternalMessage", SecondaryOOFExternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", SecondaryOOFInternalMessage);
             OOFSponder.Logger.Info("IsOnCallModeOn: " + IsOnCallModeOn);
+            OOFSponder.Logger.Info("StartMinimized: " + StartMinimized);
         }
 
         private void ReadProperties()
@@ -160,7 +163,8 @@ namespace OOFScheduling
             instance.PrimaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFInternal;
             instance.SecondaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
             instance.SecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
-            instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode;
+            instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode == baseBool ? false : Properties.Settings.Default.enableOnCallMode;
+            instance.StartMinimized = OOFScheduling.Properties.Settings.Default.startMinimized == baseBool ? false : Properties.Settings.Default.startMinimized;
 
             LogProperties();
 
@@ -196,6 +200,9 @@ namespace OOFScheduling
 
             Properties.Settings.Default.enableOnCallMode = instance.IsOnCallModeOn;
             OOFSponder.Logger.Info("Persisted enableOnCallMode = " + instance.IsOnCallModeOn.ToString());
+
+            Properties.Settings.Default.startMinimized = instance.StartMinimized;
+            OOFSponder.Logger.Info("Persisted startMinimized = " + instance.StartMinimized.ToString());
 
             Properties.Settings.Default.Save();
             OOFSponder.Logger.Info("Persisted settings");
