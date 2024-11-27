@@ -105,12 +105,12 @@ Push-Location $ghPagesDir
 try {
     # Remove previous application files.
     Write-Output "Removing previous files..."
-    if (Test-Path "Application Files") {
-        Write-Output "Removing Application Files..."
-        Remove-Item -Path "Application Files" -Recurse
+    if (Test-Path "insider/Application Files") {
+        Write-Output "Removing insider/Application Files..."
+        Remove-Item -Path "insider/Application Files" -Recurse
     }
-    if (Test-Path "$appName.application") {
-        Remove-Item -Path "$appName.application"
+    if (Test-Path "insider/$appName.application") {
+        Remove-Item -Path "insider/$appName.application"
     }
 
     # Copy new application files.
