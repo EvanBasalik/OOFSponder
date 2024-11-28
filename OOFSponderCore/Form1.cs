@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace OOFScheduling
 {
@@ -1112,8 +1113,12 @@ namespace OOFScheduling
 
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
+
+            //Accessibility settings
             lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Extended OOF External Message";
             lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Extended OOF Internal Message";
+
+
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
@@ -1185,8 +1190,11 @@ namespace OOFScheduling
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
 
+            //Accessibility settings
             lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Primary OOF External Message";
             lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Primary OOF Internal Message";
+
+
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
@@ -1343,6 +1351,18 @@ namespace OOFScheduling
 
         private void tsmiSavedOOFMessage_Click(object sender, EventArgs e)
         {
+
+            //only show files related to the target message
+            ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
+            //string filenameFilter = tsmi.Tag + tsmi.Text;
+
+            //only show HTML files
+            openFileDialog.Filter = "HTML Files|*.html|Primary External|*PrimaryExternal.html";
+            openFileDialog.FilterIndex = 1;
+
+            openFileDialog.Title = "Select an existing OOF message file";
+            openFileDialog.InitialDirectory = OOFData.OOFFolderName();
+
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -1358,6 +1378,7 @@ namespace OOFScheduling
                 }
             }
         }
+
     }
 
 

@@ -70,6 +70,8 @@ namespace OOFScheduling
             primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             tsmiSavedOOFMessage = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiExternal = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiInternal = new System.Windows.Forms.ToolStripMenuItem();
             tsmiStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
             signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -551,10 +553,28 @@ namespace OOFScheduling
             tsmiSavedOOFMessage.AccessibleDescription = "A menu item that allows you to open a previously saved OOF message";
             tsmiSavedOOFMessage.AccessibleName = "Open saved OOF message";
             tsmiSavedOOFMessage.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiSavedOOFMessage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiExternal, tsmiInternal });
             tsmiSavedOOFMessage.Name = "tsmiSavedOOFMessage";
             tsmiSavedOOFMessage.Size = new System.Drawing.Size(232, 22);
             tsmiSavedOOFMessage.Text = "Open saved OOF message...";
-            tsmiSavedOOFMessage.Click += tsmiSavedOOFMessage_Click;
+            // 
+            // tsmiExternal
+            // 
+            tsmiExternal.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiExternal.Name = "tsmiExternal";
+            tsmiExternal.Size = new System.Drawing.Size(180, 22);
+            tsmiExternal.Tag = "External";
+            tsmiExternal.Text = "External";
+            tsmiExternal.Click += tsmiSavedOOFMessage_Click;
+            // 
+            // tsmiInternal
+            // 
+            tsmiInternal.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiInternal.Name = "tsmiInternal";
+            tsmiInternal.Size = new System.Drawing.Size(180, 22);
+            tsmiInternal.Tag = "Internal";
+            tsmiInternal.Text = "Internal";
+            tsmiInternal.Click += tsmiSavedOOFMessage_Click;
             // 
             // tsmiStartMinimized
             // 
@@ -954,6 +974,8 @@ namespace OOFScheduling
         private System.Windows.Forms.ToolStripMenuItem tsmiStartMinimized;
         private System.Windows.Forms.ToolStripMenuItem tsmiSavedOOFMessage;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExternal;
+        private System.Windows.Forms.ToolStripMenuItem tsmiInternal;
     }
 }
 

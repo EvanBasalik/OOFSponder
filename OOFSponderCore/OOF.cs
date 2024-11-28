@@ -1,14 +1,18 @@
-﻿using OOFSponder;
+﻿using Newtonsoft.Json.Linq;
+using OOFSponder;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace OOFScheduling
 {
     public class OOFData
     {
         internal DateTime PermaOOFDate { get; set; }
+        static string DummyHTML = @"<BODY scroll=auto></BODY>";
 
         private string _workingHours;
         internal string WorkingHours
@@ -28,6 +32,18 @@ namespace OOFScheduling
         internal string PrimaryOOFInternalMessage { get; set; }
         internal string SecondaryOOFExternalMessage { get; set; }
         internal string SecondaryOOFInternalMessage { get; set; }
+
+        internal static string OOFFileName (OOFMessageType messageType) 
+        {
+            return Path.Combine(OOFFolderName(), DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + messageType.ToString() + ".html");
+        }
+
+
+        internal static string OOFFolderName()
+        {
+           return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder");
+
+        }
 
         internal Collection<OOFInstance> _OOFCollection;
         internal Collection<OOFInstance> OOFCollection
@@ -143,6 +159,7 @@ namespace OOFScheduling
 
         public bool useNewOOFMath { get; internal set; }
         public bool StartMinimized { get; internal set; }
+        public object get { get; private set; }
 
         private void LogProperties()
         {
@@ -240,25 +257,27 @@ namespace OOFScheduling
             SecondaryInternal=2,
             SecondaryExternal=3
         }
+
         private bool SaveOOFMessageOffline(OOFMessageType messageType, string OOFMessageAsHTML)
         {
             bool _result = false;
-
-            string folderName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"OOFSponder");
-            string fileName = Path.Combine(folderName, DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + messageType.ToString() + ".html");
+            string _folderName = OOFFolderName();
+            string _fileName = OOFFileName(messageType);
 
             try
             {
+
+
                 //first, create the folder if necessary
-                if (!Directory.Exists(folderName))
+                if (!Directory.Exists(_folderName))
                 {
                     // Create the directory
-                    Directory.CreateDirectory(folderName);
-                    Logger.Info("Directory created successfully: " + folderName);
+                    Directory.CreateDirectory(_folderName);
+                    Logger.Info("Directory created successfully: " + _folderName);
                 }
 
-                File.WriteAllText(fileName, OOFMessageAsHTML);
-                Logger.Info("File reated successfully: " + fileName);
+                File.WriteAllText(_fileName, OOFMessageAsHTML);
+                Logger.Info("File reated successfully: " + _fileName);
 
                 _result = true;
             }
@@ -272,7 +291,7 @@ namespace OOFScheduling
             //the files are small and in an application-specific directory
             try
             {
-                CleanUpOldOOFMessages(folderName, messageType, 10);
+                CleanUpOldOOFMessages(_folderName, messageType, 10);
             }
             catch (Exception e)
             {
