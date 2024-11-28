@@ -1340,6 +1340,24 @@ namespace OOFScheduling
             //make sure to set the state of the Start Minimized menu item appropriately
             tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
         }
+
+        private void tsmiSavedOOFMessage_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (StreamReader sr = new StreamReader(openFileDialog.FileName))
+                    {
+                        ;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file. Original error: " + ex.Message);
+                }
+            }
+        }
     }
 
 

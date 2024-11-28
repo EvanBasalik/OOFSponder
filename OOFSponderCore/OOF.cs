@@ -2,6 +2,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 
 namespace OOFScheduling
 {
@@ -185,30 +186,30 @@ namespace OOFScheduling
             Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
             OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
 
-            //save an offline copy of the message to a folder in the user's profile
+            //save an offline copy of the message to a folder in the user's LocalRoaming profile
             SaveOOFMessageOffline(OOFMessageType.PrimaryExternal, instance.PrimaryOOFExternalMessage);
-            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in app folder");
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in LocalRoaming profile folder");
 
             Properties.Settings.Default.PrimaryOOFInternal = instance.PrimaryOOFInternalMessage;
             OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
 
-            //save an offline copy of the message to a folder in the user's profile
+            //save an offline copy of the message to a folder in the user's LocalRoaming profile
             SaveOOFMessageOffline(OOFMessageType.PrimaryInternal, instance.PrimaryOOFInternalMessage);
-            OOFSponder.Logger.Info("Saved PrimaryOOFInternalMessage in app folder");
+            OOFSponder.Logger.Info("Saved PrimaryOOFInternalMessage in LocalRoaming profile folder");
 
             Properties.Settings.Default.SecondaryOOFExternal = instance.SecondaryOOFExternalMessage;
             OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
 
-            //save an offline copy of the message to a folder in the user's profile
+            //save an offline copy of the message to a folder in the user's LocalRoaming profile
             SaveOOFMessageOffline(OOFMessageType.SecondaryExternal, instance.SecondaryOOFExternalMessage);
-            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in app folder");
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in LocalRoaming profile folder");
 
             Properties.Settings.Default.SecondaryOOFInternal = instance.SecondaryOOFInternalMessage;
             OOFSponder.Logger.Info("Persisted SecondaryOOFInternalMessage");
 
-            //save an offline copy of the message to a folder in the user's profile
+            //save an offline copy of the message to a folder in the user's LocalRoaming profile
             SaveOOFMessageOffline(OOFMessageType.SecondaryInternal, instance.SecondaryOOFInternalMessage);
-            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in app folder");
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in LocalRoaming profile folder");
 
             Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
             OOFSponder.Logger.Info("Persisted PermaOOFDate");
@@ -244,7 +245,7 @@ namespace OOFScheduling
             bool _result = false;
 
             string folderName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"OOFSponder");
-            string fileName = Path.Combine(folderName, messageType.ToString() + ".html");
+            string fileName = Path.Combine(folderName, DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + messageType.ToString() + ".html");
 
             try
             {
@@ -264,6 +265,49 @@ namespace OOFScheduling
             catch (Exception e)
             {
                 Logger.Error(e.Message);
+            }
+
+            //clean up the old default files older than 3 iterations ago
+            //if this fails, don't worry about it
+            //the files are small and in an application-specific directory
+            try
+            {
+                CleanUpOldOOFMessages(folderName, messageType, 10);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+
+            return _result;
+
+        }
+
+        private bool CleanUpOldOOFMessages(string folderName, OOFMessageType OOFMessageToClean, int iterationsToKeep)
+        {
+            bool _result = false;
+
+            try
+            {
+                // Get the files in the directory and order them by last write time in descending order
+                var files = Directory.GetFiles(folderName)
+                    .Where(f => Path.GetFileName(f).Contains(OOFMessageToClean.ToString()))
+                    .Select(f => new FileInfo(f))
+                    .OrderByDescending(f => f.LastWriteTime)
+                    .ToList();
+
+
+                // Keep the three most recent files and delete the rest
+                for (int i = iterationsToKeep; i < files.Count(); i++)
+                {
+                    files[i].Delete();
+                }
+
+                _result = true;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
             }
 
             return _result;

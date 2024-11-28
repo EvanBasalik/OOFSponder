@@ -69,6 +69,7 @@ namespace OOFScheduling
             toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             primaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             secondaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiSavedOOFMessage = new System.Windows.Forms.ToolStripMenuItem();
             tsmiStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
             signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,7 +95,7 @@ namespace OOFScheduling
             radSecondary = new System.Windows.Forms.RadioButton();
             htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
-            tsmiSavedOOFMessage = new System.Windows.Forms.ToolStripMenuItem();
+            openFileDialog = new System.Windows.Forms.OpenFileDialog();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -545,6 +546,16 @@ namespace OOFScheduling
             secondaryToolStripMenuItem.Text = "Secondary";
             secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
+            // tsmiSavedOOFMessage
+            // 
+            tsmiSavedOOFMessage.AccessibleDescription = "A menu item that allows you to open a previously saved OOF message";
+            tsmiSavedOOFMessage.AccessibleName = "Open saved OOF message";
+            tsmiSavedOOFMessage.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiSavedOOFMessage.Name = "tsmiSavedOOFMessage";
+            tsmiSavedOOFMessage.Size = new System.Drawing.Size(232, 22);
+            tsmiSavedOOFMessage.Text = "Open saved OOF message...";
+            tsmiSavedOOFMessage.Click += tsmiSavedOOFMessage_Click;
+            // 
             // tsmiStartMinimized
             // 
             tsmiStartMinimized.AccessibleDescription = "A menu item that causes the app to start minimized when enabled";
@@ -798,14 +809,9 @@ namespace OOFScheduling
             htmlEditorControl1.Size = new System.Drawing.Size(778, 150);
             htmlEditorControl1.TabIndex = 31;
             // 
-            // tsmiSavedOOFMessage
+            // openFileDialog
             // 
-            tsmiSavedOOFMessage.AccessibleDescription = "A menu item that allows you to open a previously saved OOF message";
-            tsmiSavedOOFMessage.AccessibleName = "Open saved OOF message";
-            tsmiSavedOOFMessage.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            tsmiSavedOOFMessage.Name = "tsmiSavedOOFMessage";
-            tsmiSavedOOFMessage.Size = new System.Drawing.Size(232, 22);
-            tsmiSavedOOFMessage.Text = "Open saved OOF message...";
+            openFileDialog.FileName = "openFileDialog";
             // 
             // Form1
             // 
@@ -947,6 +953,7 @@ namespace OOFScheduling
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiStartMinimized;
         private System.Windows.Forms.ToolStripMenuItem tsmiSavedOOFMessage;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 
