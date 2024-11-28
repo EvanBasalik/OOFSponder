@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OOFSponder;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace OOFScheduling
 {
@@ -183,14 +185,30 @@ namespace OOFScheduling
             Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
             OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
 
+            //save an offline copy of the message to a folder in the user's profile
+            SaveOOFMessageOffline(OOFMessageType.PrimaryExternal, instance.PrimaryOOFExternalMessage);
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in app folder");
+
             Properties.Settings.Default.PrimaryOOFInternal = instance.PrimaryOOFInternalMessage;
             OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
+
+            //save an offline copy of the message to a folder in the user's profile
+            SaveOOFMessageOffline(OOFMessageType.PrimaryInternal, instance.PrimaryOOFInternalMessage);
+            OOFSponder.Logger.Info("Saved PrimaryOOFInternalMessage in app folder");
 
             Properties.Settings.Default.SecondaryOOFExternal = instance.SecondaryOOFExternalMessage;
             OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
 
+            //save an offline copy of the message to a folder in the user's profile
+            SaveOOFMessageOffline(OOFMessageType.SecondaryExternal, instance.SecondaryOOFExternalMessage);
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in app folder");
+
             Properties.Settings.Default.SecondaryOOFInternal = instance.SecondaryOOFInternalMessage;
             OOFSponder.Logger.Info("Persisted SecondaryOOFInternalMessage");
+
+            //save an offline copy of the message to a folder in the user's profile
+            SaveOOFMessageOffline(OOFMessageType.SecondaryInternal, instance.SecondaryOOFInternalMessage);
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in app folder");
 
             Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
             OOFSponder.Logger.Info("Persisted PermaOOFDate");
@@ -211,6 +229,44 @@ namespace OOFScheduling
             {
                 Dispose();
             }
+
+        }
+
+        internal enum OOFMessageType
+        {
+            PrimaryInternal=0,
+            PrimaryExternal=1,
+            SecondaryInternal=2,
+            SecondaryExternal=3
+        }
+        private bool SaveOOFMessageOffline(OOFMessageType messageType, string OOFMessageAsHTML)
+        {
+            bool _result = false;
+
+            string folderName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),"OOFSponder");
+            string fileName = Path.Combine(folderName, messageType.ToString() + ".html");
+
+            try
+            {
+                //first, create the folder if necessary
+                if (!Directory.Exists(folderName))
+                {
+                    // Create the directory
+                    Directory.CreateDirectory(folderName);
+                    Logger.Info("Directory created successfully: " + folderName);
+                }
+
+                File.WriteAllText(fileName, OOFMessageAsHTML);
+                Logger.Info("File reated successfully: " + fileName);
+
+                _result = true;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+            }
+
+            return _result;
 
         }
 

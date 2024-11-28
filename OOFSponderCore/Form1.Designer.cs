@@ -94,6 +94,7 @@ namespace OOFScheduling
             radSecondary = new System.Windows.Forms.RadioButton();
             htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
+            tsmiSavedOOFMessage = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -507,7 +508,7 @@ namespace OOFScheduling
             fileToolStripMenuItem.AccessibleDescription = "File";
             fileToolStripMenuItem.AccessibleName = "File";
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiStartMinimized, signoutToolStripMenuItem, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, signoutToolStripMenuItem, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             fileToolStripMenuItem.Text = "File";
@@ -797,6 +798,15 @@ namespace OOFScheduling
             htmlEditorControl1.Size = new System.Drawing.Size(778, 150);
             htmlEditorControl1.TabIndex = 31;
             // 
+            // tsmiSavedOOFMessage
+            // 
+            tsmiSavedOOFMessage.AccessibleDescription = "A menu item that allows you to open a previously saved OOF message";
+            tsmiSavedOOFMessage.AccessibleName = "Open saved OOF message";
+            tsmiSavedOOFMessage.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiSavedOOFMessage.Name = "tsmiSavedOOFMessage";
+            tsmiSavedOOFMessage.Size = new System.Drawing.Size(232, 22);
+            tsmiSavedOOFMessage.Text = "Open saved OOF message...";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -936,6 +946,7 @@ namespace OOFScheduling
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiStartMinimized;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSavedOOFMessage;
     }
 }
 
