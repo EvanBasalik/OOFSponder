@@ -534,7 +534,7 @@ namespace OOFScheduling
             primaryToolStripMenuItem.Checked = true;
             primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
-            primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            primaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             primaryToolStripMenuItem.Text = "Primary";
             primaryToolStripMenuItem.Click += primaryToolStripMenuItem_Click;
             // 
@@ -544,7 +544,7 @@ namespace OOFScheduling
             secondaryToolStripMenuItem.AccessibleName = "Secondary message";
             secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
-            secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            secondaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             secondaryToolStripMenuItem.Text = "Secondary";
             secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
@@ -616,7 +616,7 @@ namespace OOFScheduling
             showLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { oOFSponderLogToolStripMenuItem, oOFSponderLogFolderToolStripMenuItem });
             showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
             showLogsToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            showLogsToolStripMenuItem.Text = "Show logs";
+            showLogsToolStripMenuItem.Text = "Show logs...";
             // 
             // oOFSponderLogToolStripMenuItem
             // 
