@@ -564,7 +564,7 @@ namespace OOFScheduling
             tsmiExternal.Name = "tsmiExternal";
             tsmiExternal.Size = new System.Drawing.Size(180, 22);
             tsmiExternal.Tag = "External";
-            tsmiExternal.Text = "External";
+            tsmiExternal.Text = "External...";
             tsmiExternal.Click += tsmiSavedOOFMessage_Click;
             // 
             // tsmiInternal
@@ -573,7 +573,7 @@ namespace OOFScheduling
             tsmiInternal.Name = "tsmiInternal";
             tsmiInternal.Size = new System.Drawing.Size(180, 22);
             tsmiInternal.Tag = "Internal";
-            tsmiInternal.Text = "Internal";
+            tsmiInternal.Text = "Internal...";
             tsmiInternal.Click += tsmiSavedOOFMessage_Click;
             // 
             // tsmiStartMinimized

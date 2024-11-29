@@ -1228,14 +1228,14 @@ namespace OOFScheduling
 
         private void DoAccessibilityWorkforOpenSavedOOFMenuItems()
         {
-            tsmiExternal.AccessibleName = "Open saved" + tsmiExternal.Tag + " external OOF message";
+            tsmiExternal.AccessibleName = "Open saved " + tsmiExternal.Tag + " external OOF message";
             tsmiExternal.AccessibleDescription = "Opens a file dialog to allow picking a saved " + tsmiExternal.Tag +
                     " external OOF message";
-            tsmiExternal.Text = tsmiInternal.Tag + " " + tsmiExternal.Text;
-            tsmiInternal.AccessibleName = "Open saved" + tsmiInternal.Tag + " external OOF message";
+            tsmiExternal.Text = tsmiExternal.Tag + " " + "External...";
+            tsmiInternal.AccessibleName = "Open saved " + tsmiInternal.Tag + " internal OOF message";
             tsmiInternal.AccessibleDescription = "Opens a file dialog to allow picking a saved " + tsmiInternal.Tag +
                     " internal OOF message";
-            tsmiInternal.Text = tsmiInternal.Tag + " " + tsmiInternal.Text;
+            tsmiInternal.Text = tsmiInternal.Tag + " " + "Internal...";
         }
 
         private void radPrimary_CheckedChanged(object sender, EventArgs e)
@@ -1370,6 +1370,8 @@ namespace OOFScheduling
         private void tsmiSavedOOFMessage_Click(object sender, EventArgs e)
         {
 
+            string SavedOOFMessageHTML = string.Empty;
+
             //only show files related to the target message
             ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
             string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "");
@@ -1386,10 +1388,17 @@ namespace OOFScheduling
             {
                 try
                 {
-                    using (StreamReader sr = new StreamReader(openFileDialog.FileName))
+                    SavedOOFMessageHTML = System.IO.File.ReadAllText(openFileDialog.FileName);
+                    switch (tsmi.Text.Replace(tsmi.Tag + " ", ""))
                     {
-                        ;
+                        case "External":
+                            htmlEditorControl1.BodyHtml= SavedOOFMessageHTML;
+                            break;
+                        case "Internal":
+                            htmlEditorControl2.BodyHtml = SavedOOFMessageHTML;
+                            break;
                     }
+
                 }
                 catch (Exception ex)
                 {
