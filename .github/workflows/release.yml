@@ -11,9 +11,10 @@ jobs:
       output1: ${{ steps.version.outputs.full }}
 
     steps:
-
-      - name: Check Version Format in Tag
-        uses: nowsprinting/check-version-format-action@v4.0.3
+      - uses: nowsprinting/check-version-format-action@v3
+        id: version
+        with:
+          prefix: 'v'
 
       - name: Version tag only step
         run: |
