@@ -35,4 +35,4 @@ jobs:
 
       - name: Run release script
         shell: pwsh
-        run: ./release.ps1 #-ring ${{ steps.version.outputs.full}}
+        run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.full}}
