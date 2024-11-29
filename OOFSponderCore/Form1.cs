@@ -2,13 +2,17 @@
 using Microsoft.Win32;
 using MSDN.Html.Editor;
 using Newtonsoft.Json;
+using OOFSponder;
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace OOFScheduling
 {
@@ -19,13 +23,21 @@ namespace OOFScheduling
         private ContextMenuStrip trayMenu;
 
         //Track if force close or just hitting X to minimize
-        private bool minimize = true;
+        //private bool minimize = true;
 
         public Form1()
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             InitializeComponent();
+
+            // TODO figure out why the cross-thread access to dtPermaOOF is still happening
+            //temporary fix since I cannot find where it is happening
+            //with dtPermaOOF
+            if (Debugger.IsAttached)
+            {
+                CheckForIllegalCrossThreadCalls = false;
+            }
 
 #if !DEBUG
             // Display release notes so user knows what's new
@@ -107,7 +119,6 @@ namespace OOFScheduling
             //this is definitely future work :)
 
             #endregion
-
 
             //prep for async work
             System.Threading.Tasks.Task AuthTask = null;
@@ -221,6 +232,17 @@ namespace OOFScheduling
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
             fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
+
+            //if we have all the inputs and "start minimized" is checked in the menu, then minimize
+            //if we are missing some necessar input, then need to show the window regardless
+            if (OOFData.Instance.StartMinimized && haveNecessaryData)
+            {
+                this.WindowState = FormWindowState.Minimized;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
         }
 
         private void DoAccessibilityUIWork()
@@ -778,6 +800,9 @@ namespace OOFScheduling
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
 
+            //persist if they want the UI minimized on start up
+            OOFData.Instance.StartMinimized = tsmiStartMinimized.Checked;
+
             OOFData.Instance.WorkingHours = ScheduleString();
 
             OOFData.Instance.WriteProperties();
@@ -800,31 +825,51 @@ namespace OOFScheduling
 
         private void Form1_Resize(object sender, EventArgs e)
         {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
+            //if we are moving to Minimized, then make everything hidden
+            //plus show system tray stuff
             if (this.WindowState == FormWindowState.Minimized)
             {
                 notifyIcon1.Visible = true;
                 notifyIcon1.ShowBalloonTip(100);
                 this.ShowInTaskbar = false;
-                //this.Hide();
+            }
+
+            //if we are moving to Normal, then make everything visible
+            //plus hide system tray stuff
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+                this.Show();
             }
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
-            notifyIcon1.Visible = false;
-            this.Show();
+            //show the main window
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+                this.Show();
+
+                //be sure to update the UI to match the stored value for Start Minized
+                this.tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (minimize && e.CloseReason != CloseReason.WindowsShutDown)
-            {
-                e.Cancel = true;
-                this.WindowState = FormWindowState.Minimized;
-                //this.Hide();
-            }
+            //if (minimize && e.CloseReason != CloseReason.WindowsShutDown)
+            //if (e.CloseReason != CloseReason.WindowsShutDown)
+            //{
+            //    e.Cancel = true;
+            //    this.WindowState = FormWindowState.Minimized;
+            //    //this.Hide();
+            //}
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -982,7 +1027,10 @@ namespace OOFScheduling
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
-            minimize = false;
+
+            //do one last save in case we missed any changes
+            saveSettings();
+
             System.Windows.Forms.Application.Exit();
         }
 
@@ -996,7 +1044,7 @@ namespace OOFScheduling
             DateTime dtPermaOOFValue = new DateTime();
             if (dtPermaOOF.InvokeRequired)
             {
-                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate { dtPermaOOFValue = dtPermaOOF.Value; }));
+                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate () { dtPermaOOFValue = dtPermaOOF.Value; }));
             }
             else
             {
@@ -1065,8 +1113,15 @@ namespace OOFScheduling
 
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
+
+            //set the tags on the Internal/External OOF message load items to Secondary
+            //do this before setting the AccessibleName and AccessibleDescription so we can use the tag
+            tsmiExternal.Tag = tsmiInternal.Tag = "Secondary";
+
+            //Accessibility settings
             lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Extended OOF External Message";
             lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Extended OOF Internal Message";
+            DoAccessibilityWorkforOpenSavedOOFMenuItems();
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
@@ -1080,11 +1135,11 @@ namespace OOFScheduling
                 //need to be thread-safe
                 if (dtPermaOOF.InvokeRequired)
                 {
-                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate { dtPermaOOF.Enabled=false; }));
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate () { dtPermaOOF.Enabled = false; }));
                 }
                 else
                 {
-                    dtPermaOOF.Enabled=false;
+                    dtPermaOOF.Enabled = false;
                 }
 
             }
@@ -1096,7 +1151,8 @@ namespace OOFScheduling
                 //need to be thread-safe
                 if (dtPermaOOF.InvokeRequired)
                 {
-                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate {
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
+                    {
                         dtPermaOOF.Value = DateTime.Now.AddDays(1);
                         dtPermaOOF.Enabled = true;
                     }));
@@ -1137,8 +1193,14 @@ namespace OOFScheduling
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
 
+            //set the tags on the Internal/External OOF message load items to Primary
+            //do this before setting the AccessibleName and AccessibleDescription so we can use the tag
+            tsmiExternal.Tag = tsmiInternal.Tag = "Primary";
+
+            //Accessibility settings
             lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Primary OOF External Message";
             lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Primary OOF Internal Message";
+            DoAccessibilityWorkforOpenSavedOOFMenuItems();
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
@@ -1149,7 +1211,8 @@ namespace OOFScheduling
             //need to be thread-safe
             if (dtPermaOOF.InvokeRequired)
             {
-                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate {
+                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
+                {
                     dtPermaOOF.Enabled = false;
                     dtPermaOOF.Value = DateTime.Now;
                 }));
@@ -1161,6 +1224,18 @@ namespace OOFScheduling
             }
 
             OOFSponderInsights.Track("Configured for primary");
+        }
+
+        private void DoAccessibilityWorkforOpenSavedOOFMenuItems()
+        {
+            tsmiExternal.AccessibleName = "Open saved " + tsmiExternal.Tag + " external OOF message";
+            tsmiExternal.AccessibleDescription = "Opens a file dialog to allow picking a saved " + tsmiExternal.Tag +
+                    " external OOF message";
+            tsmiExternal.Text = tsmiExternal.Tag + " " + "External...";
+            tsmiInternal.AccessibleName = "Open saved " + tsmiInternal.Tag + " internal OOF message";
+            tsmiInternal.AccessibleDescription = "Opens a file dialog to allow picking a saved " + tsmiInternal.Tag +
+                    " internal OOF message";
+            tsmiInternal.Text = tsmiInternal.Tag + " " + "Internal...";
         }
 
         private void radPrimary_CheckedChanged(object sender, EventArgs e)
@@ -1241,15 +1316,35 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Successfully set OnCallModeUI for OnCallMode=" + OOFData.Instance.IsOnCallModeOn);
         }
 
-        private void showLogsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowLogs(object sender, EventArgs e)
         {
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
 
+            //should be this name, but we'll get it dynamically later just to check
+            string loggerFileName = "OOFSponder.log";
+
+            //getting ready to show logs, so force a flush
+            //while we are at it, get the file name
+            foreach (TextWriterTraceListener logger in Trace.Listeners)
+            {
+                logger.Flush();
+
+                FieldInfo fieldInfo = typeof(TextWriterTraceListener).GetField("_fileName", BindingFlags.NonPublic | BindingFlags.Instance);
+                loggerFileName = (string)fieldInfo.GetValue(logger);
+            }
+
+            //default to opening the file, but if the user
+            //picked the folder open in the UI, then switch to just the folder
+            string FileorFoldertoOpen = loggerFileName;
+            if (((ToolStripMenuItem)sender).Tag.ToString() == "Folder")
+            {
+                FileorFoldertoOpen = System.IO.Path.GetDirectoryName(loggerFileName);
+            }
+
             var psi = new System.Diagnostics.ProcessStartInfo()
             {
-                //TODO - figure out a way to make this name dynamic to match the trace file name
-                FileName = System.IO.Path.Combine(strWorkPath, "OOFSponder.log"),
+                FileName = FileorFoldertoOpen,
                 UseShellExecute = true
             };
             System.Diagnostics.Process.Start(psi);
@@ -1260,6 +1355,58 @@ namespace OOFScheduling
             bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
             OOFData.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
         }
+
+        private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
+        {
+            //saveSettings();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //make sure to set the state of the Start Minimized menu item appropriately
+            tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
+        }
+
+        private void tsmiSavedOOFMessage_Click(object sender, EventArgs e)
+        {
+
+            string SavedOOFMessageHTML = string.Empty;
+
+            //only show files related to the target message
+            ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
+            string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
+            string filenameFilterDescription = tsmi.Tag + " "+ tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...","");
+
+            //only show HTML files
+            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter +".html|HTML Files|*.html";
+            openFileDialog.FilterIndex = 1;
+
+            openFileDialog.Title = "Select an existing OOF message file";
+            openFileDialog.InitialDirectory = OOFData.OOFFolderName();
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    SavedOOFMessageHTML = System.IO.File.ReadAllText(openFileDialog.FileName);
+                    switch (tsmi.Text.Replace(tsmi.Tag + " ", ""))
+                    {
+                        case "External":
+                            htmlEditorControl1.BodyHtml= SavedOOFMessageHTML;
+                            break;
+                        case "Internal":
+                            htmlEditorControl2.BodyHtml = SavedOOFMessageHTML;
+                            break;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not read file. Original error: " + ex.Message);
+                }
+            }
+        }
+
     }
 
 
@@ -1269,6 +1416,15 @@ namespace OOFScheduling
         {
             return Regex.Replace(input, @"\r\n|\n\r|\n|\r", "\r\n");
         }
+
+        public static T GetPrivateField<T>(this object obj, string name)
+        {
+            BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            Type type = obj.GetType();
+            FieldInfo field = type.GetField(name, flags);
+            return (T)field.GetValue(obj);
+        }
+
     }
 
     public static class StringExtensions
@@ -1283,4 +1439,5 @@ namespace OOFScheduling
             }
         }
     }
+
 }

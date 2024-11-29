@@ -16,6 +16,7 @@ namespace MSDN.Html.Editor
     /// Form used to enter an Html Font attribute
     /// Input based on the HtmlFontAttribute struct
     /// </summary>
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     internal partial class FontAttributeForm : Form
     {
 

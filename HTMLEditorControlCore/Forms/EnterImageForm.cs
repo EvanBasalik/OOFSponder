@@ -17,6 +17,8 @@ namespace MSDN.Html.Editor
     /// Form used to enter an Html Image attribute
     /// Consists of Href, Text and Image Alignment
     /// </summary>
+    /// 
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     internal partial class EnterImageForm : Form
     {
 
