@@ -12,6 +12,14 @@ jobs:
 
       - name: Check Version Format in Tag
         uses: nowsprinting/check-version-format-action@v4.0.3
+
+      - name: Version tag only step
+        run: |
+          echo "Found valid version format in tag!"
+          echo "Full version: ${{ steps.version.outputs.full }}"
+          echo "Major version: ${{ steps.version.outputs.major }}"
+          echo "Major with pre-release: ${{ steps.version.outputs.major_prerelease }}"
+        if: steps.version.outputs.is_valid == 'true'
             
 
      # - name: Checkout code
