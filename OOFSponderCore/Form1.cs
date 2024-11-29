@@ -1114,11 +1114,14 @@ namespace OOFScheduling
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
 
+            //set the tags on the Internal/External OOF message load items to Secondary
+            //do this before setting the AccessibleName and AccessibleDescription so we can use the tag
+            tsmiExternal.Tag = tsmiInternal.Tag = "Secondary";
+
             //Accessibility settings
             lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Extended OOF External Message";
             lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Extended OOF Internal Message";
-
-
+            DoAccessibilityWorkforOpenSavedOOFMenuItems();
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
@@ -1190,11 +1193,14 @@ namespace OOFScheduling
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
 
+            //set the tags on the Internal/External OOF message load items to Primary
+            //do this before setting the AccessibleName and AccessibleDescription so we can use the tag
+            tsmiExternal.Tag = tsmiInternal.Tag = "Primary";
+
             //Accessibility settings
             lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Primary OOF External Message";
             lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Primary OOF Internal Message";
-
-
+            DoAccessibilityWorkforOpenSavedOOFMenuItems();
 
             htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
@@ -1218,6 +1224,18 @@ namespace OOFScheduling
             }
 
             OOFSponderInsights.Track("Configured for primary");
+        }
+
+        private void DoAccessibilityWorkforOpenSavedOOFMenuItems()
+        {
+            tsmiExternal.AccessibleName = "Open saved" + tsmiExternal.Tag + " external OOF message";
+            tsmiExternal.AccessibleDescription = "Opens a file dialog to allow picking a saved " + tsmiExternal.Tag +
+                    " external OOF message";
+            tsmiExternal.Text = tsmiInternal.Tag + " " + tsmiExternal.Text;
+            tsmiInternal.AccessibleName = "Open saved" + tsmiInternal.Tag + " external OOF message";
+            tsmiInternal.AccessibleDescription = "Opens a file dialog to allow picking a saved " + tsmiInternal.Tag +
+                    " internal OOF message";
+            tsmiInternal.Text = tsmiInternal.Tag + " " + tsmiInternal.Text;
         }
 
         private void radPrimary_CheckedChanged(object sender, EventArgs e)
@@ -1354,10 +1372,11 @@ namespace OOFScheduling
 
             //only show files related to the target message
             ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
-            //string filenameFilter = tsmi.Tag + tsmi.Text;
+            string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "");
+            string filenameFilterDescription = tsmi.Tag + " "+ tsmi.Text.Replace(tsmi.Tag + " ", "");
 
             //only show HTML files
-            openFileDialog.Filter = "HTML Files|*.html|Primary External|*PrimaryExternal.html";
+            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter +".html|HTML Files|*.html";
             openFileDialog.FilterIndex = 1;
 
             openFileDialog.Title = "Select an existing OOF message file";
