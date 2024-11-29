@@ -1374,8 +1374,8 @@ namespace OOFScheduling
 
             //only show files related to the target message
             ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
-            string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "");
-            string filenameFilterDescription = tsmi.Tag + " "+ tsmi.Text.Replace(tsmi.Tag + " ", "");
+            string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
+            string filenameFilterDescription = tsmi.Tag + " "+ tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...","");
 
             //only show HTML files
             openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter +".html|HTML Files|*.html";
