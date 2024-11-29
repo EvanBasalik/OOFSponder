@@ -9,9 +9,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-
-      - name: Check Version Format in Tag
-        uses: nowsprinting/check-version-format-action@v4.0.3
+      - uses: nowsprinting/check-version-format-action@v3
+        id: version
+        with:
+          prefix: 'v'
 
       - name: Version tag only step
         run: |
@@ -20,6 +21,11 @@ jobs:
           echo "Major version: ${{ steps.version.outputs.major }}"
           echo "Major with pre-release: ${{ steps.version.outputs.major_prerelease }}"
         if: steps.version.outputs.is_valid == 'true'
+
+      - name: Stable version only step
+        run: |
+          echo "Found stable version in tag!"
+        if: steps.version.outputs.is_stable == 'true'
             
 
      # - name: Checkout code
