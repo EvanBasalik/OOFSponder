@@ -24,8 +24,6 @@ jobs:
           # echo "Major with pre-release: ${{ steps.version.outputs.major_prerelease }}"
         if: steps.version.outputs.is_valid == 'true'
     
-            
-
       - name: Checkout code
         uses: actions/checkout@v3
 
