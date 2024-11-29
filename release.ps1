@@ -1,9 +1,9 @@
 ﻿# From https://janjones.me/posts/clickonce-installer-build-publish-github/.
-# Install location = https://evanbasalik.github.io/OOFSponder/OOFScheduling.application
+# Install location = https://evanbasalik.github.io/OOFSponder/insider/OOFScheduling.application
 
 [CmdletBinding(PositionalBinding=$false)]
 param (
-    [switch]$OnlyBuild=$false,
+    [switch]$BuildOnly=$false,
     [switch]$NoOOF=$false
 )
 
@@ -44,8 +44,12 @@ $version = "$version.0"
 Write-Output "Version: $version"
 
 # Clean output directory.
-$publishDir = "bin/publish"
+$publishDir = "insider/bin/publish"
+Write-Output "Publish directory: $publishDir"
+
 $outDir = "$projDir/$publishDir"
+Write-Output "Out directory: $outDir"
+
 if (Test-Path $outDir) {
     Remove-Item -Path $outDir -Recurse
 }
@@ -72,7 +76,7 @@ try {
     & $msBuildPath /target:publish /p:PublishProfile=$publishProfile `
         /p:ApplicationVersion=$version /p:Configuration=Release `
         /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
-        $msBuildVerbosityArg
+        /p:InstallUrl="https://evanbasalik.github.io/OOFSponder/insider/" $msBuildVerbosityArg
 
 
 
@@ -85,7 +89,7 @@ finally {
     Pop-Location
 }
 
-if ($OnlyBuild) {
+if ($BuildOnly) {
     Write-Output "Build finished."
     exit
 }
@@ -101,17 +105,18 @@ Push-Location $ghPagesDir
 try {
     # Remove previous application files.
     Write-Output "Removing previous files..."
-    if (Test-Path "Application Files") {
-        Remove-Item -Path "Application Files" -Recurse
+    if (Test-Path "insider/Application Files") {
+        Write-Output "Removing insider/Application Files..."
+        Remove-Item -Path "insider/Application Files" -Recurse
     }
-    if (Test-Path "$appName.application") {
-        Remove-Item -Path "$appName.application"
+    if (Test-Path "insider/$appName.application") {
+        Remove-Item -Path "insider/$appName.application"
     }
 
     # Copy new application files.
     Write-Output "Copying new files..."
     Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
-        -Destination . -Recurse
+        -Destination ./insider -Recurse
 
     # Stage and commit.
     Write-Output "Staging..."
