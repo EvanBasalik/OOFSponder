@@ -4,7 +4,8 @@
 [CmdletBinding(PositionalBinding=$false)]
 param (
     [switch]$BuildOnly=$false,
-    [switch]$NoOOF=$false
+    [switch]$NoOOF=$false,
+    [parameter(mandatory)] [validateset("alpha","insider", "production")] [string] $ring 
 )
 
 $appName = "OOFScheduling" # 👈 Replace with your application project name.
@@ -14,6 +15,9 @@ Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
 
 Write-Output "Working directory: $pwd"
+
+Write-Output "Target ring $ring"
+exit
 
 # Find MSBuild.
 $msBuildPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
