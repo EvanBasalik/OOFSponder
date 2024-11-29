@@ -1,11 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using OOFSponder;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
+using System.Windows.Forms.Design;
 
 namespace OOFScheduling
 {
     public class OOFData
     {
         internal DateTime PermaOOFDate { get; set; }
+        static string DummyHTML = @"<BODY scroll=auto></BODY>";
 
         private string _workingHours;
         internal string WorkingHours
@@ -25,6 +32,18 @@ namespace OOFScheduling
         internal string PrimaryOOFInternalMessage { get; set; }
         internal string SecondaryOOFExternalMessage { get; set; }
         internal string SecondaryOOFInternalMessage { get; set; }
+
+        internal static string OOFFileName (OOFMessageType messageType) 
+        {
+            return Path.Combine(OOFFolderName(), DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + messageType.ToString() + ".html");
+        }
+
+
+        internal static string OOFFolderName()
+        {
+           return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder");
+
+        }
 
         internal Collection<OOFInstance> _OOFCollection;
         internal Collection<OOFInstance> OOFCollection
@@ -140,6 +159,7 @@ namespace OOFScheduling
 
         public bool useNewOOFMath { get; internal set; }
         public bool StartMinimized { get; internal set; }
+        public object get { get; private set; }
 
         private void LogProperties()
         {
@@ -183,14 +203,30 @@ namespace OOFScheduling
             Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
             OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
 
+            //save an offline copy of the message to a folder in the user's LocalRoaming profile
+            SaveOOFMessageOffline(OOFMessageType.PrimaryExternal, instance.PrimaryOOFExternalMessage);
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in LocalRoaming profile folder");
+
             Properties.Settings.Default.PrimaryOOFInternal = instance.PrimaryOOFInternalMessage;
             OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
+
+            //save an offline copy of the message to a folder in the user's LocalRoaming profile
+            SaveOOFMessageOffline(OOFMessageType.PrimaryInternal, instance.PrimaryOOFInternalMessage);
+            OOFSponder.Logger.Info("Saved PrimaryOOFInternalMessage in LocalRoaming profile folder");
 
             Properties.Settings.Default.SecondaryOOFExternal = instance.SecondaryOOFExternalMessage;
             OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
 
+            //save an offline copy of the message to a folder in the user's LocalRoaming profile
+            SaveOOFMessageOffline(OOFMessageType.SecondaryExternal, instance.SecondaryOOFExternalMessage);
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in LocalRoaming profile folder");
+
             Properties.Settings.Default.SecondaryOOFInternal = instance.SecondaryOOFInternalMessage;
             OOFSponder.Logger.Info("Persisted SecondaryOOFInternalMessage");
+
+            //save an offline copy of the message to a folder in the user's LocalRoaming profile
+            SaveOOFMessageOffline(OOFMessageType.SecondaryInternal, instance.SecondaryOOFInternalMessage);
+            OOFSponder.Logger.Info("Saved PrimaryOOFExternalMessage in LocalRoaming profile folder");
 
             Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
             OOFSponder.Logger.Info("Persisted PermaOOFDate");
@@ -211,6 +247,89 @@ namespace OOFScheduling
             {
                 Dispose();
             }
+
+        }
+
+        internal enum OOFMessageType
+        {
+            PrimaryInternal=0,
+            PrimaryExternal=1,
+            SecondaryInternal=2,
+            SecondaryExternal=3
+        }
+
+        private bool SaveOOFMessageOffline(OOFMessageType messageType, string OOFMessageAsHTML)
+        {
+            bool _result = false;
+            string _folderName = OOFFolderName();
+            string _fileName = OOFFileName(messageType);
+
+            try
+            {
+
+
+                //first, create the folder if necessary
+                if (!Directory.Exists(_folderName))
+                {
+                    // Create the directory
+                    Directory.CreateDirectory(_folderName);
+                    Logger.Info("Directory created successfully: " + _folderName);
+                }
+
+                File.WriteAllText(_fileName, OOFMessageAsHTML);
+                Logger.Info("File reated successfully: " + _fileName);
+
+                _result = true;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e.Message);
+            }
+
+            //clean up the old default files older than 3 iterations ago
+            //if this fails, don't worry about it
+            //the files are small and in an application-specific directory
+            try
+            {
+                CleanUpOldOOFMessages(_folderName, messageType, 10);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+
+            return _result;
+
+        }
+
+        private bool CleanUpOldOOFMessages(string folderName, OOFMessageType OOFMessageToClean, int iterationsToKeep)
+        {
+            bool _result = false;
+
+            try
+            {
+                // Get the files in the directory and order them by last write time in descending order
+                var files = Directory.GetFiles(folderName)
+                    .Where(f => Path.GetFileName(f).Contains(OOFMessageToClean.ToString()))
+                    .Select(f => new FileInfo(f))
+                    .OrderByDescending(f => f.LastWriteTime)
+                    .ToList();
+
+
+                // Keep the three most recent files and delete the rest
+                for (int i = iterationsToKeep; i < files.Count(); i++)
+                {
+                    files[i].Delete();
+                }
+
+                _result = true;
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+
+            return _result;
 
         }
 

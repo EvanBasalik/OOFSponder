@@ -14,6 +14,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOFSponderCore", "OOFSponde
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTMLEditorControlCore", "HTMLEditorControlCore\HTMLEditorControlCore.csproj", "{ABBCD711-E3E2-40C9-9DDB-9FCA3ADB2948}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OOFSponder_Legacy", "OOFSponder_Legacy", "{5AFC0DE0-09B1-4A7F-B9FF-04ED4E730E4E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{134672C0-60F8-42D8-BC10-B9E69F66A1F6} = {5AFC0DE0-09B1-4A7F-B9FF-04ED4E730E4E}
+		{5873DE0F-6853-4C8E-91A4-7A6861069A9A} = {5AFC0DE0-09B1-4A7F-B9FF-04ED4E730E4E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB9B08D0-208D-4678-BF22-C5A271B456FB}
