@@ -24,18 +24,14 @@ jobs:
           # echo "Major with pre-release: ${{ steps.version.outputs.major_prerelease }}"
         if: steps.version.outputs.is_valid == 'true'
  
-     # - name: Checkout code
-     #   uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # - name: Setup Git
-      #   run: |
-      #     git config --global url."https://user:${{ secrets.GITHUB_TOKEN }}@github".insteadOf https://github
-      #     git config --global user.name github-actions
-      #     git config --global user.email github-actions@github.com          
-
-      # - name: Run release script
-      #   shell: pwsh
-      #   run: ./SupportingFiles/release.ps1
+      - name: Setup Git
+        run: |
+          git config --global url."https://user:${{ secrets.GITHUB_TOKEN }}@github".insteadOf https://github
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com          
 
       - name: Run release script
         shell: pwsh

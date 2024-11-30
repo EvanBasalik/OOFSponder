@@ -122,8 +122,8 @@ try {
     # Stage and commit.
     Write-Output "Staging..."
     git add -A
-    #Write-Output "Committing..."
-    #git commit -m "Update to v$version"
+    Write-Output "Committing..."
+    git commit -m "Update to v$version"
 
     # Push.
     git push
