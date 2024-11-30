@@ -104,18 +104,32 @@ if (-Not (Test-Path $ghPagesDir)) {
 Push-Location $ghPagesDir
 try {
     # Remove previous application files.
-    Write-Output "Removing previous files..."
+    Write-Output "Removing previous files if necessary..."
+    Write-Output "Checking $ring/Application Files"
     if (Test-Path "$ring/Application Files") {
         Write-Output "Removing $ring/Application Files..."
         Remove-Item -Path "$ring/Application Files" -Recurse
     }
+    else
+    {
+        "Don't need to remove $ring/Application Files"
+    }
+
+    Write-Output "Checking $ring/$appName.application"
     if (Test-Path "$ring/$appName.application") {
+        Write-Output "Removing $ring/$appName.application..."
         Remove-Item -Path "$ring/$appName.application"
+    }
+    else
+    {
+        "Don't need to remove $ring/$appName.application"
     }
 
     # Copy new application files.
     $destination = "./$ring"
     Write-Output "Copying new files..."
+    Write-Output "From: ../$outDir/Application Files and ../$outDir/$appName.application"
+    Write-Output "To: $destination"
     Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
         -Destination $destination -Recurse
 
