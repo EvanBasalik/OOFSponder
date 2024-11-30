@@ -15,6 +15,7 @@ namespace MSDN.Html.Editor
     /// Find and Replace operations performed by the user control class
     /// Delegates need to be defined to reference the class instances
     /// </summary> 
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     internal partial class FindReplaceForm : Form
     {
         // constants defining the form sizes

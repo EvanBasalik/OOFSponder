@@ -16,6 +16,8 @@ namespace MSDN.Html.Editor
     /// If a property RedOnly is true contents are considered viewable
     /// No Html parsing is performed on the resultant data
     /// </summary>
+    /// 
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     internal partial class EditHtmlForm : Form
     {
 

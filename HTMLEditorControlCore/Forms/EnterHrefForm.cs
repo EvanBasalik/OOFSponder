@@ -17,6 +17,8 @@ namespace MSDN.Html.Editor
     /// Form used to enter an Html Anchor attribute
     /// Consists of Href, Text and Target Frame
     /// </summary>
+    /// 
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public partial class EnterHrefForm : Form
     {
 

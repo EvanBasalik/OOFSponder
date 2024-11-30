@@ -1,5 +1,5 @@
-﻿# From https://janjones.me/posts/clickonce-installer-build-publish-github/.
-# production location = https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.
+# Adapted from https://janjones.me/posts/clickonce-installer-build-publish-github/.
+# production location = https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application
 # insider location = https://evanbasalik.github.io/OOFSponder/insider/OOFScheduling.application
 # alpha location = https://evanbasalik.github.io/OOFSponder/alpha/OOFScheduling.application
 
@@ -18,14 +18,6 @@ $projDir = "OOFSponderCore" # 👈 Replace with your project directory (where .c
 Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
 
-Write-Output "Working directory: $pwd"
-
-# Find MSBuild.
-$msBuildPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
-    -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe `
-    -prerelease | select-object -first 1
-Write-Output "MSBuild: $((Get-Command $msBuildPath).Path)"
-
 # Load current Git tag.
 $tag = $(git describe --tags)
 Write-Output "Tag: $tag"
@@ -37,13 +29,6 @@ $version = $tag.Split('-')[0].TrimStart('v')
 if ($version.Split(".").Count -ne 3) {
     Write-Error "Tag must have major.minor.revision format"
 }
-
-# Use current date and time to generate build
-# Get the current date and time
-#$currentDate = Get-Date
-
-# Format the date and time to create a unique identifier
-#$uniqueID = $currentDate.ToString("yyyyMMddHHmmss")
 
 $version = "$version.0"
 Write-Output "Version: $version"
@@ -67,6 +52,14 @@ if($NoOOF) {
 
 Write-Output "Publish profile: $publishProfile"
 
+Write-Output "Working directory: $pwd"
+
+# Find MSBuild.
+$msBuildPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
+    -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe `
+    -prerelease | select-object -first 1
+Write-Output "MSBuild: $((Get-Command $msBuildPath).Path)"
+
 # Publish the application.
 Push-Location $projDir
 try {
@@ -78,14 +71,13 @@ try {
         $msBuildVerbosityArg = ""
     }
 
-    $installURL = "https://evanbasalik.github.io/OOFSponder/" + $ring +"/"
+    //stick the ring inside the installUrl
+    $installUrl = "https://evanbasalik.github.io/OOFSponder/" + $ring + "/"
     
     & $msBuildPath /target:publish /p:PublishProfile=$publishProfile `
         /p:ApplicationVersion=$version /p:Configuration=Release `
         /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
-        /p:InstallUrl=$installURL $msBuildVerbosityArg
-
-
+        /p:InstallUrl=$installUrl $msBuildVerbosityArg
 
     # Measure publish size.
     $publishSize = (Get-ChildItem -Path "$publishDir/Application Files" -Recurse |
@@ -129,8 +121,8 @@ try {
     # Stage and commit.
     Write-Output "Staging..."
     git add -A
-    Write-Output "Committing..."
-    git commit -m "Update to v$version"
+    #Write-Output "Committing..."
+    #git commit -m "Update to v$version"
 
     # Push.
     git push

@@ -7,13 +7,23 @@ on:
 jobs:
   release:
     runs-on: windows-latest
+    outputs: 
+      output1: ${{ steps.version.outputs.full }}
 
     steps:
+      - uses: nowsprinting/check-version-format-action@v3
+        id: version
+        with:
+          prefix: 'v'
 
-      - name: Check Version Format in Tag
-        uses: nowsprinting/check-version-format-action@v4.0.3
-            
-
+      - name: Version tag only step
+        run: |
+          echo "Found valid version format in tag!"
+          echo "Full version: ${{ steps.version.outputs.full }}"
+          # echo "Major version: ${{ steps.version.outputs.major }}"
+          # echo "Major with pre-release: ${{ steps.version.outputs.major_prerelease }}"
+        if: steps.version.outputs.is_valid == 'true'
+ 
      # - name: Checkout code
      #   uses: actions/checkout@v3
 
@@ -26,3 +36,7 @@ jobs:
       # - name: Run release script
       #   shell: pwsh
       #   run: ./SupportingFiles/release.ps1
+
+      - name: Run release script
+        shell: pwsh
+        run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease}}
