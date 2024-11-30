@@ -8,22 +8,13 @@ param (
     [parameter(mandatory)] [validateset("alpha","insider", "production")] [string] $Ring 
 )
 
-$appName = "OOFScheduling" # 👈 Replace with your application project name.
-$projDir = "OOFSponderCore" # 👈 Replace with your project directory (where .csproj resides).
-
 Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
 
-Write-Output "Working directory: $pwd"
+$appName = "OOFScheduling" # 👈 Replace with your application project name.
+$projDir = "OOFSponderCore" # 👈 Replace with your project directory (where .csproj resides).
 
-Write-Output "Target ring $ring"
-exit
-
-# Find MSBuild.
-$msBuildPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
-    -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe `
-    -prerelease | select-object -first 1
-Write-Output "MSBuild: $((Get-Command $msBuildPath).Path)"
+Write-Output "Target ring: $ring"
 
 # Load current Git tag.
 $tag = $(git describe --tags)
@@ -36,13 +27,6 @@ $version = $tag.Split('-')[0].TrimStart('v')
 if ($version.Split(".").Count -ne 3) {
     Write-Error "Tag must have major.minor.revision format"
 }
-
-# Use current date and time to generate build
-# Get the current date and time
-#$currentDate = Get-Date
-
-# Format the date and time to create a unique identifier
-#$uniqueID = $currentDate.ToString("yyyyMMddHHmmss")
 
 $version = "$version.0"
 Write-Output "Version: $version"
@@ -66,6 +50,14 @@ if($NoOOF) {
 
 Write-Output "Publish profile: $publishProfile"
 
+Write-Output "Working directory: $pwd"
+
+# Find MSBuild.
+$msBuildPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
+    -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe `
+    -prerelease | select-object -first 1
+Write-Output "MSBuild: $((Get-Command $msBuildPath).Path)"
+
 # Publish the application.
 Push-Location $projDir
 try {
@@ -76,13 +68,14 @@ try {
     if ($env:CI) {
         $msBuildVerbosityArg = ""
     }
+
+    //stick the ring inside the installUrl
+    $installUrl = "https://evanbasalik.github.io/OOFSponder/" + $ring + "/"
     
     & $msBuildPath /target:publish /p:PublishProfile=$publishProfile `
         /p:ApplicationVersion=$version /p:Configuration=Release `
         /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
-        /p:InstallUrl="https://evanbasalik.github.io/OOFSponder/insider/" $msBuildVerbosityArg
-
-
+        /p:InstallUrl=$installUrl $msBuildVerbosityArg
 
     # Measure publish size.
     $publishSize = (Get-ChildItem -Path "$publishDir/Application Files" -Recurse |
@@ -109,12 +102,12 @@ Push-Location $ghPagesDir
 try {
     # Remove previous application files.
     Write-Output "Removing previous files..."
-    if (Test-Path "insider/Application Files") {
-        Write-Output "Removing insider/Application Files..."
-        Remove-Item -Path "insider/Application Files" -Recurse
+    if (Test-Path "$ring/Application Files") {
+        Write-Output "Removing $ring/Application Files..."
+        Remove-Item -Path "$ring/Application Files" -Recurse
     }
-    if (Test-Path "insider/$appName.application") {
-        Remove-Item -Path "insider/$appName.application"
+    if (Test-Path "$ring/$appName.application") {
+        Remove-Item -Path "$ring/$appName.application"
     }
 
     # Copy new application files.
@@ -125,8 +118,8 @@ try {
     # Stage and commit.
     Write-Output "Staging..."
     git add -A
-    Write-Output "Committing..."
-    git commit -m "Update to v$version"
+    #Write-Output "Committing..."
+    #git commit -m "Update to v$version"
 
     # Push.
     git push
