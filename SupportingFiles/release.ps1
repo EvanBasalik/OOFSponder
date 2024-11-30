@@ -1,20 +1,22 @@
-﻿# From https://janjones.me/posts/clickonce-installer-build-publish-github/.
-# Install location = https://evanbasalik.github.io/OOFSponder/insider/OOFScheduling.application
+# Adapted from https://janjones.me/posts/clickonce-installer-build-publish-github/.
+# production location = https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application
+# insider location = https://evanbasalik.github.io/OOFSponder/insider/OOFScheduling.application
+# alpha location = https://evanbasalik.github.io/OOFSponder/alpha/OOFScheduling.application
 
 [CmdletBinding(PositionalBinding=$false)]
 param (
     [switch]$BuildOnly=$false,
     [switch]$NoOOF=$false,
-    [parameter(mandatory)] [validateset("alpha","insider", "production")] [string] $Ring 
+    [parameter(mandatory)] [validateset("alpha","insider", "production")] [string] $ring 
 )
 
-Set-StrictMode -version 2.0
-$ErrorActionPreference = "Stop"
+Write-Output "Ring: $ring"
 
 $appName = "OOFScheduling" # 👈 Replace with your application project name.
 $projDir = "OOFSponderCore" # 👈 Replace with your project directory (where .csproj resides).
 
-Write-Output "Target ring: $ring"
+Set-StrictMode -version 2.0
+$ErrorActionPreference = "Stop"
 
 # Load current Git tag.
 $tag = $(git describe --tags)
@@ -32,7 +34,7 @@ $version = "$version.0"
 Write-Output "Version: $version"
 
 # Clean output directory.
-$publishDir = "insider/bin/publish"
+$publishDir = "$ring/bin/publish"
 Write-Output "Publish directory: $publishDir"
 
 $outDir = "$projDir/$publishDir"
@@ -111,9 +113,10 @@ try {
     }
 
     # Copy new application files.
+    $destination = "./$ring"
     Write-Output "Copying new files..."
     Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
-        -Destination ./insider -Recurse
+        -Destination $destination -Recurse
 
     # Stage and commit.
     Write-Output "Staging..."
