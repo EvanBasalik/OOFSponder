@@ -71,7 +71,8 @@ try {
         $msBuildVerbosityArg = ""
     }
 
-    //stick the ring inside the installUrl
+    # stick the ring inside the installUrl
+    # do it externally to the command to make this easier to debug
     $installUrl = "https://evanbasalik.github.io/OOFSponder/" + $ring + "/"
     
     & $msBuildPath /target:publish /p:PublishProfile=$publishProfile `
