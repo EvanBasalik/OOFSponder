@@ -56,6 +56,17 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="alpha\**" />
+    <Compile Remove="insider\**" />
+    <Compile Remove="production\**" />
+    <EmbeddedResource Remove="alpha\**" />
+    <EmbeddedResource Remove="insider\**" />
+    <EmbeddedResource Remove="production\**" />
+    <None Remove="alpha\**" />
+    <None Remove="insider\**" />
+    <None Remove="production\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="WhatsNew.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
