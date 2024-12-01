@@ -126,7 +126,7 @@ try {
     }
 
     # Copy new application files.
-    $destination = "./$ring/ApplicationFiles"
+    $destination = "./$ring"
     Write-Output "Copying new files..."
     Write-Output "From: ../$outDir/Application Files and ../$outDir/$appName.application"
     Write-Output "To: $destination"
