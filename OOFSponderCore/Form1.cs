@@ -789,6 +789,18 @@ namespace OOFScheduling
             if (primaryToolStripMenuItem.Checked)
             {
                 OOFSponder.Logger.Info("Saving Primary OOF message");
+
+                //if the current messages don't match the stored ones, then save them in AppData
+                //important to do this first so we can compare to the older message before updating
+                //the instance data in a few lines
+                //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
+                //if (OOFData.Instance.PrimaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
+                //{
+                //    Logger.Info("Primary OOF Internal has changed - persisting to AppData");
+                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryInternal, htmlEditorControl2.BodyHtml);
+                //}
+
+                //and also in the instance data
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
@@ -796,6 +808,23 @@ namespace OOFScheduling
             //since customer is editing Secondary message, save text in Secondary
             {
                 OOFSponder.Logger.Info("Saving Secondary OOF message");
+
+                //if the current messages don't match the stored ones, then save them in AppData
+                //important to do this first so we can compare to the older message before updating
+                //the instance data in a few lines
+                //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
+                //if (OOFData.Instance.SecondaryOOFExternalMessage != htmlEditorControl1.BodyHtml)
+                //{
+                //    Logger.Info("Secondary OOF External has changed - persisting to AppData");
+                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, htmlEditorControl1.BodyHtml);
+                //}
+                //if (OOFData.Instance.SecondaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
+                //{
+                //    Logger.Info("Secondary OOF Internal has changed - persisting to AppData");
+                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, htmlEditorControl2.BodyHtml);
+                //}
+
+                //and also in the instance data
                 OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
@@ -1016,13 +1045,6 @@ namespace OOFScheduling
             //}
         }
         #endregion
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
-            saveSettings();
-        }
-
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1318,6 +1340,8 @@ namespace OOFScheduling
 
         private void ShowLogs(object sender, EventArgs e)
         {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
 
@@ -1370,15 +1394,17 @@ namespace OOFScheduling
         private void tsmiSavedOOFMessage_Click(object sender, EventArgs e)
         {
 
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             string SavedOOFMessageHTML = string.Empty;
 
             //only show files related to the target message
             ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
             string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
-            string filenameFilterDescription = tsmi.Tag + " "+ tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...","");
+            string filenameFilterDescription = tsmi.Tag + " " + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
 
             //only show HTML files
-            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter +".html|HTML Files|*.html";
+            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter + ".html|HTML Files|*.html";
             openFileDialog.FilterIndex = 1;
 
             openFileDialog.Title = "Select an existing OOF message file";
@@ -1392,7 +1418,7 @@ namespace OOFScheduling
                     switch (tsmi.Text.Replace(tsmi.Tag + " ", ""))
                     {
                         case "External":
-                            htmlEditorControl1.BodyHtml= SavedOOFMessageHTML;
+                            htmlEditorControl1.BodyHtml = SavedOOFMessageHTML;
                             break;
                         case "Internal":
                             htmlEditorControl2.BodyHtml = SavedOOFMessageHTML;
@@ -1407,6 +1433,22 @@ namespace OOFScheduling
             }
         }
 
+        private void tsmiShowOOFMessageFolder_Click(object sender, EventArgs e)
+        {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
+            //get the AppData folder and open
+            //this is for generic manipulation of the saved messages
+            string FileorFoldertoOpen = System.IO.Path.GetDirectoryName(OOFData.OOFFolderName());
+
+            var psi = new System.Diagnostics.ProcessStartInfo()
+            {
+                FileName = FileorFoldertoOpen,
+                UseShellExecute = true,
+                Verb = "open"
+            };
+            System.Diagnostics.Process.Start(psi);
+        }
     }
 
 
