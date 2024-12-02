@@ -789,6 +789,18 @@ namespace OOFScheduling
             if (primaryToolStripMenuItem.Checked)
             {
                 OOFSponder.Logger.Info("Saving Primary OOF message");
+
+                //if the current messages don't match the stored ones, then save them in AppData
+                //important to do this first so we can compare to the older message before updating
+                //the instance data in a few lines
+                //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
+                //if (OOFData.Instance.PrimaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
+                //{
+                //    Logger.Info("Primary OOF Internal has changed - persisting to AppData");
+                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryInternal, htmlEditorControl2.BodyHtml);
+                //}
+
+                //and also in the instance data
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
@@ -796,6 +808,23 @@ namespace OOFScheduling
             //since customer is editing Secondary message, save text in Secondary
             {
                 OOFSponder.Logger.Info("Saving Secondary OOF message");
+
+                //if the current messages don't match the stored ones, then save them in AppData
+                //important to do this first so we can compare to the older message before updating
+                //the instance data in a few lines
+                //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
+                //if (OOFData.Instance.SecondaryOOFExternalMessage != htmlEditorControl1.BodyHtml)
+                //{
+                //    Logger.Info("Secondary OOF External has changed - persisting to AppData");
+                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, htmlEditorControl1.BodyHtml);
+                //}
+                //if (OOFData.Instance.SecondaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
+                //{
+                //    Logger.Info("Secondary OOF Internal has changed - persisting to AppData");
+                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, htmlEditorControl2.BodyHtml);
+                //}
+
+                //and also in the instance data
                 OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
