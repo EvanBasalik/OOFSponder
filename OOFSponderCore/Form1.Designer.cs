@@ -98,6 +98,7 @@ namespace OOFScheduling
             htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
             openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            tsmiShowOOFMessageFolder = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -534,7 +535,7 @@ namespace OOFScheduling
             primaryToolStripMenuItem.Checked = true;
             primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
-            primaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             primaryToolStripMenuItem.Text = "Primary";
             primaryToolStripMenuItem.Click += primaryToolStripMenuItem_Click;
             // 
@@ -544,7 +545,7 @@ namespace OOFScheduling
             secondaryToolStripMenuItem.AccessibleName = "Secondary message";
             secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
-            secondaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             secondaryToolStripMenuItem.Text = "Secondary";
             secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
@@ -553,7 +554,7 @@ namespace OOFScheduling
             tsmiSavedOOFMessage.AccessibleDescription = "A menu item that allows you to open a previously saved OOF message";
             tsmiSavedOOFMessage.AccessibleName = "Open saved OOF message";
             tsmiSavedOOFMessage.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            tsmiSavedOOFMessage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiExternal, tsmiInternal });
+            tsmiSavedOOFMessage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiExternal, tsmiInternal, tsmiShowOOFMessageFolder });
             tsmiSavedOOFMessage.Name = "tsmiSavedOOFMessage";
             tsmiSavedOOFMessage.Size = new System.Drawing.Size(232, 22);
             tsmiSavedOOFMessage.Text = "Open saved OOF message...";
@@ -562,7 +563,7 @@ namespace OOFScheduling
             // 
             tsmiExternal.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             tsmiExternal.Name = "tsmiExternal";
-            tsmiExternal.Size = new System.Drawing.Size(180, 22);
+            tsmiExternal.Size = new System.Drawing.Size(222, 22);
             tsmiExternal.Tag = "External";
             tsmiExternal.Text = "External...";
             tsmiExternal.Click += tsmiSavedOOFMessage_Click;
@@ -571,7 +572,7 @@ namespace OOFScheduling
             // 
             tsmiInternal.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             tsmiInternal.Name = "tsmiInternal";
-            tsmiInternal.Size = new System.Drawing.Size(180, 22);
+            tsmiInternal.Size = new System.Drawing.Size(222, 22);
             tsmiInternal.Tag = "Internal";
             tsmiInternal.Text = "Internal...";
             tsmiInternal.Click += tsmiSavedOOFMessage_Click;
@@ -833,6 +834,16 @@ namespace OOFScheduling
             // 
             openFileDialog.FileName = "openFileDialog";
             // 
+            // tsmiShowOOFMessageFolder
+            // 
+            tsmiShowOOFMessageFolder.AccessibleDescription = "A menu item that opens the AppData folder where OOFSponder saves OOF messages";
+            tsmiShowOOFMessageFolder.AccessibleName = "Show OOF message folder";
+            tsmiShowOOFMessageFolder.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiShowOOFMessageFolder.Name = "tsmiShowOOFMessageFolder";
+            tsmiShowOOFMessageFolder.Size = new System.Drawing.Size(222, 22);
+            tsmiShowOOFMessageFolder.Text = "Show OOF message folder...";
+            tsmiShowOOFMessageFolder.Click += tsmiShowOOFMessageFolder_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -971,6 +982,7 @@ namespace OOFScheduling
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStripMenuItem tsmiExternal;
         private System.Windows.Forms.ToolStripMenuItem tsmiInternal;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowOOFMessageFolder;
     }
 }
 

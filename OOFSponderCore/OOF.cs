@@ -133,7 +133,7 @@ namespace OOFScheduling
 
         internal static string OOFFolderName()
         {
-           return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder");
+           return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\");
 
         }
 

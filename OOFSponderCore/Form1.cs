@@ -1340,6 +1340,8 @@ namespace OOFScheduling
 
         private void ShowLogs(object sender, EventArgs e)
         {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
 
@@ -1392,15 +1394,17 @@ namespace OOFScheduling
         private void tsmiSavedOOFMessage_Click(object sender, EventArgs e)
         {
 
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             string SavedOOFMessageHTML = string.Empty;
 
             //only show files related to the target message
             ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
             string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
-            string filenameFilterDescription = tsmi.Tag + " "+ tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...","");
+            string filenameFilterDescription = tsmi.Tag + " " + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
 
             //only show HTML files
-            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter +".html|HTML Files|*.html";
+            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter + ".html|HTML Files|*.html";
             openFileDialog.FilterIndex = 1;
 
             openFileDialog.Title = "Select an existing OOF message file";
@@ -1414,7 +1418,7 @@ namespace OOFScheduling
                     switch (tsmi.Text.Replace(tsmi.Tag + " ", ""))
                     {
                         case "External":
-                            htmlEditorControl1.BodyHtml= SavedOOFMessageHTML;
+                            htmlEditorControl1.BodyHtml = SavedOOFMessageHTML;
                             break;
                         case "Internal":
                             htmlEditorControl2.BodyHtml = SavedOOFMessageHTML;
@@ -1429,6 +1433,22 @@ namespace OOFScheduling
             }
         }
 
+        private void tsmiShowOOFMessageFolder_Click(object sender, EventArgs e)
+        {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
+            //get the AppData folder and open
+            //this is for generic manipulation of the saved messages
+            string FileorFoldertoOpen = System.IO.Path.GetDirectoryName(OOFData.OOFFolderName());
+
+            var psi = new System.Diagnostics.ProcessStartInfo()
+            {
+                FileName = FileorFoldertoOpen,
+                UseShellExecute = true,
+                Verb = "open"
+            };
+            System.Diagnostics.Process.Start(psi);
+        }
     }
 
 
