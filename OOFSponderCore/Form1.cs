@@ -1017,13 +1017,6 @@ namespace OOFScheduling
         }
         #endregion
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
-            saveSettings();
-        }
-
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());

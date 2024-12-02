@@ -36,14 +36,10 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-    <BaseAddress>285212672</BaseAddress>
     <Configurations>Debug;Release without Sending OOF;Release</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release without Sending OOF|AnyCPU'">
     <OutputPath>bin\Release without Sending OOF\</OutputPath>
-    <BaseAddress>285212672</BaseAddress>
-    <Optimize>true</Optimize>
-    <FileAlignment>4096</FileAlignment>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>

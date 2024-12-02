@@ -903,11 +903,6 @@ namespace OOFScheduling
             PerformLayout();
         }
 
-        private void SaveToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
-
         #endregion
 
         private System.Windows.Forms.NotifyIcon notifyIcon1;
