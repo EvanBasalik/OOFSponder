@@ -85,12 +85,6 @@ namespace OOFScheduling
             toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             lblBuild = new System.Windows.Forms.ToolStripStatusLabel();
-            passwordConfirmTB = new System.Windows.Forms.MaskedTextBox();
-            label10 = new System.Windows.Forms.Label();
-            passwordTB = new System.Windows.Forms.MaskedTextBox();
-            label9 = new System.Windows.Forms.Label();
-            emailAddressTB = new System.Windows.Forms.TextBox();
-            label8 = new System.Windows.Forms.Label();
             btnPermaOOF = new System.Windows.Forms.Button();
             dtPermaOOF = new System.Windows.Forms.DateTimePicker();
             radPrimary = new System.Windows.Forms.RadioButton();
@@ -699,70 +693,7 @@ namespace OOFScheduling
             // 
             lblBuild.Name = "lblBuild";
             lblBuild.Size = new System.Drawing.Size(78, 19);
-            lblBuild.Text = "BuildNumber";
-            // 
-            // passwordConfirmTB
-            // 
-            passwordConfirmTB.Location = new System.Drawing.Point(516, 890);
-            passwordConfirmTB.Margin = new System.Windows.Forms.Padding(4);
-            passwordConfirmTB.Name = "passwordConfirmTB";
-            passwordConfirmTB.Size = new System.Drawing.Size(116, 23);
-            passwordConfirmTB.TabIndex = 52;
-            passwordConfirmTB.UseSystemPasswordChar = true;
-            passwordConfirmTB.Visible = false;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new System.Drawing.Point(399, 893);
-            label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label10.Name = "label10";
-            label10.Size = new System.Drawing.Size(107, 15);
-            label10.TabIndex = 51;
-            label10.Text = "Confirm Password:";
-            label10.Visible = false;
-            // 
-            // passwordTB
-            // 
-            passwordTB.Location = new System.Drawing.Point(274, 890);
-            passwordTB.Margin = new System.Windows.Forms.Padding(4);
-            passwordTB.Name = "passwordTB";
-            passwordTB.Size = new System.Drawing.Size(116, 23);
-            passwordTB.TabIndex = 50;
-            passwordTB.UseSystemPasswordChar = true;
-            passwordTB.Visible = false;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(202, 893);
-            label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(60, 15);
-            label9.TabIndex = 49;
-            label9.Text = "Password:";
-            label9.Visible = false;
-            // 
-            // emailAddressTB
-            // 
-            emailAddressTB.Location = new System.Drawing.Point(78, 890);
-            emailAddressTB.Margin = new System.Windows.Forms.Padding(4);
-            emailAddressTB.Name = "emailAddressTB";
-            emailAddressTB.Size = new System.Drawing.Size(116, 23);
-            emailAddressTB.TabIndex = 48;
-            emailAddressTB.Visible = false;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(30, 893);
-            label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(39, 15);
-            label8.TabIndex = 47;
-            label8.Text = "Email:";
-            label8.Visible = false;
-            // 
+            lblBuild.Text = "BuildNumber";            // 
             // btnPermaOOF
             // 
             btnPermaOOF.Location = new System.Drawing.Point(379, 512);
