@@ -783,12 +783,6 @@ namespace OOFScheduling
             ClientSize = new System.Drawing.Size(819, 586);
             Controls.Add(dtPermaOOF);
             Controls.Add(btnPermaOOF);
-            Controls.Add(passwordConfirmTB);
-            Controls.Add(label10);
-            Controls.Add(passwordTB);
-            Controls.Add(label9);
-            Controls.Add(emailAddressTB);
-            Controls.Add(label8);
             Controls.Add(statusStrip1);
             Controls.Add(label13);
             Controls.Add(lblInternalMessage);
@@ -830,7 +824,6 @@ namespace OOFScheduling
             MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4);
             MaximizeBox = false;
-            MaximumSize = new System.Drawing.Size(835, 900);
             MinimumSize = new System.Drawing.Size(835, 160);
             Name = "Form1";
             Text = "OOFSponder";
