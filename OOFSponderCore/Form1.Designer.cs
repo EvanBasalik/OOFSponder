@@ -846,7 +846,7 @@ namespace OOFScheduling
             // 
             // Form1
             // 
-            AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new System.Drawing.Size(819, 586);
@@ -899,7 +899,7 @@ namespace OOFScheduling
             MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4);
             MaximizeBox = false;
-            MaximumSize = new System.Drawing.Size(835, 625);
+            MaximumSize = new System.Drawing.Size(835, 900);
             MinimumSize = new System.Drawing.Size(835, 160);
             Name = "Form1";
             Text = "OOFSponder";
