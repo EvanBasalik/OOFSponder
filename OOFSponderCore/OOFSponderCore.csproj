@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
+    <Version>3.0.0</Version>
     <OutputType>WinExe</OutputType>
     <RootNamespace>OOFScheduling</RootNamespace>
     <AssemblyName>OOFScheduling</AssemblyName>
@@ -33,12 +34,6 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DefineConstants>TRACE;DEBUG;NOOOF;</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>1E054AAED22CE8B6579534FCA27D973FC82A1527</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>OOFSponder_3_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
