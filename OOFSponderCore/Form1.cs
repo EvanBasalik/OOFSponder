@@ -861,6 +861,8 @@ namespace OOFScheduling
         #region Events
         private void OnExit(object sender, EventArgs e)
         {
+            Logger.Info("Exiting - triggered by system tray Exit");
+
             // Use this since we are a console app
             System.Environment.Exit(1);
         }
@@ -905,13 +907,17 @@ namespace OOFScheduling
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //if (minimize && e.CloseReason != CloseReason.WindowsShutDown)
-            //if (e.CloseReason != CloseReason.WindowsShutDown)
-            //{
-            //    e.Cancel = true;
-            //    this.WindowState = FormWindowState.Minimized;
-            //    //this.Hide();
-            //}
+
+            Logger.Info("FormClosing triggered: " + e.CloseReason.ToString());
+
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                this.WindowState = FormWindowState.Minimized;
+                //this.Hide();
+
+                Logger.Info("FormClosing due to UserClosing - canceled Close and minimized instead");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
