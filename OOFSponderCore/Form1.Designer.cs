@@ -112,10 +112,10 @@ namespace OOFScheduling
             label1.AccessibleDescription = "A label with the text Sunday";
             label1.AccessibleName = "Sunday working hours";
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(14, 45);
-            label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label1.Location = new System.Drawing.Point(24, 90);
+            label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(46, 15);
+            label1.Size = new System.Drawing.Size(81, 30);
             label1.TabIndex = 0;
             label1.Text = "Sunday";
             // 
@@ -124,10 +124,10 @@ namespace OOFScheduling
             label2.AccessibleDescription = "A label with the text Monday";
             label2.AccessibleName = "Monday working hours";
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(126, 45);
-            label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label2.Location = new System.Drawing.Point(216, 90);
+            label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(51, 15);
+            label2.Size = new System.Drawing.Size(89, 30);
             label2.TabIndex = 1;
             label2.Text = "Monday";
             // 
@@ -136,10 +136,10 @@ namespace OOFScheduling
             label3.AccessibleDescription = "A label with the text Tuesday";
             label3.AccessibleName = "Tuesday working hours";
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(238, 45);
-            label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label3.Location = new System.Drawing.Point(408, 90);
+            label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(51, 15);
+            label3.Size = new System.Drawing.Size(89, 30);
             label3.TabIndex = 2;
             label3.Text = "Tuesday";
             // 
@@ -148,10 +148,10 @@ namespace OOFScheduling
             label4.AccessibleDescription = "A label with the text Wednesday";
             label4.AccessibleName = "Wednesday working hours";
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(350, 45);
-            label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label4.Location = new System.Drawing.Point(600, 90);
+            label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(68, 15);
+            label4.Size = new System.Drawing.Size(120, 30);
             label4.TabIndex = 3;
             label4.Text = "Wednesday";
             // 
@@ -160,10 +160,10 @@ namespace OOFScheduling
             label5.AccessibleDescription = "A label with the text Thursday";
             label5.AccessibleName = "Thursday working hours";
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(462, 45);
-            label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label5.Location = new System.Drawing.Point(792, 90);
+            label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(56, 15);
+            label5.Size = new System.Drawing.Size(97, 30);
             label5.TabIndex = 4;
             label5.Text = "Thursday";
             // 
@@ -172,10 +172,10 @@ namespace OOFScheduling
             label6.AccessibleDescription = "A label with the text Friday";
             label6.AccessibleName = "Friday working hours";
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(574, 45);
-            label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label6.Location = new System.Drawing.Point(984, 90);
+            label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(39, 15);
+            label6.Size = new System.Drawing.Size(68, 30);
             label6.TabIndex = 5;
             label6.Text = "Friday";
             // 
@@ -184,10 +184,10 @@ namespace OOFScheduling
             label7.AccessibleDescription = "A label with the text Saturday";
             label7.AccessibleName = "Saturday working hours";
             label7.AutoSize = true;
-            label7.Location = new System.Drawing.Point(686, 45);
-            label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label7.Location = new System.Drawing.Point(1176, 90);
+            label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(53, 15);
+            label7.Size = new System.Drawing.Size(94, 30);
             label7.TabIndex = 6;
             label7.Text = "Saturday";
             // 
@@ -196,11 +196,11 @@ namespace OOFScheduling
             sundayStartTimepicker.AccessibleName = "Enter your working hours start time for Sunday";
             sundayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             sundayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            sundayStartTimepicker.Location = new System.Drawing.Point(14, 64);
-            sundayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            sundayStartTimepicker.Location = new System.Drawing.Point(24, 127);
+            sundayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             sundayStartTimepicker.Name = "sundayStartTimepicker";
             sundayStartTimepicker.ShowUpDown = true;
-            sundayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            sundayStartTimepicker.Size = new System.Drawing.Size(176, 35);
             sundayStartTimepicker.TabIndex = 7;
             sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -209,11 +209,11 @@ namespace OOFScheduling
             mondayStartTimepicker.AccessibleName = "Enter your working hours start time for Monday";
             mondayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             mondayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            mondayStartTimepicker.Location = new System.Drawing.Point(126, 64);
-            mondayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            mondayStartTimepicker.Location = new System.Drawing.Point(216, 127);
+            mondayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             mondayStartTimepicker.Name = "mondayStartTimepicker";
             mondayStartTimepicker.ShowUpDown = true;
-            mondayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            mondayStartTimepicker.Size = new System.Drawing.Size(176, 35);
             mondayStartTimepicker.TabIndex = 10;
             mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -222,11 +222,11 @@ namespace OOFScheduling
             tuesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Tuesday";
             tuesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             tuesdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            tuesdayStartTimepicker.Location = new System.Drawing.Point(238, 64);
-            tuesdayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            tuesdayStartTimepicker.Location = new System.Drawing.Point(408, 127);
+            tuesdayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             tuesdayStartTimepicker.Name = "tuesdayStartTimepicker";
             tuesdayStartTimepicker.ShowUpDown = true;
-            tuesdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            tuesdayStartTimepicker.Size = new System.Drawing.Size(176, 35);
             tuesdayStartTimepicker.TabIndex = 13;
             tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -235,11 +235,11 @@ namespace OOFScheduling
             wednesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Wednesday";
             wednesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             wednesdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            wednesdayStartTimepicker.Location = new System.Drawing.Point(350, 64);
-            wednesdayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            wednesdayStartTimepicker.Location = new System.Drawing.Point(600, 127);
+            wednesdayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             wednesdayStartTimepicker.Name = "wednesdayStartTimepicker";
             wednesdayStartTimepicker.ShowUpDown = true;
-            wednesdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            wednesdayStartTimepicker.Size = new System.Drawing.Size(176, 35);
             wednesdayStartTimepicker.TabIndex = 16;
             wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -248,11 +248,11 @@ namespace OOFScheduling
             thursdayStartTimepicker.AccessibleName = "Enter your working hours start time for Thursday";
             thursdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             thursdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            thursdayStartTimepicker.Location = new System.Drawing.Point(462, 64);
-            thursdayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            thursdayStartTimepicker.Location = new System.Drawing.Point(792, 127);
+            thursdayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             thursdayStartTimepicker.Name = "thursdayStartTimepicker";
             thursdayStartTimepicker.ShowUpDown = true;
-            thursdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            thursdayStartTimepicker.Size = new System.Drawing.Size(176, 35);
             thursdayStartTimepicker.TabIndex = 19;
             thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -261,11 +261,11 @@ namespace OOFScheduling
             fridayStartTimepicker.AccessibleName = "Enter your working hours start time for Friday";
             fridayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             fridayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            fridayStartTimepicker.Location = new System.Drawing.Point(574, 64);
-            fridayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            fridayStartTimepicker.Location = new System.Drawing.Point(984, 127);
+            fridayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             fridayStartTimepicker.Name = "fridayStartTimepicker";
             fridayStartTimepicker.ShowUpDown = true;
-            fridayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            fridayStartTimepicker.Size = new System.Drawing.Size(176, 35);
             fridayStartTimepicker.TabIndex = 22;
             fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -274,11 +274,11 @@ namespace OOFScheduling
             saturdayStartTimepicker.AccessibleName = "Enter your working hours start time for Saturday";
             saturdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             saturdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            saturdayStartTimepicker.Location = new System.Drawing.Point(686, 64);
-            saturdayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            saturdayStartTimepicker.Location = new System.Drawing.Point(1176, 127);
+            saturdayStartTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             saturdayStartTimepicker.Name = "saturdayStartTimepicker";
             saturdayStartTimepicker.ShowUpDown = true;
-            saturdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            saturdayStartTimepicker.Size = new System.Drawing.Size(176, 35);
             saturdayStartTimepicker.TabIndex = 25;
             saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -287,11 +287,11 @@ namespace OOFScheduling
             saturdayEndTimepicker.AccessibleName = "Enter your working hours end time for Saturday";
             saturdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             saturdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            saturdayEndTimepicker.Location = new System.Drawing.Point(686, 94);
-            saturdayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            saturdayEndTimepicker.Location = new System.Drawing.Point(1176, 187);
+            saturdayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             saturdayEndTimepicker.Name = "saturdayEndTimepicker";
             saturdayEndTimepicker.ShowUpDown = true;
-            saturdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            saturdayEndTimepicker.Size = new System.Drawing.Size(176, 35);
             saturdayEndTimepicker.TabIndex = 26;
             saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -300,11 +300,11 @@ namespace OOFScheduling
             fridayEndTimepicker.AccessibleName = "Enter your working hours end time for Friday";
             fridayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             fridayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            fridayEndTimepicker.Location = new System.Drawing.Point(574, 94);
-            fridayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            fridayEndTimepicker.Location = new System.Drawing.Point(984, 187);
+            fridayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             fridayEndTimepicker.Name = "fridayEndTimepicker";
             fridayEndTimepicker.ShowUpDown = true;
-            fridayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            fridayEndTimepicker.Size = new System.Drawing.Size(176, 35);
             fridayEndTimepicker.TabIndex = 23;
             fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -313,11 +313,11 @@ namespace OOFScheduling
             thursdayEndTimepicker.AccessibleName = "Enter your working hours end time for Thursday";
             thursdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             thursdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            thursdayEndTimepicker.Location = new System.Drawing.Point(462, 94);
-            thursdayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            thursdayEndTimepicker.Location = new System.Drawing.Point(792, 187);
+            thursdayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             thursdayEndTimepicker.Name = "thursdayEndTimepicker";
             thursdayEndTimepicker.ShowUpDown = true;
-            thursdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            thursdayEndTimepicker.Size = new System.Drawing.Size(176, 35);
             thursdayEndTimepicker.TabIndex = 20;
             thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -326,11 +326,11 @@ namespace OOFScheduling
             wednesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Wednesday";
             wednesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             wednesdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            wednesdayEndTimepicker.Location = new System.Drawing.Point(350, 94);
-            wednesdayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            wednesdayEndTimepicker.Location = new System.Drawing.Point(600, 187);
+            wednesdayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             wednesdayEndTimepicker.Name = "wednesdayEndTimepicker";
             wednesdayEndTimepicker.ShowUpDown = true;
-            wednesdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            wednesdayEndTimepicker.Size = new System.Drawing.Size(176, 35);
             wednesdayEndTimepicker.TabIndex = 17;
             wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -339,11 +339,11 @@ namespace OOFScheduling
             tuesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Tuesday";
             tuesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             tuesdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            tuesdayEndTimepicker.Location = new System.Drawing.Point(238, 94);
-            tuesdayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            tuesdayEndTimepicker.Location = new System.Drawing.Point(408, 187);
+            tuesdayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             tuesdayEndTimepicker.Name = "tuesdayEndTimepicker";
             tuesdayEndTimepicker.ShowUpDown = true;
-            tuesdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            tuesdayEndTimepicker.Size = new System.Drawing.Size(176, 35);
             tuesdayEndTimepicker.TabIndex = 14;
             tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -352,11 +352,11 @@ namespace OOFScheduling
             mondayEndTimepicker.AccessibleName = "Enter your working hours end time for Monday";
             mondayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             mondayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            mondayEndTimepicker.Location = new System.Drawing.Point(126, 94);
-            mondayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            mondayEndTimepicker.Location = new System.Drawing.Point(216, 187);
+            mondayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             mondayEndTimepicker.Name = "mondayEndTimepicker";
             mondayEndTimepicker.ShowUpDown = true;
-            mondayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            mondayEndTimepicker.Size = new System.Drawing.Size(176, 35);
             mondayEndTimepicker.TabIndex = 11;
             mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -365,21 +365,21 @@ namespace OOFScheduling
             sundayEndTimepicker.AccessibleName = "Enter your working hours end time for Sunday";
             sundayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             sundayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            sundayEndTimepicker.Location = new System.Drawing.Point(14, 94);
-            sundayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
+            sundayEndTimepicker.Location = new System.Drawing.Point(24, 187);
+            sundayEndTimepicker.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             sundayEndTimepicker.Name = "sundayEndTimepicker";
             sundayEndTimepicker.ShowUpDown = true;
-            sundayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            sundayEndTimepicker.Size = new System.Drawing.Size(176, 35);
             sundayEndTimepicker.TabIndex = 8;
             sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // sundayOffWorkCB
             // 
             sundayOffWorkCB.AutoSize = true;
-            sundayOffWorkCB.Location = new System.Drawing.Point(18, 124);
-            sundayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
+            sundayOffWorkCB.Location = new System.Drawing.Point(30, 247);
+            sundayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             sundayOffWorkCB.Name = "sundayOffWorkCB";
-            sundayOffWorkCB.Size = new System.Drawing.Size(74, 19);
+            sundayOffWorkCB.Size = new System.Drawing.Size(123, 34);
             sundayOffWorkCB.TabIndex = 9;
             sundayOffWorkCB.Text = "Off Work";
             sundayOffWorkCB.UseVisualStyleBackColor = true;
@@ -388,10 +388,10 @@ namespace OOFScheduling
             // mondayOffWorkCB
             // 
             mondayOffWorkCB.AutoSize = true;
-            mondayOffWorkCB.Location = new System.Drawing.Point(130, 124);
-            mondayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
+            mondayOffWorkCB.Location = new System.Drawing.Point(222, 247);
+            mondayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             mondayOffWorkCB.Name = "mondayOffWorkCB";
-            mondayOffWorkCB.Size = new System.Drawing.Size(74, 19);
+            mondayOffWorkCB.Size = new System.Drawing.Size(123, 34);
             mondayOffWorkCB.TabIndex = 12;
             mondayOffWorkCB.Text = "Off Work";
             mondayOffWorkCB.UseVisualStyleBackColor = true;
@@ -400,10 +400,10 @@ namespace OOFScheduling
             // tuesdayOffWorkCB
             // 
             tuesdayOffWorkCB.AutoSize = true;
-            tuesdayOffWorkCB.Location = new System.Drawing.Point(241, 124);
-            tuesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
+            tuesdayOffWorkCB.Location = new System.Drawing.Point(414, 247);
+            tuesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
-            tuesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
+            tuesdayOffWorkCB.Size = new System.Drawing.Size(123, 34);
             tuesdayOffWorkCB.TabIndex = 15;
             tuesdayOffWorkCB.Text = "Off Work";
             tuesdayOffWorkCB.UseVisualStyleBackColor = true;
@@ -412,10 +412,10 @@ namespace OOFScheduling
             // wednesdayOffWorkCB
             // 
             wednesdayOffWorkCB.AutoSize = true;
-            wednesdayOffWorkCB.Location = new System.Drawing.Point(354, 124);
-            wednesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
+            wednesdayOffWorkCB.Location = new System.Drawing.Point(606, 247);
+            wednesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
-            wednesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
+            wednesdayOffWorkCB.Size = new System.Drawing.Size(123, 34);
             wednesdayOffWorkCB.TabIndex = 18;
             wednesdayOffWorkCB.Text = "Off Work";
             wednesdayOffWorkCB.UseVisualStyleBackColor = true;
@@ -424,10 +424,10 @@ namespace OOFScheduling
             // thursdayOffWorkCB
             // 
             thursdayOffWorkCB.AutoSize = true;
-            thursdayOffWorkCB.Location = new System.Drawing.Point(465, 124);
-            thursdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
+            thursdayOffWorkCB.Location = new System.Drawing.Point(798, 247);
+            thursdayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             thursdayOffWorkCB.Name = "thursdayOffWorkCB";
-            thursdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
+            thursdayOffWorkCB.Size = new System.Drawing.Size(123, 34);
             thursdayOffWorkCB.TabIndex = 21;
             thursdayOffWorkCB.Text = "Off Work";
             thursdayOffWorkCB.UseVisualStyleBackColor = true;
@@ -436,10 +436,10 @@ namespace OOFScheduling
             // fridayOffWorkCB
             // 
             fridayOffWorkCB.AutoSize = true;
-            fridayOffWorkCB.Location = new System.Drawing.Point(578, 124);
-            fridayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
+            fridayOffWorkCB.Location = new System.Drawing.Point(990, 247);
+            fridayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             fridayOffWorkCB.Name = "fridayOffWorkCB";
-            fridayOffWorkCB.Size = new System.Drawing.Size(74, 19);
+            fridayOffWorkCB.Size = new System.Drawing.Size(123, 34);
             fridayOffWorkCB.TabIndex = 24;
             fridayOffWorkCB.Text = "Off Work";
             fridayOffWorkCB.UseVisualStyleBackColor = true;
@@ -448,10 +448,10 @@ namespace OOFScheduling
             // saturdayOffWorkCB
             // 
             saturdayOffWorkCB.AutoSize = true;
-            saturdayOffWorkCB.Location = new System.Drawing.Point(690, 124);
-            saturdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
+            saturdayOffWorkCB.Location = new System.Drawing.Point(1182, 247);
+            saturdayOffWorkCB.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             saturdayOffWorkCB.Name = "saturdayOffWorkCB";
-            saturdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
+            saturdayOffWorkCB.Size = new System.Drawing.Size(123, 34);
             saturdayOffWorkCB.TabIndex = 27;
             saturdayOffWorkCB.Text = "Off Work";
             saturdayOffWorkCB.UseVisualStyleBackColor = true;
@@ -459,10 +459,10 @@ namespace OOFScheduling
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(14, 512);
-            button2.Margin = new System.Windows.Forms.Padding(4);
+            button2.Location = new System.Drawing.Point(24, 1024);
+            button2.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             button2.Name = "button2";
-            button2.Size = new System.Drawing.Size(133, 26);
+            button2.Size = new System.Drawing.Size(228, 53);
             button2.TabIndex = 38;
             button2.Text = "Save Settings";
             button2.UseVisualStyleBackColor = true;
@@ -472,10 +472,10 @@ namespace OOFScheduling
             // 
             lblExternalMesage.AutoSize = true;
             lblExternalMesage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblExternalMesage.Location = new System.Drawing.Point(16, 152);
-            lblExternalMesage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblExternalMesage.Location = new System.Drawing.Point(28, 305);
+            lblExternalMesage.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             lblExternalMesage.Name = "lblExternalMesage";
-            lblExternalMesage.Size = new System.Drawing.Size(107, 13);
+            lblExternalMesage.Size = new System.Drawing.Size(185, 25);
             lblExternalMesage.TabIndex = 40;
             lblExternalMesage.Text = "External Message";
             // 
@@ -483,10 +483,10 @@ namespace OOFScheduling
             // 
             lblInternalMessage.AutoSize = true;
             lblInternalMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblInternalMessage.Location = new System.Drawing.Point(16, 335);
-            lblInternalMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblInternalMessage.Location = new System.Drawing.Point(28, 670);
+            lblInternalMessage.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             lblInternalMessage.Name = "lblInternalMessage";
-            lblInternalMessage.Size = new System.Drawing.Size(104, 13);
+            lblInternalMessage.Size = new System.Drawing.Size(178, 25);
             lblInternalMessage.TabIndex = 41;
             lblInternalMessage.Text = "Internal Message";
             // 
@@ -658,10 +658,10 @@ namespace OOFScheduling
             label13.AccessibleName = "Enter your Working Hours";
             label13.AutoSize = true;
             label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            label13.Location = new System.Drawing.Point(14, 29);
-            label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label13.Location = new System.Drawing.Point(24, 58);
+            label13.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             label13.Name = "label13";
-            label13.Size = new System.Drawing.Size(157, 13);
+            label13.Size = new System.Drawing.Size(267, 25);
             label13.TabIndex = 43;
             label13.Text = "Enter your Working Hours:";
             // 
@@ -696,10 +696,10 @@ namespace OOFScheduling
             lblBuild.Text = "BuildNumber";            // 
             // btnPermaOOF
             // 
-            btnPermaOOF.Location = new System.Drawing.Point(379, 512);
-            btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
+            btnPermaOOF.Location = new System.Drawing.Point(649, 1024);
+            btnPermaOOF.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             btnPermaOOF.Name = "btnPermaOOF";
-            btnPermaOOF.Size = new System.Drawing.Size(152, 26);
+            btnPermaOOF.Size = new System.Drawing.Size(260, 53);
             btnPermaOOF.TabIndex = 54;
             btnPermaOOF.Tag = "Enable";
             btnPermaOOF.Text = "Go OOF now until:";
@@ -712,20 +712,20 @@ namespace OOFScheduling
             dtPermaOOF.AccessibleName = "Perma OOF date";
             dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(535, 514);
-            dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
+            dtPermaOOF.Location = new System.Drawing.Point(917, 1033);
+            dtPermaOOF.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             dtPermaOOF.Name = "dtPermaOOF";
-            dtPermaOOF.Size = new System.Drawing.Size(215, 23);
+            dtPermaOOF.Size = new System.Drawing.Size(366, 35);
             dtPermaOOF.TabIndex = 55;
             // 
             // radPrimary
             // 
             radPrimary.AutoSize = true;
             radPrimary.Checked = true;
-            radPrimary.Location = new System.Drawing.Point(154, 516);
-            radPrimary.Margin = new System.Windows.Forms.Padding(4);
+            radPrimary.Location = new System.Drawing.Point(264, 1033);
+            radPrimary.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             radPrimary.Name = "radPrimary";
-            radPrimary.Size = new System.Drawing.Size(93, 19);
+            radPrimary.Size = new System.Drawing.Size(156, 34);
             radPrimary.TabIndex = 56;
             radPrimary.TabStop = true;
             radPrimary.Text = "Primary OOF";
@@ -734,10 +734,10 @@ namespace OOFScheduling
             // radSecondary
             // 
             radSecondary.AutoSize = true;
-            radSecondary.Location = new System.Drawing.Point(252, 516);
-            radSecondary.Margin = new System.Windows.Forms.Padding(4);
+            radSecondary.Location = new System.Drawing.Point(432, 1033);
+            radSecondary.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             radSecondary.Name = "radSecondary";
-            radSecondary.Size = new System.Drawing.Size(107, 19);
+            radSecondary.Size = new System.Drawing.Size(182, 34);
             radSecondary.TabIndex = 56;
             radSecondary.TabStop = true;
             radSecondary.Text = "Secondary OOF";
@@ -746,19 +746,19 @@ namespace OOFScheduling
             // htmlEditorControl2
             // 
             htmlEditorControl2.InnerText = null;
-            htmlEditorControl2.Location = new System.Drawing.Point(14, 351);
-            htmlEditorControl2.Margin = new System.Windows.Forms.Padding(4);
+            htmlEditorControl2.Location = new System.Drawing.Point(24, 702);
+            htmlEditorControl2.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             htmlEditorControl2.Name = "htmlEditorControl2";
-            htmlEditorControl2.Size = new System.Drawing.Size(778, 150);
+            htmlEditorControl2.Size = new System.Drawing.Size(1334, 300);
             htmlEditorControl2.TabIndex = 39;
             // 
             // htmlEditorControl1
             // 
             htmlEditorControl1.InnerText = null;
-            htmlEditorControl1.Location = new System.Drawing.Point(14, 171);
-            htmlEditorControl1.Margin = new System.Windows.Forms.Padding(4);
+            htmlEditorControl1.Location = new System.Drawing.Point(24, 342);
+            htmlEditorControl1.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             htmlEditorControl1.Name = "htmlEditorControl1";
-            htmlEditorControl1.Size = new System.Drawing.Size(778, 150);
+            htmlEditorControl1.Size = new System.Drawing.Size(1334, 300);
             htmlEditorControl1.TabIndex = 31;
             // 
             // openFileDialog
