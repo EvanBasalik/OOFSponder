@@ -26,998 +26,898 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HtmlEditorControl));
-            this.browserPanel = new System.Windows.Forms.Panel();
-            this.toolstripEditor = new System.Windows.Forms.ToolStrip();
-            this.toolstripTextCut = new System.Windows.Forms.ToolStripButton();
-            this.toolstripTextCopy = new System.Windows.Forms.ToolStripButton();
-            this.toolstripTextPaste = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolstripEditUndo = new System.Windows.Forms.ToolStripButton();
-            this.toolstripEditRedo = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolstripFormatBold = new System.Windows.Forms.ToolStripButton();
-            this.toolstripFormatUnderline = new System.Windows.Forms.ToolStripButton();
-            this.toolstripFormatItalic = new System.Windows.Forms.ToolStripButton();
-            this.toolstripFontDialog = new System.Windows.Forms.ToolStripButton();
-            this.toolstripFontNormal = new System.Windows.Forms.ToolStripButton();
-            this.toolstripColorDialog = new System.Windows.Forms.ToolStripButton();
-            this.toolstripFontIncrease = new System.Windows.Forms.ToolStripButton();
-            this.toolstripFontDecrease = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolstripJustifyLeft = new System.Windows.Forms.ToolStripButton();
-            this.toolstripJustifyCenter = new System.Windows.Forms.ToolStripButton();
-            this.toolstripJustifyRight = new System.Windows.Forms.ToolStripButton();
-            this.toolstripFontIndent = new System.Windows.Forms.ToolStripButton();
-            this.toolstripFontOutdent = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolstripListOrdered = new System.Windows.Forms.ToolStripButton();
-            this.toolstripListUnordered = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolstripInsertLine = new System.Windows.Forms.ToolStripButton();
-            this.toolstripInsertTable = new System.Windows.Forms.ToolStripButton();
-            this.toolstripInsertImage = new System.Windows.Forms.ToolStripButton();
-            this.toolstripInsertLink = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolstripFindReplace = new System.Windows.Forms.ToolStripButton();
-            this.toolstripDocumentPrint = new System.Windows.Forms.ToolStripButton();
-            this.contextEditor = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.contextTable = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextTableModify = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextTableInsertRow = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextTableDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextEditUndo = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextEditRedo = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextEditCut = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextEditCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextEditPaste = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextEditFindReplace = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextEditUnselect = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextEditSelectAll = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextEditDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextDocument = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextDocumentOpen = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextDocumentSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextDocumentPrint = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextDocumentToolbar = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextDocumentScrollbar = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextDocumentWordwrap = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextDocumentOverwrite = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextFormat = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatFontDialog = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatColorDialog = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextFormatNormal = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatBold = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatItalic = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatUnderline = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatSuperscript = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatSubscript = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatStrikeout = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextFormatIncrease = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatDecrease = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatIndent = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatOutdent = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextFormatListOrdered = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatListUnordered = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextJustify = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextJustifyLeft = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextJustifyCenter = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextJustifyRight = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormatting = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormattingNormal = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormattingHeading1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormattingHeading2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormattingHeading3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormattingHeading4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormattingHeading5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextFormattingFormatted = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.contextInsert = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextInsertLine = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextInsertLink = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextInsertImage = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextInsertText = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextInsertHtml = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextInsertTable = new System.Windows.Forms.ToolStripMenuItem();
-            this.editorWebBrowser = new System.Windows.Forms.WebBrowser();
-            this.browserPanel.SuspendLayout();
-            this.toolstripEditor.SuspendLayout();
-            this.contextEditor.SuspendLayout();
-            this.SuspendLayout();
+            browserPanel = new System.Windows.Forms.Panel();
+            editorWebBrowser = new System.Windows.Forms.WebBrowser();
+            toolstripEditor = new System.Windows.Forms.ToolStrip();
+            toolstripTextCut = new System.Windows.Forms.ToolStripButton();
+            toolstripTextCopy = new System.Windows.Forms.ToolStripButton();
+            toolstripTextPaste = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            toolstripEditUndo = new System.Windows.Forms.ToolStripButton();
+            toolstripEditRedo = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            toolstripFormatBold = new System.Windows.Forms.ToolStripButton();
+            toolstripFormatUnderline = new System.Windows.Forms.ToolStripButton();
+            toolstripFormatItalic = new System.Windows.Forms.ToolStripButton();
+            toolstripFontDialog = new System.Windows.Forms.ToolStripButton();
+            toolstripFontNormal = new System.Windows.Forms.ToolStripButton();
+            toolstripColorDialog = new System.Windows.Forms.ToolStripButton();
+            toolstripFontIncrease = new System.Windows.Forms.ToolStripButton();
+            toolstripFontDecrease = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            toolstripJustifyLeft = new System.Windows.Forms.ToolStripButton();
+            toolstripJustifyCenter = new System.Windows.Forms.ToolStripButton();
+            toolstripJustifyRight = new System.Windows.Forms.ToolStripButton();
+            toolstripFontIndent = new System.Windows.Forms.ToolStripButton();
+            toolstripFontOutdent = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            toolstripListOrdered = new System.Windows.Forms.ToolStripButton();
+            toolstripListUnordered = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            toolstripInsertLine = new System.Windows.Forms.ToolStripButton();
+            toolstripInsertTable = new System.Windows.Forms.ToolStripButton();
+            toolstripInsertImage = new System.Windows.Forms.ToolStripButton();
+            toolstripInsertLink = new System.Windows.Forms.ToolStripButton();
+            toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            toolstripFindReplace = new System.Windows.Forms.ToolStripButton();
+            toolstripDocumentPrint = new System.Windows.Forms.ToolStripButton();
+            contextEditor = new System.Windows.Forms.ContextMenuStrip(components);
+            contextTable = new System.Windows.Forms.ToolStripMenuItem();
+            contextTableModify = new System.Windows.Forms.ToolStripMenuItem();
+            contextTableInsertRow = new System.Windows.Forms.ToolStripMenuItem();
+            contextTableDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
+            contextEdit = new System.Windows.Forms.ToolStripMenuItem();
+            contextEditUndo = new System.Windows.Forms.ToolStripMenuItem();
+            contextEditRedo = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            contextEditCut = new System.Windows.Forms.ToolStripMenuItem();
+            contextEditCopy = new System.Windows.Forms.ToolStripMenuItem();
+            contextEditPaste = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            contextEditFindReplace = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+            contextEditUnselect = new System.Windows.Forms.ToolStripMenuItem();
+            contextEditSelectAll = new System.Windows.Forms.ToolStripMenuItem();
+            contextEditDelete = new System.Windows.Forms.ToolStripMenuItem();
+            contextDocument = new System.Windows.Forms.ToolStripMenuItem();
+            contextDocumentOpen = new System.Windows.Forms.ToolStripMenuItem();
+            contextDocumentSave = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            contextDocumentPrint = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            contextDocumentToolbar = new System.Windows.Forms.ToolStripMenuItem();
+            contextDocumentScrollbar = new System.Windows.Forms.ToolStripMenuItem();
+            contextDocumentWordwrap = new System.Windows.Forms.ToolStripMenuItem();
+            contextDocumentOverwrite = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            contextFormat = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatFontDialog = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatColorDialog = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            contextFormatNormal = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatBold = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatItalic = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatUnderline = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatSuperscript = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatSubscript = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatStrikeout = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            contextFormatIncrease = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatDecrease = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatIndent = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatOutdent = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            contextFormatListOrdered = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatListUnordered = new System.Windows.Forms.ToolStripMenuItem();
+            contextJustify = new System.Windows.Forms.ToolStripMenuItem();
+            contextJustifyLeft = new System.Windows.Forms.ToolStripMenuItem();
+            contextJustifyCenter = new System.Windows.Forms.ToolStripMenuItem();
+            contextJustifyRight = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormatting = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormattingNormal = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormattingHeading1 = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormattingHeading2 = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormattingHeading3 = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormattingHeading4 = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormattingHeading5 = new System.Windows.Forms.ToolStripMenuItem();
+            contextFormattingFormatted = new System.Windows.Forms.ToolStripMenuItem();
+            toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            contextInsert = new System.Windows.Forms.ToolStripMenuItem();
+            contextInsertLine = new System.Windows.Forms.ToolStripMenuItem();
+            contextInsertLink = new System.Windows.Forms.ToolStripMenuItem();
+            contextInsertImage = new System.Windows.Forms.ToolStripMenuItem();
+            contextInsertText = new System.Windows.Forms.ToolStripMenuItem();
+            contextInsertHtml = new System.Windows.Forms.ToolStripMenuItem();
+            contextInsertTable = new System.Windows.Forms.ToolStripMenuItem();
+            browserPanel.SuspendLayout();
+            toolstripEditor.SuspendLayout();
+            contextEditor.SuspendLayout();
+            SuspendLayout();
             // 
             // browserPanel
             // 
-            this.browserPanel.Controls.Add(this.editorWebBrowser);
-            resources.ApplyResources(this.browserPanel, "browserPanel");
-            this.browserPanel.Name = "browserPanel";
-            this.browserPanel.Resize += new System.EventHandler(this.browserPanelResize);
-            // 
-            // toolstripEditor
-            // 
-            resources.ApplyResources(this.toolstripEditor, "toolstripEditor");
-            this.toolstripEditor.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolstripEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolstripTextCut,
-            this.toolstripTextCopy,
-            this.toolstripTextPaste,
-            this.toolStripSeparator1,
-            this.toolstripEditUndo,
-            this.toolstripEditRedo,
-            this.toolStripSeparator2,
-            this.toolstripFormatBold,
-            this.toolstripFormatUnderline,
-            this.toolstripFormatItalic,
-            this.toolstripFontDialog,
-            this.toolstripFontNormal,
-            this.toolstripColorDialog,
-            this.toolstripFontIncrease,
-            this.toolstripFontDecrease,
-            this.toolStripSeparator3,
-            this.toolstripJustifyLeft,
-            this.toolstripJustifyCenter,
-            this.toolstripJustifyRight,
-            this.toolstripFontIndent,
-            this.toolstripFontOutdent,
-            this.toolStripSeparator4,
-            this.toolstripListOrdered,
-            this.toolstripListUnordered,
-            this.toolStripSeparator5,
-            this.toolstripInsertLine,
-            this.toolstripInsertTable,
-            this.toolstripInsertImage,
-            this.toolstripInsertLink,
-            this.toolStripSeparator6,
-            this.toolstripFindReplace,
-            this.toolstripDocumentPrint});
-            this.toolstripEditor.Name = "toolstripEditor";
-            this.toolstripEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolstripEditor.AccessibleName  = "OOF Message edit";
-            this.toolstripEditor.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
-            // 
-            // toolstripTextCut
-            // 
-            this.toolstripTextCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripTextCut.Image = global::MSDN.Html.Editor.Properties.Resources.ToolBarCut;
-            resources.ApplyResources(this.toolstripTextCut, "toolstripTextCut");
-            this.toolstripTextCut.Name = "toolstripTextCut";
-            this.toolstripTextCut.Tag = "TextCut";
-            this.toolstripTextCut.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripTextCopy
-            // 
-            this.toolstripTextCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripTextCopy.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarCopy;
-            resources.ApplyResources(this.toolstripTextCopy, "toolstripTextCopy");
-            this.toolstripTextCopy.Name = "toolstripTextCopy";
-            this.toolstripTextCopy.Tag = "TextCopy";
-            this.toolstripTextCopy.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripTextPaste
-            // 
-            this.toolstripTextPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripTextPaste.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarPaste;
-            resources.ApplyResources(this.toolstripTextPaste, "toolstripTextPaste");
-            this.toolstripTextPaste.Name = "toolstripTextPaste";
-            this.toolstripTextPaste.Tag = "TextPaste";
-            this.toolstripTextPaste.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
-            // 
-            // toolstripEditUndo
-            // 
-            this.toolstripEditUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripEditUndo.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarUndo;
-            resources.ApplyResources(this.toolstripEditUndo, "toolstripEditUndo");
-            this.toolstripEditUndo.Name = "toolstripEditUndo";
-            this.toolstripEditUndo.Tag = "EditUndo";
-            this.toolstripEditUndo.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripEditRedo
-            // 
-            this.toolstripEditRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripEditRedo.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarRedo;
-            resources.ApplyResources(this.toolstripEditRedo, "toolstripEditRedo");
-            this.toolstripEditRedo.Name = "toolstripEditRedo";
-            this.toolstripEditRedo.Tag = "EditRedo";
-            this.toolstripEditRedo.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
-            // 
-            // toolstripFormatBold
-            // 
-            this.toolstripFormatBold.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFormatBold.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarBold;
-            resources.ApplyResources(this.toolstripFormatBold, "toolstripFormatBold");
-            this.toolstripFormatBold.Name = "toolstripFormatBold";
-            this.toolstripFormatBold.Tag = "FormatBold";
-            this.toolstripFormatBold.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripFormatUnderline
-            // 
-            this.toolstripFormatUnderline.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFormatUnderline.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarUnderline;
-            resources.ApplyResources(this.toolstripFormatUnderline, "toolstripFormatUnderline");
-            this.toolstripFormatUnderline.Name = "toolstripFormatUnderline";
-            this.toolstripFormatUnderline.Tag = "FormatUnderline";
-            this.toolstripFormatUnderline.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripFormatItalic
-            // 
-            this.toolstripFormatItalic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFormatItalic.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarItalic;
-            resources.ApplyResources(this.toolstripFormatItalic, "toolstripFormatItalic");
-            this.toolstripFormatItalic.Name = "toolstripFormatItalic";
-            this.toolstripFormatItalic.Tag = "FormatItalic";
-            this.toolstripFormatItalic.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripFontDialog
-            // 
-            this.toolstripFontDialog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFontDialog.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontStyle;
-            resources.ApplyResources(this.toolstripFontDialog, "toolstripFontDialog");
-            this.toolstripFontDialog.Name = "toolstripFontDialog";
-            this.toolstripFontDialog.Tag = "FontDialog";
-            this.toolstripFontDialog.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripFontNormal
-            // 
-            this.toolstripFontNormal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFontNormal.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontNormal;
-            resources.ApplyResources(this.toolstripFontNormal, "toolstripFontNormal");
-            this.toolstripFontNormal.Name = "toolstripFontNormal";
-            this.toolstripFontNormal.Tag = "FontNormal";
-            this.toolstripFontNormal.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripColorDialog
-            // 
-            this.toolstripColorDialog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripColorDialog.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontColor;
-            resources.ApplyResources(this.toolstripColorDialog, "toolstripColorDialog");
-            this.toolstripColorDialog.Name = "toolstripColorDialog";
-            this.toolstripColorDialog.Tag = "ColorDialog";
-            this.toolstripColorDialog.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripFontIncrease
-            // 
-            this.toolstripFontIncrease.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFontIncrease.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontUp;
-            resources.ApplyResources(this.toolstripFontIncrease, "toolstripFontIncrease");
-            this.toolstripFontIncrease.Name = "toolstripFontIncrease";
-            this.toolstripFontIncrease.Tag = "FontIncrease";
-            this.toolstripFontIncrease.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripFontDecrease
-            // 
-            this.toolstripFontDecrease.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFontDecrease.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontDown;
-            resources.ApplyResources(this.toolstripFontDecrease, "toolstripFontDecrease");
-            this.toolstripFontDecrease.Name = "toolstripFontDecrease";
-            this.toolstripFontDecrease.Tag = "FontDecrease";
-            this.toolstripFontDecrease.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
-            // 
-            // toolstripJustifyLeft
-            // 
-            this.toolstripJustifyLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripJustifyLeft.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarJustifyLeft;
-            resources.ApplyResources(this.toolstripJustifyLeft, "toolstripJustifyLeft");
-            this.toolstripJustifyLeft.Name = "toolstripJustifyLeft";
-            this.toolstripJustifyLeft.Tag = "JustifyLeft";
-            this.toolstripJustifyLeft.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripJustifyCenter
-            // 
-            this.toolstripJustifyCenter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripJustifyCenter.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarJustifyCenter;
-            resources.ApplyResources(this.toolstripJustifyCenter, "toolstripJustifyCenter");
-            this.toolstripJustifyCenter.Name = "toolstripJustifyCenter";
-            this.toolstripJustifyCenter.Tag = "JustifyCenter";
-            this.toolstripJustifyCenter.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripJustifyRight
-            // 
-            this.toolstripJustifyRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripJustifyRight.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarJustifyRight;
-            resources.ApplyResources(this.toolstripJustifyRight, "toolstripJustifyRight");
-            this.toolstripJustifyRight.Name = "toolstripJustifyRight";
-            this.toolstripJustifyRight.Tag = "JustifyRight";
-            this.toolstripJustifyRight.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripFontIndent
-            // 
-            this.toolstripFontIndent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFontIndent.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarTabInsert;
-            resources.ApplyResources(this.toolstripFontIndent, "toolstripFontIndent");
-            this.toolstripFontIndent.Name = "toolstripFontIndent";
-            this.toolstripFontIndent.Tag = "FontIndent";
-            this.toolstripFontIndent.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripFontOutdent
-            // 
-            this.toolstripFontOutdent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFontOutdent.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarTabRemove;
-            resources.ApplyResources(this.toolstripFontOutdent, "toolstripFontOutdent");
-            this.toolstripFontOutdent.Name = "toolstripFontOutdent";
-            this.toolstripFontOutdent.Tag = "FontOutdent";
-            this.toolstripFontOutdent.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            resources.ApplyResources(this.toolStripSeparator4, "toolStripSeparator4");
-            // 
-            // toolstripListOrdered
-            // 
-            this.toolstripListOrdered.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripListOrdered.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarListOrdered;
-            resources.ApplyResources(this.toolstripListOrdered, "toolstripListOrdered");
-            this.toolstripListOrdered.Name = "toolstripListOrdered";
-            this.toolstripListOrdered.Tag = "ListOrdered";
-            this.toolstripListOrdered.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripListUnordered
-            // 
-            this.toolstripListUnordered.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripListUnordered.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarListUnordered;
-            resources.ApplyResources(this.toolstripListUnordered, "toolstripListUnordered");
-            this.toolstripListUnordered.Name = "toolstripListUnordered";
-            this.toolstripListUnordered.Tag = "ListUnordered";
-            this.toolstripListUnordered.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
-            // 
-            // toolstripInsertLine
-            // 
-            this.toolstripInsertLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripInsertLine.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarLine;
-            resources.ApplyResources(this.toolstripInsertLine, "toolstripInsertLine");
-            this.toolstripInsertLine.Name = "toolstripInsertLine";
-            this.toolstripInsertLine.Tag = "InsertLine";
-            this.toolstripInsertLine.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripInsertTable
-            // 
-            this.toolstripInsertTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripInsertTable.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarTable;
-            resources.ApplyResources(this.toolstripInsertTable, "toolstripInsertTable");
-            this.toolstripInsertTable.Name = "toolstripInsertTable";
-            this.toolstripInsertTable.Tag = "InsertTable";
-            this.toolstripInsertTable.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripInsertImage
-            // 
-            this.toolstripInsertImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripInsertImage.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarImage;
-            resources.ApplyResources(this.toolstripInsertImage, "toolstripInsertImage");
-            this.toolstripInsertImage.Name = "toolstripInsertImage";
-            this.toolstripInsertImage.Tag = "InsertImage";
-            this.toolstripInsertImage.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripInsertLink
-            // 
-            this.toolstripInsertLink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripInsertLink.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarWebLink;
-            resources.ApplyResources(this.toolstripInsertLink, "toolstripInsertLink");
-            this.toolstripInsertLink.Name = "toolstripInsertLink";
-            this.toolstripInsertLink.Tag = "InsertLink";
-            this.toolstripInsertLink.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
-            // 
-            // toolstripFindReplace
-            // 
-            this.toolstripFindReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripFindReplace.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFind;
-            resources.ApplyResources(this.toolstripFindReplace, "toolstripFindReplace");
-            this.toolstripFindReplace.Name = "toolstripFindReplace";
-            this.toolstripFindReplace.Tag = "FindReplace";
-            this.toolstripFindReplace.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // toolstripDocumentPrint
-            // 
-            this.toolstripDocumentPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolstripDocumentPrint.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarPrint;
-            resources.ApplyResources(this.toolstripDocumentPrint, "toolstripDocumentPrint");
-            this.toolstripDocumentPrint.Name = "toolstripDocumentPrint";
-            this.toolstripDocumentPrint.Tag = "DocumentPrint";
-            this.toolstripDocumentPrint.Click += new System.EventHandler(this.toolstripEditorClick);
-            // 
-            // contextEditor
-            // 
-            this.contextEditor.AllowDrop = true;
-            this.contextEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextTable,
-            this.contextEdit,
-            this.contextDocument,
-            this.toolStripSeparator7,
-            this.contextFormat,
-            this.contextJustify,
-            this.contextFormatting,
-            this.toolStripSeparator8,
-            this.contextInsert});
-            this.contextEditor.Name = "contextEditor";
-            this.contextEditor.ShowImageMargin = false;
-            resources.ApplyResources(this.contextEditor, "contextEditor");
-            // 
-            // contextTable
-            // 
-            this.contextTable.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextTableModify,
-            this.contextTableInsertRow,
-            this.contextTableDeleteRow});
-            resources.ApplyResources(this.contextTable, "contextTable");
-            this.contextTable.Name = "contextTable";
-            // 
-            // contextTableModify
-            // 
-            this.contextTableModify.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarTable;
-            resources.ApplyResources(this.contextTableModify, "contextTableModify");
-            this.contextTableModify.Name = "contextTableModify";
-            this.contextTableModify.Tag = "TableModify";
-            this.contextTableModify.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextTableInsertRow
-            // 
-            this.contextTableInsertRow.Name = "contextTableInsertRow";
-            resources.ApplyResources(this.contextTableInsertRow, "contextTableInsertRow");
-            this.contextTableInsertRow.Tag = "TableInsertRow";
-            this.contextTableInsertRow.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextTableDeleteRow
-            // 
-            this.contextTableDeleteRow.Name = "contextTableDeleteRow";
-            resources.ApplyResources(this.contextTableDeleteRow, "contextTableDeleteRow");
-            this.contextTableDeleteRow.Tag = "TableDeleteRow";
-            this.contextTableDeleteRow.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextEdit
-            // 
-            this.contextEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextEditUndo,
-            this.contextEditRedo,
-            this.toolStripSeparator14,
-            this.contextEditCut,
-            this.contextEditCopy,
-            this.contextEditPaste,
-            this.toolStripSeparator15,
-            this.contextEditFindReplace,
-            this.toolStripSeparator16,
-            this.contextEditUnselect,
-            this.contextEditSelectAll,
-            this.contextEditDelete});
-            this.contextEdit.Name = "contextEdit";
-            resources.ApplyResources(this.contextEdit, "contextEdit");
-            // 
-            // contextEditUndo
-            // 
-            this.contextEditUndo.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarUndo;
-            resources.ApplyResources(this.contextEditUndo, "contextEditUndo");
-            this.contextEditUndo.Name = "contextEditUndo";
-            this.contextEditUndo.Tag = "EditUndo";
-            this.contextEditUndo.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextEditRedo
-            // 
-            this.contextEditRedo.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarRedo;
-            resources.ApplyResources(this.contextEditRedo, "contextEditRedo");
-            this.contextEditRedo.Name = "contextEditRedo";
-            this.contextEditRedo.Tag = "EditRedo";
-            this.contextEditRedo.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator14
-            // 
-            this.toolStripSeparator14.Name = "toolStripSeparator14";
-            resources.ApplyResources(this.toolStripSeparator14, "toolStripSeparator14");
-            // 
-            // contextEditCut
-            // 
-            this.contextEditCut.Image = global::MSDN.Html.Editor.Properties.Resources.ToolBarCut;
-            resources.ApplyResources(this.contextEditCut, "contextEditCut");
-            this.contextEditCut.Name = "contextEditCut";
-            this.contextEditCut.Tag = "TextCut";
-            this.contextEditCut.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextEditCopy
-            // 
-            this.contextEditCopy.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarCopy;
-            resources.ApplyResources(this.contextEditCopy, "contextEditCopy");
-            this.contextEditCopy.Name = "contextEditCopy";
-            this.contextEditCopy.Tag = "TextCopy";
-            this.contextEditCopy.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextEditPaste
-            // 
-            this.contextEditPaste.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarPaste;
-            resources.ApplyResources(this.contextEditPaste, "contextEditPaste");
-            this.contextEditPaste.Name = "contextEditPaste";
-            this.contextEditPaste.Tag = "TextPaste";
-            this.contextEditPaste.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator15
-            // 
-            this.toolStripSeparator15.Name = "toolStripSeparator15";
-            resources.ApplyResources(this.toolStripSeparator15, "toolStripSeparator15");
-            // 
-            // contextEditFindReplace
-            // 
-            this.contextEditFindReplace.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFind;
-            resources.ApplyResources(this.contextEditFindReplace, "contextEditFindReplace");
-            this.contextEditFindReplace.Name = "contextEditFindReplace";
-            this.contextEditFindReplace.Tag = "FindReplace";
-            this.contextEditFindReplace.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator16
-            // 
-            this.toolStripSeparator16.Name = "toolStripSeparator16";
-            resources.ApplyResources(this.toolStripSeparator16, "toolStripSeparator16");
-            // 
-            // contextEditUnselect
-            // 
-            this.contextEditUnselect.Name = "contextEditUnselect";
-            resources.ApplyResources(this.contextEditUnselect, "contextEditUnselect");
-            this.contextEditUnselect.Tag = "ClearSelect";
-            this.contextEditUnselect.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextEditSelectAll
-            // 
-            this.contextEditSelectAll.Name = "contextEditSelectAll";
-            resources.ApplyResources(this.contextEditSelectAll, "contextEditSelectAll");
-            this.contextEditSelectAll.Tag = "SelectAll";
-            this.contextEditSelectAll.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextEditDelete
-            // 
-            this.contextEditDelete.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarDelete;
-            resources.ApplyResources(this.contextEditDelete, "contextEditDelete");
-            this.contextEditDelete.Name = "contextEditDelete";
-            this.contextEditDelete.Tag = "TextDelete";
-            this.contextEditDelete.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextDocument
-            // 
-            this.contextDocument.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextDocumentOpen,
-            this.contextDocumentSave,
-            this.toolStripSeparator9,
-            this.contextDocumentPrint,
-            this.toolStripSeparator10,
-            this.contextDocumentToolbar,
-            this.contextDocumentScrollbar,
-            this.contextDocumentWordwrap,
-            this.contextDocumentOverwrite});
-            this.contextDocument.Name = "contextDocument";
-            resources.ApplyResources(this.contextDocument, "contextDocument");
-            // 
-            // contextDocumentOpen
-            // 
-            this.contextDocumentOpen.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFileOpen;
-            resources.ApplyResources(this.contextDocumentOpen, "contextDocumentOpen");
-            this.contextDocumentOpen.Name = "contextDocumentOpen";
-            this.contextDocumentOpen.Tag = "OpenFile";
-            this.contextDocumentOpen.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextDocumentSave
-            // 
-            this.contextDocumentSave.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFileSave;
-            resources.ApplyResources(this.contextDocumentSave, "contextDocumentSave");
-            this.contextDocumentSave.Name = "contextDocumentSave";
-            this.contextDocumentSave.Tag = "SaveFile";
-            this.contextDocumentSave.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            resources.ApplyResources(this.toolStripSeparator9, "toolStripSeparator9");
-            // 
-            // contextDocumentPrint
-            // 
-            this.contextDocumentPrint.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarPrint;
-            resources.ApplyResources(this.contextDocumentPrint, "contextDocumentPrint");
-            this.contextDocumentPrint.Name = "contextDocumentPrint";
-            this.contextDocumentPrint.Tag = "DocumentPrint";
-            this.contextDocumentPrint.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            resources.ApplyResources(this.toolStripSeparator10, "toolStripSeparator10");
-            // 
-            // contextDocumentToolbar
-            // 
-            this.contextDocumentToolbar.Name = "contextDocumentToolbar";
-            resources.ApplyResources(this.contextDocumentToolbar, "contextDocumentToolbar");
-            this.contextDocumentToolbar.Tag = "ToggleToolbar";
-            this.contextDocumentToolbar.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextDocumentScrollbar
-            // 
-            this.contextDocumentScrollbar.Name = "contextDocumentScrollbar";
-            resources.ApplyResources(this.contextDocumentScrollbar, "contextDocumentScrollbar");
-            this.contextDocumentScrollbar.Tag = "ToggleScrollbar";
-            this.contextDocumentScrollbar.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextDocumentWordwrap
-            // 
-            this.contextDocumentWordwrap.Name = "contextDocumentWordwrap";
-            resources.ApplyResources(this.contextDocumentWordwrap, "contextDocumentWordwrap");
-            this.contextDocumentWordwrap.Tag = "ToggleWordwrap";
-            this.contextDocumentWordwrap.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextDocumentOverwrite
-            // 
-            this.contextDocumentOverwrite.Name = "contextDocumentOverwrite";
-            resources.ApplyResources(this.contextDocumentOverwrite, "contextDocumentOverwrite");
-            this.contextDocumentOverwrite.Tag = "ToggleOverwrite";
-            this.contextDocumentOverwrite.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            resources.ApplyResources(this.toolStripSeparator7, "toolStripSeparator7");
-            // 
-            // contextFormat
-            // 
-            this.contextFormat.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextFormatFontDialog,
-            this.contextFormatColorDialog,
-            this.toolStripSeparator11,
-            this.contextFormatNormal,
-            this.contextFormatBold,
-            this.contextFormatItalic,
-            this.contextFormatUnderline,
-            this.contextFormatSuperscript,
-            this.contextFormatSubscript,
-            this.contextFormatStrikeout,
-            this.toolStripSeparator12,
-            this.contextFormatIncrease,
-            this.contextFormatDecrease,
-            this.contextFormatIndent,
-            this.contextFormatOutdent,
-            this.toolStripSeparator13,
-            this.contextFormatListOrdered,
-            this.contextFormatListUnordered});
-            this.contextFormat.Name = "contextFormat";
-            resources.ApplyResources(this.contextFormat, "contextFormat");
-            // 
-            // contextFormatFontDialog
-            // 
-            this.contextFormatFontDialog.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontStyle;
-            resources.ApplyResources(this.contextFormatFontDialog, "contextFormatFontDialog");
-            this.contextFormatFontDialog.Name = "contextFormatFontDialog";
-            this.contextFormatFontDialog.Tag = "FontDialog";
-            this.contextFormatFontDialog.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatColorDialog
-            // 
-            this.contextFormatColorDialog.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontColor;
-            resources.ApplyResources(this.contextFormatColorDialog, "contextFormatColorDialog");
-            this.contextFormatColorDialog.Name = "contextFormatColorDialog";
-            this.contextFormatColorDialog.Tag = "ColorDialog";
-            this.contextFormatColorDialog.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            resources.ApplyResources(this.toolStripSeparator11, "toolStripSeparator11");
-            // 
-            // contextFormatNormal
-            // 
-            this.contextFormatNormal.Name = "contextFormatNormal";
-            resources.ApplyResources(this.contextFormatNormal, "contextFormatNormal");
-            this.contextFormatNormal.Tag = "FontNormal";
-            this.contextFormatNormal.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatBold
-            // 
-            this.contextFormatBold.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarBold;
-            resources.ApplyResources(this.contextFormatBold, "contextFormatBold");
-            this.contextFormatBold.Name = "contextFormatBold";
-            this.contextFormatBold.Tag = "FormatBold";
-            this.contextFormatBold.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatItalic
-            // 
-            this.contextFormatItalic.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarItalic;
-            resources.ApplyResources(this.contextFormatItalic, "contextFormatItalic");
-            this.contextFormatItalic.Name = "contextFormatItalic";
-            this.contextFormatItalic.Tag = "FormatItalic";
-            this.contextFormatItalic.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatUnderline
-            // 
-            this.contextFormatUnderline.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarUnderline;
-            resources.ApplyResources(this.contextFormatUnderline, "contextFormatUnderline");
-            this.contextFormatUnderline.Name = "contextFormatUnderline";
-            this.contextFormatUnderline.Tag = "FormatUnderline";
-            this.contextFormatUnderline.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatSuperscript
-            // 
-            this.contextFormatSuperscript.Name = "contextFormatSuperscript";
-            resources.ApplyResources(this.contextFormatSuperscript, "contextFormatSuperscript");
-            this.contextFormatSuperscript.Tag = "FormatSuperscript";
-            this.contextFormatSuperscript.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatSubscript
-            // 
-            this.contextFormatSubscript.Name = "contextFormatSubscript";
-            resources.ApplyResources(this.contextFormatSubscript, "contextFormatSubscript");
-            this.contextFormatSubscript.Tag = "FormatSubscript";
-            this.contextFormatSubscript.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatStrikeout
-            // 
-            this.contextFormatStrikeout.Name = "contextFormatStrikeout";
-            resources.ApplyResources(this.contextFormatStrikeout, "contextFormatStrikeout");
-            this.contextFormatStrikeout.Tag = "FormatStrikeout";
-            this.contextFormatStrikeout.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            resources.ApplyResources(this.toolStripSeparator12, "toolStripSeparator12");
-            // 
-            // contextFormatIncrease
-            // 
-            this.contextFormatIncrease.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontUp;
-            resources.ApplyResources(this.contextFormatIncrease, "contextFormatIncrease");
-            this.contextFormatIncrease.Name = "contextFormatIncrease";
-            this.contextFormatIncrease.Tag = "FontIncrease";
-            this.contextFormatIncrease.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatDecrease
-            // 
-            this.contextFormatDecrease.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontDown;
-            resources.ApplyResources(this.contextFormatDecrease, "contextFormatDecrease");
-            this.contextFormatDecrease.Name = "contextFormatDecrease";
-            this.contextFormatDecrease.Tag = "FontDecrease";
-            this.contextFormatDecrease.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatIndent
-            // 
-            this.contextFormatIndent.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarTabInsert;
-            resources.ApplyResources(this.contextFormatIndent, "contextFormatIndent");
-            this.contextFormatIndent.Name = "contextFormatIndent";
-            this.contextFormatIndent.Tag = "FontIndent";
-            this.contextFormatIndent.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatOutdent
-            // 
-            this.contextFormatOutdent.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarTabRemove;
-            resources.ApplyResources(this.contextFormatOutdent, "contextFormatOutdent");
-            this.contextFormatOutdent.Name = "contextFormatOutdent";
-            this.contextFormatOutdent.Tag = "FontOutdent";
-            this.contextFormatOutdent.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator13
-            // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            resources.ApplyResources(this.toolStripSeparator13, "toolStripSeparator13");
-            // 
-            // contextFormatListOrdered
-            // 
-            this.contextFormatListOrdered.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarListOrdered;
-            resources.ApplyResources(this.contextFormatListOrdered, "contextFormatListOrdered");
-            this.contextFormatListOrdered.Name = "contextFormatListOrdered";
-            this.contextFormatListOrdered.Tag = "ListOrdered";
-            this.contextFormatListOrdered.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatListUnordered
-            // 
-            this.contextFormatListUnordered.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarListUnordered;
-            resources.ApplyResources(this.contextFormatListUnordered, "contextFormatListUnordered");
-            this.contextFormatListUnordered.Name = "contextFormatListUnordered";
-            this.contextFormatListUnordered.Tag = "ListUnordered";
-            this.contextFormatListUnordered.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextJustify
-            // 
-            this.contextJustify.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextJustifyLeft,
-            this.contextJustifyCenter,
-            this.contextJustifyRight});
-            this.contextJustify.Name = "contextJustify";
-            resources.ApplyResources(this.contextJustify, "contextJustify");
-            // 
-            // contextJustifyLeft
-            // 
-            this.contextJustifyLeft.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarJustifyLeft;
-            resources.ApplyResources(this.contextJustifyLeft, "contextJustifyLeft");
-            this.contextJustifyLeft.Name = "contextJustifyLeft";
-            this.contextJustifyLeft.Tag = "JustifyLeft";
-            this.contextJustifyLeft.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextJustifyCenter
-            // 
-            this.contextJustifyCenter.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarJustifyCenter;
-            resources.ApplyResources(this.contextJustifyCenter, "contextJustifyCenter");
-            this.contextJustifyCenter.Name = "contextJustifyCenter";
-            this.contextJustifyCenter.Tag = "JustifyCenter";
-            this.contextJustifyCenter.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextJustifyRight
-            // 
-            this.contextJustifyRight.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarJustifyRight;
-            resources.ApplyResources(this.contextJustifyRight, "contextJustifyRight");
-            this.contextJustifyRight.Name = "contextJustifyRight";
-            this.contextJustifyRight.Tag = "JustifyRight";
-            this.contextJustifyRight.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormatting
-            // 
-            this.contextFormatting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextFormattingNormal,
-            this.contextFormattingHeading1,
-            this.contextFormattingHeading2,
-            this.contextFormattingHeading3,
-            this.contextFormattingHeading4,
-            this.contextFormattingHeading5,
-            this.contextFormattingFormatted});
-            this.contextFormatting.Name = "contextFormatting";
-            resources.ApplyResources(this.contextFormatting, "contextFormatting");
-            // 
-            // contextFormattingNormal
-            // 
-            this.contextFormattingNormal.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarFontNormal;
-            resources.ApplyResources(this.contextFormattingNormal, "contextFormattingNormal");
-            this.contextFormattingNormal.Name = "contextFormattingNormal";
-            this.contextFormattingNormal.Tag = "FormattedNormal";
-            this.contextFormattingNormal.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormattingHeading1
-            // 
-            this.contextFormattingHeading1.Name = "contextFormattingHeading1";
-            resources.ApplyResources(this.contextFormattingHeading1, "contextFormattingHeading1");
-            this.contextFormattingHeading1.Tag = "FormattedHeading1";
-            this.contextFormattingHeading1.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormattingHeading2
-            // 
-            this.contextFormattingHeading2.Name = "contextFormattingHeading2";
-            resources.ApplyResources(this.contextFormattingHeading2, "contextFormattingHeading2");
-            this.contextFormattingHeading2.Tag = "FormattedHeading2";
-            this.contextFormattingHeading2.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormattingHeading3
-            // 
-            this.contextFormattingHeading3.Name = "contextFormattingHeading3";
-            resources.ApplyResources(this.contextFormattingHeading3, "contextFormattingHeading3");
-            this.contextFormattingHeading3.Tag = "FormattedHeading3";
-            this.contextFormattingHeading3.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormattingHeading4
-            // 
-            this.contextFormattingHeading4.Name = "contextFormattingHeading4";
-            resources.ApplyResources(this.contextFormattingHeading4, "contextFormattingHeading4");
-            this.contextFormattingHeading4.Tag = "FormattedHeading4";
-            this.contextFormattingHeading4.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormattingHeading5
-            // 
-            this.contextFormattingHeading5.Name = "contextFormattingHeading5";
-            resources.ApplyResources(this.contextFormattingHeading5, "contextFormattingHeading5");
-            this.contextFormattingHeading5.Tag = "FormattedHeading5";
-            this.contextFormattingHeading5.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextFormattingFormatted
-            // 
-            this.contextFormattingFormatted.Name = "contextFormattingFormatted";
-            resources.ApplyResources(this.contextFormattingFormatted, "contextFormattingFormatted");
-            this.contextFormattingFormatted.Tag = "FormattedPre";
-            this.contextFormattingFormatted.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            resources.ApplyResources(this.toolStripSeparator8, "toolStripSeparator8");
-            // 
-            // contextInsert
-            // 
-            this.contextInsert.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.contextInsertLine,
-            this.contextInsertLink,
-            this.contextInsertImage,
-            this.contextInsertText,
-            this.contextInsertHtml,
-            this.contextInsertTable});
-            this.contextInsert.Name = "contextInsert";
-            resources.ApplyResources(this.contextInsert, "contextInsert");
-            // 
-            // contextInsertLine
-            // 
-            this.contextInsertLine.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarLine;
-            resources.ApplyResources(this.contextInsertLine, "contextInsertLine");
-            this.contextInsertLine.Name = "contextInsertLine";
-            this.contextInsertLine.Tag = "InsertLine";
-            this.contextInsertLine.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextInsertLink
-            // 
-            this.contextInsertLink.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarWebLink;
-            resources.ApplyResources(this.contextInsertLink, "contextInsertLink");
-            this.contextInsertLink.Name = "contextInsertLink";
-            this.contextInsertLink.Tag = "InsertLink";
-            this.contextInsertLink.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextInsertImage
-            // 
-            this.contextInsertImage.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarImage;
-            resources.ApplyResources(this.contextInsertImage, "contextInsertImage");
-            this.contextInsertImage.Name = "contextInsertImage";
-            this.contextInsertImage.Tag = "InsertImage";
-            this.contextInsertImage.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextInsertText
-            // 
-            this.contextInsertText.Name = "contextInsertText";
-            resources.ApplyResources(this.contextInsertText, "contextInsertText");
-            this.contextInsertText.Tag = "InsertText";
-            this.contextInsertText.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextInsertHtml
-            // 
-            this.contextInsertHtml.Name = "contextInsertHtml";
-            resources.ApplyResources(this.contextInsertHtml, "contextInsertHtml");
-            this.contextInsertHtml.Tag = "InsertHtml";
-            this.contextInsertHtml.Click += new System.EventHandler(this.contextEditorClick);
-            // 
-            // contextInsertTable
-            // 
-            this.contextInsertTable.Image = global::MSDN.Html.Editor.Properties.Resources.ToolbarTable;
-            resources.ApplyResources(this.contextInsertTable, "contextInsertTable");
-            this.contextInsertTable.Name = "contextInsertTable";
-            this.contextInsertTable.Tag = "InsertTable";
-            this.contextInsertTable.Click += new System.EventHandler(this.contextEditorClick);
+            browserPanel.Controls.Add(editorWebBrowser);
+            resources.ApplyResources(browserPanel, "browserPanel");
+            browserPanel.Name = "browserPanel";
+            browserPanel.Resize += browserPanelResize;
             // 
             // editorWebBrowser
             // 
-            this.editorWebBrowser.IsWebBrowserContextMenuEnabled = false;
-            resources.ApplyResources(this.editorWebBrowser, "editorWebBrowser");
-            this.editorWebBrowser.Name = "editorWebBrowser";
-            this.editorWebBrowser.ScriptErrorsSuppressed = true;
-            this.editorWebBrowser.Navigating += new System.Windows.Forms.WebBrowserNavigatingEventHandler(this.BrowserBeforeNavigate);
-            this.editorWebBrowser.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.BrowserDocumentComplete);
+            editorWebBrowser.IsWebBrowserContextMenuEnabled = false;
+            resources.ApplyResources(editorWebBrowser, "editorWebBrowser");
+            editorWebBrowser.Name = "editorWebBrowser";
+            editorWebBrowser.ScriptErrorsSuppressed = true;
+            editorWebBrowser.DocumentCompleted += BrowserDocumentComplete;
+            editorWebBrowser.Navigating += BrowserBeforeNavigate;
+            // 
+            // toolstripEditor
+            // 
+            resources.ApplyResources(toolstripEditor, "toolstripEditor");
+            toolstripEditor.AccessibleRole = System.Windows.Forms.AccessibleRole.ToolBar;
+            toolstripEditor.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            toolstripEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolstripTextCut, toolstripTextCopy, toolstripTextPaste, toolStripSeparator1, toolstripEditUndo, toolstripEditRedo, toolStripSeparator2, toolstripFormatBold, toolstripFormatUnderline, toolstripFormatItalic, toolstripFontDialog, toolstripFontNormal, toolstripColorDialog, toolstripFontIncrease, toolstripFontDecrease, toolStripSeparator3, toolstripJustifyLeft, toolstripJustifyCenter, toolstripJustifyRight, toolstripFontIndent, toolstripFontOutdent, toolStripSeparator4, toolstripListOrdered, toolstripListUnordered, toolStripSeparator5, toolstripInsertLine, toolstripInsertTable, toolstripInsertImage, toolstripInsertLink, toolStripSeparator6, toolstripFindReplace, toolstripDocumentPrint });
+            toolstripEditor.Name = "toolstripEditor";
+            toolstripEditor.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            // 
+            // toolstripTextCut
+            // 
+            toolstripTextCut.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripTextCut.Image = Properties.Resources.ToolBarCut;
+            resources.ApplyResources(toolstripTextCut, "toolstripTextCut");
+            toolstripTextCut.Name = "toolstripTextCut";
+            toolstripTextCut.Tag = "TextCut";
+            toolstripTextCut.Click += toolstripEditorClick;
+            // 
+            // toolstripTextCopy
+            // 
+            toolstripTextCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripTextCopy.Image = Properties.Resources.ToolbarCopy;
+            resources.ApplyResources(toolstripTextCopy, "toolstripTextCopy");
+            toolstripTextCopy.Name = "toolstripTextCopy";
+            toolstripTextCopy.Tag = "TextCopy";
+            toolstripTextCopy.Click += toolstripEditorClick;
+            // 
+            // toolstripTextPaste
+            // 
+            toolstripTextPaste.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripTextPaste.Image = Properties.Resources.ToolbarPaste;
+            resources.ApplyResources(toolstripTextPaste, "toolstripTextPaste");
+            toolstripTextPaste.Name = "toolstripTextPaste";
+            toolstripTextPaste.Tag = "TextPaste";
+            toolstripTextPaste.Click += toolstripEditorClick;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            resources.ApplyResources(toolStripSeparator1, "toolStripSeparator1");
+            // 
+            // toolstripEditUndo
+            // 
+            toolstripEditUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripEditUndo.Image = Properties.Resources.ToolbarUndo;
+            resources.ApplyResources(toolstripEditUndo, "toolstripEditUndo");
+            toolstripEditUndo.Name = "toolstripEditUndo";
+            toolstripEditUndo.Tag = "EditUndo";
+            toolstripEditUndo.Click += toolstripEditorClick;
+            // 
+            // toolstripEditRedo
+            // 
+            toolstripEditRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripEditRedo.Image = Properties.Resources.ToolbarRedo;
+            resources.ApplyResources(toolstripEditRedo, "toolstripEditRedo");
+            toolstripEditRedo.Name = "toolstripEditRedo";
+            toolstripEditRedo.Tag = "EditRedo";
+            toolstripEditRedo.Click += toolstripEditorClick;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(toolStripSeparator2, "toolStripSeparator2");
+            // 
+            // toolstripFormatBold
+            // 
+            toolstripFormatBold.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFormatBold.Image = Properties.Resources.ToolbarBold;
+            resources.ApplyResources(toolstripFormatBold, "toolstripFormatBold");
+            toolstripFormatBold.Name = "toolstripFormatBold";
+            toolstripFormatBold.Tag = "FormatBold";
+            toolstripFormatBold.Click += toolstripEditorClick;
+            // 
+            // toolstripFormatUnderline
+            // 
+            toolstripFormatUnderline.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFormatUnderline.Image = Properties.Resources.ToolbarUnderline;
+            resources.ApplyResources(toolstripFormatUnderline, "toolstripFormatUnderline");
+            toolstripFormatUnderline.Name = "toolstripFormatUnderline";
+            toolstripFormatUnderline.Tag = "FormatUnderline";
+            toolstripFormatUnderline.Click += toolstripEditorClick;
+            // 
+            // toolstripFormatItalic
+            // 
+            toolstripFormatItalic.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFormatItalic.Image = Properties.Resources.ToolbarItalic;
+            resources.ApplyResources(toolstripFormatItalic, "toolstripFormatItalic");
+            toolstripFormatItalic.Name = "toolstripFormatItalic";
+            toolstripFormatItalic.Tag = "FormatItalic";
+            toolstripFormatItalic.Click += toolstripEditorClick;
+            // 
+            // toolstripFontDialog
+            // 
+            toolstripFontDialog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFontDialog.Image = Properties.Resources.ToolbarFontStyle;
+            resources.ApplyResources(toolstripFontDialog, "toolstripFontDialog");
+            toolstripFontDialog.Name = "toolstripFontDialog";
+            toolstripFontDialog.Tag = "FontDialog";
+            toolstripFontDialog.Click += toolstripEditorClick;
+            // 
+            // toolstripFontNormal
+            // 
+            toolstripFontNormal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFontNormal.Image = Properties.Resources.ToolbarFontNormal;
+            resources.ApplyResources(toolstripFontNormal, "toolstripFontNormal");
+            toolstripFontNormal.Name = "toolstripFontNormal";
+            toolstripFontNormal.Tag = "FontNormal";
+            toolstripFontNormal.Click += toolstripEditorClick;
+            // 
+            // toolstripColorDialog
+            // 
+            toolstripColorDialog.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripColorDialog.Image = Properties.Resources.ToolbarFontColor;
+            resources.ApplyResources(toolstripColorDialog, "toolstripColorDialog");
+            toolstripColorDialog.Name = "toolstripColorDialog";
+            toolstripColorDialog.Tag = "ColorDialog";
+            toolstripColorDialog.Click += toolstripEditorClick;
+            // 
+            // toolstripFontIncrease
+            // 
+            toolstripFontIncrease.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFontIncrease.Image = Properties.Resources.ToolbarFontUp;
+            resources.ApplyResources(toolstripFontIncrease, "toolstripFontIncrease");
+            toolstripFontIncrease.Name = "toolstripFontIncrease";
+            toolstripFontIncrease.Tag = "FontIncrease";
+            toolstripFontIncrease.Click += toolstripEditorClick;
+            // 
+            // toolstripFontDecrease
+            // 
+            toolstripFontDecrease.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFontDecrease.Image = Properties.Resources.ToolbarFontDown;
+            resources.ApplyResources(toolstripFontDecrease, "toolstripFontDecrease");
+            toolstripFontDecrease.Name = "toolstripFontDecrease";
+            toolstripFontDecrease.Tag = "FontDecrease";
+            toolstripFontDecrease.Click += toolstripEditorClick;
+            // 
+            // toolStripSeparator3
+            // 
+            toolStripSeparator3.Name = "toolStripSeparator3";
+            resources.ApplyResources(toolStripSeparator3, "toolStripSeparator3");
+            // 
+            // toolstripJustifyLeft
+            // 
+            toolstripJustifyLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripJustifyLeft.Image = Properties.Resources.ToolbarJustifyLeft;
+            resources.ApplyResources(toolstripJustifyLeft, "toolstripJustifyLeft");
+            toolstripJustifyLeft.Name = "toolstripJustifyLeft";
+            toolstripJustifyLeft.Tag = "JustifyLeft";
+            toolstripJustifyLeft.Click += toolstripEditorClick;
+            // 
+            // toolstripJustifyCenter
+            // 
+            toolstripJustifyCenter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripJustifyCenter.Image = Properties.Resources.ToolbarJustifyCenter;
+            resources.ApplyResources(toolstripJustifyCenter, "toolstripJustifyCenter");
+            toolstripJustifyCenter.Name = "toolstripJustifyCenter";
+            toolstripJustifyCenter.Tag = "JustifyCenter";
+            toolstripJustifyCenter.Click += toolstripEditorClick;
+            // 
+            // toolstripJustifyRight
+            // 
+            toolstripJustifyRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripJustifyRight.Image = Properties.Resources.ToolbarJustifyRight;
+            resources.ApplyResources(toolstripJustifyRight, "toolstripJustifyRight");
+            toolstripJustifyRight.Name = "toolstripJustifyRight";
+            toolstripJustifyRight.Tag = "JustifyRight";
+            toolstripJustifyRight.Click += toolstripEditorClick;
+            // 
+            // toolstripFontIndent
+            // 
+            toolstripFontIndent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFontIndent.Image = Properties.Resources.ToolbarTabInsert;
+            resources.ApplyResources(toolstripFontIndent, "toolstripFontIndent");
+            toolstripFontIndent.Name = "toolstripFontIndent";
+            toolstripFontIndent.Tag = "FontIndent";
+            toolstripFontIndent.Click += toolstripEditorClick;
+            // 
+            // toolstripFontOutdent
+            // 
+            toolstripFontOutdent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFontOutdent.Image = Properties.Resources.ToolbarTabRemove;
+            resources.ApplyResources(toolstripFontOutdent, "toolstripFontOutdent");
+            toolstripFontOutdent.Name = "toolstripFontOutdent";
+            toolstripFontOutdent.Tag = "FontOutdent";
+            toolstripFontOutdent.Click += toolstripEditorClick;
+            // 
+            // toolStripSeparator4
+            // 
+            toolStripSeparator4.Name = "toolStripSeparator4";
+            resources.ApplyResources(toolStripSeparator4, "toolStripSeparator4");
+            // 
+            // toolstripListOrdered
+            // 
+            toolstripListOrdered.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripListOrdered.Image = Properties.Resources.ToolbarListOrdered;
+            resources.ApplyResources(toolstripListOrdered, "toolstripListOrdered");
+            toolstripListOrdered.Name = "toolstripListOrdered";
+            toolstripListOrdered.Tag = "ListOrdered";
+            toolstripListOrdered.Click += toolstripEditorClick;
+            // 
+            // toolstripListUnordered
+            // 
+            toolstripListUnordered.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripListUnordered.Image = Properties.Resources.ToolbarListUnordered;
+            resources.ApplyResources(toolstripListUnordered, "toolstripListUnordered");
+            toolstripListUnordered.Name = "toolstripListUnordered";
+            toolstripListUnordered.Tag = "ListUnordered";
+            toolstripListUnordered.Click += toolstripEditorClick;
+            // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            resources.ApplyResources(toolStripSeparator5, "toolStripSeparator5");
+            // 
+            // toolstripInsertLine
+            // 
+            toolstripInsertLine.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripInsertLine.Image = Properties.Resources.ToolbarLine;
+            resources.ApplyResources(toolstripInsertLine, "toolstripInsertLine");
+            toolstripInsertLine.Name = "toolstripInsertLine";
+            toolstripInsertLine.Tag = "InsertLine";
+            toolstripInsertLine.Click += toolstripEditorClick;
+            // 
+            // toolstripInsertTable
+            // 
+            toolstripInsertTable.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripInsertTable.Image = Properties.Resources.ToolbarTable;
+            resources.ApplyResources(toolstripInsertTable, "toolstripInsertTable");
+            toolstripInsertTable.Name = "toolstripInsertTable";
+            toolstripInsertTable.Tag = "InsertTable";
+            toolstripInsertTable.Click += toolstripEditorClick;
+            // 
+            // toolstripInsertImage
+            // 
+            toolstripInsertImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripInsertImage.Image = Properties.Resources.ToolbarImage;
+            resources.ApplyResources(toolstripInsertImage, "toolstripInsertImage");
+            toolstripInsertImage.Name = "toolstripInsertImage";
+            toolstripInsertImage.Tag = "InsertImage";
+            toolstripInsertImage.Click += toolstripEditorClick;
+            // 
+            // toolstripInsertLink
+            // 
+            toolstripInsertLink.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripInsertLink.Image = Properties.Resources.ToolbarWebLink;
+            resources.ApplyResources(toolstripInsertLink, "toolstripInsertLink");
+            toolstripInsertLink.Name = "toolstripInsertLink";
+            toolstripInsertLink.Tag = "InsertLink";
+            toolstripInsertLink.Click += toolstripEditorClick;
+            // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            resources.ApplyResources(toolStripSeparator6, "toolStripSeparator6");
+            // 
+            // toolstripFindReplace
+            // 
+            toolstripFindReplace.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripFindReplace.Image = Properties.Resources.ToolbarFind;
+            resources.ApplyResources(toolstripFindReplace, "toolstripFindReplace");
+            toolstripFindReplace.Name = "toolstripFindReplace";
+            toolstripFindReplace.Tag = "FindReplace";
+            toolstripFindReplace.Click += toolstripEditorClick;
+            // 
+            // toolstripDocumentPrint
+            // 
+            toolstripDocumentPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            toolstripDocumentPrint.Image = Properties.Resources.ToolbarPrint;
+            resources.ApplyResources(toolstripDocumentPrint, "toolstripDocumentPrint");
+            toolstripDocumentPrint.Name = "toolstripDocumentPrint";
+            toolstripDocumentPrint.Tag = "DocumentPrint";
+            toolstripDocumentPrint.Click += toolstripEditorClick;
+            // 
+            // contextEditor
+            // 
+            contextEditor.AllowDrop = true;
+            contextEditor.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { contextTable, contextEdit, contextDocument, toolStripSeparator7, contextFormat, contextJustify, contextFormatting, toolStripSeparator8, contextInsert });
+            contextEditor.Name = "contextEditor";
+            contextEditor.ShowImageMargin = false;
+            resources.ApplyResources(contextEditor, "contextEditor");
+            // 
+            // contextTable
+            // 
+            contextTable.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { contextTableModify, contextTableInsertRow, contextTableDeleteRow });
+            resources.ApplyResources(contextTable, "contextTable");
+            contextTable.Name = "contextTable";
+            // 
+            // contextTableModify
+            // 
+            contextTableModify.Image = Properties.Resources.ToolbarTable;
+            resources.ApplyResources(contextTableModify, "contextTableModify");
+            contextTableModify.Name = "contextTableModify";
+            contextTableModify.Tag = "TableModify";
+            contextTableModify.Click += contextEditorClick;
+            // 
+            // contextTableInsertRow
+            // 
+            contextTableInsertRow.Name = "contextTableInsertRow";
+            resources.ApplyResources(contextTableInsertRow, "contextTableInsertRow");
+            contextTableInsertRow.Tag = "TableInsertRow";
+            contextTableInsertRow.Click += contextEditorClick;
+            // 
+            // contextTableDeleteRow
+            // 
+            contextTableDeleteRow.Name = "contextTableDeleteRow";
+            resources.ApplyResources(contextTableDeleteRow, "contextTableDeleteRow");
+            contextTableDeleteRow.Tag = "TableDeleteRow";
+            contextTableDeleteRow.Click += contextEditorClick;
+            // 
+            // contextEdit
+            // 
+            contextEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { contextEditUndo, contextEditRedo, toolStripSeparator14, contextEditCut, contextEditCopy, contextEditPaste, toolStripSeparator15, contextEditFindReplace, toolStripSeparator16, contextEditUnselect, contextEditSelectAll, contextEditDelete });
+            contextEdit.Name = "contextEdit";
+            resources.ApplyResources(contextEdit, "contextEdit");
+            // 
+            // contextEditUndo
+            // 
+            contextEditUndo.Image = Properties.Resources.ToolbarUndo;
+            resources.ApplyResources(contextEditUndo, "contextEditUndo");
+            contextEditUndo.Name = "contextEditUndo";
+            contextEditUndo.Tag = "EditUndo";
+            contextEditUndo.Click += contextEditorClick;
+            // 
+            // contextEditRedo
+            // 
+            contextEditRedo.Image = Properties.Resources.ToolbarRedo;
+            resources.ApplyResources(contextEditRedo, "contextEditRedo");
+            contextEditRedo.Name = "contextEditRedo";
+            contextEditRedo.Tag = "EditRedo";
+            contextEditRedo.Click += contextEditorClick;
+            // 
+            // toolStripSeparator14
+            // 
+            toolStripSeparator14.Name = "toolStripSeparator14";
+            resources.ApplyResources(toolStripSeparator14, "toolStripSeparator14");
+            // 
+            // contextEditCut
+            // 
+            contextEditCut.Image = Properties.Resources.ToolBarCut;
+            resources.ApplyResources(contextEditCut, "contextEditCut");
+            contextEditCut.Name = "contextEditCut";
+            contextEditCut.Tag = "TextCut";
+            contextEditCut.Click += contextEditorClick;
+            // 
+            // contextEditCopy
+            // 
+            contextEditCopy.Image = Properties.Resources.ToolbarCopy;
+            resources.ApplyResources(contextEditCopy, "contextEditCopy");
+            contextEditCopy.Name = "contextEditCopy";
+            contextEditCopy.Tag = "TextCopy";
+            contextEditCopy.Click += contextEditorClick;
+            // 
+            // contextEditPaste
+            // 
+            contextEditPaste.Image = Properties.Resources.ToolbarPaste;
+            resources.ApplyResources(contextEditPaste, "contextEditPaste");
+            contextEditPaste.Name = "contextEditPaste";
+            contextEditPaste.Tag = "TextPaste";
+            contextEditPaste.Click += contextEditorClick;
+            // 
+            // toolStripSeparator15
+            // 
+            toolStripSeparator15.Name = "toolStripSeparator15";
+            resources.ApplyResources(toolStripSeparator15, "toolStripSeparator15");
+            // 
+            // contextEditFindReplace
+            // 
+            contextEditFindReplace.Image = Properties.Resources.ToolbarFind;
+            resources.ApplyResources(contextEditFindReplace, "contextEditFindReplace");
+            contextEditFindReplace.Name = "contextEditFindReplace";
+            contextEditFindReplace.Tag = "FindReplace";
+            contextEditFindReplace.Click += contextEditorClick;
+            // 
+            // toolStripSeparator16
+            // 
+            toolStripSeparator16.Name = "toolStripSeparator16";
+            resources.ApplyResources(toolStripSeparator16, "toolStripSeparator16");
+            // 
+            // contextEditUnselect
+            // 
+            contextEditUnselect.Name = "contextEditUnselect";
+            resources.ApplyResources(contextEditUnselect, "contextEditUnselect");
+            contextEditUnselect.Tag = "ClearSelect";
+            contextEditUnselect.Click += contextEditorClick;
+            // 
+            // contextEditSelectAll
+            // 
+            contextEditSelectAll.Name = "contextEditSelectAll";
+            resources.ApplyResources(contextEditSelectAll, "contextEditSelectAll");
+            contextEditSelectAll.Tag = "SelectAll";
+            contextEditSelectAll.Click += contextEditorClick;
+            // 
+            // contextEditDelete
+            // 
+            contextEditDelete.Image = Properties.Resources.ToolbarDelete;
+            resources.ApplyResources(contextEditDelete, "contextEditDelete");
+            contextEditDelete.Name = "contextEditDelete";
+            contextEditDelete.Tag = "TextDelete";
+            contextEditDelete.Click += contextEditorClick;
+            // 
+            // contextDocument
+            // 
+            contextDocument.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { contextDocumentOpen, contextDocumentSave, toolStripSeparator9, contextDocumentPrint, toolStripSeparator10, contextDocumentToolbar, contextDocumentScrollbar, contextDocumentWordwrap, contextDocumentOverwrite });
+            contextDocument.Name = "contextDocument";
+            resources.ApplyResources(contextDocument, "contextDocument");
+            // 
+            // contextDocumentOpen
+            // 
+            contextDocumentOpen.Image = Properties.Resources.ToolbarFileOpen;
+            resources.ApplyResources(contextDocumentOpen, "contextDocumentOpen");
+            contextDocumentOpen.Name = "contextDocumentOpen";
+            contextDocumentOpen.Tag = "OpenFile";
+            contextDocumentOpen.Click += contextEditorClick;
+            // 
+            // contextDocumentSave
+            // 
+            contextDocumentSave.Image = Properties.Resources.ToolbarFileSave;
+            resources.ApplyResources(contextDocumentSave, "contextDocumentSave");
+            contextDocumentSave.Name = "contextDocumentSave";
+            contextDocumentSave.Tag = "SaveFile";
+            contextDocumentSave.Click += contextEditorClick;
+            // 
+            // toolStripSeparator9
+            // 
+            toolStripSeparator9.Name = "toolStripSeparator9";
+            resources.ApplyResources(toolStripSeparator9, "toolStripSeparator9");
+            // 
+            // contextDocumentPrint
+            // 
+            contextDocumentPrint.Image = Properties.Resources.ToolbarPrint;
+            resources.ApplyResources(contextDocumentPrint, "contextDocumentPrint");
+            contextDocumentPrint.Name = "contextDocumentPrint";
+            contextDocumentPrint.Tag = "DocumentPrint";
+            contextDocumentPrint.Click += contextEditorClick;
+            // 
+            // toolStripSeparator10
+            // 
+            toolStripSeparator10.Name = "toolStripSeparator10";
+            resources.ApplyResources(toolStripSeparator10, "toolStripSeparator10");
+            // 
+            // contextDocumentToolbar
+            // 
+            contextDocumentToolbar.Name = "contextDocumentToolbar";
+            resources.ApplyResources(contextDocumentToolbar, "contextDocumentToolbar");
+            contextDocumentToolbar.Tag = "ToggleToolbar";
+            contextDocumentToolbar.Click += contextEditorClick;
+            // 
+            // contextDocumentScrollbar
+            // 
+            contextDocumentScrollbar.Name = "contextDocumentScrollbar";
+            resources.ApplyResources(contextDocumentScrollbar, "contextDocumentScrollbar");
+            contextDocumentScrollbar.Tag = "ToggleScrollbar";
+            contextDocumentScrollbar.Click += contextEditorClick;
+            // 
+            // contextDocumentWordwrap
+            // 
+            contextDocumentWordwrap.Name = "contextDocumentWordwrap";
+            resources.ApplyResources(contextDocumentWordwrap, "contextDocumentWordwrap");
+            contextDocumentWordwrap.Tag = "ToggleWordwrap";
+            contextDocumentWordwrap.Click += contextEditorClick;
+            // 
+            // contextDocumentOverwrite
+            // 
+            contextDocumentOverwrite.Name = "contextDocumentOverwrite";
+            resources.ApplyResources(contextDocumentOverwrite, "contextDocumentOverwrite");
+            contextDocumentOverwrite.Tag = "ToggleOverwrite";
+            contextDocumentOverwrite.Click += contextEditorClick;
+            // 
+            // toolStripSeparator7
+            // 
+            toolStripSeparator7.Name = "toolStripSeparator7";
+            resources.ApplyResources(toolStripSeparator7, "toolStripSeparator7");
+            // 
+            // contextFormat
+            // 
+            contextFormat.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { contextFormatFontDialog, contextFormatColorDialog, toolStripSeparator11, contextFormatNormal, contextFormatBold, contextFormatItalic, contextFormatUnderline, contextFormatSuperscript, contextFormatSubscript, contextFormatStrikeout, toolStripSeparator12, contextFormatIncrease, contextFormatDecrease, contextFormatIndent, contextFormatOutdent, toolStripSeparator13, contextFormatListOrdered, contextFormatListUnordered });
+            contextFormat.Name = "contextFormat";
+            resources.ApplyResources(contextFormat, "contextFormat");
+            // 
+            // contextFormatFontDialog
+            // 
+            contextFormatFontDialog.Image = Properties.Resources.ToolbarFontStyle;
+            resources.ApplyResources(contextFormatFontDialog, "contextFormatFontDialog");
+            contextFormatFontDialog.Name = "contextFormatFontDialog";
+            contextFormatFontDialog.Tag = "FontDialog";
+            contextFormatFontDialog.Click += contextEditorClick;
+            // 
+            // contextFormatColorDialog
+            // 
+            contextFormatColorDialog.Image = Properties.Resources.ToolbarFontColor;
+            resources.ApplyResources(contextFormatColorDialog, "contextFormatColorDialog");
+            contextFormatColorDialog.Name = "contextFormatColorDialog";
+            contextFormatColorDialog.Tag = "ColorDialog";
+            contextFormatColorDialog.Click += contextEditorClick;
+            // 
+            // toolStripSeparator11
+            // 
+            toolStripSeparator11.Name = "toolStripSeparator11";
+            resources.ApplyResources(toolStripSeparator11, "toolStripSeparator11");
+            // 
+            // contextFormatNormal
+            // 
+            contextFormatNormal.Name = "contextFormatNormal";
+            resources.ApplyResources(contextFormatNormal, "contextFormatNormal");
+            contextFormatNormal.Tag = "FontNormal";
+            contextFormatNormal.Click += contextEditorClick;
+            // 
+            // contextFormatBold
+            // 
+            contextFormatBold.Image = Properties.Resources.ToolbarBold;
+            resources.ApplyResources(contextFormatBold, "contextFormatBold");
+            contextFormatBold.Name = "contextFormatBold";
+            contextFormatBold.Tag = "FormatBold";
+            contextFormatBold.Click += contextEditorClick;
+            // 
+            // contextFormatItalic
+            // 
+            contextFormatItalic.Image = Properties.Resources.ToolbarItalic;
+            resources.ApplyResources(contextFormatItalic, "contextFormatItalic");
+            contextFormatItalic.Name = "contextFormatItalic";
+            contextFormatItalic.Tag = "FormatItalic";
+            contextFormatItalic.Click += contextEditorClick;
+            // 
+            // contextFormatUnderline
+            // 
+            contextFormatUnderline.Image = Properties.Resources.ToolbarUnderline;
+            resources.ApplyResources(contextFormatUnderline, "contextFormatUnderline");
+            contextFormatUnderline.Name = "contextFormatUnderline";
+            contextFormatUnderline.Tag = "FormatUnderline";
+            contextFormatUnderline.Click += contextEditorClick;
+            // 
+            // contextFormatSuperscript
+            // 
+            contextFormatSuperscript.Name = "contextFormatSuperscript";
+            resources.ApplyResources(contextFormatSuperscript, "contextFormatSuperscript");
+            contextFormatSuperscript.Tag = "FormatSuperscript";
+            contextFormatSuperscript.Click += contextEditorClick;
+            // 
+            // contextFormatSubscript
+            // 
+            contextFormatSubscript.Name = "contextFormatSubscript";
+            resources.ApplyResources(contextFormatSubscript, "contextFormatSubscript");
+            contextFormatSubscript.Tag = "FormatSubscript";
+            contextFormatSubscript.Click += contextEditorClick;
+            // 
+            // contextFormatStrikeout
+            // 
+            contextFormatStrikeout.Name = "contextFormatStrikeout";
+            resources.ApplyResources(contextFormatStrikeout, "contextFormatStrikeout");
+            contextFormatStrikeout.Tag = "FormatStrikeout";
+            contextFormatStrikeout.Click += contextEditorClick;
+            // 
+            // toolStripSeparator12
+            // 
+            toolStripSeparator12.Name = "toolStripSeparator12";
+            resources.ApplyResources(toolStripSeparator12, "toolStripSeparator12");
+            // 
+            // contextFormatIncrease
+            // 
+            contextFormatIncrease.Image = Properties.Resources.ToolbarFontUp;
+            resources.ApplyResources(contextFormatIncrease, "contextFormatIncrease");
+            contextFormatIncrease.Name = "contextFormatIncrease";
+            contextFormatIncrease.Tag = "FontIncrease";
+            contextFormatIncrease.Click += contextEditorClick;
+            // 
+            // contextFormatDecrease
+            // 
+            contextFormatDecrease.Image = Properties.Resources.ToolbarFontDown;
+            resources.ApplyResources(contextFormatDecrease, "contextFormatDecrease");
+            contextFormatDecrease.Name = "contextFormatDecrease";
+            contextFormatDecrease.Tag = "FontDecrease";
+            contextFormatDecrease.Click += contextEditorClick;
+            // 
+            // contextFormatIndent
+            // 
+            contextFormatIndent.Image = Properties.Resources.ToolbarTabInsert;
+            resources.ApplyResources(contextFormatIndent, "contextFormatIndent");
+            contextFormatIndent.Name = "contextFormatIndent";
+            contextFormatIndent.Tag = "FontIndent";
+            contextFormatIndent.Click += contextEditorClick;
+            // 
+            // contextFormatOutdent
+            // 
+            contextFormatOutdent.Image = Properties.Resources.ToolbarTabRemove;
+            resources.ApplyResources(contextFormatOutdent, "contextFormatOutdent");
+            contextFormatOutdent.Name = "contextFormatOutdent";
+            contextFormatOutdent.Tag = "FontOutdent";
+            contextFormatOutdent.Click += contextEditorClick;
+            // 
+            // toolStripSeparator13
+            // 
+            toolStripSeparator13.Name = "toolStripSeparator13";
+            resources.ApplyResources(toolStripSeparator13, "toolStripSeparator13");
+            // 
+            // contextFormatListOrdered
+            // 
+            contextFormatListOrdered.Image = Properties.Resources.ToolbarListOrdered;
+            resources.ApplyResources(contextFormatListOrdered, "contextFormatListOrdered");
+            contextFormatListOrdered.Name = "contextFormatListOrdered";
+            contextFormatListOrdered.Tag = "ListOrdered";
+            contextFormatListOrdered.Click += contextEditorClick;
+            // 
+            // contextFormatListUnordered
+            // 
+            contextFormatListUnordered.Image = Properties.Resources.ToolbarListUnordered;
+            resources.ApplyResources(contextFormatListUnordered, "contextFormatListUnordered");
+            contextFormatListUnordered.Name = "contextFormatListUnordered";
+            contextFormatListUnordered.Tag = "ListUnordered";
+            contextFormatListUnordered.Click += contextEditorClick;
+            // 
+            // contextJustify
+            // 
+            contextJustify.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { contextJustifyLeft, contextJustifyCenter, contextJustifyRight });
+            contextJustify.Name = "contextJustify";
+            resources.ApplyResources(contextJustify, "contextJustify");
+            // 
+            // contextJustifyLeft
+            // 
+            contextJustifyLeft.Image = Properties.Resources.ToolbarJustifyLeft;
+            resources.ApplyResources(contextJustifyLeft, "contextJustifyLeft");
+            contextJustifyLeft.Name = "contextJustifyLeft";
+            contextJustifyLeft.Tag = "JustifyLeft";
+            contextJustifyLeft.Click += contextEditorClick;
+            // 
+            // contextJustifyCenter
+            // 
+            contextJustifyCenter.Image = Properties.Resources.ToolbarJustifyCenter;
+            resources.ApplyResources(contextJustifyCenter, "contextJustifyCenter");
+            contextJustifyCenter.Name = "contextJustifyCenter";
+            contextJustifyCenter.Tag = "JustifyCenter";
+            contextJustifyCenter.Click += contextEditorClick;
+            // 
+            // contextJustifyRight
+            // 
+            contextJustifyRight.Image = Properties.Resources.ToolbarJustifyRight;
+            resources.ApplyResources(contextJustifyRight, "contextJustifyRight");
+            contextJustifyRight.Name = "contextJustifyRight";
+            contextJustifyRight.Tag = "JustifyRight";
+            contextJustifyRight.Click += contextEditorClick;
+            // 
+            // contextFormatting
+            // 
+            contextFormatting.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { contextFormattingNormal, contextFormattingHeading1, contextFormattingHeading2, contextFormattingHeading3, contextFormattingHeading4, contextFormattingHeading5, contextFormattingFormatted });
+            contextFormatting.Name = "contextFormatting";
+            resources.ApplyResources(contextFormatting, "contextFormatting");
+            // 
+            // contextFormattingNormal
+            // 
+            contextFormattingNormal.Image = Properties.Resources.ToolbarFontNormal;
+            resources.ApplyResources(contextFormattingNormal, "contextFormattingNormal");
+            contextFormattingNormal.Name = "contextFormattingNormal";
+            contextFormattingNormal.Tag = "FormattedNormal";
+            contextFormattingNormal.Click += contextEditorClick;
+            // 
+            // contextFormattingHeading1
+            // 
+            contextFormattingHeading1.Name = "contextFormattingHeading1";
+            resources.ApplyResources(contextFormattingHeading1, "contextFormattingHeading1");
+            contextFormattingHeading1.Tag = "FormattedHeading1";
+            contextFormattingHeading1.Click += contextEditorClick;
+            // 
+            // contextFormattingHeading2
+            // 
+            contextFormattingHeading2.Name = "contextFormattingHeading2";
+            resources.ApplyResources(contextFormattingHeading2, "contextFormattingHeading2");
+            contextFormattingHeading2.Tag = "FormattedHeading2";
+            contextFormattingHeading2.Click += contextEditorClick;
+            // 
+            // contextFormattingHeading3
+            // 
+            contextFormattingHeading3.Name = "contextFormattingHeading3";
+            resources.ApplyResources(contextFormattingHeading3, "contextFormattingHeading3");
+            contextFormattingHeading3.Tag = "FormattedHeading3";
+            contextFormattingHeading3.Click += contextEditorClick;
+            // 
+            // contextFormattingHeading4
+            // 
+            contextFormattingHeading4.Name = "contextFormattingHeading4";
+            resources.ApplyResources(contextFormattingHeading4, "contextFormattingHeading4");
+            contextFormattingHeading4.Tag = "FormattedHeading4";
+            contextFormattingHeading4.Click += contextEditorClick;
+            // 
+            // contextFormattingHeading5
+            // 
+            contextFormattingHeading5.Name = "contextFormattingHeading5";
+            resources.ApplyResources(contextFormattingHeading5, "contextFormattingHeading5");
+            contextFormattingHeading5.Tag = "FormattedHeading5";
+            contextFormattingHeading5.Click += contextEditorClick;
+            // 
+            // contextFormattingFormatted
+            // 
+            contextFormattingFormatted.Name = "contextFormattingFormatted";
+            resources.ApplyResources(contextFormattingFormatted, "contextFormattingFormatted");
+            contextFormattingFormatted.Tag = "FormattedPre";
+            contextFormattingFormatted.Click += contextEditorClick;
+            // 
+            // toolStripSeparator8
+            // 
+            toolStripSeparator8.Name = "toolStripSeparator8";
+            resources.ApplyResources(toolStripSeparator8, "toolStripSeparator8");
+            // 
+            // contextInsert
+            // 
+            contextInsert.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { contextInsertLine, contextInsertLink, contextInsertImage, contextInsertText, contextInsertHtml, contextInsertTable });
+            contextInsert.Name = "contextInsert";
+            resources.ApplyResources(contextInsert, "contextInsert");
+            // 
+            // contextInsertLine
+            // 
+            contextInsertLine.Image = Properties.Resources.ToolbarLine;
+            resources.ApplyResources(contextInsertLine, "contextInsertLine");
+            contextInsertLine.Name = "contextInsertLine";
+            contextInsertLine.Tag = "InsertLine";
+            contextInsertLine.Click += contextEditorClick;
+            // 
+            // contextInsertLink
+            // 
+            contextInsertLink.Image = Properties.Resources.ToolbarWebLink;
+            resources.ApplyResources(contextInsertLink, "contextInsertLink");
+            contextInsertLink.Name = "contextInsertLink";
+            contextInsertLink.Tag = "InsertLink";
+            contextInsertLink.Click += contextEditorClick;
+            // 
+            // contextInsertImage
+            // 
+            contextInsertImage.Image = Properties.Resources.ToolbarImage;
+            resources.ApplyResources(contextInsertImage, "contextInsertImage");
+            contextInsertImage.Name = "contextInsertImage";
+            contextInsertImage.Tag = "InsertImage";
+            contextInsertImage.Click += contextEditorClick;
+            // 
+            // contextInsertText
+            // 
+            contextInsertText.Name = "contextInsertText";
+            resources.ApplyResources(contextInsertText, "contextInsertText");
+            contextInsertText.Tag = "InsertText";
+            contextInsertText.Click += contextEditorClick;
+            // 
+            // contextInsertHtml
+            // 
+            contextInsertHtml.Name = "contextInsertHtml";
+            resources.ApplyResources(contextInsertHtml, "contextInsertHtml");
+            contextInsertHtml.Tag = "InsertHtml";
+            contextInsertHtml.Click += contextEditorClick;
+            // 
+            // contextInsertTable
+            // 
+            contextInsertTable.Image = Properties.Resources.ToolbarTable;
+            resources.ApplyResources(contextInsertTable, "contextInsertTable");
+            contextInsertTable.Name = "contextInsertTable";
+            contextInsertTable.Tag = "InsertTable";
+            contextInsertTable.Click += contextEditorClick;
             // 
             // HtmlEditorControl
             // 
-            this.Controls.Add(this.toolstripEditor);
-            this.Controls.Add(this.browserPanel);
-            this.Name = "HtmlEditorControl";
             resources.ApplyResources(this, "$this");
-            this.browserPanel.ResumeLayout(false);
-            this.toolstripEditor.ResumeLayout(false);
-            this.toolstripEditor.PerformLayout();
-            this.contextEditor.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            Controls.Add(toolstripEditor);
+            Controls.Add(browserPanel);
+            Name = "HtmlEditorControl";
+            browserPanel.ResumeLayout(false);
+            toolstripEditor.ResumeLayout(false);
+            toolstripEditor.PerformLayout();
+            contextEditor.ResumeLayout(false);
+            ResumeLayout(false);
+            PerformLayout();
         }
         #endregion
 
