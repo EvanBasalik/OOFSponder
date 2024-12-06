@@ -97,10 +97,9 @@
             // 
             // lblInternalMessage
             // 
-            lblInternalMessage.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             lblInternalMessage.AutoSize = true;
             lblInternalMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblInternalMessage.Location = new System.Drawing.Point(8, 438);
+            lblInternalMessage.Location = new System.Drawing.Point(8, 443);
             lblInternalMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblInternalMessage.Name = "lblInternalMessage";
             lblInternalMessage.Size = new System.Drawing.Size(104, 13);
@@ -330,9 +329,10 @@
             // 
             // lblExternalMesage
             // 
+            lblExternalMesage.Anchor = System.Windows.Forms.AnchorStyles.Top;
             lblExternalMesage.AutoSize = true;
             lblExternalMesage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblExternalMesage.Location = new System.Drawing.Point(8, 141);
+            lblExternalMesage.Location = new System.Drawing.Point(9, 152);
             lblExternalMesage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblExternalMesage.Name = "lblExternalMesage";
             lblExternalMesage.Size = new System.Drawing.Size(107, 13);
@@ -806,6 +806,7 @@
             Controls.Add(radPrimary);
             Controls.Add(radSecondary);
             Controls.Add(htmlEditorControl1);
+            MinimumSize = new System.Drawing.Size(822, 838);
             Name = "MainForm";
             Text = "MainForm";
             statusStrip1.ResumeLayout(false);
