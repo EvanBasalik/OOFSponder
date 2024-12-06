@@ -126,6 +126,7 @@
             primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
             primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             primaryToolStripMenuItem.Text = "Primary";
+            primaryToolStripMenuItem.Click += primaryToolStripMenuItem_Click;
             // 
             // secondaryToolStripMenuItem
             // 
@@ -135,6 +136,7 @@
             secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
             secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             secondaryToolStripMenuItem.Text = "Secondary";
+            secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
             // tsmiSavedOOFMessage
             // 
@@ -153,6 +155,7 @@
             tsmiExternal.Size = new System.Drawing.Size(222, 22);
             tsmiExternal.Tag = "External";
             tsmiExternal.Text = "External...";
+            tsmiExternal.Click += tsmiSavedOOFMessage_Click;
             // 
             // tsmiInternal
             // 
@@ -161,6 +164,7 @@
             tsmiInternal.Size = new System.Drawing.Size(222, 22);
             tsmiInternal.Tag = "Internal";
             tsmiInternal.Text = "Internal...";
+            tsmiInternal.Click += tsmiSavedOOFMessage_Click;
             // 
             // tsmiShowOOFMessageFolder
             // 
@@ -170,6 +174,7 @@
             tsmiShowOOFMessageFolder.Name = "tsmiShowOOFMessageFolder";
             tsmiShowOOFMessageFolder.Size = new System.Drawing.Size(222, 22);
             tsmiShowOOFMessageFolder.Text = "Show OOF message folder...";
+            tsmiShowOOFMessageFolder.Click += tsmiShowOOFMessageFolder_Click;
             // 
             // tsmiStartMinimized
             // 
@@ -180,6 +185,7 @@
             tsmiStartMinimized.Name = "tsmiStartMinimized";
             tsmiStartMinimized.Size = new System.Drawing.Size(232, 22);
             tsmiStartMinimized.Text = "Start minimized";
+            tsmiStartMinimized.CheckStateChanged += tsmiStartMinimized_CheckStateChanged;
             // 
             // signoutToolStripMenuItem
             // 
@@ -189,6 +195,7 @@
             signoutToolStripMenuItem.Name = "signoutToolStripMenuItem";
             signoutToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             signoutToolStripMenuItem.Text = "Sign out";
+            signoutToolStripMenuItem.Click += signOutToolStripMenuItem_Click;
             // 
             // enableOnCallModeToolStripMenuItem
             // 
@@ -199,6 +206,7 @@
             enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
             enableOnCallModeToolStripMenuItem.Visible = false;
+            enableOnCallModeToolStripMenuItem.Click += enableOnCallModeToolStripMenuItem_Click;
             // 
             // fileToolStripMenuItem
             // 
@@ -229,6 +237,7 @@
             oOFSponderLogToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             oOFSponderLogToolStripMenuItem.Tag = "File";
             oOFSponderLogToolStripMenuItem.Text = "OOFSponder log";
+            oOFSponderLogToolStripMenuItem.Click += ShowLogs;
             // 
             // oOFSponderLogFolderToolStripMenuItem
             // 
@@ -239,12 +248,14 @@
             oOFSponderLogFolderToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             oOFSponderLogFolderToolStripMenuItem.Tag = "Folder";
             oOFSponderLogFolderToolStripMenuItem.Text = "OOFSponder log folder";
+            oOFSponderLogFolderToolStripMenuItem.Click += ShowLogs;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // bETAEnableNewOOFToolStripMenuItem
             // 
@@ -254,6 +265,7 @@
             bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
             bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
             bETAEnableNewOOFToolStripMenuItem.Visible = false;
+            bETAEnableNewOOFToolStripMenuItem.Click += bETAEnableNewOOFToolStripMenuItem_Click;
             // 
             // statusStrip1
             // 
@@ -320,6 +332,7 @@
             btnPermaOOF.Tag = "Enable";
             btnPermaOOF.Text = "Go OOF now until:";
             btnPermaOOF.UseVisualStyleBackColor = true;
+            btnPermaOOF.Click += btnPermaOOF_Click;
             // 
             // openFileDialog
             // 
@@ -344,6 +357,7 @@
             notifyIcon1.Icon = (System.Drawing.Icon)resources.GetObject("notifyIcon1.Icon");
             notifyIcon1.Text = "OOFScheduling";
             notifyIcon1.Visible = true;
+            notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
             // htmlEditorControl2
             // 
@@ -364,6 +378,7 @@
             button2.TabIndex = 86;
             button2.Text = "Save Settings";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // htmlEditorControl1
             // 
