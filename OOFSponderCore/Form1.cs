@@ -80,7 +80,7 @@ namespace OOFScheduling
                 OOFData.version = lblBuild.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
             }
 
-             
+
 
             #endregion
 
@@ -1461,6 +1461,11 @@ namespace OOFScheduling
                 Verb = "open"
             };
             System.Diagnostics.Process.Start(psi);
+        }
+
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
         }
     }
 

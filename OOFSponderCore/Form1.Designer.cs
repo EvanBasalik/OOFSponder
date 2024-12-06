@@ -825,6 +825,7 @@ namespace OOFScheduling
             Margin = new System.Windows.Forms.Padding(4);
             MaximizeBox = false;
             MinimumSize = new System.Drawing.Size(835, 160);
+            MaximumSize = new System.Drawing.Size(1420, 1200);
             Name = "Form1";
             Text = "OOFSponder";
             FormClosing += Form1_FormClosing;
