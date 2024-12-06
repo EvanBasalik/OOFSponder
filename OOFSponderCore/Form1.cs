@@ -32,7 +32,7 @@ namespace OOFScheduling
             InitializeComponent();
 
             //because of problems with the scaling inheritance, have to set this in code
-            this.Size = new System.Drawing.Size(1500, 1250);
+            this.Size = new System.Drawing.Size(1500, 1300);
 
             // TODO figure out why the cross-thread access to dtPermaOOF is still happening
             //temporary fix since I cannot find where it is happening
