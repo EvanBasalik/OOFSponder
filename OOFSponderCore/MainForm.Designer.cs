@@ -97,9 +97,10 @@
             // 
             // lblInternalMessage
             // 
+            lblInternalMessage.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             lblInternalMessage.AutoSize = true;
             lblInternalMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblInternalMessage.Location = new System.Drawing.Point(8, 430);
+            lblInternalMessage.Location = new System.Drawing.Point(8, 438);
             lblInternalMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblInternalMessage.Name = "lblInternalMessage";
             lblInternalMessage.Size = new System.Drawing.Size(104, 13);
@@ -259,10 +260,10 @@
             // 
             statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, lblBuild });
-            statusStrip1.Location = new System.Drawing.Point(0, 767);
+            statusStrip1.Location = new System.Drawing.Point(0, 775);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
-            statusStrip1.Size = new System.Drawing.Size(796, 24);
+            statusStrip1.Size = new System.Drawing.Size(806, 24);
             statusStrip1.TabIndex = 92;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -305,7 +306,7 @@
             dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(551, 731);
+            dtPermaOOF.Location = new System.Drawing.Point(551, 739);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
@@ -314,7 +315,7 @@
             // btnPermaOOF
             // 
             btnPermaOOF.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            btnPermaOOF.Location = new System.Drawing.Point(395, 729);
+            btnPermaOOF.Location = new System.Drawing.Point(395, 737);
             btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             btnPermaOOF.Name = "btnPermaOOF";
             btnPermaOOF.Size = new System.Drawing.Size(152, 26);
@@ -351,16 +352,16 @@
             // 
             htmlEditorControl2.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             htmlEditorControl2.InnerText = "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
-            htmlEditorControl2.Location = new System.Drawing.Point(8, 456);
+            htmlEditorControl2.Location = new System.Drawing.Point(8, 460);
             htmlEditorControl2.Margin = new System.Windows.Forms.Padding(4);
             htmlEditorControl2.Name = "htmlEditorControl2";
-            htmlEditorControl2.Size = new System.Drawing.Size(777, 260);
+            htmlEditorControl2.Size = new System.Drawing.Size(787, 260);
             htmlEditorControl2.TabIndex = 87;
             // 
             // button2
             // 
             button2.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-            button2.Location = new System.Drawing.Point(30, 729);
+            button2.Location = new System.Drawing.Point(30, 737);
             button2.Margin = new System.Windows.Forms.Padding(4);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(133, 26);
@@ -370,12 +371,12 @@
             // 
             // htmlEditorControl1
             // 
-            htmlEditorControl1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            htmlEditorControl1.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             htmlEditorControl1.InnerText = resources.GetString("htmlEditorControl1.InnerText");
-            htmlEditorControl1.Location = new System.Drawing.Point(9, 165);
+            htmlEditorControl1.Location = new System.Drawing.Point(9, 169);
             htmlEditorControl1.Margin = new System.Windows.Forms.Padding(4);
             htmlEditorControl1.Name = "htmlEditorControl1";
-            htmlEditorControl1.Size = new System.Drawing.Size(776, 250);
+            htmlEditorControl1.Size = new System.Drawing.Size(786, 250);
             htmlEditorControl1.TabIndex = 85;
             // 
             // saturdayOffWorkCB
@@ -728,7 +729,7 @@
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            menuStrip1.Size = new System.Drawing.Size(796, 24);
+            menuStrip1.Size = new System.Drawing.Size(806, 24);
             menuStrip1.TabIndex = 90;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -737,7 +738,7 @@
             radPrimary.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             radPrimary.AutoSize = true;
             radPrimary.Checked = true;
-            radPrimary.Location = new System.Drawing.Point(170, 733);
+            radPrimary.Location = new System.Drawing.Point(170, 741);
             radPrimary.Margin = new System.Windows.Forms.Padding(4);
             radPrimary.Name = "radPrimary";
             radPrimary.Size = new System.Drawing.Size(93, 19);
@@ -750,7 +751,7 @@
             // 
             radSecondary.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
             radSecondary.AutoSize = true;
-            radSecondary.Location = new System.Drawing.Point(268, 733);
+            radSecondary.Location = new System.Drawing.Point(268, 741);
             radSecondary.Margin = new System.Windows.Forms.Padding(4);
             radSecondary.Name = "radSecondary";
             radSecondary.Size = new System.Drawing.Size(107, 19);
@@ -763,7 +764,8 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(796, 791);
+            AutoScroll = true;
+            ClientSize = new System.Drawing.Size(806, 799);
             Controls.Add(lblInternalMessage);
             Controls.Add(statusStrip1);
             Controls.Add(label13);
