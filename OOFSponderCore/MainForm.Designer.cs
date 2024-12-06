@@ -103,7 +103,7 @@
             lblInternalMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblInternalMessage.Name = "lblInternalMessage";
             lblInternalMessage.Size = new System.Drawing.Size(104, 13);
-            lblInternalMessage.TabIndex = 89;
+            lblInternalMessage.TabIndex = 41;
             lblInternalMessage.Text = "Internal Message";
             // 
             // toolStripMenuItem1
@@ -275,7 +275,7 @@
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
             statusStrip1.Size = new System.Drawing.Size(814, 24);
-            statusStrip1.TabIndex = 92;
+            statusStrip1.TabIndex = 45;
             statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
@@ -307,7 +307,7 @@
             label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(157, 13);
-            label13.TabIndex = 91;
+            label13.TabIndex = 43;
             label13.Text = "Enter your Working Hours:";
             // 
             // dtPermaOOF
@@ -320,7 +320,7 @@
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
-            dtPermaOOF.TabIndex = 94;
+            dtPermaOOF.TabIndex = 55;
             // 
             // btnPermaOOF
             // 
@@ -328,7 +328,7 @@
             btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             btnPermaOOF.Name = "btnPermaOOF";
             btnPermaOOF.Size = new System.Drawing.Size(152, 26);
-            btnPermaOOF.TabIndex = 93;
+            btnPermaOOF.TabIndex = 54;
             btnPermaOOF.Tag = "Enable";
             btnPermaOOF.Text = "Go OOF now until:";
             btnPermaOOF.UseVisualStyleBackColor = true;
@@ -346,7 +346,7 @@
             lblExternalMesage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblExternalMesage.Name = "lblExternalMesage";
             lblExternalMesage.Size = new System.Drawing.Size(107, 13);
-            lblExternalMesage.TabIndex = 88;
+            lblExternalMesage.TabIndex = 40;
             lblExternalMesage.Text = "External Message";
             // 
             // notifyIcon1
@@ -362,12 +362,12 @@
             // htmlEditorControl2
             // 
             htmlEditorControl2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            htmlEditorControl2.InnerText = "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+            htmlEditorControl2.InnerText = null;
             htmlEditorControl2.Location = new System.Drawing.Point(8, 466);
             htmlEditorControl2.Margin = new System.Windows.Forms.Padding(4);
             htmlEditorControl2.Name = "htmlEditorControl2";
             htmlEditorControl2.Size = new System.Drawing.Size(795, 260);
-            htmlEditorControl2.TabIndex = 87;
+            htmlEditorControl2.TabIndex = 32;
             // 
             // button2
             // 
@@ -375,7 +375,7 @@
             button2.Margin = new System.Windows.Forms.Padding(4);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(133, 26);
-            button2.TabIndex = 86;
+            button2.TabIndex = 38;
             button2.Text = "Save Settings";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
@@ -383,12 +383,12 @@
             // htmlEditorControl1
             // 
             htmlEditorControl1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            htmlEditorControl1.InnerText = resources.GetString("htmlEditorControl1.InnerText");
+            htmlEditorControl1.InnerText = null;
             htmlEditorControl1.Location = new System.Drawing.Point(9, 175);
             htmlEditorControl1.Margin = new System.Windows.Forms.Padding(4);
             htmlEditorControl1.Name = "htmlEditorControl1";
             htmlEditorControl1.Size = new System.Drawing.Size(794, 250);
-            htmlEditorControl1.TabIndex = 85;
+            htmlEditorControl1.TabIndex = 31;
             // 
             // saturdayOffWorkCB
             // 
@@ -397,7 +397,7 @@
             saturdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             saturdayOffWorkCB.Name = "saturdayOffWorkCB";
             saturdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
-            saturdayOffWorkCB.TabIndex = 84;
+            saturdayOffWorkCB.TabIndex = 27;
             saturdayOffWorkCB.Text = "Off Work";
             saturdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -408,7 +408,7 @@
             fridayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             fridayOffWorkCB.Name = "fridayOffWorkCB";
             fridayOffWorkCB.Size = new System.Drawing.Size(74, 19);
-            fridayOffWorkCB.TabIndex = 81;
+            fridayOffWorkCB.TabIndex = 24;
             fridayOffWorkCB.Text = "Off Work";
             fridayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -419,7 +419,7 @@
             thursdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             thursdayOffWorkCB.Name = "thursdayOffWorkCB";
             thursdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
-            thursdayOffWorkCB.TabIndex = 78;
+            thursdayOffWorkCB.TabIndex = 21;
             thursdayOffWorkCB.Text = "Off Work";
             thursdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -430,7 +430,7 @@
             wednesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
             wednesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
-            wednesdayOffWorkCB.TabIndex = 75;
+            wednesdayOffWorkCB.TabIndex = 18;
             wednesdayOffWorkCB.Text = "Off Work";
             wednesdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -441,7 +441,7 @@
             tuesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
             tuesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
-            tuesdayOffWorkCB.TabIndex = 72;
+            tuesdayOffWorkCB.TabIndex = 15;
             tuesdayOffWorkCB.Text = "Off Work";
             tuesdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -452,7 +452,7 @@
             mondayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             mondayOffWorkCB.Name = "mondayOffWorkCB";
             mondayOffWorkCB.Size = new System.Drawing.Size(74, 19);
-            mondayOffWorkCB.TabIndex = 69;
+            mondayOffWorkCB.TabIndex = 12;
             mondayOffWorkCB.Text = "Off Work";
             mondayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -463,7 +463,7 @@
             sundayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             sundayOffWorkCB.Name = "sundayOffWorkCB";
             sundayOffWorkCB.Size = new System.Drawing.Size(74, 19);
-            sundayOffWorkCB.TabIndex = 66;
+            sundayOffWorkCB.TabIndex = 9;
             sundayOffWorkCB.Text = "Off Work";
             sundayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -477,7 +477,7 @@
             saturdayEndTimepicker.Name = "saturdayEndTimepicker";
             saturdayEndTimepicker.ShowUpDown = true;
             saturdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
-            saturdayEndTimepicker.TabIndex = 83;
+            saturdayEndTimepicker.TabIndex = 26;
             saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // fridayEndTimepicker
@@ -490,7 +490,7 @@
             fridayEndTimepicker.Name = "fridayEndTimepicker";
             fridayEndTimepicker.ShowUpDown = true;
             fridayEndTimepicker.Size = new System.Drawing.Size(104, 23);
-            fridayEndTimepicker.TabIndex = 80;
+            fridayEndTimepicker.TabIndex = 23;
             fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // thursdayEndTimepicker
@@ -503,7 +503,7 @@
             thursdayEndTimepicker.Name = "thursdayEndTimepicker";
             thursdayEndTimepicker.ShowUpDown = true;
             thursdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
-            thursdayEndTimepicker.TabIndex = 77;
+            thursdayEndTimepicker.TabIndex = 20;
             thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // wednesdayEndTimepicker
@@ -516,7 +516,7 @@
             wednesdayEndTimepicker.Name = "wednesdayEndTimepicker";
             wednesdayEndTimepicker.ShowUpDown = true;
             wednesdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
-            wednesdayEndTimepicker.TabIndex = 74;
+            wednesdayEndTimepicker.TabIndex = 17;
             wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // tuesdayEndTimepicker
@@ -529,7 +529,7 @@
             tuesdayEndTimepicker.Name = "tuesdayEndTimepicker";
             tuesdayEndTimepicker.ShowUpDown = true;
             tuesdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
-            tuesdayEndTimepicker.TabIndex = 71;
+            tuesdayEndTimepicker.TabIndex = 14;
             tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // mondayEndTimepicker
@@ -542,7 +542,7 @@
             mondayEndTimepicker.Name = "mondayEndTimepicker";
             mondayEndTimepicker.ShowUpDown = true;
             mondayEndTimepicker.Size = new System.Drawing.Size(104, 23);
-            mondayEndTimepicker.TabIndex = 68;
+            mondayEndTimepicker.TabIndex = 11;
             mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // sundayEndTimepicker
@@ -555,7 +555,7 @@
             sundayEndTimepicker.Name = "sundayEndTimepicker";
             sundayEndTimepicker.ShowUpDown = true;
             sundayEndTimepicker.Size = new System.Drawing.Size(104, 23);
-            sundayEndTimepicker.TabIndex = 65;
+            sundayEndTimepicker.TabIndex = 8;
             sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
             // saturdayStartTimepicker
@@ -568,7 +568,7 @@
             saturdayStartTimepicker.Name = "saturdayStartTimepicker";
             saturdayStartTimepicker.ShowUpDown = true;
             saturdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
-            saturdayStartTimepicker.TabIndex = 82;
+            saturdayStartTimepicker.TabIndex = 25;
             saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // fridayStartTimepicker
@@ -581,7 +581,7 @@
             fridayStartTimepicker.Name = "fridayStartTimepicker";
             fridayStartTimepicker.ShowUpDown = true;
             fridayStartTimepicker.Size = new System.Drawing.Size(104, 23);
-            fridayStartTimepicker.TabIndex = 79;
+            fridayStartTimepicker.TabIndex = 22;
             fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // thursdayStartTimepicker
@@ -594,7 +594,7 @@
             thursdayStartTimepicker.Name = "thursdayStartTimepicker";
             thursdayStartTimepicker.ShowUpDown = true;
             thursdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
-            thursdayStartTimepicker.TabIndex = 76;
+            thursdayStartTimepicker.TabIndex = 19;
             thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // wednesdayStartTimepicker
@@ -607,7 +607,7 @@
             wednesdayStartTimepicker.Name = "wednesdayStartTimepicker";
             wednesdayStartTimepicker.ShowUpDown = true;
             wednesdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
-            wednesdayStartTimepicker.TabIndex = 73;
+            wednesdayStartTimepicker.TabIndex = 16;
             wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // tuesdayStartTimepicker
@@ -620,7 +620,7 @@
             tuesdayStartTimepicker.Name = "tuesdayStartTimepicker";
             tuesdayStartTimepicker.ShowUpDown = true;
             tuesdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
-            tuesdayStartTimepicker.TabIndex = 70;
+            tuesdayStartTimepicker.TabIndex = 13;
             tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // mondayStartTimepicker
@@ -633,7 +633,7 @@
             mondayStartTimepicker.Name = "mondayStartTimepicker";
             mondayStartTimepicker.ShowUpDown = true;
             mondayStartTimepicker.Size = new System.Drawing.Size(104, 23);
-            mondayStartTimepicker.TabIndex = 67;
+            mondayStartTimepicker.TabIndex = 10;
             mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // sundayStartTimepicker
@@ -646,7 +646,7 @@
             sundayStartTimepicker.Name = "sundayStartTimepicker";
             sundayStartTimepicker.ShowUpDown = true;
             sundayStartTimepicker.Size = new System.Drawing.Size(104, 23);
-            sundayStartTimepicker.TabIndex = 64;
+            sundayStartTimepicker.TabIndex = 7;
             sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
             // label7
@@ -658,7 +658,7 @@
             label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(53, 15);
-            label7.TabIndex = 63;
+            label7.TabIndex = 6;
             label7.Text = "Saturday";
             // 
             // label6
@@ -670,7 +670,7 @@
             label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(39, 15);
-            label6.TabIndex = 62;
+            label6.TabIndex = 5;
             label6.Text = "Friday";
             // 
             // label5
@@ -682,7 +682,7 @@
             label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(56, 15);
-            label5.TabIndex = 61;
+            label5.TabIndex = 4;
             label5.Text = "Thursday";
             // 
             // label4
@@ -694,7 +694,7 @@
             label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(68, 15);
-            label4.TabIndex = 60;
+            label4.TabIndex = 3;
             label4.Text = "Wednesday";
             // 
             // label3
@@ -706,7 +706,7 @@
             label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(51, 15);
-            label3.TabIndex = 59;
+            label3.TabIndex = 2;
             label3.Text = "Tuesday";
             // 
             // label2
@@ -718,7 +718,7 @@
             label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(51, 15);
-            label2.TabIndex = 58;
+            label2.TabIndex = 1;
             label2.Text = "Monday";
             // 
             // label1
@@ -730,7 +730,7 @@
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(46, 15);
-            label1.TabIndex = 57;
+            label1.TabIndex = 0;
             label1.Text = "Sunday";
             // 
             // menuStrip1
@@ -741,7 +741,7 @@
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
             menuStrip1.Size = new System.Drawing.Size(814, 24);
-            menuStrip1.TabIndex = 90;
+            menuStrip1.TabIndex = 42;
             menuStrip1.Text = "menuStrip1";
             // 
             // radPrimary
@@ -752,7 +752,7 @@
             radPrimary.Margin = new System.Windows.Forms.Padding(4);
             radPrimary.Name = "radPrimary";
             radPrimary.Size = new System.Drawing.Size(93, 19);
-            radPrimary.TabIndex = 95;
+            radPrimary.TabIndex = 56;
             radPrimary.TabStop = true;
             radPrimary.Text = "Primary OOF";
             radPrimary.UseVisualStyleBackColor = true;
@@ -764,7 +764,7 @@
             radSecondary.Margin = new System.Windows.Forms.Padding(4);
             radSecondary.Name = "radSecondary";
             radSecondary.Size = new System.Drawing.Size(107, 19);
-            radSecondary.TabIndex = 96;
+            radSecondary.TabIndex = 57;
             radSecondary.TabStop = true;
             radSecondary.Text = "Secondary OOF";
             radSecondary.UseVisualStyleBackColor = true;
