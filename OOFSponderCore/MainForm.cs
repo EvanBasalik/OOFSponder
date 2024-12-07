@@ -84,7 +84,7 @@ namespace OOFScheduling
                 OOFData.version = lblBuild.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
             }
 
-
+            OOFSponder.Logger.Info("Assembly version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
 
             #endregion
 
