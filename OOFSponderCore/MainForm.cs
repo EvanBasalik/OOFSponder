@@ -865,31 +865,33 @@ namespace OOFScheduling
         #region Events
         private void OnExit(object sender, EventArgs e)
         {
+            OOFSponder.Logger.Info("Exiting - triggered by system tray Exit");
             // Use this since we are a console app
             System.Environment.Exit(1);
         }
 
-        private void Form1_Resize(object sender, EventArgs e)
+        private void MainForm_Resize(object sender, EventArgs e)
         {
-            //OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
-            ////if we are moving to Minimized, then make everything hidden
-            ////plus show system tray stuff
-            //if (this.WindowState == FormWindowState.Minimized)
-            //{
-            //    notifyIcon1.Visible = true;
-            //    notifyIcon1.ShowBalloonTip(100);
-            //    this.ShowInTaskbar = false;
-            //}
+            //move this here so it doesn't get called for every tiny resize
+            //if we are moving to Minimized, then make everything hidden
+            //plus show system tray stuff
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                notifyIcon1.Visible = true;
+                notifyIcon1.ShowBalloonTip(100);
+                this.ShowInTaskbar = false;
+            }
 
-            ////if we are moving to Normal, then make everything visible
-            ////plus hide system tray stuff
-            //if (this.WindowState == FormWindowState.Normal)
-            //{
-            //    this.ShowInTaskbar = true;
-            //    notifyIcon1.Visible = false;
-            //    this.Show();
-            //}
+            //if we are moving to Normal, then make everything visible
+            //plus hide system tray stuff
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+                this.Show();
+            }
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -907,15 +909,18 @@ namespace OOFScheduling
             }
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            //if (minimize && e.CloseReason != CloseReason.WindowsShutDown)
-            //if (e.CloseReason != CloseReason.WindowsShutDown)
-            //{
-            //    e.Cancel = true;
-            //    this.WindowState = FormWindowState.Minimized;
-            //    //this.Hide();
-            //}
+            OOFSponder.Logger.Info("FormClosing triggered: " + e.CloseReason.ToString());
+
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                this.WindowState = FormWindowState.Minimized;
+                //this.Hide();
+
+                OOFSponder.Logger.Info("FormClosing due to UserClosing - canceled Close and minimized instead");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1402,7 +1407,7 @@ namespace OOFScheduling
             //saveSettings();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             //make sure to set the state of the Start Minimized menu item appropriately
             tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
@@ -1468,28 +1473,9 @@ namespace OOFScheduling
             System.Diagnostics.Process.Start(psi);
         }
 
-        private void Form1_ResizeEnd(object sender, EventArgs e)
+        private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
-            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
-            //move this here so it doesn't get called for every tiny resize
-            //if we are moving to Minimized, then make everything hidden
-            //plus show system tray stuff
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                notifyIcon1.Visible = true;
-                notifyIcon1.ShowBalloonTip(100);
-                this.ShowInTaskbar = false;
-            }
-
-            //if we are moving to Normal, then make everything visible
-            //plus hide system tray stuff
-            if (this.WindowState == FormWindowState.Normal)
-            {
-                this.ShowInTaskbar = true;
-                notifyIcon1.Visible = false;
-                this.Show();
-            }
         }
     }
 
