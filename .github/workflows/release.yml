@@ -37,7 +37,7 @@ jobs:
         id: setversion
         uses: berglie/assembly-version/set-buildnumber@v1
         with:
-          buildnumber: ${{ steps.version.full_without_prefix }}		
+          buildnumber: ${{ format('{0}.{1}.{2}', steps.version.outputs.major_without_prefix, steps.version.outputs.minor, steps.version.outputs.patch) }}	
 
       # - name: Run release script
       #   shell: pwsh
