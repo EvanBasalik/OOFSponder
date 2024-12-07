@@ -1417,11 +1417,12 @@ namespace OOFScheduling
 
             //only show files related to the target message
             ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
-            string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
-            string filenameFilterDescription = tsmi.Tag + " " + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
+            string _tsmiText = tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
+            string filenameFilter = tsmi.Tag + _tsmiText;
+            string filenameFilterDescription = tsmi.Tag + " " + _tsmiText;
 
             //only show HTML files
-            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter + ".html|HTML Files|*.html";
+            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter + ".html|All HTML Files|*.html";
             openFileDialog.FilterIndex = 1;
 
             openFileDialog.Title = "Select an existing OOF message file";
@@ -1432,7 +1433,7 @@ namespace OOFScheduling
                 try
                 {
                     SavedOOFMessageHTML = System.IO.File.ReadAllText(openFileDialog.FileName);
-                    switch (tsmi.Text.Replace(tsmi.Tag + " ", ""))
+                    switch (tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...",""))
                     {
                         case "External":
                             htmlEditorControl1.BodyHtml = SavedOOFMessageHTML;
