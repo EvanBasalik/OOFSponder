@@ -31,8 +31,14 @@ jobs:
         run: |
           git config --global url."https://user:${{ secrets.GITHUB_TOKEN }}@github".insteadOf https://github
           git config --global user.name github-actions
-          git config --global user.email github-actions@github.com          
+          git config --global user.email github-actions@github.com  
+          
+      - name: Set build number
+        id: setversion
+        uses: berglie/assembly-version/set-buildnumber@v1
+        with:
+          buildnumber: ${{ steps.version.full_without_prefix }}		
 
-      - name: Run release script
-        shell: pwsh
-        run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease}}
+      # - name: Run release script
+      #   shell: pwsh
+      #   run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease}}
