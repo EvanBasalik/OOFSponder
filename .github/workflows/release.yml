@@ -20,7 +20,7 @@ jobs:
         run: |
           echo "Found valid version format in tag!"
           echo "Full version: ${{ steps.version.outputs.full }}"
-          echo "Full version without prefix: ${{ steps.version.outputs.full_without_prefix }}"
+          echo "Full version without suffix or prefix: ${{ format('{0}.{1}.{2}', steps.version.outputs.major_without_prefix, steps.version.outputs.minor, steps.version.outputs.patch) }}"
           # echo "Major with pre-release: ${{ steps.version.outputs.major_prerelease }}"
         if: steps.version.outputs.is_valid == 'true'
  
