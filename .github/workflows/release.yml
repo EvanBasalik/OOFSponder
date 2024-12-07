@@ -33,12 +33,11 @@ jobs:
           git config --global user.name github-actions
           git config --global user.email github-actions@github.com  
           
-      - name: Set build number
-        id: setversion
-        uses: berglie/assembly-version/set-buildnumber@v1
-        with:
-          buildnumber: ${{ format('{0}.{1}.{2}', steps.version.outputs.major_without_prefix, steps.version.outputs.minor, steps.version.outputs.patch) }}	
+      #- name: Set build number
+      #  id: setversion
+      #  uses: berglie/assembly-version/set-buildnumber@v1
+      #  with: buildnumber: ${{ format('{0}.{1}.{2}', steps.version.outputs.major_without_prefix, steps.version.outputs.minor, steps.version.outputs.patch) }}	
 
-      # - name: Run release script
-      #   shell: pwsh
-      #   run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease}}
+      - name: Run release script
+        shell: pwsh
+        run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease}}
