@@ -393,7 +393,7 @@
             // saturdayOffWorkCB
             // 
             saturdayOffWorkCB.AutoSize = true;
-            saturdayOffWorkCB.Location = new System.Drawing.Point(685, 111);
+            saturdayOffWorkCB.Location = new System.Drawing.Point(696, 111);
             saturdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             saturdayOffWorkCB.Name = "saturdayOffWorkCB";
             saturdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
@@ -404,7 +404,7 @@
             // fridayOffWorkCB
             // 
             fridayOffWorkCB.AutoSize = true;
-            fridayOffWorkCB.Location = new System.Drawing.Point(573, 111);
+            fridayOffWorkCB.Location = new System.Drawing.Point(584, 111);
             fridayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             fridayOffWorkCB.Name = "fridayOffWorkCB";
             fridayOffWorkCB.Size = new System.Drawing.Size(74, 19);
@@ -415,7 +415,7 @@
             // thursdayOffWorkCB
             // 
             thursdayOffWorkCB.AutoSize = true;
-            thursdayOffWorkCB.Location = new System.Drawing.Point(460, 111);
+            thursdayOffWorkCB.Location = new System.Drawing.Point(472, 111);
             thursdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             thursdayOffWorkCB.Name = "thursdayOffWorkCB";
             thursdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
@@ -426,7 +426,7 @@
             // wednesdayOffWorkCB
             // 
             wednesdayOffWorkCB.AutoSize = true;
-            wednesdayOffWorkCB.Location = new System.Drawing.Point(349, 111);
+            wednesdayOffWorkCB.Location = new System.Drawing.Point(360, 111);
             wednesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
             wednesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
@@ -437,7 +437,7 @@
             // tuesdayOffWorkCB
             // 
             tuesdayOffWorkCB.AutoSize = true;
-            tuesdayOffWorkCB.Location = new System.Drawing.Point(236, 111);
+            tuesdayOffWorkCB.Location = new System.Drawing.Point(248, 111);
             tuesdayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
             tuesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
@@ -448,7 +448,7 @@
             // mondayOffWorkCB
             // 
             mondayOffWorkCB.AutoSize = true;
-            mondayOffWorkCB.Location = new System.Drawing.Point(125, 111);
+            mondayOffWorkCB.Location = new System.Drawing.Point(136, 111);
             mondayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             mondayOffWorkCB.Name = "mondayOffWorkCB";
             mondayOffWorkCB.Size = new System.Drawing.Size(74, 19);
@@ -459,7 +459,7 @@
             // sundayOffWorkCB
             // 
             sundayOffWorkCB.AutoSize = true;
-            sundayOffWorkCB.Location = new System.Drawing.Point(13, 111);
+            sundayOffWorkCB.Location = new System.Drawing.Point(24, 111);
             sundayOffWorkCB.Margin = new System.Windows.Forms.Padding(4);
             sundayOffWorkCB.Name = "sundayOffWorkCB";
             sundayOffWorkCB.Size = new System.Drawing.Size(74, 19);
@@ -654,7 +654,7 @@
             label7.AccessibleDescription = "A label with the text Saturday";
             label7.AccessibleName = "Saturday working hours";
             label7.AutoSize = true;
-            label7.Location = new System.Drawing.Point(681, 32);
+            label7.Location = new System.Drawing.Point(707, 32);
             label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(53, 15);
@@ -666,7 +666,7 @@
             label6.AccessibleDescription = "A label with the text Friday";
             label6.AccessibleName = "Friday working hours";
             label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(569, 32);
+            label6.Location = new System.Drawing.Point(602, 32);
             label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(39, 15);
@@ -678,7 +678,7 @@
             label5.AccessibleDescription = "A label with the text Thursday";
             label5.AccessibleName = "Thursday working hours";
             label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(457, 32);
+            label5.Location = new System.Drawing.Point(481, 32);
             label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(56, 15);
@@ -690,7 +690,7 @@
             label4.AccessibleDescription = "A label with the text Wednesday";
             label4.AccessibleName = "Wednesday working hours";
             label4.AutoSize = true;
-            label4.Location = new System.Drawing.Point(345, 32);
+            label4.Location = new System.Drawing.Point(363, 32);
             label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(68, 15);
@@ -702,7 +702,7 @@
             label3.AccessibleDescription = "A label with the text Tuesday";
             label3.AccessibleName = "Tuesday working hours";
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(233, 32);
+            label3.Location = new System.Drawing.Point(260, 32);
             label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(51, 15);
@@ -714,7 +714,7 @@
             label2.AccessibleDescription = "A label with the text Monday";
             label2.AccessibleName = "Monday working hours";
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(121, 32);
+            label2.Location = new System.Drawing.Point(148, 32);
             label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(51, 15);
@@ -726,7 +726,7 @@
             label1.AccessibleDescription = "A label with the text Sunday";
             label1.AccessibleName = "Sunday working hours";
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(9, 32);
+            label1.Location = new System.Drawing.Point(38, 32);
             label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(46, 15);
