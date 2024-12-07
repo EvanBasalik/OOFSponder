@@ -819,6 +819,10 @@
             MinimumSize = new System.Drawing.Size(822, 0);
             Name = "MainForm";
             Text = "MainForm";
+            FormClosing += MainForm_FormClosing;
+            Load += MainForm_Load;
+            ResizeEnd += MainForm_ResizeEnd;
+            Resize += MainForm_Resize;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
             menuStrip1.ResumeLayout(false);
