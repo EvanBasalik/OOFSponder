@@ -1,22 +1,23 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Win32;
-using MSDN.Html.Editor;
 using Newtonsoft.Json;
-using OOFSponder;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
-using System.IO;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
 
 namespace OOFScheduling
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
 
@@ -25,7 +26,7 @@ namespace OOFScheduling
         //Track if force close or just hitting X to minimize
         //private bool minimize = true;
 
-        public Form1()
+        public MainForm()
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
@@ -864,8 +865,6 @@ namespace OOFScheduling
         #region Events
         private void OnExit(object sender, EventArgs e)
         {
-            Logger.Info("Exiting - triggered by system tray Exit");
-
             // Use this since we are a console app
             System.Environment.Exit(1);
         }
@@ -910,17 +909,13 @@ namespace OOFScheduling
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-
-            Logger.Info("FormClosing triggered: " + e.CloseReason.ToString());
-
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                this.WindowState = FormWindowState.Minimized;
-                //this.Hide();
-
-                Logger.Info("FormClosing due to UserClosing - canceled Close and minimized instead");
-            }
+            //if (minimize && e.CloseReason != CloseReason.WindowsShutDown)
+            //if (e.CloseReason != CloseReason.WindowsShutDown)
+            //{
+            //    e.Cancel = true;
+            //    this.WindowState = FormWindowState.Minimized;
+            //    //this.Hide();
+            //}
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1479,34 +1474,5 @@ namespace OOFScheduling
     }
 
 
-    //internal static class Extensions
-    //{
-    //    internal static string CleanReplyMessage(this string input)
-    //    {
-    //        return Regex.Replace(input, @"\r\n|\n\r|\n|\r", "\r\n");
-    //    }
-
-    //    public static T GetPrivateField<T>(this object obj, string name)
-    //    {
-    //        BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
-    //        Type type = obj.GetType();
-    //        FieldInfo field = type.GetField(name, flags);
-    //        return (T)field.GetValue(obj);
-    //    }
-
-    //}
-
-    //public static class StringExtensions
-    //{
-    //    internal static string FirstCharToUpper(this string input)
-    //    {
-    //        switch (input)
-    //        {
-    //            case null: throw new ArgumentNullException(nameof(input));
-    //            case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
-    //            default: return input[0].ToString().ToUpper() + input.Substring(1);
-    //        }
-    //    }
-    //}
 
 }

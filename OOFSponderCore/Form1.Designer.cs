@@ -72,6 +72,7 @@ namespace OOFScheduling
             tsmiSavedOOFMessage = new System.Windows.Forms.ToolStripMenuItem();
             tsmiExternal = new System.Windows.Forms.ToolStripMenuItem();
             tsmiInternal = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiShowOOFMessageFolder = new System.Windows.Forms.ToolStripMenuItem();
             tsmiStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
             signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,12 +86,6 @@ namespace OOFScheduling
             toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             lblBuild = new System.Windows.Forms.ToolStripStatusLabel();
-            passwordConfirmTB = new System.Windows.Forms.MaskedTextBox();
-            label10 = new System.Windows.Forms.Label();
-            passwordTB = new System.Windows.Forms.MaskedTextBox();
-            label9 = new System.Windows.Forms.Label();
-            emailAddressTB = new System.Windows.Forms.TextBox();
-            label8 = new System.Windows.Forms.Label();
             btnPermaOOF = new System.Windows.Forms.Button();
             dtPermaOOF = new System.Windows.Forms.DateTimePicker();
             radPrimary = new System.Windows.Forms.RadioButton();
@@ -98,7 +93,6 @@ namespace OOFScheduling
             htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
             htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
             openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            tsmiShowOOFMessageFolder = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             statusStrip1.SuspendLayout();
             SuspendLayout();
@@ -502,8 +496,8 @@ namespace OOFScheduling
             menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            menuStrip1.Size = new System.Drawing.Size(802, 24);
+            menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
+            menuStrip1.Size = new System.Drawing.Size(792, 24);
             menuStrip1.TabIndex = 42;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -514,7 +508,7 @@ namespace OOFScheduling
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, signoutToolStripMenuItem, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            fileToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
             fileToolStripMenuItem.Text = "File";
             // 
             // toolStripMenuItem1
@@ -576,6 +570,16 @@ namespace OOFScheduling
             tsmiInternal.Tag = "Internal";
             tsmiInternal.Text = "Internal...";
             tsmiInternal.Click += tsmiSavedOOFMessage_Click;
+            // 
+            // tsmiShowOOFMessageFolder
+            // 
+            tsmiShowOOFMessageFolder.AccessibleDescription = "A menu item that opens the AppData folder where OOFSponder saves OOF messages";
+            tsmiShowOOFMessageFolder.AccessibleName = "Show OOF message folder";
+            tsmiShowOOFMessageFolder.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiShowOOFMessageFolder.Name = "tsmiShowOOFMessageFolder";
+            tsmiShowOOFMessageFolder.Size = new System.Drawing.Size(222, 22);
+            tsmiShowOOFMessageFolder.Text = "Show OOF message folder...";
+            tsmiShowOOFMessageFolder.Click += tsmiShowOOFMessageFolder_Click;
             // 
             // tsmiStartMinimized
             // 
@@ -675,10 +679,10 @@ namespace OOFScheduling
             // 
             statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, lblBuild });
-            statusStrip1.Location = new System.Drawing.Point(0, 913);
+            statusStrip1.Location = new System.Drawing.Point(0, 539);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            statusStrip1.Size = new System.Drawing.Size(802, 24);
+            statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
+            statusStrip1.Size = new System.Drawing.Size(792, 24);
             statusStrip1.TabIndex = 45;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -701,68 +705,6 @@ namespace OOFScheduling
             lblBuild.Size = new System.Drawing.Size(78, 19);
             lblBuild.Text = "BuildNumber";
             // 
-            // passwordConfirmTB
-            // 
-            passwordConfirmTB.Location = new System.Drawing.Point(516, 890);
-            passwordConfirmTB.Margin = new System.Windows.Forms.Padding(4);
-            passwordConfirmTB.Name = "passwordConfirmTB";
-            passwordConfirmTB.Size = new System.Drawing.Size(116, 23);
-            passwordConfirmTB.TabIndex = 52;
-            passwordConfirmTB.UseSystemPasswordChar = true;
-            passwordConfirmTB.Visible = false;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new System.Drawing.Point(399, 893);
-            label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label10.Name = "label10";
-            label10.Size = new System.Drawing.Size(107, 15);
-            label10.TabIndex = 51;
-            label10.Text = "Confirm Password:";
-            label10.Visible = false;
-            // 
-            // passwordTB
-            // 
-            passwordTB.Location = new System.Drawing.Point(274, 890);
-            passwordTB.Margin = new System.Windows.Forms.Padding(4);
-            passwordTB.Name = "passwordTB";
-            passwordTB.Size = new System.Drawing.Size(116, 23);
-            passwordTB.TabIndex = 50;
-            passwordTB.UseSystemPasswordChar = true;
-            passwordTB.Visible = false;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new System.Drawing.Point(202, 893);
-            label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(60, 15);
-            label9.TabIndex = 49;
-            label9.Text = "Password:";
-            label9.Visible = false;
-            // 
-            // emailAddressTB
-            // 
-            emailAddressTB.Location = new System.Drawing.Point(78, 890);
-            emailAddressTB.Margin = new System.Windows.Forms.Padding(4);
-            emailAddressTB.Name = "emailAddressTB";
-            emailAddressTB.Size = new System.Drawing.Size(116, 23);
-            emailAddressTB.TabIndex = 48;
-            emailAddressTB.Visible = false;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(30, 893);
-            label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(39, 15);
-            label8.TabIndex = 47;
-            label8.Text = "Email:";
-            label8.Visible = false;
-            // 
             // btnPermaOOF
             // 
             btnPermaOOF.Location = new System.Drawing.Point(379, 512);
@@ -781,7 +723,7 @@ namespace OOFScheduling
             dtPermaOOF.AccessibleName = "Perma OOF date";
             dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(535, 514);
+            dtPermaOOF.Location = new System.Drawing.Point(535, 516);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
@@ -834,30 +776,14 @@ namespace OOFScheduling
             // 
             openFileDialog.FileName = "openFileDialog";
             // 
-            // tsmiShowOOFMessageFolder
-            // 
-            tsmiShowOOFMessageFolder.AccessibleDescription = "A menu item that opens the AppData folder where OOFSponder saves OOF messages";
-            tsmiShowOOFMessageFolder.AccessibleName = "Show OOF message folder";
-            tsmiShowOOFMessageFolder.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            tsmiShowOOFMessageFolder.Name = "tsmiShowOOFMessageFolder";
-            tsmiShowOOFMessageFolder.Size = new System.Drawing.Size(222, 22);
-            tsmiShowOOFMessageFolder.Text = "Show OOF message folder...";
-            tsmiShowOOFMessageFolder.Click += tsmiShowOOFMessageFolder_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new System.Drawing.Size(819, 586);
+            ClientSize = new System.Drawing.Size(478, 293);
             Controls.Add(dtPermaOOF);
             Controls.Add(btnPermaOOF);
-            Controls.Add(passwordConfirmTB);
-            Controls.Add(label10);
-            Controls.Add(passwordTB);
-            Controls.Add(label9);
-            Controls.Add(emailAddressTB);
-            Controls.Add(label8);
             Controls.Add(statusStrip1);
             Controls.Add(label13);
             Controls.Add(lblInternalMessage);
@@ -897,10 +823,10 @@ namespace OOFScheduling
             Controls.Add(radPrimary);
             Controls.Add(radSecondary);
             MainMenuStrip = menuStrip1;
-            Margin = new System.Windows.Forms.Padding(4);
+            Margin = new System.Windows.Forms.Padding(2);
             MaximizeBox = false;
-            MaximumSize = new System.Drawing.Size(835, 625);
-            MinimumSize = new System.Drawing.Size(835, 160);
+            MaximumSize = new System.Drawing.Size(835, 619);
+            MinimumSize = new System.Drawing.Size(494, 99);
             Name = "Form1";
             Text = "OOFSponder";
             FormClosing += Form1_FormClosing;
