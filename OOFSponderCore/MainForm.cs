@@ -871,25 +871,25 @@ namespace OOFScheduling
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+            //OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
-            //if we are moving to Minimized, then make everything hidden
-            //plus show system tray stuff
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                notifyIcon1.Visible = true;
-                notifyIcon1.ShowBalloonTip(100);
-                this.ShowInTaskbar = false;
-            }
+            ////if we are moving to Minimized, then make everything hidden
+            ////plus show system tray stuff
+            //if (this.WindowState == FormWindowState.Minimized)
+            //{
+            //    notifyIcon1.Visible = true;
+            //    notifyIcon1.ShowBalloonTip(100);
+            //    this.ShowInTaskbar = false;
+            //}
 
-            //if we are moving to Normal, then make everything visible
-            //plus hide system tray stuff
-            if (this.WindowState == FormWindowState.Normal)
-            {
-                this.ShowInTaskbar = true;
-                notifyIcon1.Visible = false;
-                this.Show();
-            }
+            ////if we are moving to Normal, then make everything visible
+            ////plus hide system tray stuff
+            //if (this.WindowState == FormWindowState.Normal)
+            //{
+            //    this.ShowInTaskbar = true;
+            //    notifyIcon1.Visible = false;
+            //    this.Show();
+            //}
         }
 
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -1417,11 +1417,12 @@ namespace OOFScheduling
 
             //only show files related to the target message
             ToolStripMenuItem tsmi = ((ToolStripMenuItem)sender);
-            string filenameFilter = tsmi.Tag + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
-            string filenameFilterDescription = tsmi.Tag + " " + tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
+            string _tsmiText = tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", "");
+            string filenameFilter = tsmi.Tag + _tsmiText;
+            string filenameFilterDescription = tsmi.Tag + " " + _tsmiText;
 
             //only show HTML files
-            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter + ".html|HTML Files|*.html";
+            openFileDialog.Filter = filenameFilterDescription + "|*" + filenameFilter + ".html|All HTML Files|*.html";
             openFileDialog.FilterIndex = 1;
 
             openFileDialog.Title = "Select an existing OOF message file";
@@ -1432,7 +1433,7 @@ namespace OOFScheduling
                 try
                 {
                     SavedOOFMessageHTML = System.IO.File.ReadAllText(openFileDialog.FileName);
-                    switch (tsmi.Text.Replace(tsmi.Tag + " ", ""))
+                    switch (tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...",""))
                     {
                         case "External":
                             htmlEditorControl1.BodyHtml = SavedOOFMessageHTML;
@@ -1470,6 +1471,25 @@ namespace OOFScheduling
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
+            //move this here so it doesn't get called for every tiny resize
+            //if we are moving to Minimized, then make everything hidden
+            //plus show system tray stuff
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                notifyIcon1.Visible = true;
+                notifyIcon1.ShowBalloonTip(100);
+                this.ShowInTaskbar = false;
+            }
+
+            //if we are moving to Normal, then make everything visible
+            //plus hide system tray stuff
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                this.ShowInTaskbar = true;
+                notifyIcon1.Visible = false;
+                this.Show();
+            }
         }
     }
 
