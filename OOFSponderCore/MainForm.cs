@@ -248,7 +248,7 @@ namespace OOFScheduling
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
-            fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
+            //fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
 
             //if we have all the inputs and "start minimized" is checked in the menu, then minimize
             //if we are missing some necessar input, then need to show the window regardless
@@ -297,20 +297,20 @@ namespace OOFScheduling
             }
         }
 
-        private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-        {
-            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
-            if (!O365.isLoggedIn)
-            {
-                signoutToolStripMenuItem.Tag = "LoggedOut";
-                signoutToolStripMenuItem.Text = "Sign in";
-            }
-            else
-            {
-                signoutToolStripMenuItem.Tag = "LoggedIn";
-                signoutToolStripMenuItem.Text = "Sign out";
-            }
-        }
+        //private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        //{
+        //    OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+        //    if (!O365.isLoggedIn)
+        //    {
+        //        signoutToolStripMenuItem.Tag = "LoggedOut";
+        //        signoutToolStripMenuItem.Text = "Sign in";
+        //    }
+        //    else
+        //    {
+        //        signoutToolStripMenuItem.Tag = "LoggedIn";
+        //        signoutToolStripMenuItem.Text = "Sign out";
+        //    }
+        //}
 
         void signOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
