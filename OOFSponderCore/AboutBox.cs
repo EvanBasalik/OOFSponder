@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOFScheduling.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -16,6 +17,7 @@ namespace OOFScheduling
             InitializeComponent();
             this.labelVersion.Text = String.Format("Version {0}", OOFData.version);
             this.richTextBox1.LoadFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "whatsnew.rtf"));
+            this.logoPictureBox.InitialImage = Resources.OOFSponderIcon;
         }
 
         #region Assembly Attribute Accessors
