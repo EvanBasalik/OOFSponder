@@ -52,7 +52,7 @@ namespace OOFScheduling
             }
 #endif
             //removed sign out capability now that we are using MSAL
-            this.signoutToolStripMenuItem.Visible = false;
+            //this.signoutToolStripMenuItem.Visible = false;
 
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
