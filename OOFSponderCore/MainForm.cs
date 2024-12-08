@@ -67,6 +67,10 @@ namespace OOFScheduling
             }
 
             //pull all the runtime accessibility work into one place
+            //wire up to respond to changes
+            SystemEvents.UserPreferenceChanged += new UserPreferenceChangedEventHandler(SystemEvents_UserPreferenceChanged);
+
+            //actually do the work
             DoAccessibilityUIWork();
 
             #region SetBuildInfo
@@ -262,6 +266,13 @@ namespace OOFScheduling
             }
         }
 
+        private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+        {
+            //right now, the ony user preference we respond to
+            //is HighContrast and that is contained in the DoAccessiblityUIWork() method
+            DoAccessibilityUIWork();
+        }
+
         private void DoAccessibilityUIWork()
         {
             //set the AccessibleName for all the working day checkboxes
@@ -300,11 +311,23 @@ namespace OOFScheduling
             //High Contrast, so manually setting the ForeColor to ControlLight
             if (SystemInformation.HighContrast)
             {
+                OOFSponder.Logger.Info("HighContrast mode = true, so setting DataTimePickers to ControlLight");
                 foreach (Control item in this.Controls)
                 {
                     if (item.GetType() == typeof(DateTimePicker))
                     {
                         item.ForeColor = SystemColors.ControlLight;
+                    }
+                }
+            }
+            else
+            {
+                OOFSponder.Logger.Info("HighContrast mode = false, so setting DataTimePickers to ControlText");
+                foreach (Control item in this.Controls)
+                {
+                    if (item.GetType() == typeof(DateTimePicker))
+                    {
+                        item.ForeColor = SystemColors.ControlText;
                     }
                 }
             }
