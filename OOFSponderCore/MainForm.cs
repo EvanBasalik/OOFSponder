@@ -327,7 +327,7 @@ namespace OOFScheduling
                 {
                     if (item.GetType() == typeof(DateTimePicker))
                     {
-                        item.ForeColor = SystemColors.ControlText;
+                        item.ForeColor = SystemColors.WindowText;
                     }
                 }
             }
