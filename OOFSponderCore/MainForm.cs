@@ -295,6 +295,19 @@ namespace OOFScheduling
                     item.AccessibleName = "Internal " + item.AccessibleName;
                 }
             }
+
+            //similar to the File menuitem, the DateTimePickers aren't properly rendering in 
+            //High Contrast, so manually setting the ForeColor to ControlLight
+            if (SystemInformation.HighContrast)
+            {
+                foreach (Control item in this.Controls)
+                {
+                    if (item.GetType() == typeof(DateTimePicker))
+                    {
+                        item.ForeColor = SystemColors.ControlLight;
+                    }
+                }
+            }
         }
 
         //private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
