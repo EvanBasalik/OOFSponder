@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutBox));
             tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             label1 = new System.Windows.Forms.Label();
             logoPictureBox = new System.Windows.Forms.PictureBox();
@@ -80,6 +81,7 @@
             // logoPictureBox
             // 
             logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            logoPictureBox.Image = (System.Drawing.Image)resources.GetObject("logoPictureBox.Image");
             logoPictureBox.Location = new System.Drawing.Point(4, 3);
             logoPictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             logoPictureBox.Name = "logoPictureBox";
