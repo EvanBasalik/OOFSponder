@@ -52,7 +52,7 @@ namespace OOFScheduling
             }
 #endif
             //removed sign out capability now that we are using MSAL
-            this.signoutToolStripMenuItem.Visible = false;
+            //this.signoutToolStripMenuItem.Visible = false;
 
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
@@ -248,7 +248,7 @@ namespace OOFScheduling
             System.Threading.Tasks.Task.Run(() => RunSetOofO365());
 
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
-            fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
+            //fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
 
             //if we have all the inputs and "start minimized" is checked in the menu, then minimize
             //if we are missing some necessar input, then need to show the window regardless
@@ -297,20 +297,20 @@ namespace OOFScheduling
             }
         }
 
-        private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
-        {
-            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
-            if (!O365.isLoggedIn)
-            {
-                signoutToolStripMenuItem.Tag = "LoggedOut";
-                signoutToolStripMenuItem.Text = "Sign in";
-            }
-            else
-            {
-                signoutToolStripMenuItem.Tag = "LoggedIn";
-                signoutToolStripMenuItem.Text = "Sign out";
-            }
-        }
+        //private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        //{
+        //    OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+        //    if (!O365.isLoggedIn)
+        //    {
+        //        signoutToolStripMenuItem.Tag = "LoggedOut";
+        //        signoutToolStripMenuItem.Text = "Sign in";
+        //    }
+        //    else
+        //    {
+        //        signoutToolStripMenuItem.Tag = "LoggedIn";
+        //        signoutToolStripMenuItem.Text = "Sign out";
+        //    }
+        //}
 
         void signOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1438,7 +1438,7 @@ namespace OOFScheduling
                 try
                 {
                     SavedOOFMessageHTML = System.IO.File.ReadAllText(openFileDialog.FileName);
-                    switch (tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...",""))
+                    switch (tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", ""))
                     {
                         case "External":
                             htmlEditorControl1.BodyHtml = SavedOOFMessageHTML;
@@ -1475,6 +1475,43 @@ namespace OOFScheduling
 
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
+
+        }
+
+        private void fileToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            //for some reason, even though the control colors report as
+            //Control and ControlText, it doesn't look right under High Contrast
+            //so do some manual fix up to provide contrast. It looks a bit weird
+            //visually, but at least the contrast works
+            if (SystemInformation.HighContrast)
+            {
+                //as suggested by the Accessibility folks, but this isn't necessarily
+                //going to work across all possible color combinations
+                //fileToolStripMenuItem.BackColor = Color.White;
+                //fileToolStripMenuItem.ForeColor = Color.Black;
+
+                //use SystemColors to ensure it works no matter what
+                //just make sure we have a darker background than the foreground
+                fileToolStripMenuItem.ForeColor = SystemColors.ControlDark;
+                fileToolStripMenuItem.BackColor = SystemColors.ControlLight;
+            }
+
+
+        }
+
+        private void fileToolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+
+            //for some reason, even though the control colors report as
+            //Control and ControlText, it doesn't look right under High Contrast
+            //so had to do some manual fix up in fileToolStripMenuItem_MouseEnter.
+            //Revert back to standard SystemColors here
+            if (SystemInformation.HighContrast)
+            {
+                fileToolStripMenuItem.BackColor = SystemColors.Control;
+                fileToolStripMenuItem.ForeColor = SystemColors.ControlText;
+            }
 
         }
     }

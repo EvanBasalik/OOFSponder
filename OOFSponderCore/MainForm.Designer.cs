@@ -39,7 +39,6 @@
             tsmiInternal = new System.Windows.Forms.ToolStripMenuItem();
             tsmiShowOOFMessageFolder = new System.Windows.Forms.ToolStripMenuItem();
             tsmiStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
-            signoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -187,16 +186,6 @@
             tsmiStartMinimized.Text = "Start minimized";
             tsmiStartMinimized.CheckStateChanged += tsmiStartMinimized_CheckStateChanged;
             // 
-            // signoutToolStripMenuItem
-            // 
-            signoutToolStripMenuItem.AccessibleDescription = "A menu item with text 'Sign out'";
-            signoutToolStripMenuItem.AccessibleName = "Sign out";
-            signoutToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            signoutToolStripMenuItem.Name = "signoutToolStripMenuItem";
-            signoutToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            signoutToolStripMenuItem.Text = "Sign out";
-            signoutToolStripMenuItem.Click += signOutToolStripMenuItem_Click;
-            // 
             // enableOnCallModeToolStripMenuItem
             // 
             enableOnCallModeToolStripMenuItem.AccessibleDescription = "A menu item with text '(BETA) Enable On-Call Mode'";
@@ -213,10 +202,12 @@
             fileToolStripMenuItem.AccessibleDescription = "File";
             fileToolStripMenuItem.AccessibleName = "File";
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, signoutToolStripMenuItem, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
             fileToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem.MouseEnter += fileToolStripMenuItem_MouseEnter;
+            fileToolStripMenuItem.MouseLeave += fileToolStripMenuItem_MouseLeave;
             // 
             // showLogsToolStripMenuItem
             // 
@@ -842,7 +833,6 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiInternal;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowOOFMessageFolder;
         private System.Windows.Forms.ToolStripMenuItem tsmiStartMinimized;
-        private System.Windows.Forms.ToolStripMenuItem signoutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enableOnCallModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showLogsToolStripMenuItem;

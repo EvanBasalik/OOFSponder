@@ -61,6 +61,9 @@
     <None Remove="production\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="WhatsNew.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -155,5 +158,6 @@
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>del OOFScheduling.exemsalcache.txt</PostBuildEvent>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 </Project>
