@@ -1438,7 +1438,7 @@ namespace OOFScheduling
                 try
                 {
                     SavedOOFMessageHTML = System.IO.File.ReadAllText(openFileDialog.FileName);
-                    switch (tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...",""))
+                    switch (tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", ""))
                     {
                         case "External":
                             htmlEditorControl1.BodyHtml = SavedOOFMessageHTML;
@@ -1476,6 +1476,20 @@ namespace OOFScheduling
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
 
+        }
+
+        private void fileToolStripMenuItem_MouseEnter(object sender, EventArgs e)
+        {
+            fileToolStripMenuItem.BackColor = Color.White;
+            fileToolStripMenuItem.ForeColor = Color.Black;
+            //fileToolStripMenuItem.BackColor = SystemColors.Menu;
+            //fileToolStripMenuItem.ForeColor = SystemColors.ControlText;
+        }
+
+        private void fileToolStripMenuItem_MouseLeave(object sender, EventArgs e)
+        {
+            fileToolStripMenuItem.BackColor = SystemColors.Control;
+            fileToolStripMenuItem.ForeColor = SystemColors.ControlText;
         }
     }
 

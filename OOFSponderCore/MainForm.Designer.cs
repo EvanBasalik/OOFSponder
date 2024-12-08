@@ -206,6 +206,8 @@
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
             fileToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem.MouseEnter += fileToolStripMenuItem_MouseEnter;
+            fileToolStripMenuItem.MouseLeave += fileToolStripMenuItem_MouseLeave;
             // 
             // showLogsToolStripMenuItem
             // 
