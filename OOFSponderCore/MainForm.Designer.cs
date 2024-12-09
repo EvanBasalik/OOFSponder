@@ -809,7 +809,7 @@
             MaximumSize = new System.Drawing.Size(830, 725);
             MinimumSize = new System.Drawing.Size(822, 0);
             Name = "MainForm";
-            Text = "MainForm";
+            Text = "OOFSponder";
             FormClosing += MainForm_FormClosing;
             Load += MainForm_Load;
             ResizeEnd += MainForm_ResizeEnd;
