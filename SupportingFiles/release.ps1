@@ -130,8 +130,14 @@ try {
     Write-Output "Copying new files..."
     Write-Output "From: ../$outDir/Application Files and ../$outDir/$appName.application"
     Write-Output "To: $destination"
-    Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
+
+    Write-Output "Copying .application..."
+    Copy-Item -Path "../$outDir/$appName.application" `
         -Destination $destination -Recurse
+
+    Write-Output "Copying Application Files..."
+    Copy-Item -Path "../$outDir/Application Files" `
+        -Destination $destination/ApplicationFiles -Recurse
 
     # Stage and commit.
     Write-Output "Staging..."
