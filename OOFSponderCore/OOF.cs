@@ -313,6 +313,9 @@ namespace OOFScheduling
 
             LogProperties();
 
+            var configurationSection = config.GetSection("UserSettingsSource");
+            Logger.Info("userproperties.json source:" + configurationSection.Value);
+
             OOFSponder.Logger.Info("Successfully read settings");
         }
 
