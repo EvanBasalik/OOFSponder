@@ -147,6 +147,7 @@
             linkLabel1.TabStop = true;
             linkLabel1.Text = "https://github.com/evanbasalik/OOFSponder";
             linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
             // 
             // AboutBox
             // 

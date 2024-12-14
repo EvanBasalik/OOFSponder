@@ -3,6 +3,7 @@ using OOFScheduling.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -21,7 +22,8 @@ namespace OOFScheduling
             //and we can get the ring from other properties
             string _version = OOFData.version;
             ApplicationDeployment ad = ApplicationDeployment.CurrentDeployment;
-            if (ad != null) {
+            if (ad != null)
+            {
                 _version += " [" + ad.Ring.ToString() + "]";
             }
 
@@ -112,6 +114,16 @@ namespace OOFScheduling
         private void okButton_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabel1.LinkVisited = true;
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = linkLabel1.Text,
+                UseShellExecute = true
+            });
         }
     }
 }
