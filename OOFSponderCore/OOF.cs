@@ -269,7 +269,7 @@ namespace OOFScheduling
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 //later added files override previous ones
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()))
+                .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()),true)
                 .Build();
 
             var section = config.GetSection("OOFData");
