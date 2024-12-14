@@ -176,6 +176,32 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info("Persisting settings");
 
+            //new method using appsettings.json
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFExternalMessage", instance.PrimaryOOFExternalMessage);
+            OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
+
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFInternalMessage", instance.PrimaryOOFInternalMessage);
+            OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
+
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:SecondaryOOFExternalMessage", instance.SecondaryOOFExternalMessage);
+            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
+
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:SecondaryOOFInternalMessage", instance.SecondaryOOFInternalMessage);
+            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
+
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PermaOOFDate", instance.PermaOOFDate);
+            OOFSponder.Logger.Info("Persisted PermaOOFDate");
+
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:WorkingHours", instance.WorkingHours);
+            OOFSponder.Logger.Info("Persisted WorkingHours");
+
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:IsOnCallModeOn", instance.IsOnCallModeOn);
+            OOFSponder.Logger.Info("Persisted IsOnCallModeOn");
+
+            //log where the settings file is coming from
+            SettingsHelpers.AddOrUpdateAppSetting("UserSettingsSource", "OOFSponder_Legacy");
+            OOFSponder.Logger.Info("Persisted UserSettingsSource");
+
             Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
             OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
 
