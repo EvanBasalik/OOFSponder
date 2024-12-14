@@ -1,4 +1,5 @@
-﻿using OOFSponder;
+﻿using Microsoft.Graph;
+using OOFSponder;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,11 @@ namespace OOFScheduling
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\");
         }
 
+        internal static string BaseSettingsFile()
+        {
+            return Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+        }
+
         //user preferences settings file
         internal static string PerUserSettingsFile()
         {
@@ -23,7 +29,7 @@ namespace OOFScheduling
         }
 
         //https://stackoverflow.com/questions/60832072/how-to-write-data-to-appsettings-json-in-a-console-application-net-core
-        public static void AddOrUpdateAppSetting<T>(string sectionPathKey, T value, bool isUserSetting=true)
+        public static void AddOrUpdateAppSetting<T>(string sectionPathKey, T value, bool isUserSetting = true)
         {
             try
             {
@@ -37,31 +43,31 @@ namespace OOFScheduling
                 //make sure the file exists
                 //if not, copy appsettings.json over
                 //as usersettings.json
-                if (!Path.Exists(_targetFile))
+                if (!System.IO.File.Exists(_targetFile))
                 {
                     System.IO.File.Copy(BaseSettingsFile(), _targetFile);
                 }
 
-                string json = File.ReadAllText(filePath);
+                string json = System.IO.File.ReadAllText(_targetFile);
                 dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
 
                 SetValueRecursively(sectionPathKey, jsonObj, value);
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(filePath, output);
+                System.IO.File.WriteAllText(_targetFile, output);
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error writing app settings | {0}", ex.Message);
+                Logger.Error("Error persisting settings: " + ex.Message);
             }
         }
 
         private static void SetValueRecursively<T>(string sectionPathKey, dynamic jsonObj, T value)
         {
             // split the string at the first ':' character
-            char[] delimiterChars = { ':'};
-            var remainingSections = sectionPathKey.Split(delimiterChars);
+            char[] delimiter = {':'};
+            var remainingSections = sectionPathKey.Split(delimiter, 2);
 
             var currentSection = remainingSections[0];
             if (remainingSections.Length > 1)
