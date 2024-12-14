@@ -1,4 +1,5 @@
-﻿using OOFSponder;
+﻿using Microsoft.Graph;
+using OOFSponder;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,11 @@ namespace OOFScheduling
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\");
         }
 
+        internal static string BaseSettingsFile()
+        {
+            return Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+        }
+
         //user preferences settings file
         internal static string PerUserSettingsFile()
         {
@@ -27,39 +33,33 @@ namespace OOFScheduling
         {
             try
             {
-                //default to the app directory
-                string _folder = AppContext.BaseDirectory;
-                string _file = "appsettings.json";
-
                 //but if setting a user setting, then switch to AppData/LocalRoaming and per user settings file
+                string _targetFile = BaseSettingsFile();
                 if (isUserSetting)
                 {
-                    _folder = PerUserDataFolder();
-                    _file = PerUserSettingsFile();
+                    _targetFile = Path.Combine(PerUserDataFolder(),PerUserSettingsFile());
                 }
-
-
-                var filePath = Path.Combine(_folder, _file);
 
                 //make sure the file exists
-                //if not, create an empty JSON file
-                if (!Path.Exists(filePath))
+                //if not, copy appsettings.json over
+                //as usersettings.json
+                if (!Path.Exists(_targetFile))
                 {
-                    File.WriteAllText(filePath, "{}");
+                    System.IO.File.Copy(BaseSettingsFile(), _targetFile);
                 }
 
-                string json = File.ReadAllText(filePath);
+                string json = System.IO.File.ReadAllText(_targetFile);
                 dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
 
                 SetValueRecursively(sectionPathKey, jsonObj, value);
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
-                File.WriteAllText(filePath, output);
+                System.IO.File.WriteAllText(_targetFile, output);
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error writing app settings | {0}", ex.Message);
+                Logger.Error("Error persisting settings: " + ex.Message);
             }
         }
 
