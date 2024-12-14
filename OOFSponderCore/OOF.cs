@@ -350,6 +350,10 @@ namespace OOFScheduling
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:StartMinimized", instance.StartMinimized);
             OOFSponder.Logger.Info("Persisted StartMinimized");
 
+            //log where the settings file is coming from
+            SettingsHelpers.AddOrUpdateAppSetting("UserSettingsSource", "OOFSponder_Core");
+            OOFSponder.Logger.Info("Persisted UserSettingsSource");
+
             //old method using appsettings.config
             //Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
             //OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");

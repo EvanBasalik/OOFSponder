@@ -198,6 +198,10 @@ namespace OOFScheduling
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:IsOnCallModeOn", instance.IsOnCallModeOn);
             OOFSponder.Logger.Info("Persisted IsOnCallModeOn");
 
+            //log where the settings file is coming from
+            SettingsHelpers.AddOrUpdateAppSetting("UserSettingsSource", "OOFSponder_Legacy");
+            OOFSponder.Logger.Info("Persisted UserSettingsSource");
+
             Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
             OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
 
