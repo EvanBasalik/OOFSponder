@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 using OOFSponder;
 using System;
 using System.Collections.ObjectModel;
@@ -9,6 +10,7 @@ using System.Windows.Forms.Design;
 
 namespace OOFScheduling
 {
+
     public class OOFData
     {
         internal DateTime PermaOOFDate { get; set; }
@@ -269,8 +271,18 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info("Reading settings");
 
-            instance.PermaOOFDate = OOFScheduling.Properties.Settings.Default.PermaOOFDate;
-            instance.WorkingHours = OOFScheduling.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
+            //new approach using appsettings.json
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json").Build();
+
+            var section = config.GetSection("OOFData");
+            instance.PermaOOFDate = section.GetValue<DateTime>("PermaOOFDate");
+            instance.WorkingHours = section.GetValue<string>("WorkingHours") == baseValue ? string.Empty : section.GetValue<string>("WorkingHours");
+
+            //old approach using app.config
+            //instance.PermaOOFDate = OOFScheduling.Properties.Settings.Default.PermaOOFDate;
+           //instance.WorkingHours = OOFScheduling.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
 
             //while reading in the Primary External, also store that value in a secondary Stored field for the Save comparison
             instance.PrimaryOOFExternalMessage = instance.StoredPrimaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFExternal;
