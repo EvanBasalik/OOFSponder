@@ -1440,7 +1440,8 @@ namespace OOFScheduling
 
         private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
         {
-            //saveSettings();
+            //force a save if the StartMinimize is adjusted
+            saveSettings();
         }
 
         private void MainForm_Load(object sender, EventArgs e)

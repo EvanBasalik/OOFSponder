@@ -1,4 +1,5 @@
-﻿using OOFScheduling.Properties;
+﻿using ClickOnceHelper;
+using OOFScheduling.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,16 @@ namespace OOFScheduling
         public AboutBox()
         {
             InitializeComponent();
-            this.labelVersion.Text = String.Format("Version {0}", OOFData.version);
+
+            //if we are running a ClickOnce version, then the ApplicationDeployment won't be null
+            //and we can get the ring from other properties
+            string _version = OOFData.version;
+            ApplicationDeployment ad = ApplicationDeployment.CurrentDeployment;
+            if (ad != null) {
+                _version += " [" + ad.Ring.ToString() + "]";
+            }
+
+            this.labelVersion.Text = _version;
             this.richTextBox1.LoadFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "whatsnew.rtf"));
         }
 
