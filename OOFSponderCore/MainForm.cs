@@ -31,6 +31,7 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
+
             InitializeComponent();
 
             //because of problems with the scaling inheritance, have to set this in code
@@ -52,9 +53,9 @@ namespace OOFScheduling
                 wn.Show();
             }
 #endif
-            //removed sign out capability now that we are using MSAL
-            //this.signoutToolStripMenuItem.Visible = false;
 
+            //need to wire up the day checkboxes first so that it takes effect
+            //when we set the value
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
             foreach (var checkBox in listOfCheckBoxControls)
@@ -65,6 +66,53 @@ namespace OOFScheduling
 
                     checkBox.AccessibleName = checkBox.Name.Replace("OffWorkCB", "").FirstCharToUpper() + "Off Work";
                 }
+            }
+
+            //and now we can set the values
+            if (OOFData.Instance.WorkingHours != "")
+            {
+                string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
+                Logger.InfoPotentialPII("workingHours", OOFData.Instance.WorkingHours);
+
+                //Zero means you are off that day (not working) therefore the box is checked
+                string[] dayHours = workingHours[0].Split('~');
+                if (dayHours[2] == "0") { sundayOffWorkCB.Checked = true; } else { sundayOffWorkCB.Checked = false; }
+                sundayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
+                sundayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+
+                dayHours = workingHours[1].Split('~');
+                if (dayHours[2] == "0") { mondayOffWorkCB.Checked = true; } else { mondayOffWorkCB.Checked = false; }
+                mondayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
+                mondayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+
+                dayHours = workingHours[2].Split('~');
+                if (dayHours[2] == "0") { tuesdayOffWorkCB.Checked = true; } else { tuesdayOffWorkCB.Checked = false; }
+                tuesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
+                tuesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+
+                dayHours = workingHours[3].Split('~');
+                if (dayHours[2] == "0") { wednesdayOffWorkCB.Checked = true; } else { wednesdayOffWorkCB.Checked = false; }
+                wednesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
+                wednesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+
+                dayHours = workingHours[4].Split('~');
+                if (dayHours[2] == "0") { thursdayOffWorkCB.Checked = true; } else { thursdayOffWorkCB.Checked = false; }
+                thursdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
+                thursdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+
+                dayHours = workingHours[5].Split('~');
+                if (dayHours[2] == "0") { fridayOffWorkCB.Checked = true; } else { fridayOffWorkCB.Checked = false; }
+                fridayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
+                fridayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+
+                dayHours = workingHours[6].Split('~');
+                if (dayHours[2] == "0") { saturdayOffWorkCB.Checked = true; } else { saturdayOffWorkCB.Checked = false; }
+                saturdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
+                saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+            }
+            else
+            {
+                Logger.Warning("Don't have WorkingHours");
             }
 
             //pull all the runtime accessibility work into one place
@@ -166,52 +214,6 @@ namespace OOFScheduling
 
             //Need to update the UI as appropriate based on On-Call mode
             SetUIforOnCallMode();
-
-            if (OOFData.Instance.WorkingHours != "")
-            {
-                string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
-                Logger.InfoPotentialPII("workingHours", OOFData.Instance.WorkingHours);
-
-                //Zero means you are off that day (not working) therefore the box is checked
-                string[] dayHours = workingHours[0].Split('~');
-                if (dayHours[2] == "0") { sundayOffWorkCB.Checked = true; } else { sundayOffWorkCB.Checked = false; }
-                sundayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                sundayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-
-                dayHours = workingHours[1].Split('~');
-                if (dayHours[2] == "0") { mondayOffWorkCB.Checked = true; } else { mondayOffWorkCB.Checked = false; }
-                mondayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                mondayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-
-                dayHours = workingHours[2].Split('~');
-                if (dayHours[2] == "0") { tuesdayOffWorkCB.Checked = true; } else { tuesdayOffWorkCB.Checked = false; }
-                tuesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                tuesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-
-                dayHours = workingHours[3].Split('~');
-                if (dayHours[2] == "0") { wednesdayOffWorkCB.Checked = true; } else { wednesdayOffWorkCB.Checked = false; }
-                wednesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                wednesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-
-                dayHours = workingHours[4].Split('~');
-                if (dayHours[2] == "0") { thursdayOffWorkCB.Checked = true; } else { thursdayOffWorkCB.Checked = false; }
-                thursdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                thursdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-
-                dayHours = workingHours[5].Split('~');
-                if (dayHours[2] == "0") { fridayOffWorkCB.Checked = true; } else { fridayOffWorkCB.Checked = false; }
-                fridayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                fridayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-
-                dayHours = workingHours[6].Split('~');
-                if (dayHours[2] == "0") { saturdayOffWorkCB.Checked = true; } else { saturdayOffWorkCB.Checked = false; }
-                saturdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-            }
-            else
-            {
-                Logger.Warning("Don't have WorkingHours");
-            }
 
             //we need the OOF messages and working hours
             if (!OOFData.Instance.HaveNecessaryData)
