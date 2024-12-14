@@ -1,0 +1,12 @@
+{
+  "OOFData": {
+    "WorkingHours": "default",
+    "PermaOOFDate": "1900-01-01",
+    "PrimaryOOFExternalMessage": "default",
+    "PrimaryOOFInternalMessage": "default",
+    "SecondaryOOFExternalMessage": "default",
+    "SecondaryOOFInternalMessage": "default",
+    "IsOnCallModeOn": false,
+    "StartMinimized": false
+  }
+}
