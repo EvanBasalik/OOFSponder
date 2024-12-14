@@ -118,7 +118,7 @@ namespace OOFScheduling
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
                 if (value != StoredSecondaryOOFInternalMessage && value != "" && value != DummyHTML)
                 {
-                    Logger.Info("Secondary OOF Interal has changed - persisting to AppData and updating stored value");
+                    Logger.Info("Secondary OOF Internal has changed - persisting to AppData and updating stored value");
                     OOFData.Instance.StoredSecondaryOOFInternalMessage = value;
                     OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, value);
                 }
