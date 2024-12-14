@@ -419,7 +419,8 @@ namespace OOFScheduling
                 }
 
                 File.WriteAllText(_fileName, OOFMessageAsHTML);
-                Logger.Info("File created successfully: " + _fileName);
+                //
+                Logger.Info("File created successfully: " + _fileName.Replace(_folderName, ""));
 
                 _result = true;
             }
