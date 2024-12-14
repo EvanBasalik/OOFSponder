@@ -212,12 +212,7 @@ namespace OOFScheduling
 
 
             //we need the OOF messages and working hours
-            if (OOFData.Instance.PrimaryOOFExternalMessage != "" && OOFData.Instance.PrimaryOOFInternalMessage != ""
-                && OOFData.Instance.WorkingHours != "")
-            {
-                haveNecessaryData = true;
-            }
-            else
+            if (!OOFData.Instance.HaveNecessaryData)
             {
                 //we are missing data, so log the three we are checking
                 OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
@@ -225,7 +220,7 @@ namespace OOFScheduling
                 OOFSponder.Logger.InfoPotentialPII("WorkingHours", OOFData.Instance.WorkingHours);
             }
 
-            if (haveNecessaryData)
+            if (OOFData.Instance.HaveNecessaryData)
             {
                 toolStripStatusLabel1.Text = "Ready";
                 OOFSponder.Logger.Info("HaveNecessaryData");

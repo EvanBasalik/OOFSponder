@@ -195,6 +195,22 @@ namespace OOFScheduling
             }
         }
 
+        internal bool HaveNecessaryData
+        {
+            get
+            {
+                bool _result = false;
+
+                if (OOFData.Instance.PrimaryOOFExternalMessage != "" && OOFData.Instance.PrimaryOOFInternalMessage != ""
+    && OOFData.Instance.WorkingHours != "")
+                {
+                    _result = true;
+                }
+
+                return _result;
+            }
+        }
+
         internal OOFInstance currentOOFPeriod
         {
             get
@@ -326,6 +342,12 @@ namespace OOFScheduling
 
         public void WriteProperties(bool disposing = false)
         {
+            if (!this.HaveNecessaryData)
+            {
+                Logger.Warning("Missing necessary data, so not persisting settings!");
+                return;
+            }
+
             OOFSponder.Logger.Info("Persisting settings");
 
             //new method using appsettings.json
