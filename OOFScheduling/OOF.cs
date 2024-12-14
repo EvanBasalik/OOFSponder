@@ -176,7 +176,7 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info("Persisting settings");
 
-                        //new method using appsettings.json
+            //new method using appsettings.json
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFExternalMessage", instance.PrimaryOOFExternalMessage);
             OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
 
