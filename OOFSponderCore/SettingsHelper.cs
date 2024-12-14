@@ -29,7 +29,7 @@ namespace OOFScheduling
         }
 
         //https://stackoverflow.com/questions/60832072/how-to-write-data-to-appsettings-json-in-a-console-application-net-core
-        public static void AddOrUpdateAppSetting<T>(string sectionPathKey, T value, bool isUserSetting=true)
+        public static void AddOrUpdateAppSetting<T>(string sectionPathKey, T value, bool isUserSetting = true)
         {
             try
             {
@@ -66,7 +66,8 @@ namespace OOFScheduling
         private static void SetValueRecursively<T>(string sectionPathKey, dynamic jsonObj, T value)
         {
             // split the string at the first ':' character
-            var remainingSections = sectionPathKey.Split(":", 2);
+            char[] separators = { ':' };
+            var remainingSections = sectionPathKey.Split(separators);
 
             var currentSection = remainingSections[0];
             if (remainingSections.Length > 1)
