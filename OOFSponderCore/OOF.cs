@@ -267,9 +267,9 @@ namespace OOFScheduling
             //new approach using appsettings.json
             var config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                //I think this works such that the last added file overrides previous ones
-                //If that is true, then this becomes easy to override with user variant
+                //later added files override previous ones
                 .AddJsonFile("appsettings.json")
+                .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()))
                 .Build();
 
             var section = config.GetSection("OOFData");
@@ -277,16 +277,16 @@ namespace OOFScheduling
             instance.WorkingHours = section.GetValue<string>("WorkingHours") == baseValue ? string.Empty : section.GetValue<string>("WorkingHours");
 
             //while reading in the Primary External, also store that value in a secondary Stored field for the Save comparison
-            instance.PrimaryOOFExternalMessage = instance.StoredPrimaryOOFExternalMessage = section.GetValue<string>("PrimaryOOFExternalMessage") == baseValue ? string.Empty : section.GetValue<string>("PrimaryOOFExternal");
+            instance.PrimaryOOFExternalMessage = instance.StoredPrimaryOOFExternalMessage = section.GetValue<string>("PrimaryOOFExternalMessage") == baseValue ? string.Empty : section.GetValue<string>("PrimaryOOFExternalMessage");
 
             //while reading in the Primary Internal, also store that value in a secondary Stored field for the Save comparison
-            instance.PrimaryOOFInternalMessage = instance.StoredPrimaryOOFInternalMessage = section.GetValue<string>("PrimaryOOFInternalMessage") == baseValue ? string.Empty : section.GetValue<string>("PrimaryOOFInternal");
+            instance.PrimaryOOFInternalMessage = instance.StoredPrimaryOOFInternalMessage = section.GetValue<string>("PrimaryOOFInternalMessage") == baseValue ? string.Empty : section.GetValue<string>("PrimaryOOFInternalMessage");
 
             //while reading in the Secondary External, also store that value in a secondary Stored field for the Save comparison
-            instance.SecondaryOOFExternalMessage = instance.StoredSecondaryOOFExternalMessage = section.GetValue<string>("SecondaryOOFExternalMessage") == baseValue ? string.Empty : section.GetValue<string>("SecondaryOOFExternal");
+            instance.SecondaryOOFExternalMessage = instance.StoredSecondaryOOFExternalMessage = section.GetValue<string>("SecondaryOOFExternalMessage") == baseValue ? string.Empty : section.GetValue<string>("SecondaryOOFExternalMessage");
 
             //while reading in the Secondary Internal, also store that value in a secondary Stored field for the Save comparison
-            instance.SecondaryOOFInternalMessage = instance.StoredSecondaryOOFInternalMessage = section.GetValue<string>("SecondaryOOFInternalMessage") == baseValue ? string.Empty : section.GetValue<string>("SecondaryOOFInternal");
+            instance.SecondaryOOFInternalMessage = instance.StoredSecondaryOOFInternalMessage = section.GetValue<string>("SecondaryOOFInternalMessage") == baseValue ? string.Empty : section.GetValue<string>("SecondaryOOFInternalMessage");
 
             instance.IsOnCallModeOn = section.GetValue<bool>("IsOnCallModeOn") == baseBool ? false : section.GetValue<bool>("IsOnCallModeOn");
             instance.StartMinimized = section.GetValue<bool>("StartMinimized") == baseBool ? false : section.GetValue<bool>("StartMinimized");
@@ -375,7 +375,7 @@ namespace OOFScheduling
             //Properties.Settings.Default.startMinimized = instance.StartMinimized;
             //OOFSponder.Logger.Info("Persisted startMinimized = " + instance.StartMinimized.ToString());
 
-            Properties.Settings.Default.Save();
+            //Properties.Settings.Default.Save();
             OOFSponder.Logger.Info("Persisted settings");
 
             if (disposing)
