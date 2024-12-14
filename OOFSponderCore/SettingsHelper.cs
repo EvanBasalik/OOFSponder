@@ -66,8 +66,7 @@ namespace OOFScheduling
         private static void SetValueRecursively<T>(string sectionPathKey, dynamic jsonObj, T value)
         {
             // split the string at the first ':' character
-            char[] separators = { ':' };
-            var remainingSections = sectionPathKey.Split(separators);
+            var remainingSections = sectionPathKey.Split(":",2);
 
             var currentSection = remainingSections[0];
             if (remainingSections.Length > 1)
