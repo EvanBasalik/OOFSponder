@@ -1,33 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="OOFScheduling.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="workingHours" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
-    <Setting Name="IsPermaOOFOn" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="PermaOOFDate" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)">1900-01-01</Value>
-    </Setting>
-    <Setting Name="PrimaryOOFExternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
-    <Setting Name="PrimaryOOFInternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
-    <Setting Name="SecondaryOOFExternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
-    <Setting Name="SecondaryOOFInternal" Type="System.String" Scope="User">
-      <Value Profile="(Default)">default</Value>
-    </Setting>
-    <Setting Name="enableOnCallMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="startMinimized" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>
