@@ -1550,6 +1550,12 @@ namespace OOFScheduling
             }
 
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox a = new AboutBox();
+            a.Show();
+        }
     }
 
 
