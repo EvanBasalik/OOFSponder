@@ -63,17 +63,17 @@
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            tableLayoutPanel.Size = new System.Drawing.Size(487, 307);
+            tableLayoutPanel.Size = new System.Drawing.Size(616, 300);
             tableLayoutPanel.TabIndex = 0;
             // 
             // label1
             // 
             label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            label1.Location = new System.Drawing.Point(209, 60);
+            label1.Location = new System.Drawing.Point(262, 60);
             label1.Margin = new System.Windows.Forms.Padding(7, 0, 4, 0);
             label1.MaximumSize = new System.Drawing.Size(0, 20);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(274, 20);
+            label1.Size = new System.Drawing.Size(350, 20);
             label1.TabIndex = 25;
             label1.Text = "Evan Basalik and Cameron Battagler";
             label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -86,7 +86,7 @@
             logoPictureBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             logoPictureBox.Name = "logoPictureBox";
             tableLayoutPanel.SetRowSpan(logoPictureBox, 6);
-            logoPictureBox.Size = new System.Drawing.Size(194, 301);
+            logoPictureBox.Size = new System.Drawing.Size(247, 294);
             logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             logoPictureBox.TabIndex = 12;
             logoPictureBox.TabStop = false;
@@ -94,11 +94,11 @@
             // labelProductName
             // 
             labelProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelProductName.Location = new System.Drawing.Point(209, 0);
+            labelProductName.Location = new System.Drawing.Point(262, 0);
             labelProductName.Margin = new System.Windows.Forms.Padding(7, 0, 4, 0);
             labelProductName.MaximumSize = new System.Drawing.Size(0, 20);
             labelProductName.Name = "labelProductName";
-            labelProductName.Size = new System.Drawing.Size(274, 20);
+            labelProductName.Size = new System.Drawing.Size(350, 20);
             labelProductName.TabIndex = 19;
             labelProductName.Text = "OOFSponder";
             labelProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -106,11 +106,11 @@
             // labelVersion
             // 
             labelVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-            labelVersion.Location = new System.Drawing.Point(209, 30);
+            labelVersion.Location = new System.Drawing.Point(262, 30);
             labelVersion.Margin = new System.Windows.Forms.Padding(7, 0, 4, 0);
             labelVersion.MaximumSize = new System.Drawing.Size(0, 20);
             labelVersion.Name = "labelVersion";
-            labelVersion.Size = new System.Drawing.Size(274, 20);
+            labelVersion.Size = new System.Drawing.Size(350, 20);
             labelVersion.TabIndex = 0;
             labelVersion.Text = "Version";
             labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -119,10 +119,10 @@
             // 
             okButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
             okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            okButton.Location = new System.Drawing.Point(395, 277);
+            okButton.Location = new System.Drawing.Point(524, 273);
             okButton.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             okButton.Name = "okButton";
-            okButton.Size = new System.Drawing.Size(88, 27);
+            okButton.Size = new System.Drawing.Size(88, 24);
             okButton.TabIndex = 24;
             okButton.Text = "&OK";
             okButton.Click += okButton_Click;
@@ -130,9 +130,9 @@
             // richTextBox1
             // 
             richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            richTextBox1.Location = new System.Drawing.Point(205, 123);
+            richTextBox1.Location = new System.Drawing.Point(258, 123);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new System.Drawing.Size(279, 147);
+            richTextBox1.Size = new System.Drawing.Size(355, 144);
             richTextBox1.TabIndex = 26;
             richTextBox1.Text = "";
             // 
@@ -140,9 +140,9 @@
             // 
             linkLabel1.AutoSize = true;
             linkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            linkLabel1.Location = new System.Drawing.Point(205, 90);
+            linkLabel1.Location = new System.Drawing.Point(258, 90);
             linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new System.Drawing.Size(279, 30);
+            linkLabel1.Size = new System.Drawing.Size(355, 30);
             linkLabel1.TabIndex = 27;
             linkLabel1.TabStop = true;
             linkLabel1.Text = "https://github.com/evanbasalik/OOFSponder";
@@ -154,7 +154,7 @@
             AcceptButton = okButton;
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(507, 327);
+            ClientSize = new System.Drawing.Size(636, 320);
             Controls.Add(tableLayoutPanel);
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
