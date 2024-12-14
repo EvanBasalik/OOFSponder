@@ -59,7 +59,7 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error writing app settings | {0}", ex.Message);
+                Logger.Error("Error writing app settings: "+ ex.Message);
             }
         }
 
