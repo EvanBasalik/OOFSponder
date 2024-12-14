@@ -170,6 +170,7 @@ namespace OOFScheduling
             if (OOFData.Instance.WorkingHours != "")
             {
                 string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
+                Logger.InfoPotentialPII("workingHours", OOFData.Instance.WorkingHours);
 
                 //Zero means you are off that day (not working) therefore the box is checked
                 string[] dayHours = workingHours[0].Split('~');
@@ -207,9 +208,10 @@ namespace OOFScheduling
                 saturdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
             }
-
-            bool haveNecessaryData = false;
-
+            else
+            {
+                Logger.Warning("Don't have WorkingHours");
+            }
 
             //we need the OOF messages and working hours
             if (!OOFData.Instance.HaveNecessaryData)
@@ -253,8 +255,8 @@ namespace OOFScheduling
             //if we have all the inputs and "start minimized" is checked in the menu, then minimize
             //if we are missing some necessar input, then need to show the window regardless
             Logger.Info("StartMinimized:" + OOFData.Instance.StartMinimized.ToString());
-            Logger.Info("HaveNecessaryData:" + haveNecessaryData.ToString());
-            if (OOFData.Instance.StartMinimized && haveNecessaryData)
+            Logger.Info("HaveNecessaryData:" + OOFData.Instance.HaveNecessaryData.ToString());
+            if (OOFData.Instance.StartMinimized && OOFData.Instance.HaveNecessaryData)
             {
                 this.WindowState = FormWindowState.Minimized;
             }
