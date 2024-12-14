@@ -18,7 +18,7 @@ Compose both your External and Internal OOF message.
 _Hint #1: Create the message in Outlook and copy it in to the window, OOFSponder will keep all your formatting._ <br>
 _Hint #2: Hitting Save Settings will push your OOF message to Exchange Online immediately._
 
-Click the Save Settings button to store all your settings locally. OOFSponder will every 10 minutes and set your OOF message as appropriate.
+Click the Save Settings button to store all your settings locally. OOFSponder will wake up every 10 minutes and do the math to set your OOF message as appropriate.
 
 If you close the window OOFSponder will continue running in the background. You can double click the icon in your system tray to open it back up.
 
