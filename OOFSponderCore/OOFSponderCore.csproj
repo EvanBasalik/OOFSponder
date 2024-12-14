@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="app.manifest" />
+    <None Remove="Resources\OOFSponderLogo.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="WhatsNew.rtf">
@@ -116,7 +117,12 @@
     </Content>
     <Content Include="OOFSponderIcon.ico" />
     <Content Include="OOFSponderLogo.ico" />
-    <EmbeddedResource Include="Resources\OOFSponderIcon.ico" />
+    <EmbeddedResource Include="Resources\OOFSponderIcon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OOFSponderLogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights">

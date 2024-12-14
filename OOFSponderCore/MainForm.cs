@@ -1444,6 +1444,7 @@ namespace OOFScheduling
 
         private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
         {
+            //force a save if the StartMinimize is adjusted
             saveSettings();
         }
 
@@ -1553,6 +1554,12 @@ namespace OOFScheduling
                 fileToolStripMenuItem.ForeColor = SystemColors.ControlText;
             }
 
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox a = new AboutBox();
+            a.Show();
         }
     }
 

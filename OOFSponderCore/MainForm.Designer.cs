@@ -88,6 +88,7 @@
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
+            aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             radPrimary = new System.Windows.Forms.RadioButton();
             radSecondary = new System.Windows.Forms.RadioButton();
             statusStrip1.SuspendLayout();
@@ -204,8 +205,8 @@
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            fileToolStripMenuItem.Size = new System.Drawing.Size(37, 22);
-            fileToolStripMenuItem.Text = "File";
+            fileToolStripMenuItem.Size = new System.Drawing.Size(46, 22);
+            fileToolStripMenuItem.Text = "File...";
             fileToolStripMenuItem.MouseEnter += fileToolStripMenuItem_MouseEnter;
             fileToolStripMenuItem.MouseLeave += fileToolStripMenuItem_MouseLeave;
             // 
@@ -727,13 +728,20 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, aboutToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
             menuStrip1.Size = new System.Drawing.Size(814, 24);
             menuStrip1.TabIndex = 42;
             menuStrip1.Text = "menuStrip1";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(61, 22);
+            aboutToolStripMenuItem.Text = "About...";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // radPrimary
             // 
@@ -884,5 +892,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
