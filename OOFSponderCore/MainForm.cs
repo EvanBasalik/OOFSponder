@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using OOFSponder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -256,6 +257,8 @@ namespace OOFScheduling
 
             //if we have all the inputs and "start minimized" is checked in the menu, then minimize
             //if we are missing some necessar input, then need to show the window regardless
+            Logger.Info("StartMinimized:" + OOFData.Instance.StartMinimized.ToString());
+            Logger.Info("HaveNecessaryData:" + haveNecessaryData.ToString());
             if (OOFData.Instance.StartMinimized && haveNecessaryData)
             {
                 this.WindowState = FormWindowState.Minimized;
@@ -264,6 +267,7 @@ namespace OOFScheduling
             {
                 this.WindowState = FormWindowState.Normal;
             }
+            Logger.Info("Starting WindowState:" + this.WindowState.ToString());
         }
 
         private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
