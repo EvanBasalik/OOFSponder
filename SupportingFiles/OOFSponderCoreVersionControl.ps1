@@ -52,7 +52,7 @@ foreach ($file in $AssemblyFiles) {
         $convPath = Convert-Path -Path $file.PSPath
         [xml]$doc = Get-Content -Path $file.PSPath
         [bool]$modified = $false
-        $currentDepVersion = ([string]$doc.Project.PropertyGroup.Version).Trim()
+        $currentDepVersion = ([string]$doc.Project.PropertyGroup[0].Version).Trim()
         Write-Output "Current version: $($currentDepVersion)"
 
         ##make sure the existing version is less than the new version
