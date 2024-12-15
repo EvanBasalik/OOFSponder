@@ -816,7 +816,7 @@
             Controls.Add(radPrimary);
             Controls.Add(radSecondary);
             Controls.Add(htmlEditorControl1);
-            MaximumSize = new System.Drawing.Size(830, 725);
+            MaximumSize = new System.Drawing.Size(1300, 725);
             MinimumSize = new System.Drawing.Size(822, 0);
             Name = "MainForm";
             Text = "OOFSponder";
