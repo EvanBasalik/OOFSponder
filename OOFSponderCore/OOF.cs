@@ -350,6 +350,15 @@ namespace OOFScheduling
 
             OOFSponder.Logger.Info("Persisting settings");
 
+            //special logging and message box for the intermittent nulling of the message
+            if (instance.PrimaryOOFExternalMessage == "<BODY scroll=auto></BODY>")
+            {
+#if DEBUG
+                MessageBox.Show("OOF message has been nulled!!!");
+#endif
+                Logger.Error("OOF messaged has been nulled!!!");
+            }
+
             //new method using appsettings.json
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFExternalMessage", instance.PrimaryOOFExternalMessage);
             OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
