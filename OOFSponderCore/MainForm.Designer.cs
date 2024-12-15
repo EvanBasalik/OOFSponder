@@ -91,6 +91,8 @@
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             radPrimary = new System.Windows.Forms.RadioButton();
             radSecondary = new System.Windows.Forms.RadioButton();
+            htmlEditorControl1.SuspendLayout();
+            htmlEditorControl2.SuspendLayout();
             statusStrip1.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -826,6 +828,10 @@
             statusStrip1.PerformLayout();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            htmlEditorControl1.ResumeLayout(false);
+            htmlEditorControl1.PerformLayout();
+            htmlEditorControl2.ResumeLayout(false);
+            htmlEditorControl2.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
