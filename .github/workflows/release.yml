@@ -38,7 +38,7 @@ jobs:
       #  uses: berglie/assembly-version/set-buildnumber@v1
       #  with: buildnumber: ${{ format('{0}.{1}.{2}', steps.version.outputs.major_without_prefix, steps.version.outputs.minor, steps.version.outputs.patch) }}	
 
-      - name: Run release script
+      - name: Update assembly version
         shell: pwsh
         run: ./SupportingFiles/OOFSponderCoreVersionControl.ps1 -Version ${{ steps.version.outputs.full }}
 
