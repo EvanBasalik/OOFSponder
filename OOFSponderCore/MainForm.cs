@@ -31,11 +31,10 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
-
             InitializeComponent();
 
-            //because of problems with the scaling inheritance, have to set this in code
-            this.Size = new System.Drawing.Size(1500, 1400);
+            //TODO - Need to figure out why we have to do this, but for now this works
+            //FixHtmlEditorControlSizingIssue();
 
             // TODO figure out why the cross-thread access to dtPermaOOF is still happening
             //temporary fix since I cannot find where it is happening
@@ -267,6 +266,8 @@ namespace OOFScheduling
                 this.WindowState = FormWindowState.Normal;
             }
             Logger.Info("Starting WindowState:" + this.WindowState.ToString());
+
+            this.Show();
         }
 
         private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
@@ -965,6 +966,40 @@ namespace OOFScheduling
         private void button2_Click(object sender, EventArgs e)
         {
             saveSettings();
+        }
+
+        /// <summary>
+        /// Triggers a Show, then a Hide to address the weird HTLMEditor painting issue
+        /// </summary>
+        private void FixHtmlEditorControlSizingIssue()
+        {
+            //foreach (Control ctl in this.Controls)
+            //{
+            //    if (ctl.Name.Contains("html"))
+            //    {
+            //        foreach (Control ctl2 in ctl.Controls)
+            //        {
+            //            foreach (Control ctl3 in ctl2.Controls)
+            //            {
+            //                if (ctl3.Name.Contains("editor"))
+            //                {
+            //                    Debug.WriteLine("found editor control");
+            //                    ctl3.Refresh();
+            //                    ctl3.PerformLayout();
+            //                }
+            //            }
+            //        }
+            //    } 
+            //}
+            //this.Size = new Size(this.Size.Width +1,this.Size.Height+ 1);
+            //this.Refresh();
+            //this.PerformLayout();
+            //this.Refresh();
+            //this.Show();
+            //because of problems with the scaling inheritance, have to set this in code
+            //this.Size = new System.Drawing.Size(1500, 1400);
+            this.Hide();
+            this.Show();
         }
 
 
