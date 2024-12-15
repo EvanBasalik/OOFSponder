@@ -42,9 +42,12 @@ if (($Version.Split("v").Count -eq 2) -and ($Version.Split(".").Count -eq 3) -eq
 #drop the leading "v"
 $Version = $Version.Split("v")[1]
 
+#add in the trailing ".0"
+$Version = "$Version.0"
+
 ##We only want to update OOFSponder's project - dependencies get modified independently
 ##Leave the logic in to grab everything in case the logic changes in the future
-Write-Host -NoNewline "Updating OOFSponderCore.csproj..."
+Write-Host "Updating OOFSponderCore.csproj..."
 $AssemblyFiles = Get-ChildItem -Path $OOFSponderLocalPath *.csproj -rec
 foreach ($file in $AssemblyFiles) {
     if ($file.Name -contains "OOFSponderCore.csproj")
@@ -58,7 +61,7 @@ foreach ($file in $AssemblyFiles) {
         ##make sure the existing version is less than the new version
         ##if not, bail
         if (([version]$currentDepVersion) -lt [version]$Version) {
-            $doc.Project.PropertyGroup[0].Version = $Version.ToString() + ".0"
+            $doc.Project.PropertyGroup[0].Version = $Version.ToString()
             $modified = $true
         }
         else 
