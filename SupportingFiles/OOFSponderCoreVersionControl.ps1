@@ -43,7 +43,7 @@ if (($Version.Split("v").Count -eq 2) -and ($Version.Split(".").Count -eq 3) -eq
 $Version = $Version.Split("v")[1]
 
 #add in the trailing ".0"
-$Version = "$Version.0"
+#$Version = "$Version.0"
 
 ##We only want to update OOFSponder's project - dependencies get modified independently
 ##Leave the logic in to grab everything in case the logic changes in the future
@@ -60,6 +60,7 @@ foreach ($file in $AssemblyFiles) {
 
         ##make sure the existing version is less than the new version
         ##if not, bail
+        Write-Output "Attempting to set the new version to $($Version)"
         if (([version]$currentDepVersion) -lt [version]$Version) {
             $doc.Project.PropertyGroup[0].Version = $Version.ToString()
             $modified = $true
