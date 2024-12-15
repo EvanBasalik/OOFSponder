@@ -44,4 +44,6 @@ jobs:
 
       - name: Run release script
         shell: pwsh
-        run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease }} -BuildOnly
+        run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease }}
+        #Build only variant - doesn't copy to GitHub Pages
+        #run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease }} -BuildOnly
