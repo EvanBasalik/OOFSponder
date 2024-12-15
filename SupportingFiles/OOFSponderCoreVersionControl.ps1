@@ -27,6 +27,13 @@ $ErrorActionPreference = "Stop"
 $supportingFiles=$pwd.ToString().replace("\SupportingFiles","")
 $OOFSponderLocalPath = "$($supportingFiles)\OOFSponderCore\"
 
+#if "-ring" is on the end of version number, then drop it
+if ($Version.Contains("-")) {
+    Write-Output "Version number contained ""-xxxx"" - removed"
+    $Version = $Version.Split("-")[0]
+}
+
+
 if (($Version.Split("v").Count -eq 2) -and ($Version.Split(".").Count -eq 3) -eq $false) {
     Write-Error "Version must be in the form of v1.2.3"
     Exit

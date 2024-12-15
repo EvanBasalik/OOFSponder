@@ -42,6 +42,6 @@ jobs:
         shell: pwsh
         run: ./SupportingFiles/OOFSponderCoreVersionControl.ps1 -Version ${{ steps.version.outputs.prerelease}}
 
-      - name: Run release script
-        shell: pwsh
-        run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease}}
+      #- name: Run release script
+      #  shell: pwsh
+      #  run: ./SupportingFiles/release.ps1 -Ring ${{ steps.version.outputs.prerelease}}
