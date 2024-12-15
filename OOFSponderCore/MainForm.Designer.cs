@@ -268,7 +268,7 @@
             statusStrip1.Location = new System.Drawing.Point(0, 662);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
-            statusStrip1.Size = new System.Drawing.Size(814, 24);
+            statusStrip1.Size = new System.Drawing.Size(794, 24);
             statusStrip1.TabIndex = 45;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -360,7 +360,7 @@
             htmlEditorControl2.Location = new System.Drawing.Point(9, 396);
             htmlEditorControl2.Margin = new System.Windows.Forms.Padding(4);
             htmlEditorControl2.Name = "htmlEditorControl2";
-            htmlEditorControl2.Size = new System.Drawing.Size(795, 200);
+            htmlEditorControl2.Size = new System.Drawing.Size(776, 200);
             htmlEditorControl2.TabIndex = 32;
             // 
             // button2
@@ -381,7 +381,7 @@
             htmlEditorControl1.Location = new System.Drawing.Point(9, 169);
             htmlEditorControl1.Margin = new System.Windows.Forms.Padding(4);
             htmlEditorControl1.Name = "htmlEditorControl1";
-            htmlEditorControl1.Size = new System.Drawing.Size(794, 200);
+            htmlEditorControl1.Size = new System.Drawing.Size(776, 200);
             htmlEditorControl1.TabIndex = 31;
             // 
             // saturdayOffWorkCB
@@ -734,7 +734,7 @@
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            menuStrip1.Size = new System.Drawing.Size(814, 24);
+            menuStrip1.Size = new System.Drawing.Size(794, 24);
             menuStrip1.TabIndex = 42;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -775,7 +775,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new System.Drawing.Size(814, 686);
+            ClientSize = new System.Drawing.Size(794, 686);
             Controls.Add(lblInternalMessage);
             Controls.Add(statusStrip1);
             Controls.Add(label13);
@@ -817,7 +817,6 @@
             Controls.Add(radSecondary);
             Controls.Add(htmlEditorControl1);
             MaximumSize = new System.Drawing.Size(1300, 725);
-            MinimumSize = new System.Drawing.Size(830, 0);
             Name = "MainForm";
             Text = "OOFSponder";
             FormClosing += MainForm_FormClosing;
