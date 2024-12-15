@@ -31,10 +31,8 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
+            //TODO - need to dynamically inject the HTMLEditor controls, but that's a problem for another day
             InitializeComponent();
-
-            //TODO - Need to figure out why we have to do this, but for now this works
-            //FixHtmlEditorControlSizingIssue();
 
             // TODO figure out why the cross-thread access to dtPermaOOF is still happening
             //temporary fix since I cannot find where it is happening
