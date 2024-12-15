@@ -106,7 +106,7 @@
             lblInternalMessage.Name = "lblInternalMessage";
             lblInternalMessage.Size = new System.Drawing.Size(104, 13);
             lblInternalMessage.TabIndex = 41;
-            lblInternalMessage.Text = "Internal Message";
+            lblInternalMessage.Text = "&Internal Message";
             // 
             // toolStripMenuItem1
             // 
@@ -116,7 +116,7 @@
             toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { primaryToolStripMenuItem, secondaryToolStripMenuItem });
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             toolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
-            toolStripMenuItem1.Text = "Message";
+            toolStripMenuItem1.Text = "&Message";
             // 
             // primaryToolStripMenuItem
             // 
@@ -127,7 +127,7 @@
             primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
             primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            primaryToolStripMenuItem.Text = "Primary";
+            primaryToolStripMenuItem.Text = "&Primary";
             primaryToolStripMenuItem.Click += primaryToolStripMenuItem_Click;
             // 
             // secondaryToolStripMenuItem
@@ -137,7 +137,7 @@
             secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
             secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
-            secondaryToolStripMenuItem.Text = "Secondary";
+            secondaryToolStripMenuItem.Text = "&Secondary";
             secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
             // tsmiSavedOOFMessage
@@ -148,7 +148,7 @@
             tsmiSavedOOFMessage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiExternal, tsmiInternal, tsmiShowOOFMessageFolder });
             tsmiSavedOOFMessage.Name = "tsmiSavedOOFMessage";
             tsmiSavedOOFMessage.Size = new System.Drawing.Size(232, 22);
-            tsmiSavedOOFMessage.Text = "Open saved OOF message...";
+            tsmiSavedOOFMessage.Text = "&Open saved OOF message...";
             // 
             // tsmiExternal
             // 
@@ -186,7 +186,7 @@
             tsmiStartMinimized.CheckOnClick = true;
             tsmiStartMinimized.Name = "tsmiStartMinimized";
             tsmiStartMinimized.Size = new System.Drawing.Size(232, 22);
-            tsmiStartMinimized.Text = "Start minimized";
+            tsmiStartMinimized.Text = "&Start minimized";
             tsmiStartMinimized.CheckStateChanged += tsmiStartMinimized_CheckStateChanged;
             // 
             // enableOnCallModeToolStripMenuItem
@@ -208,7 +208,7 @@
             fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(46, 22);
-            fileToolStripMenuItem.Text = "File...";
+            fileToolStripMenuItem.Text = "&File...";
             fileToolStripMenuItem.MouseEnter += fileToolStripMenuItem_MouseEnter;
             fileToolStripMenuItem.MouseLeave += fileToolStripMenuItem_MouseLeave;
             // 
@@ -220,7 +220,7 @@
             showLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { oOFSponderLogToolStripMenuItem, oOFSponderLogFolderToolStripMenuItem });
             showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
             showLogsToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            showLogsToolStripMenuItem.Text = "Show logs...";
+            showLogsToolStripMenuItem.Text = "Show &logs...";
             // 
             // oOFSponderLogToolStripMenuItem
             // 
@@ -230,7 +230,7 @@
             oOFSponderLogToolStripMenuItem.Name = "oOFSponderLogToolStripMenuItem";
             oOFSponderLogToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             oOFSponderLogToolStripMenuItem.Tag = "File";
-            oOFSponderLogToolStripMenuItem.Text = "OOFSponder log";
+            oOFSponderLogToolStripMenuItem.Text = "OOFSponder &log";
             oOFSponderLogToolStripMenuItem.Click += ShowLogs;
             // 
             // oOFSponderLogFolderToolStripMenuItem
@@ -248,7 +248,7 @@
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // bETAEnableNewOOFToolStripMenuItem
@@ -370,7 +370,7 @@
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(133, 26);
             button2.TabIndex = 38;
-            button2.Text = "Save Settings";
+            button2.Text = "S&ave Settings";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
@@ -741,8 +741,8 @@
             // aboutToolStripMenuItem
             // 
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new System.Drawing.Size(61, 22);
-            aboutToolStripMenuItem.Text = "About...";
+            aboutToolStripMenuItem.Size = new System.Drawing.Size(53, 22);
+            aboutToolStripMenuItem.Text = "&Help...";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
             // radPrimary
