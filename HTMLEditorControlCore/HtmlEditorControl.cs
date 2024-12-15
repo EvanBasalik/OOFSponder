@@ -61,7 +61,7 @@ namespace MSDN.Html.Editor
     [DefaultProperty("InnerText")]
     [ToolboxBitmap(typeof(HtmlEditorControl), "Resources.HtmlEditor.bmp")]
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    public sealed partial class HtmlEditorControl : UserControl
+    public sealed partial class HtmlEditorControl : UserControl, ISupportInitialize
     {
         #region Public Events
 
@@ -396,9 +396,26 @@ namespace MSDN.Html.Editor
         } //DefineBodyAttributes
 
         #endregion
-        
+
         #region Control Methods and Events
-    
+
+        // ISupportInitialize members
+
+        //by adding ISupportInitialize interface, and BeginInit/EndInit method, the Winforms designer
+        //injects BeginInit and EndInit automatically
+        //because of some weird scaling issues, need to SuspendLayout during InitializeComponent
+        public void BeginInit()
+        {
+            this.SuspendLayout();
+        }
+
+        //and now result the layout
+        public void EndInit()
+        {
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
         /// <summary>
         /// Method to perform the process of showing the context menus
         /// </summary>
