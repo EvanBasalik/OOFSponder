@@ -27,6 +27,8 @@ $ErrorActionPreference = "Stop"
 $supportingFiles=$pwd.ToString().replace("\SupportingFiles","")
 $OOFSponderLocalPath = "$($supportingFiles)\OOFSponderCore\"
 
+Write-Output "Target version: $($Version)"
+
 #if "-ring" is on the end of version number, then drop it
 if ($Version.Contains("-")) {
     Write-Output "Version number contained ""-xxxx"" - removed"
@@ -43,7 +45,7 @@ if (($Version.Split("v").Count -eq 2) -and ($Version.Split(".").Count -eq 3) -eq
 $Version = $Version.Split("v")[1]
 
 #add in the trailing ".0"
-#$Version = "$Version.0"
+$Version = "$Version.0"
 
 ##We only want to update OOFSponder's project - dependencies get modified independently
 ##Leave the logic in to grab everything in case the logic changes in the future
