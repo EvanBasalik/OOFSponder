@@ -58,7 +58,7 @@ foreach ($file in $AssemblyFiles) {
         ##make sure the existing version is less than the new version
         ##if not, bail
         if (([version]$currentDepVersion) -lt [version]$Version) {
-            $doc.Project.PropertyGroup[0].Version = $Version.ToString()
+            $doc.Project.PropertyGroup[0].Version = $Version.ToString() + ".0"
             $modified = $true
         }
         else 
