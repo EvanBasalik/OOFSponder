@@ -178,25 +178,25 @@ namespace OOFScheduling
 
             //new method using appsettings.json
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFExternalMessage", instance.PrimaryOOFExternalMessage);
-            OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
+            OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage in appsettings.json");
 
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFInternalMessage", instance.PrimaryOOFInternalMessage);
-            OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
+            OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage in appsettings.json");
 
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:SecondaryOOFExternalMessage", instance.SecondaryOOFExternalMessage);
-            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
+            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage in appsettings.json");
 
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:SecondaryOOFInternalMessage", instance.SecondaryOOFInternalMessage);
-            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
+            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage in appsettings.json");
 
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:PermaOOFDate", instance.PermaOOFDate);
-            OOFSponder.Logger.Info("Persisted PermaOOFDate");
+            OOFSponder.Logger.Info("Persisted PermaOOFDate in appsettings.json");
 
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:WorkingHours", instance.WorkingHours);
-            OOFSponder.Logger.Info("Persisted WorkingHours");
+            OOFSponder.Logger.Info("Persisted WorkingHours in appsettings.json");
 
             SettingsHelpers.AddOrUpdateAppSetting("OOFData:IsOnCallModeOn", instance.IsOnCallModeOn);
-            OOFSponder.Logger.Info("Persisted IsOnCallModeOn");
+            OOFSponder.Logger.Info("Persisted IsOnCallModeOn in appsettings.json");
 
             //log where the settings file is coming from
             SettingsHelpers.AddOrUpdateAppSetting("UserSettingsSource", "OOFSponder_Legacy");

@@ -10,38 +10,51 @@ namespace OOFSponder
         {
             StackFrame fr = new StackFrame(1, true);
             StackTrace st = new StackTrace(fr);
-            WriteEntry(message, "error", fr.GetMethod().Name + ":" + st.ToString());
+
+            WriteEntry(ScrubMessage(message), "error", fr.GetMethod().Name + ":" + st.ToString());
         }
 
         public static void Error(Exception ex)
         {
             StackFrame fr = new StackFrame(1, true);
             StackTrace st = new StackTrace(fr);
-            WriteEntry(ex.Message + " due to " + ex.InnerException.Message, "error", fr.GetMethod().Name + ":" + st.ToString());
+
+            WriteEntry(ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "error", fr.GetMethod().Name + ":" + st.ToString());
         }
 
         public static void Error(string message, Exception ex)
         {
             StackFrame fr = new StackFrame(1, true);
             StackTrace st = new StackTrace(fr);
-            WriteEntry(message + ": " + ex.Message + " due to " + ex.InnerException.Message, "error", fr.GetMethod().Name + ":" + st.ToString());
+            WriteEntry(message + ": " + ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "error", fr.GetMethod().Name + ":" + st.ToString());
+        }
+
+        /// <summary>
+        /// Removes any reference to data the should't be visible in logs such as
+        /// the user name in AppData folder tree and ???
+        /// </summary>
+        /// <param name="UnscrubbedMessage"></param>
+        public static string ScrubMessage(string UnscrubbedMessage)
+        {
+            //edge case where we need to scrub reference to the user name coming from the AppData reference
+            return UnscrubbedMessage.Replace(Environment.SpecialFolder.ApplicationData.ToString(), "");
         }
 
         public static void Warning(string message)
         {
-            WriteEntry(message, "warning", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+            WriteEntry(ScrubMessage(message), "warning", new System.Diagnostics.StackFrame(1).GetMethod().Name);
         }
 
         public static void Warning(Exception ex)
         {
             StackFrame fr = new StackFrame(1, true);
             StackTrace st = new StackTrace(fr);
-            WriteEntry(ex.Message + " due to " + ex.InnerException.Message, "warning", fr.GetMethod().Name + ":" + st.ToString());
+            WriteEntry(ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "warning", fr.GetMethod().Name + ":" + st.ToString());
         }
 
         public static void Info(string message)
         {
-            WriteEntry(message, "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+            WriteEntry(ScrubMessage(message), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
         }
 
         public static void InfoPotentialPII(string property, string value)
@@ -64,14 +77,14 @@ namespace OOFSponder
                                   DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                                   type,
                                   module,
-                                  message));
+                                  ScrubMessage(message)));
 
             //also send everything to AppInsights
             OOFSponderInsights.Track(
                     string.Format("{0},{1},{2}",
                                   type,
                                   module,
-                                  message)
+                                  ScrubMessage(message))
                 );
         }
     }
