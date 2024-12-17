@@ -14,7 +14,24 @@ namespace OOFScheduling
         //user preferences and OOF messages folder
         internal static string PerUserDataFolder()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\");
+            string _AppDataRoamingFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder");
+
+            //check to make sure it exists. If not, create AppData\Roaming\OOFSponder
+            try
+            {
+                if (!System.IO.Directory.Exists(_AppDataRoamingFolder))
+                {
+                    System.IO.Directory.CreateDirectory(_AppDataRoamingFolder);
+                }
+            }
+            catch (Exception ex)
+            {
+                string _errorMessage = "Unable to create " + _AppDataRoamingFolder;
+                Logger.Error(_errorMessage, ex);
+                throw new Exception(_errorMessage, ex);
+            }
+
+            return _AppDataRoamingFolder;
         }
 
         internal static string BaseSettingsFile()
