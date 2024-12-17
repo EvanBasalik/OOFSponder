@@ -10,6 +10,10 @@ namespace OOFSponder
         {
             StackFrame fr = new StackFrame(1, true);
             StackTrace st = new StackTrace(fr);
+
+            //edge case where we need to scrub reference to the user name coming from the AppData reference
+            message = message.Replace(Environment.SpecialFolder.ApplicationData.ToString(), "");
+
             WriteEntry(message, "error", fr.GetMethod().Name + ":" + st.ToString());
         }
 
