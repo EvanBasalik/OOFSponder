@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using MSDN.Html.Editor;
 using Newtonsoft.Json;
+using OOFSponder;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -504,6 +505,7 @@ namespace OOFScheduling
                     OOFSponder.Logger.Info("Local OOF doesn't match remote OOF");
 
 #if NOOOF
+                    Logger.Warning("Running NOOOF mode - not actually setting OOF");
                     return true;
 #endif
                     System.Net.Http.HttpResponseMessage result = await O365.PatchHttpContentWithToken(O365.MailboxSettingsURL, localOOF);
