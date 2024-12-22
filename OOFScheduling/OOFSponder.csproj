@@ -109,7 +109,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logger.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="O365.cs" />
     <Compile Include="OOF.cs" />
