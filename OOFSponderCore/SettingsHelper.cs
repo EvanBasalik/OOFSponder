@@ -14,6 +14,8 @@ namespace OOFScheduling
         //user preferences and OOF messages folder
         internal static string PerUserDataFolder()
         {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             string _AppDataRoamingFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder");
 
             //check to make sure it exists. If not, create AppData\Roaming\OOFSponder
@@ -53,6 +55,8 @@ namespace OOFScheduling
         //https://stackoverflow.com/questions/60832072/how-to-write-data-to-appsettings-json-in-a-console-application-net-core
         public static void AddOrUpdateAppSetting<T>(string sectionPathKey, T value, bool isUserSetting = true)
         {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             try
             {
                 //but if setting a user setting, then switch to AppData/LocalRoaming and per user settings file
@@ -92,6 +96,9 @@ namespace OOFScheduling
 
         private static void SetValueRecursively<T>(string sectionPathKey, dynamic jsonObj, T value)
         {
+
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             // split the string at the first ':' character
 #if NET8_0_OR_GREATER
             var remainingSections = sectionPathKey.Split(":", 2);

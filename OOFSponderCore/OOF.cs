@@ -342,6 +342,8 @@ namespace OOFScheduling
 
         public void WriteProperties(bool disposing = false)
         {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             if (!this.HaveNecessaryData)
             {
                 Logger.Warning("Missing necessary data, so not persisting settings!");
@@ -356,7 +358,7 @@ namespace OOFScheduling
 #if DEBUG
                 MessageBox.Show("OOF message has been nulled!!!");
 #endif
-                Logger.Error("OOF messaged has been nulled!!!");
+                Logger.Error("OOF message has been nulled!!!");
             }
 
             //new method using appsettings.json
