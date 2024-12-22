@@ -19,7 +19,12 @@ namespace OOFScheduling
             //check to make sure it exists. If not, create AppData\Roaming\OOFSponder
             try
             {
+#if NET8_0_OR_GREATER
                 if (!Path.Exists(_AppDataRoamingFolder))
+#endif
+#if NETFRAMEWORK
+                if (!System.IO.Directory.Exists(_AppDataRoamingFolder))
+#endif
                 {
                     System.IO.Directory.CreateDirectory(_AppDataRoamingFolder);
                 }
@@ -54,13 +59,18 @@ namespace OOFScheduling
                 string _targetFile = BaseSettingsFile();
                 if (isUserSetting)
                 {
-                    _targetFile = Path.Combine(PerUserDataFolder(),PerUserSettingsFile());
+                    _targetFile = Path.Combine(PerUserDataFolder(), PerUserSettingsFile());
                 }
 
                 //make sure the file exists
                 //if not, copy appsettings.json over
                 //as usersettings.json
+#if NET8_0_OR_GREATER
                 if (!Path.Exists(_targetFile))
+#endif
+#if NETFRAMEWORK
+                if (!System.IO.File.Exists(_targetFile))
+#endif
                 {
                     System.IO.File.Copy(BaseSettingsFile(), _targetFile);
                 }
@@ -83,7 +93,14 @@ namespace OOFScheduling
         private static void SetValueRecursively<T>(string sectionPathKey, dynamic jsonObj, T value)
         {
             // split the string at the first ':' character
-            var remainingSections = sectionPathKey.Split(":",2);
+#if NET8_0_OR_GREATER
+            var remainingSections = sectionPathKey.Split(":", 2);
+
+#endif
+#if NETFRAMEWORK
+            char[] delimiter = {':'};
+            var remainingSections = sectionPathKey.Split(delimiter, 2);
+#endif
 
             var currentSection = remainingSections[0];
             if (remainingSections.Length > 1)
