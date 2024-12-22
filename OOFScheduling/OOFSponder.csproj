@@ -99,6 +99,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\OOFSponderCore\Logger.cs">
+      <Link>Logger.cs</Link>
+    </Compile>
     <Compile Include="..\OOFSponderCore\SettingsHelper.cs">
       <Link>SettingsHelper.cs</Link>
     </Compile>
