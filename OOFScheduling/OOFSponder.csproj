@@ -73,7 +73,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release without Sending OOF|AnyCPU'">
     <OutputPath>bin\Release without Sending OOF\</OutputPath>
-    <DefineConstants>TRACE;CredMan;NOOOF;FASTOOF;NETFRAMEWORK</DefineConstants>
+    <DefineConstants>TRACE;NOOOF;FASTOOF;NETFRAMEWORK</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
