@@ -113,7 +113,6 @@
     <Compile Include="OOFSponderInsights.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsHelper.cs" />
     <Compile Include="WhatsNew.cs">
       <SubType>Form</SubType>
     </Compile>
