@@ -86,7 +86,7 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
-                Logger.Error("Error persisting settings: " + ex.Message);
+                Logger.Error("Error persisting setting for " + sectionPathKey + ":" + ex.Message);
             }
         }
 
