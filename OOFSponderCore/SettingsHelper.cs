@@ -81,11 +81,16 @@ namespace OOFScheduling
 
                 string json = System.IO.File.ReadAllText(_targetFile);
                 dynamic jsonObj = Newtonsoft.Json.JsonConvert.DeserializeObject(json);
+                Logger.Info("Successfully deserialized json");
 
                 SetValueRecursively(sectionPathKey, jsonObj, value);
+                Logger.Info("Successfully SetValueRecursively");
 
                 string output = Newtonsoft.Json.JsonConvert.SerializeObject(jsonObj, Newtonsoft.Json.Formatting.Indented);
+                Logger.Info("Successfully serialized json");
+
                 System.IO.File.WriteAllText(_targetFile, output);
+                Logger.Info("Successfully updated settings file");
 
             }
             catch (Exception ex)
@@ -107,6 +112,7 @@ namespace OOFScheduling
             char[] delimiter = {':'};
             var remainingSections = sectionPathKey.Split(delimiter, 2);
 #endif
+            Logger.Info("remainingSections.Length: " + remainingSections.Length.ToString());
 
             var currentSection = remainingSections[0];
             if (remainingSections.Length > 1)
