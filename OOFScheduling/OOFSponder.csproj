@@ -99,6 +99,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\OOFSponderCore\SettingsHelper.cs">
+      <Link>SettingsHelper.cs</Link>
+    </Compile>
     <Compile Include="ClickOnceTracker.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

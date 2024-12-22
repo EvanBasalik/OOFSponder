@@ -95,7 +95,6 @@ namespace OOFScheduling
             // split the string at the first ':' character
 #if NET8_0_OR_GREATER
             var remainingSections = sectionPathKey.Split(":", 2);
-
 #endif
 #if NETFRAMEWORK
             char[] delimiter = {':'};
