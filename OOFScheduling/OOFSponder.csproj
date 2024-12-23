@@ -99,8 +99,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\OOFSponderCore\ClickOnceTracker.cs">
+      <Link>ClickOnceTracker.cs</Link>
+    </Compile>
     <Compile Include="..\OOFSponderCore\Logger.cs">
       <Link>Logger.cs</Link>
+    </Compile>
+    <Compile Include="..\OOFSponderCore\OOFSponderInsights.cs">
+      <Link>OOFSponderInsights.cs</Link>
     </Compile>
     <Compile Include="..\OOFSponderCore\SettingsHelper.cs">
       <Link>SettingsHelper.cs</Link>
