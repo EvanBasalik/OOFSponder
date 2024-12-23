@@ -34,7 +34,7 @@ namespace OOFSponder
         /// the user name in AppData folder tree and ???
         /// </summary>
         /// <param name="UnscrubbedMessage"></param>
-        public static string ScrubMessage(string UnscrubbedMessage)
+        private static string ScrubMessage(string UnscrubbedMessage)
         {
             //edge case where we need to scrub reference to the user name coming from the AppData reference
             return UnscrubbedMessage.Replace(Environment.SpecialFolder.ApplicationData.ToString(), "");
