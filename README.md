@@ -1,13 +1,8 @@
 ## ReadMe
-
-**OOFSponder 3.0 (new features such as OOF message saving, defaulting to minimized) is here!!
-If you are willing to try it, it can be installed from [https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application].
-_Note that you'll need to move to the released version manually for now. Automated upgrade from 2.6+ is coming in the near future, though!_**
-
 ![Image of primary UI](https://github.com/EvanBasalik/OOFSponder/blob/main/ReadMeImages/Primary.png)
 **Getting Started**
 
-Install from [here](https://oofsponderinstall.blob.core.windows.net/install/install.htm). Note that Windows will throw a warning the first time you install OOFSponder, but if you select _Run anyway_ it will install properly. Future upgrades will not show the same warning.
+Install from [here](https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application). Note that Windows will throw a warning the first time you install OOFSponder, but if you select _Keep_ and then _Run anyway_ it will install properly. Future upgrades will not show the same warning.
 
 Set the hours to when you work, if you don't work that day check Off Work.  
 
