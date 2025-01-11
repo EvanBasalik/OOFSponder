@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
+using static System.Windows.Forms.Design.AxImporter;
+using Microsoft.Identity.Client.Broker;
 
 namespace OOFScheduling
 {
@@ -98,9 +100,12 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Attempting to build PublicClientApp with multitenant endpoint");
             lock (pcaInitLock)
             {
+                //since OOFSponder only runs on Windows, we can use the WAM variant
+                BrokerOptions options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows);
                 PublicClientApp = PublicClientApplicationBuilder.Create(ClientId)
-                    .WithRedirectUri("https://login.microsoftonline.com/common/oauth2/nativeclient")
-                    .WithAuthority(logonUrl)
+                    .WithDefaultRedirectUri()
+                    .WithParentActivityOrWindow(GetMainFormWindowHandle)
+                    .WithBroker(options)
                     .Build();
 
                 MSALTokenCacheHelper.EnableSerialization(PublicClientApp.UserTokenCache);
@@ -115,7 +120,7 @@ namespace OOFScheduling
 
 
                 //  give UserTokenCache a go
-                //in this case, we are OK doing some pattern matching since we jsut want to find the right user in the cache
+                //in this case, we are OK doing some pattern matching since we just want to find the right user in the cache
                 OOFSponder.Logger.Info("give UserTokenCache a go");
                 IAccount account = null;
                 try { account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower().Contains(DefaultUserUPN.ToLower())); } catch (Exception) { }
@@ -134,6 +139,12 @@ namespace OOFScheduling
                             OOFSponder.Logger.Info("AcquireTokenSilent -> OK");
                         }
                         _result = true;
+
+#if FORCE_UI_LOGIN
+                        //for testing purposes need to be able to force UI prompt for login
+                        //IMPORTANT!!! This will result in multiple prompts
+                        _result = false;
+#endif
                     }
                     catch (Exception x)
                     {
@@ -151,7 +162,8 @@ namespace OOFScheduling
                             .WithLoginHint(DefaultUserUPN)
                             .WithPrompt(Prompt.NoPrompt)
                             .ExecuteAsync();
-                        authUITask.Wait(10000);
+                        //since this is UI based, wait up to 5 min (5*60*1000 ms)
+                        authUITask.Wait(300000);
                         authResult = authUITask.Result;
                         _result = true;
                     }
@@ -170,7 +182,8 @@ namespace OOFScheduling
                                 Task<AuthenticationResult> authUITask = PublicClientApp.AcquireTokenInteractive(_scopes)
                                     .WithPrompt(Prompt.NoPrompt)
                                     .WithLoginHint(DefaultUserUPN).ExecuteAsync();
-                                authUITask.Wait(10000);
+                                //since this is UI based, wait up to 5 min (5*60*1000 ms)
+                                authUITask.Wait(300000);
                                 authResult = authUITask.Result;
                                 _result = true;
                             }
@@ -212,6 +225,11 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("UserGUID: " + OOFSponderInsights.UserGUID);
 
             return _result;
+        }
+
+        private static IntPtr GetMainFormWindowHandle()
+        {
+            return System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
         }
 
         /// <summary>

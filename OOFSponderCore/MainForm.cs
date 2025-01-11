@@ -23,6 +23,7 @@ namespace OOFScheduling
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
 
         private ContextMenuStrip trayMenu;
+        internal static IntPtr FormHandle = IntPtr.Zero;
 
         //Track if force close or just hitting X to minimize
         //private bool minimize = true;
@@ -31,8 +32,10 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
-            //TODO - need to dynamically inject the HTMLEditor controls, but that's a problem for another day
             InitializeComponent();
+
+            //grab the handle for use later with the MSAL work
+            FormHandle = this.Handle;
 
             // TODO figure out why the cross-thread access to dtPermaOOF is still happening
             //temporary fix since I cannot find where it is happening
