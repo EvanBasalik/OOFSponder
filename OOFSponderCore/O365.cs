@@ -116,12 +116,16 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Attempting to build PublicClientApp with multitenant endpoint");
             lock (pcaInitLock)
             {
+                //needed for enabling MSAL logging
+                MyIdentityLogger myLogger = new MyIdentityLogger();
+
                 //since OOFSponder only runs on Windows, we can use the WAM variant
                 BrokerOptions options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows);
                 PublicClientApp = PublicClientApplicationBuilder.Create(ClientId)
                     .WithDefaultRedirectUri()
                     .WithParentActivityOrWindow(GetMainFormWindowHandle)
                     .WithBroker(options)
+                    .WithLogging(myLogger)
                     .Build();
 
                 MSALTokenCacheHelper.EnableSerialization(PublicClientApp.UserTokenCache);

@@ -52,9 +52,9 @@ namespace OOFSponder
             WriteEntry(ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "warning", fr.GetMethod().Name + ":" + st.ToString());
         }
 
-        public static void Info(string message)
+        public static void Info(string message, bool SendToAppInsights=true)
         {
-            WriteEntry(ScrubMessage(message), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+            WriteEntry(ScrubMessage(message), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name, SendToAppInsights);
         }
 
         public static void InfoPotentialPII(string property, string value)
@@ -70,7 +70,7 @@ namespace OOFSponder
 
         }
 
-        private static void WriteEntry(string message, string type, string module)
+        private static void WriteEntry(string message, string type, string module, bool SendToAppInsights = true)
         {
             Trace.WriteLine(
                     string.Format("{0},{1},{2},{3}",
@@ -79,13 +79,19 @@ namespace OOFSponder
                                   module,
                                   ScrubMessage(message)));
 
-            //also send everything to AppInsights
-            OOFSponderInsights.Track(
-                    string.Format("{0},{1},{2}",
-                                  type,
-                                  module,
-                                  ScrubMessage(message))
-                );
+            //default is to send everything to AppInsights
+            //but need the ability to log sensitive information to the log file only
+            if (SendToAppInsights)
+            {
+                //also send everything to AppInsights
+                OOFSponderInsights.Track(
+                        string.Format("{0},{1},{2}",
+                                      type,
+                                      module,
+                                      ScrubMessage(message))
+                    );
+            }
+
         }
     }
 }
