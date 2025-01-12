@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="OOFScheduling.exe" version="3.1.2.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="OOFScheduling.exe" version="3.1.3.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="OOFSponderLogo.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -249,7 +249,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>uAyskw2UIpHAoLNgjLw5UXtdbnYO8XFxiuSDfUQ4x1k=</dsig:DigestValue>
+      <dsig:DigestValue>sFjgYvzWqtNjEeve76LvzjxXzN8jHqji/HIG80A8NQA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Newtonsoft.Json.dll" size="712464">
@@ -267,16 +267,16 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>rR2Ni0nNmMxrBMR5t8H4jFUAmiPySh7CGlhVT4AFZOE=</dsig:DigestValue>
+      <dsig:DigestValue>vAFDelSI/P1oHAVtxAmkeQMCInvDy3cUj+70vwO7fNg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="OOFScheduling.dll" size="764416">
+  <file name="OOFScheduling.dll" size="764928">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>zN8GsS+9OVWGnJ1OZ9qNYCzkd14nGoHrDexfR5YOiMk=</dsig:DigestValue>
+      <dsig:DigestValue>fbkx/ppsDu2BJc4E3b/yvvZYTnuJr/hMs/gA1/TMt54=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.dll.config" size="423">
@@ -294,7 +294,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>eblEBG5p/paubegfiYYfhYsP2LrHZLPhicrgOANW7GE=</dsig:DigestValue>
+      <dsig:DigestValue>GAajjiNjGmOBz28KCHjR+xYOeycpiNfIrwnZf6Do1uM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.runtimeconfig.json" size="515">
