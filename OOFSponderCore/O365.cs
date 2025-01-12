@@ -42,14 +42,18 @@ namespace OOFScheduling
         {
             get
             {
+                OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
                 if (string.IsNullOrEmpty(_defaultUserUPN))
                 {
+                    OOFSponder.Logger.Info("Don't already have defaultUserUPN - getting from WindowsIdentity.GetCurrent()");
                     _defaultUserUPN = System.Security.Principal.WindowsIdentity.GetCurrent().Name.ToLower();
 
                     //when on a domain-joined machine, it will be in the domain\user structure
                     //in that case, just return the user for pattern matching
                     if (_defaultUserUPN.Contains("\\"))
                     {
+                        OOFSponder.Logger.Info("UPN contains '\\' so is a domain-joined machine - returning just the user");
                         _defaultUserUPN = _defaultUserUPN.Split('\\').Last();
                     }
                 }
@@ -65,19 +69,32 @@ namespace OOFScheduling
         {
             get
             {
+                OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
                 //return authResult.ExpiresOn >= DateTime.UtcNow;
 
                 //MSAL 1.0
                 //return PublicClientApp.Users.Any();
 
                 //MSAL 3.0
+                OOFSponder.Logger.Info("Trying to get accounts from PublicClientApp");
                 Task<IEnumerable<IAccount>> accountTask = PublicClientApp.GetAccountsAsync();
                 accountTask.Wait(10000);
 
                 //for checking if logged in, want to do an exact match
+                OOFSponder.Logger.Info("Checking for the logged in user");
                 IAccount account = null;
-                try { account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower()); } catch (Exception) { }
+                try 
+                {
+                    OOFSponder.Logger.Info("Comparing GetAccountsAsyncFirstOrDefault.UserName to DefaultUserUPN");
+                    account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower()); 
+                } 
+                catch (Exception ex) 
+                { 
+                    OOFSponder.Logger.Error(ex);
+                }
 
+                OOFSponder.Logger.Info("DefaultUserUPN IsNullorEmpty: " + string.IsNullOrEmpty(DefaultUserUPN));
                 return (account != null && account.Username.ToLower() == DefaultUserUPN.ToLower());
             }
         }
