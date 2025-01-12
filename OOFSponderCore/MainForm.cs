@@ -430,7 +430,9 @@ namespace OOFScheduling
             bool result = false;
             if (haveNecessaryData)
             {
+                OOFSponder.Logger.Info("Getting OOF times");
                 DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
+                OOFSponder.Logger.Info("Got OOF times");
 
                 ////if PermaOOF is turned on, need to adjust the end time
                 //if (OOFData.Instance.PermaOOFDate < oofTimes[0])
@@ -460,9 +462,11 @@ namespace OOFScheduling
                 {
                     OOFSponder.Logger.Error("Not logged in when trying to Save Settings. Giving them one more try.");
 
+                    OOFSponder.Logger.Info("Trying to log in again inside " + OOFSponderInsights.CurrentMethod());
                     System.Threading.Tasks.Task AuthTask = null;
                     AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
                     AuthTask.Wait(10000);
+                    OOFSponder.Logger.Info("Successfully logged in inside " + OOFSponderInsights.CurrentMethod());
 
                     //if still not logged in, bail
                     if (!O365.isLoggedIn)
@@ -473,6 +477,7 @@ namespace OOFScheduling
                     }
                 }
 
+                OOFSponder.Logger.Info("Getting ready to set either PermaOOF or NormalOOF");
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
                 if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                 {
