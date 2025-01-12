@@ -458,6 +458,7 @@ namespace OOFScheduling
                 //}
 
                 //if not logged in, give the user a chance to log in
+                OOFSponder.Logger.Info("Checking to make sure the user is logged in before doing OOF work");
                 if (!O365.isLoggedIn)
                 {
                     OOFSponder.Logger.Error("Not logged in when trying to Save Settings. Giving them one more try.");

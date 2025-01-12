@@ -77,9 +77,10 @@ namespace OOFScheduling
                 //return PublicClientApp.Users.Any();
 
                 //MSAL 3.0
-                OOFSponder.Logger.Info("Trying to get accounts from PublicClientApp");
+                OOFSponder.Logger.Info("Trying to get accounts from PublicClientApp.GetAccountsAsync");
                 Task<IEnumerable<IAccount>> accountTask = PublicClientApp.GetAccountsAsync();
                 accountTask.Wait(10000);
+                OOFSponder.Logger.Info("Got accounts from PublicClientApp.GetAccountsAsync");
 
                 //for checking if logged in, want to do an exact match
                 OOFSponder.Logger.Info("Checking for the logged in user");
@@ -95,6 +96,8 @@ namespace OOFScheduling
                 }
 
                 OOFSponder.Logger.Info("DefaultUserUPN IsNullorEmpty: " + string.IsNullOrEmpty(DefaultUserUPN));
+                OOFSponder.Logger.Info("account is not null: " + (account == null).ToString());
+                OOFSponder.Logger.Info("Username == DefaultUserUPN: " + (account.Username.ToLower() == DefaultUserUPN.ToLower()).ToString());
                 return (account != null && account.Username.ToLower() == DefaultUserUPN.ToLower());
             }
         }
