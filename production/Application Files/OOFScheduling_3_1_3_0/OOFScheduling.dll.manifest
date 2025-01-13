@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="OOFScheduling.exe" version="3.1.0.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="OOFScheduling.exe" version="3.1.3.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="OOFSponderLogo.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -189,22 +189,40 @@
       <dsig:DigestValue>W9Rg2faUZwUAPfVag6AwefdCQ2qsEBRyfznetYi+zpY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Microsoft.Identity.Client.dll" size="1005600">
+  <file name="Microsoft.Identity.Client.Broker.dll" size="67120">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ARM7lDG/a03QYQIL94ZuHx4RZ2BFCQfgXRjhZ/+KW88=</dsig:DigestValue>
+      <dsig:DigestValue>SkJezX8U2+NPciQjkJTNGedEfqlfWTakpVq8Sn00iRw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Microsoft.Identity.Client.Extensions.Msal.dll" size="66656">
+  <file name="Microsoft.Identity.Client.dll" size="1004616">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>bIomcFxpBoSEtyHBzgnKbAr8nf3OQi7ddLen8aCvDLY=</dsig:DigestValue>
+      <dsig:DigestValue>Kms/yvHFAixpWyBHzq+pLL1NmH6tW/FFsKyicni7cw4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Microsoft.Identity.Client.Extensions.Msal.dll" size="66592">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>o0eKw/9nc6NzQnz0zJ7oWKhFebSMMOUNfmfdsPMOm+4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Microsoft.Identity.Client.NativeInterop.dll" size="91224">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>iPlrX8p4uLqaPq3kAwD8dRAJfug6TN/ztZ4/8+JFBMQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Microsoft.IdentityModel.Abstractions.dll" size="18968">
@@ -231,7 +249,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>QDx4ncPUy6sO98eFEf0idLb2Px+ELZBBwMAvZifVD8Q=</dsig:DigestValue>
+      <dsig:DigestValue>sFjgYvzWqtNjEeve76LvzjxXzN8jHqji/HIG80A8NQA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Newtonsoft.Json.dll" size="712464">
@@ -243,22 +261,22 @@
       <dsig:DigestValue>IsZJ91/OW+fHzNqIgEc7Y072ns8z9dGritiSyvR9Wgc=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="OOFScheduling.deps.json" size="79237">
+  <file name="OOFScheduling.deps.json" size="79702">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>TKVbI+RpWB4mFsN/mTuXD9Eyafp7df1X18n5H1sSEb4=</dsig:DigestValue>
+      <dsig:DigestValue>vAFDelSI/P1oHAVtxAmkeQMCInvDy3cUj+70vwO7fNg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="OOFScheduling.dll" size="761344">
+  <file name="OOFScheduling.dll" size="764928">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>+4BcKpzn1D3Rp+4EUmBskGoN6/MarmqM2vTzw9L2GWI=</dsig:DigestValue>
+      <dsig:DigestValue>a+QuuyN5fuJtvk10Sp9nwvoHf+xwYYELjXtrGqkwgXY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.dll.config" size="423">
@@ -276,7 +294,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>LVlJK4+7xBjjmJ3fF4DrDr63cG4ydxhwGLuvH3C2HBc=</dsig:DigestValue>
+      <dsig:DigestValue>GAajjiNjGmOBz28KCHjR+xYOeycpiNfIrwnZf6Do1uM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.runtimeconfig.json" size="515">
@@ -340,6 +358,33 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>VSuynRU5zuOWpeOts4uWsdcRbW6hrl7U5e5aSfNAlks=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="runtimes\win-arm64\native\msalruntime_arm64.dll" size="3151392">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>p63xwyV24jUKaSu+V1xuR9u8JSvH0/oiDXZjXggBeWY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="runtimes\win-x64\native\msalruntime.dll" size="2924472">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4n0/452h0BnDtBkinHB5jKsu9znC/1fQ8Bl+IDt90ME=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="runtimes\win-x86\native\msalruntime_x86.dll" size="2544672">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>I/gmv+AnujWu8GEPmlX+/quGjoMb7WWrKE6deoPF5/0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="System.Configuration.ConfigurationManager.dll" size="442144">
