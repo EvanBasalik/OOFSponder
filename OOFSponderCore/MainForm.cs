@@ -434,28 +434,9 @@ namespace OOFScheduling
                 DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
                 OOFSponder.Logger.Info("Got OOF times");
 
-                ////if PermaOOF is turned on, need to adjust the end time
-                //if (OOFData.Instance.PermaOOFDate < oofTimes[0])
-                //{
-                //    //set all the UI stuff back to primary 
-                //    //to set up for normal OOF schedule
-                //    SetUIforPrimary();
-
-                //}
-
                 //persist settings just in case
                 string oofMessageExternal = htmlEditorControl1.BodyHtml;
                 string oofMessageInternal = htmlEditorControl2.BodyHtml;
-                //if (!OOFData.Instance.IsPermaOOFOn)
-                //{
-                //    OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                //    OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
-                //}
-                //else
-                //{
-                //    OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                //    OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
-                //}
 
                 //if not logged in, give the user a chance to log in
                 OOFSponder.Logger.Info("Checking to make sure the user is logged in before doing OOF work");
@@ -923,6 +904,7 @@ namespace OOFScheduling
             //plus show system tray stuff
             if (this.WindowState == FormWindowState.Minimized)
             {
+                OOFSponder.Logger.Info("Main window just minimized, so show tooltip, etc.");
                 notifyIcon1.Visible = true;
                 notifyIcon1.ShowBalloonTip(100);
                 this.ShowInTaskbar = false;
@@ -932,6 +914,7 @@ namespace OOFScheduling
             //plus hide system tray stuff
             if (this.WindowState == FormWindowState.Normal)
             {
+                OOFSponder.Logger.Info("Main window just to normal, so show in taskbar");
                 this.ShowInTaskbar = true;
                 notifyIcon1.Visible = false;
                 this.Show();
