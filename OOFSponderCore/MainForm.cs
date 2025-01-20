@@ -145,16 +145,11 @@ namespace OOFScheduling
             this.Icon = Properties.Resources.OOFSponderIcon;
 
             #region Add to Startup
-            // The path to the key where Windows looks for startup applications
-            RegistryKey rkApp = Registry.CurrentUser.OpenSubKey(
-                                @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
 
-            //Path to launch shortcut
-            string startPath = Environment.GetFolderPath(Environment.SpecialFolder.Programs)
-                               + @"\Microsoft\OOFSponder.appref-ms";
+            AutoStartup.AddToStartup();
 
-            rkApp.SetValue("OOFSponder", startPath);
             #endregion
+
             #region Tray Menu Initialize
             OOFSponder.Logger.Info("Initializing tray menu");
 
@@ -167,23 +162,6 @@ namespace OOFScheduling
             notifyIcon1.Icon = Properties.Resources.OOFSponderIcon;
 
             OOFSponder.Logger.Info("Done initializing tray menu");
-            #endregion
-            #region Read the list of teams to populate with templates
-            //Read in the list of teams and build the dictionary list of team name
-            //and template location
-
-            //for each team, add an entry to the the Team Settings menu item (teamSettingsToolStripMenuItem)
-
-            //If Use Team Settings is checked and a team is selected
-            //then pull the remote files in as the text and then set the
-            //controls to ReadOnly
-            //Use a naming convention of "ExternalOOF.html" and "InternalOOF.html"?
-
-            //Will also need to add some #Start/#End/#TimeZone logic
-            //could even get fancy and have that be some sort of pop-up
-            //so that each team could have its own
-            //this is definitely future work :)
-
             #endregion
 
             //prep for async work
