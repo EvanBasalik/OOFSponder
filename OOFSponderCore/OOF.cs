@@ -346,7 +346,7 @@ namespace OOFScheduling
 #if DEBUG
                 MessageBox.Show("OOF message has been nulled!!!");
 #endif
-                Logger.Error("OOF message has been nulled!!!");
+                Logger.Error("NULLED: OOF message has been nulled!!!");
             }
 
             //new method using appsettings.json and JsonSerializer
