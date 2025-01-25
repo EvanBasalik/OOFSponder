@@ -287,35 +287,34 @@ namespace OOFScheduling
                 .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()),true)
                 .Build();
 
-            var section = config.GetSection("OOFData");
-            OOFSponderConfig.OOFData OOFConfig = new OOFSponderConfig.OOFData();
-            section.Bind(OOFConfig);
-            instance.PermaOOFDate = OOFConfig.PermaOOFDate;
-            instance.WorkingHours = OOFConfig.WorkingHours == baseValue ? string.Empty : OOFConfig.WorkingHours;
+            OOFSponderConfig.Root OOFSponderConfig = new OOFSponderConfig.Root();
+            config.Bind(OOFSponderConfig);
+
+            instance.PermaOOFDate = OOFSponderConfig.OOFData.PermaOOFDate;
+            instance.WorkingHours = OOFSponderConfig.OOFData.WorkingHours == baseValue ? string.Empty : OOFSponderConfig.OOFData.WorkingHours;
 
             //while reading in the Primary External, also store that value in a secondary Stored field for the Save comparison
-            instance.PrimaryOOFExternalMessage = OOFConfig.PrimaryOOFExternalMessage == baseValue ? string.Empty : OOFConfig.PrimaryOOFExternalMessage;
+            instance.PrimaryOOFExternalMessage = OOFSponderConfig.OOFData.PrimaryOOFExternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.PrimaryOOFExternalMessage;
             instance.StoredPrimaryOOFExternalMessage = instance.PrimaryOOFExternalMessage;
 
             //while reading in the Primary Internal, also store that value in a secondary Stored field for the Save comparison
-            instance.PrimaryOOFInternalMessage = OOFConfig.PrimaryOOFInternalMessage == baseValue ? string.Empty : OOFConfig.PrimaryOOFInternalMessage;
+            instance.PrimaryOOFInternalMessage = OOFSponderConfig.OOFData.PrimaryOOFInternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.PrimaryOOFInternalMessage;
             instance.StoredPrimaryOOFInternalMessage = instance.PrimaryOOFInternalMessage;
 
             //while reading in the Secondary External, also store that value in a secondary Stored field for the Save comparison
-            instance.SecondaryOOFExternalMessage = instance.StoredSecondaryOOFExternalMessage = OOFConfig.SecondaryOOFExternalMessage == baseValue ? string.Empty : OOFConfig.SecondaryOOFExternalMessage;
+            instance.SecondaryOOFExternalMessage = instance.StoredSecondaryOOFExternalMessage = OOFSponderConfig.OOFData.SecondaryOOFExternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.SecondaryOOFExternalMessage;
             instance.StoredSecondaryOOFExternalMessage = instance.SecondaryOOFExternalMessage;
 
             //while reading in the Secondary Internal, also store that value in a secondary Stored field for the Save comparison
-            instance.SecondaryOOFInternalMessage = OOFConfig.SecondaryOOFInternalMessage == baseValue ? string.Empty : OOFConfig.SecondaryOOFInternalMessage;
+            instance.SecondaryOOFInternalMessage = OOFSponderConfig.OOFData.SecondaryOOFInternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.SecondaryOOFInternalMessage;
             instance.StoredSecondaryOOFInternalMessage = instance.SecondaryOOFInternalMessage;
 
-            instance.IsOnCallModeOn = OOFConfig.IsOnCallModeOn == baseBool ? false : OOFConfig.IsOnCallModeOn;
-            instance.StartMinimized = OOFConfig.StartMinimized == baseBool ? false : OOFConfig.StartMinimized;
+            instance.IsOnCallModeOn = OOFSponderConfig.OOFData.IsOnCallModeOn == baseBool ? false : OOFSponderConfig.OOFData.IsOnCallModeOn;
+            instance.StartMinimized = OOFSponderConfig.OOFData.StartMinimized == baseBool ? false : OOFSponderConfig.OOFData.StartMinimized;
 
             LogProperties();
 
-            var configurationSection = config.GetSection("UserSettingsSource");
-            Logger.Info("userproperties.json source:" + configurationSection.Value);
+            Logger.Info("userproperties.json source:" + OOFSponderConfig.UserSettingsSource);
 
             OOFSponder.Logger.Info("Successfully read settings");
         }
