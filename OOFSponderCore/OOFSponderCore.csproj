@@ -46,7 +46,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release without Sending OOF|AnyCPU'">
     <OutputPath>bin\Release without Sending OOF\</OutputPath>
-    <DefineConstants>$(DefineConstants);NOOOF;FASTOOF</DefineConstants>
+    <DefineConstants>$(DefineConstants);NOOOF</DefineConstants>
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
