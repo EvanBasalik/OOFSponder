@@ -1,11 +1,13 @@
 ﻿using OOFScheduling;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace OOFSponder
 {
     public static class Logger
     {
+        public static readonly string FileName  = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\OOFSponder.log");
         public static void Error(string message)
         {
             StackFrame fr = new StackFrame(1, true);

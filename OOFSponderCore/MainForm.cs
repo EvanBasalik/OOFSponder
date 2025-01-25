@@ -1406,25 +1406,25 @@ namespace OOFScheduling
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
 
-            //should be this name, but we'll get it dynamically later just to check
-            string loggerFileName = "OOFSponder.log";
+            ////should be this name, but we'll get it dynamically later just to check
+            //string loggerFileName = Logger.FileName;
 
             //getting ready to show logs, so force a flush
-            //while we are at it, get the file name
             foreach (TextWriterTraceListener logger in Trace.Listeners)
             {
                 logger.Flush();
 
-                FieldInfo fieldInfo = typeof(TextWriterTraceListener).GetField("_fileName", BindingFlags.NonPublic | BindingFlags.Instance);
-                loggerFileName = (string)fieldInfo.GetValue(logger);
+                //don't need this any more b/c we have this info in Logger.FileName
+                //FieldInfo fieldInfo = typeof(TextWriterTraceListener).GetField("_fileName", BindingFlags.NonPublic | BindingFlags.Instance);
+                //loggerFileName = (string)fieldInfo.GetValue(logger);
             }
 
             //default to opening the file, but if the user
             //picked the folder open in the UI, then switch to just the folder
-            string FileorFoldertoOpen = loggerFileName;
+            string FileorFoldertoOpen = Logger.FileName;
             if (((ToolStripMenuItem)sender).Tag.ToString() == "Folder")
             {
-                FileorFoldertoOpen = System.IO.Path.GetDirectoryName(loggerFileName);
+                FileorFoldertoOpen = System.IO.Path.GetDirectoryName(Logger.FileName);
             }
 
             var psi = new System.Diagnostics.ProcessStartInfo()
