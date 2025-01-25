@@ -341,7 +341,7 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Persisting settings");
 
             //special logging and message box for the intermittent nulling of the message
-            if (instance.PrimaryOOFExternalMessage == "<BODY scroll=auto></BODY>")
+            if (instance.PrimaryOOFExternalMessage == DummyHTML)
             {
 #if DEBUG
                 MessageBox.Show("OOF message has been nulled!!!");
