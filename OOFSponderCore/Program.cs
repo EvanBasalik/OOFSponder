@@ -28,7 +28,7 @@ namespace OOFScheduling
 
             //Add our custom logger
             //Trace.Listeners.Add(new TextWriterTraceListener("OOFSponder.log", "myListener"));
-            System.IO.TextWriter mylog= System.IO.File.CreateText(Logger.FileName);
+            System.IO.TextWriter mylog= System.IO.File.AppendText(Logger.FileName);
             Trace.Listeners.Add(new TextWriterTraceListener(mylog, "myListener"));
             #endregion
 
