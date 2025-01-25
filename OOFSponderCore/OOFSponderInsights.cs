@@ -94,12 +94,12 @@ namespace OOFScheduling
 #endif
 
                 AIClient.Context.Properties["MachineName"] = Environment.MachineName;
-                AIClient.Context.Properties["Version"] = OOFDataInstance.version;
+                AIClient.Context.Properties["Version"] = OOFData.version;
 
                 isConfigured = true;
                 OOFSponder.Logger.Info("Successfully configured ApplicationInsights");
                 OOFSponder.Logger.Info("MachineName: " + Environment.MachineName);
-                OOFSponder.Logger.Info("Version: " + OOFDataInstance.version);
+                OOFSponder.Logger.Info("Version: " + OOFData.version);
             }
             catch (Exception ex)
             {

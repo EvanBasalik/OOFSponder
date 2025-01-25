@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace OOFScheduling
 {
 
-    public class OOFDataInstance
+    public class OOFData
     {
         internal DateTime PermaOOFDate { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
@@ -45,8 +45,8 @@ namespace OOFScheduling
                 if (value != StoredPrimaryOOFExternalMessage && value != "" && value != DummyHTML)
                 {
                     Logger.Info("Primary OOF External has changed - persisting to AppData and updating stored value");
-                    OOFDataInstance.Instance.StoredPrimaryOOFExternalMessage = value;
-                    OOFDataInstance.Instance.SaveOOFMessageOffline(OOFDataInstance.OOFMessageType.PrimaryExternal, value);
+                    OOFData.Instance.StoredPrimaryOOFExternalMessage = value;
+                    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryExternal, value);
                 }
                 _primaryOOFExternalMessage = value;
             }
@@ -69,8 +69,8 @@ namespace OOFScheduling
                 if (value != StoredPrimaryOOFInternalMessage && value != "" && value != DummyHTML)
                 {
                     Logger.Info("Primary OOF Internal has changed - persisting to AppData and updating stored value");
-                    OOFDataInstance.Instance.StoredPrimaryOOFInternalMessage = value;
-                    OOFDataInstance.Instance.SaveOOFMessageOffline(OOFDataInstance.OOFMessageType.PrimaryInternal, value);
+                    OOFData.Instance.StoredPrimaryOOFInternalMessage = value;
+                    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryInternal, value);
                 }
                 _primaryOOFInternalMessage = value;
             }
@@ -93,8 +93,8 @@ namespace OOFScheduling
                 if (value != StoredSecondaryOOFExternalMessage && value != "" && value != DummyHTML)
                 {
                     Logger.Info("Secondary OOF External has changed - persisting to AppData and updating stored value");
-                    OOFDataInstance.Instance.StoredSecondaryOOFExternalMessage = value;
-                    OOFDataInstance.Instance.SaveOOFMessageOffline(OOFDataInstance.OOFMessageType.SecondaryExternal, value);
+                    OOFData.Instance.StoredSecondaryOOFExternalMessage = value;
+                    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, value);
                 }
                 _secondaryOOFExternalMessage = value;
             }
@@ -118,8 +118,8 @@ namespace OOFScheduling
                 if (value != StoredSecondaryOOFInternalMessage && value != "" && value != DummyHTML)
                 {
                     Logger.Info("Secondary OOF Internal has changed - persisting to AppData and updating stored value");
-                    OOFDataInstance.Instance.StoredSecondaryOOFInternalMessage = value;
-                    OOFDataInstance.Instance.SaveOOFMessageOffline(OOFDataInstance.OOFMessageType.SecondaryInternal, value);
+                    OOFData.Instance.StoredSecondaryOOFInternalMessage = value;
+                    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, value);
                 }
                 _secondaryOOFInternalMessage = value;
             }
@@ -178,16 +178,16 @@ namespace OOFScheduling
         private const string baseValue = "default";
         private const bool baseBool = false;
         internal static string version;
-        static OOFDataInstance instance;
+        static OOFData instance;
 
-        public static OOFDataInstance Instance
+        public static OOFData Instance
         {
             get
             {
 
                 if (instance == null)
                 {
-                    instance = new OOFDataInstance();
+                    instance = new OOFData();
                     instance.ReadProperties();
                 }
                 return instance;
@@ -200,8 +200,8 @@ namespace OOFScheduling
             {
                 bool _result = false;
 
-                if (OOFDataInstance.Instance.PrimaryOOFExternalMessage != "" && OOFDataInstance.Instance.PrimaryOOFInternalMessage != ""
-    && OOFDataInstance.Instance.WorkingHours != "")
+                if (OOFData.Instance.PrimaryOOFExternalMessage != "" && OOFData.Instance.PrimaryOOFInternalMessage != ""
+    && OOFData.Instance.WorkingHours != "")
                 {
                     _result = true;
                 }
@@ -288,7 +288,7 @@ namespace OOFScheduling
                 .Build();
 
             var section = config.GetSection("OOFData");
-            OOFData OOFConfig = new OOFData();
+            OOFSponderConfig.OOFData OOFConfig = new OOFSponderConfig.OOFData();
             section.Bind(OOFConfig);
             instance.PermaOOFDate = section.GetValue<DateTime>("PermaOOFDate");
             instance.WorkingHours = section.GetValue<string>("WorkingHours") == baseValue ? string.Empty : section.GetValue<string>("WorkingHours");
@@ -336,7 +336,7 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Successfully read settings");
         }
 
-        ~OOFDataInstance()
+        ~OOFData()
         {
             Dispose(false);
         }
@@ -363,28 +363,28 @@ namespace OOFScheduling
             }
 
             //new method using appsettings.json
-            SettingsHelpers.AddOrUpdateAppSetting("OOFDataInstance:PrimaryOOFExternalMessage", instance.PrimaryOOFExternalMessage);
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFExternalMessage", instance.PrimaryOOFExternalMessage);
             OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFDataInstance:PrimaryOOFInternalMessage", instance.PrimaryOOFInternalMessage);
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFInternalMessage", instance.PrimaryOOFInternalMessage);
             OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFDataInstance:SecondaryOOFExternalMessage", instance.SecondaryOOFExternalMessage);
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:SecondaryOOFExternalMessage", instance.SecondaryOOFExternalMessage);
             OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFDataInstance:SecondaryOOFInternalMessage", instance.SecondaryOOFInternalMessage);
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:SecondaryOOFInternalMessage", instance.SecondaryOOFInternalMessage);
             OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFDataInstance:PermaOOFDate", instance.PermaOOFDate);
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PermaOOFDate", instance.PermaOOFDate);
             OOFSponder.Logger.Info("Persisted PermaOOFDate");
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFDataInstance:WorkingHours", instance.WorkingHours);
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:WorkingHours", instance.WorkingHours);
             OOFSponder.Logger.Info("Persisted WorkingHours");
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFDataInstance:IsOnCallModeOn", instance.IsOnCallModeOn);
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:IsOnCallModeOn", instance.IsOnCallModeOn);
             OOFSponder.Logger.Info("Persisted IsOnCallModeOn");
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFDataInstance:StartMinimized", instance.StartMinimized);
+            SettingsHelpers.AddOrUpdateAppSetting("OOFData:StartMinimized", instance.StartMinimized);
             OOFSponder.Logger.Info("Persisted StartMinimized");
 
             //log where the settings file is coming from
