@@ -65,10 +65,10 @@ namespace OOFScheduling
             }
 
             //and now we can set the values
-            if (OOFData.Instance.WorkingHours != "")
+            if (OOFDataInstance.Instance.WorkingHours != "")
             {
-                string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
-                Logger.InfoPotentialPII("workingHours", OOFData.Instance.WorkingHours);
+                string[] workingHours = OOFDataInstance.Instance.WorkingHours.Split('|');
+                Logger.InfoPotentialPII("workingHours", OOFDataInstance.Instance.WorkingHours);
 
                 //Zero means you are off that day (not working) therefore the box is checked
                 string[] dayHours = workingHours[0].Split('~');
@@ -126,11 +126,11 @@ namespace OOFScheduling
             //set as part of the GitHub action
             if (Environment.GetEnvironmentVariable("ClickOnce_CurrentVersion") != null)
             {
-                OOFData.version = lblBuild.Text = Environment.GetEnvironmentVariable("ClickOnce_CurrentVersion");
+                OOFDataInstance.version = lblBuild.Text = Environment.GetEnvironmentVariable("ClickOnce_CurrentVersion");
             }
             else
             {
-                OOFData.version = lblBuild.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
+                OOFDataInstance.version = lblBuild.Text = Assembly.GetEntryAssembly().GetName().Version.ToString();
             }
 
             OOFSponder.Logger.Info("Assembly version: " + Assembly.GetEntryAssembly().GetName().Version.ToString());
@@ -177,7 +177,7 @@ namespace OOFScheduling
             button2.Text = "Save NoOOF";
 #endif
 
-            if (OOFData.Instance.IsPermaOOFOn)
+            if (OOFDataInstance.Instance.IsPermaOOFOn)
             {
                 SetUIforSecondary();
             }
@@ -190,15 +190,15 @@ namespace OOFScheduling
             SetUIforOnCallMode();
 
             //we need the OOF messages and working hours
-            if (!OOFData.Instance.HaveNecessaryData)
+            if (!OOFDataInstance.Instance.HaveNecessaryData)
             {
                 //we are missing data, so log the three we are checking
-                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
-                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
-                OOFSponder.Logger.InfoPotentialPII("WorkingHours", OOFData.Instance.WorkingHours);
+                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFDataInstance.Instance.PrimaryOOFExternalMessage);
+                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFDataInstance.Instance.PrimaryOOFInternalMessage);
+                OOFSponder.Logger.InfoPotentialPII("WorkingHours", OOFDataInstance.Instance.WorkingHours);
             }
 
-            if (OOFData.Instance.HaveNecessaryData)
+            if (OOFDataInstance.Instance.HaveNecessaryData)
             {
                 toolStripStatusLabel1.Text = "Ready";
                 OOFSponder.Logger.Info("HaveNecessaryData");
@@ -230,9 +230,9 @@ namespace OOFScheduling
 
             //if we have all the inputs and "start minimized" is checked in the menu, then minimize
             //if we are missing some necessar input, then need to show the window regardless
-            Logger.Info("StartMinimized:" + OOFData.Instance.StartMinimized.ToString());
-            Logger.Info("HaveNecessaryData:" + OOFData.Instance.HaveNecessaryData.ToString());
-            if (OOFData.Instance.StartMinimized && OOFData.Instance.HaveNecessaryData)
+            Logger.Info("StartMinimized:" + OOFDataInstance.Instance.StartMinimized.ToString());
+            Logger.Info("HaveNecessaryData:" + OOFDataInstance.Instance.HaveNecessaryData.ToString());
+            if (OOFDataInstance.Instance.StartMinimized && OOFDataInstance.Instance.HaveNecessaryData)
             {
                 this.WindowState = FormWindowState.Minimized;
             }
@@ -397,9 +397,9 @@ namespace OOFScheduling
             //also, don't need to check SecondaryOOF messages for two reasons:
             //1) they won't always be set
             //2) the UI flow won't let you get here with permaOOF if they aren't set
-            if (OOFData.Instance.PrimaryOOFExternalMessage != "" &&
-                OOFData.Instance.PrimaryOOFInternalMessage != "" &&
-                OOFData.Instance.WorkingHours != "")
+            if (OOFDataInstance.Instance.PrimaryOOFExternalMessage != "" &&
+                OOFDataInstance.Instance.PrimaryOOFInternalMessage != "" &&
+                OOFDataInstance.Instance.WorkingHours != "")
             {
                 haveNecessaryData = true;
                 OOFSponderInsights.Track("HaveNecessaryData");
@@ -409,7 +409,7 @@ namespace OOFScheduling
             if (haveNecessaryData)
             {
                 OOFSponder.Logger.Info("Getting OOF times");
-                DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
+                DateTime[] oofTimes = getOofTime(OOFDataInstance.Instance.WorkingHours);
                 OOFSponder.Logger.Info("Got OOF times");
 
                 //persist settings just in case
@@ -439,7 +439,7 @@ namespace OOFScheduling
 
                 OOFSponder.Logger.Info("Getting ready to set either PermaOOF or NormalOOF");
                 //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
-                if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
+                if ((oofTimes[0] != oofTimes[1]) && !OOFDataInstance.Instance.IsPermaOOFOn)
                 {
                     OOFSponder.Logger.Info("TrySetNormalOOF");
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
@@ -450,7 +450,7 @@ namespace OOFScheduling
                 //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
                 {
                     int adjustmentDays = 0;
-                    if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                    if (OOFDataInstance.Instance.PermaOOFDate > oofTimes[0] && OOFDataInstance.Instance.PermaOOFDate < oofTimes[1])
                     {
                         adjustmentDays = 1;
                     }
@@ -465,7 +465,7 @@ namespace OOFScheduling
 
                     OOFSponderInsights.Track("TrySetPermaOOF");
 
-                    result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+                    result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFDataInstance.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
                 }
             }
 
@@ -642,13 +642,13 @@ namespace OOFScheduling
             DateTime StartTime, EndTime;
 
             //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
-            if (!OOFData.Instance.IsOnCallModeOn && !OOFData.Instance.useNewOOFMath)
+            if (!OOFDataInstance.Instance.IsOnCallModeOn && !OOFDataInstance.Instance.useNewOOFMath)
             {
-                CalculateOOFTimes(OOFData.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
+                CalculateOOFTimes(OOFDataInstance.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
             }
             else
             {
-                CalculateOOFTimes2(out StartTime, out EndTime, OOFData.Instance.IsOnCallModeOn);
+                CalculateOOFTimes2(out StartTime, out EndTime, OOFDataInstance.Instance.IsOnCallModeOn);
             }
 
             OofTimes[0] = StartTime;
@@ -739,17 +739,17 @@ namespace OOFScheduling
             DateTime currentCheckDate = DateTime.Now;
             OOFSponder.Logger.Info("currentCheckDate = " + currentCheckDate.ToString());
 
-            OOFInstance currentWorkingTime = OOFData.Instance.currentOOFPeriod;
+            OOFInstance currentWorkingTime = OOFDataInstance.Instance.currentOOFPeriod;
             OOFSponder.Logger.Info("currentWorkingTime.StartTime = " + currentWorkingTime.StartTime);
             OOFSponder.Logger.Info("currentWorkingtime.Endtime = " + currentWorkingTime.EndTime);
 
-            DateTime previousDayPeriodEnd = OOFData.Instance.previousOOFPeriodEnd;
+            DateTime previousDayPeriodEnd = OOFDataInstance.Instance.previousOOFPeriodEnd;
             OOFSponder.Logger.Info("previousDayPeriodEnd = " + previousDayPeriodEnd);
 
-            DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriodStart;
+            DateTime nextDayPeriodStart = OOFDataInstance.Instance.nextOOFPeriodStart;
             OOFSponder.Logger.Info("nextDayPeriodState = " + nextDayPeriodStart);
 
-            DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriodEnd;
+            DateTime nextDayPeriodEnd = OOFDataInstance.Instance.nextOOFPeriodEnd;
             OOFSponder.Logger.Info("nextDayPeriodEnd =" + nextDayPeriodEnd);
 
             OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
@@ -814,15 +814,15 @@ namespace OOFScheduling
                 //important to do this first so we can compare to the older message before updating
                 //the instance data in a few lines
                 //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
-                //if (OOFData.Instance.PrimaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
+                //if (OOFDataInstance.Instance.PrimaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
                 //{
                 //    Logger.Info("Primary OOF Internal has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryInternal, htmlEditorControl2.BodyHtml);
+                //    OOFDataInstance.Instance.SaveOOFMessageOffline(OOFDataInstance.OOFMessageType.PrimaryInternal, htmlEditorControl2.BodyHtml);
                 //}
 
                 //and also in the instance data
-                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFDataInstance.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFDataInstance.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
             else
             //since customer is editing Secondary message, save text in Secondary
@@ -833,28 +833,28 @@ namespace OOFScheduling
                 //important to do this first so we can compare to the older message before updating
                 //the instance data in a few lines
                 //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
-                //if (OOFData.Instance.SecondaryOOFExternalMessage != htmlEditorControl1.BodyHtml)
+                //if (OOFDataInstance.Instance.SecondaryOOFExternalMessage != htmlEditorControl1.BodyHtml)
                 //{
                 //    Logger.Info("Secondary OOF External has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, htmlEditorControl1.BodyHtml);
+                //    OOFDataInstance.Instance.SaveOOFMessageOffline(OOFDataInstance.OOFMessageType.SecondaryExternal, htmlEditorControl1.BodyHtml);
                 //}
-                //if (OOFData.Instance.SecondaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
+                //if (OOFDataInstance.Instance.SecondaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
                 //{
                 //    Logger.Info("Secondary OOF Internal has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, htmlEditorControl2.BodyHtml);
+                //    OOFDataInstance.Instance.SaveOOFMessageOffline(OOFDataInstance.OOFMessageType.SecondaryInternal, htmlEditorControl2.BodyHtml);
                 //}
 
                 //and also in the instance data
-                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFDataInstance.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFDataInstance.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
 
             //persist if they want the UI minimized on start up
-            OOFData.Instance.StartMinimized = tsmiStartMinimized.Checked;
+            OOFDataInstance.Instance.StartMinimized = tsmiStartMinimized.Checked;
 
-            OOFData.Instance.WorkingHours = ScheduleString();
+            OOFDataInstance.Instance.WorkingHours = ScheduleString();
 
-            OOFData.Instance.WriteProperties();
+            OOFDataInstance.Instance.WriteProperties();
 
             toolStripStatusLabel1.Text = "Settings Saved";
             OOFSponder.Logger.Info("Settings saved");
@@ -910,7 +910,7 @@ namespace OOFScheduling
                 this.Show();
 
                 //be sure to update the UI to match the stored value for Start Minized
-                this.tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
+                this.tsmiStartMinimized.Checked = OOFDataInstance.Instance.StartMinimized;
             }
         }
 
@@ -998,7 +998,7 @@ namespace OOFScheduling
                 string dtpName = dt.Name.Replace("StartTimepicker", "").Replace("EndTimepicker", "");
                 if (cbName == dtpName)
                 {
-                    if (!OOFData.Instance.IsOnCallModeOn)
+                    if (!OOFDataInstance.Instance.IsOnCallModeOn)
                     {
                         dt.Enabled = !cb.Checked;
                     }
@@ -1142,7 +1142,7 @@ namespace OOFScheduling
             }
 
             //only set up for permaOOF if we have OOF messages
-            if (OOFData.Instance.SecondaryOOFExternalMessage == String.Empty | OOFData.Instance.SecondaryOOFInternalMessage == String.Empty)
+            if (OOFDataInstance.Instance.SecondaryOOFExternalMessage == String.Empty | OOFDataInstance.Instance.SecondaryOOFInternalMessage == String.Empty)
             {
                 MessageBox.Show("Unable to turn on extended OOF - Secondary OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -1151,11 +1151,11 @@ namespace OOFScheduling
             bool result = false;
             if (((Button)sender).Tag.ToString() == "Enable")
             {
-                OOFData.Instance.PermaOOFDate = dtPermaOOFValue;
+                OOFDataInstance.Instance.PermaOOFDate = dtPermaOOFValue;
             }
             else
             {
-                OOFData.Instance.PermaOOFDate = DateTime.Now;
+                OOFDataInstance.Instance.PermaOOFDate = DateTime.Now;
             }
 
             //actually go OOF now
@@ -1175,7 +1175,7 @@ namespace OOFScheduling
             else
             {
                 //if we fail to set OOF, disable PermaOOF to reset the UI
-                OOFData.Instance.PermaOOFDate = DateTime.Now;
+                OOFDataInstance.Instance.PermaOOFDate = DateTime.Now;
 
             }
 
@@ -1206,11 +1206,11 @@ namespace OOFScheduling
             lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Extended OOF Internal Message";
             DoAccessibilityWorkforOpenSavedOOFMenuItems();
 
-            htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
-            htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
+            htmlEditorControl1.BodyHtml = OOFDataInstance.Instance.SecondaryOOFExternalMessage;
+            htmlEditorControl2.BodyHtml = OOFDataInstance.Instance.SecondaryOOFInternalMessage;
 
             //update the UI
-            if (OOFData.Instance.IsPermaOOFOn)
+            if (OOFDataInstance.Instance.IsPermaOOFOn)
             {
                 btnPermaOOF.Text = "Disable Extended OOF";
                 btnPermaOOF.Tag = "Disable";
@@ -1271,7 +1271,7 @@ namespace OOFScheduling
             //so HTML controls have the Secondary messages
 
             //disable PermaOOF by setting date to time in the past
-            OOFData.Instance.PermaOOFDate = DateTime.Now.AddMinutes(-1);
+            OOFDataInstance.Instance.PermaOOFDate = DateTime.Now.AddMinutes(-1);
 
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
@@ -1285,8 +1285,8 @@ namespace OOFScheduling
             lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Primary OOF Internal Message";
             DoAccessibilityWorkforOpenSavedOOFMenuItems();
 
-            htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
-            htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
+            htmlEditorControl1.BodyHtml = OOFDataInstance.Instance.PrimaryOOFExternalMessage;
+            htmlEditorControl2.BodyHtml = OOFDataInstance.Instance.PrimaryOOFInternalMessage;
 
             //lastly, disable the permaOOF controls to help with some UI flow issues
             btnPermaOOF.Enabled = false;
@@ -1328,16 +1328,16 @@ namespace OOFScheduling
             if (radPrimary.Checked)
             {
                 //Persist the opposite message
-                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFDataInstance.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFDataInstance.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
 
                 SetUIforPrimary();
             }
             else
             {
                 //Persist the opposite message
-                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFDataInstance.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFDataInstance.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
 
                 SetUIforSecondary();
             }
@@ -1349,33 +1349,33 @@ namespace OOFScheduling
             if (radPrimary.Checked)
             {
                 OOFSponderInsights.Track("PermaOOF off - persisting primary messages");
-                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFDataInstance.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFDataInstance.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
             else
             {
                 OOFSponderInsights.Track("PermaOOF on - persisting secondary messages");
-                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFDataInstance.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
+                OOFDataInstance.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
         }
 
         //enable/disable OnCallMode
         private void enableOnCallModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OOFData.Instance.IsOnCallModeOn = !OOFData.Instance.IsOnCallModeOn;
+            OOFDataInstance.Instance.IsOnCallModeOn = !OOFDataInstance.Instance.IsOnCallModeOn;
             SetUIforOnCallMode();
         }
 
         //do all the work to update the UI when enabling/disabling OnCallMode
         private void SetUIforOnCallMode()
         {
-            OOFSponder.Logger.Info("Attempting to set OnCallModeUI for OnCallMode=" + OOFData.Instance.IsOnCallModeOn);
-            enableOnCallModeToolStripMenuItem.Checked = OOFData.Instance.IsOnCallModeOn;
+            OOFSponder.Logger.Info("Attempting to set OnCallModeUI for OnCallMode=" + OOFDataInstance.Instance.IsOnCallModeOn);
+            enableOnCallModeToolStripMenuItem.Checked = OOFDataInstance.Instance.IsOnCallModeOn;
 
             //rename all the working day checkbox labels - keep the control names
             //a bit confusing, sure - but better than recreating a whole new set of controls
-            if (OOFData.Instance.IsOnCallModeOn)
+            if (OOFDataInstance.Instance.IsOnCallModeOn)
             {
                 sundayOffWorkCB.Text = "On-Call";
                 mondayOffWorkCB.Text = "On-Call";
@@ -1396,7 +1396,7 @@ namespace OOFScheduling
                 saturdayOffWorkCB.Text = "Off Work";
             }
 
-            OOFSponder.Logger.Info("Successfully set OnCallModeUI for OnCallMode=" + OOFData.Instance.IsOnCallModeOn);
+            OOFSponder.Logger.Info("Successfully set OnCallModeUI for OnCallMode=" + OOFDataInstance.Instance.IsOnCallModeOn);
         }
 
         private void ShowLogs(object sender, EventArgs e)
@@ -1438,7 +1438,7 @@ namespace OOFScheduling
         private void bETAEnableNewOOFToolStripMenuItem_Click(object sender, EventArgs e)
         {
             bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
-            OOFData.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
+            OOFDataInstance.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
         }
 
         private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
@@ -1450,7 +1450,7 @@ namespace OOFScheduling
         private void MainForm_Load(object sender, EventArgs e)
         {
             //make sure to set the state of the Start Minimized menu item appropriately
-            tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
+            tsmiStartMinimized.Checked = OOFDataInstance.Instance.StartMinimized;
         }
 
         private void tsmiSavedOOFMessage_Click(object sender, EventArgs e)

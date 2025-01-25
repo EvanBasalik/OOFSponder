@@ -20,7 +20,7 @@ namespace OOFScheduling
 
             //if we are running a ClickOnce version, then the ApplicationDeployment won't be null
             //and we can get the ring from other properties
-            string _version = OOFData.version;
+            string _version = OOFDataInstance.version;
             ApplicationDeployment ad = ApplicationDeployment.CurrentDeployment;
             if (ad != null)
             {
