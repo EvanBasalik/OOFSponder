@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
+using OOFSponder;
 
 namespace OOFScheduling
 {
@@ -21,7 +22,15 @@ namespace OOFScheduling
         static void Main()
         {
 
-            TraceConfiguration.Register();
+            #region ConfigureLogger
+            //remove the Default logger we don't use
+            Trace.Listeners.Remove("Default");
+
+            //Add our custom logger
+            //Trace.Listeners.Add(new TextWriterTraceListener("OOFSponder.log", "myListener"));
+            System.IO.TextWriter mylog= System.IO.File.CreateText(Logger.FileName);
+            Trace.Listeners.Add(new TextWriterTraceListener(mylog, "myListener"));
+            #endregion
 
             try
             {
