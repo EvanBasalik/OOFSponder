@@ -20,7 +20,7 @@ namespace OOFSponderConfig
     //  "UserSettingsSource": "OOFSponder_Core"
     //}
 
-    public class OOFData
+    internal class OOFData
     {
         public string WorkingHours { get; set; }
         public DateTime PermaOOFDate { get; set; }
@@ -32,9 +32,24 @@ namespace OOFSponderConfig
         public bool StartMinimized { get; set; }
     }
 
-    public class Root
+    internal class Root
     {
-        public OOFData OOFData { get; set; }
+        OOFData _OOFData;
+        public OOFData OOFData { 
+            get
+            {
+                if (_OOFData == null)
+                {
+                    _OOFData = new OOFData();
+                }
+
+                return _OOFData;
+            }
+            set
+            {
+                _OOFData = value;
+            }
+        }
         public string UserSettingsSource { get; set; }
     }
 }
