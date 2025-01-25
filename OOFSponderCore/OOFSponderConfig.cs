@@ -23,7 +23,7 @@ namespace OOFSponderConfig
     public class OOFData
     {
         public string WorkingHours { get; set; }
-        public string PermaOOFDate { get; set; }
+        public DateTime PermaOOFDate { get; set; }
         public string PrimaryOOFExternalMessage { get; set; }
         public string PrimaryOOFInternalMessage { get; set; }
         public string SecondaryOOFExternalMessage { get; set; }
