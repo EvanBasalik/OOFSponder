@@ -5,8 +5,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Windows.Forms;
-using System.Windows.Forms.Design;
 
 namespace OOFScheduling
 {
@@ -15,6 +15,8 @@ namespace OOFScheduling
     {
         internal DateTime PermaOOFDate { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
+
+        internal string UserSettingsSource { get; set; }
 
         private string _workingHours;
         internal string WorkingHours
@@ -274,6 +276,7 @@ namespace OOFScheduling
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", SecondaryOOFInternalMessage);
             OOFSponder.Logger.Info("IsOnCallModeOn: " + IsOnCallModeOn);
             OOFSponder.Logger.Info("StartMinimized: " + StartMinimized);
+            OOFSponder.Logger.Info("UserSettingsSource: " + UserSettingsSource);
         }
 
         private void ReadProperties()
@@ -288,49 +291,34 @@ namespace OOFScheduling
                 .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()),true)
                 .Build();
 
-            var section = config.GetSection("OOFData");
-            instance.PermaOOFDate = section.GetValue<DateTime>("PermaOOFDate");
-            instance.WorkingHours = section.GetValue<string>("WorkingHours") == baseValue ? string.Empty : section.GetValue<string>("WorkingHours");
+            OOFSponderConfig.Root OOFSponderConfig = new OOFSponderConfig.Root();
+            config.Bind(OOFSponderConfig);
+
+            instance.PermaOOFDate = OOFSponderConfig.OOFData.PermaOOFDate;
+            instance.WorkingHours = OOFSponderConfig.OOFData.WorkingHours == baseValue ? string.Empty : OOFSponderConfig.OOFData.WorkingHours;
 
             //while reading in the Primary External, also store that value in a secondary Stored field for the Save comparison
-            instance.PrimaryOOFExternalMessage = instance.StoredPrimaryOOFExternalMessage = section.GetValue<string>("PrimaryOOFExternalMessage") == baseValue ? string.Empty : section.GetValue<string>("PrimaryOOFExternalMessage");
+            instance.PrimaryOOFExternalMessage = OOFSponderConfig.OOFData.PrimaryOOFExternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.PrimaryOOFExternalMessage;
+            instance.StoredPrimaryOOFExternalMessage = instance.PrimaryOOFExternalMessage;
 
             //while reading in the Primary Internal, also store that value in a secondary Stored field for the Save comparison
-            instance.PrimaryOOFInternalMessage = instance.StoredPrimaryOOFInternalMessage = section.GetValue<string>("PrimaryOOFInternalMessage") == baseValue ? string.Empty : section.GetValue<string>("PrimaryOOFInternalMessage");
+            instance.PrimaryOOFInternalMessage = OOFSponderConfig.OOFData.PrimaryOOFInternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.PrimaryOOFInternalMessage;
+            instance.StoredPrimaryOOFInternalMessage = instance.PrimaryOOFInternalMessage;
 
             //while reading in the Secondary External, also store that value in a secondary Stored field for the Save comparison
-            instance.SecondaryOOFExternalMessage = instance.StoredSecondaryOOFExternalMessage = section.GetValue<string>("SecondaryOOFExternalMessage") == baseValue ? string.Empty : section.GetValue<string>("SecondaryOOFExternalMessage");
+            instance.SecondaryOOFExternalMessage = instance.StoredSecondaryOOFExternalMessage = OOFSponderConfig.OOFData.SecondaryOOFExternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.SecondaryOOFExternalMessage;
+            instance.StoredSecondaryOOFExternalMessage = instance.SecondaryOOFExternalMessage;
 
             //while reading in the Secondary Internal, also store that value in a secondary Stored field for the Save comparison
-            instance.SecondaryOOFInternalMessage = instance.StoredSecondaryOOFInternalMessage = section.GetValue<string>("SecondaryOOFInternalMessage") == baseValue ? string.Empty : section.GetValue<string>("SecondaryOOFInternalMessage");
+            instance.SecondaryOOFInternalMessage = OOFSponderConfig.OOFData.SecondaryOOFInternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.SecondaryOOFInternalMessage;
+            instance.StoredSecondaryOOFInternalMessage = instance.SecondaryOOFInternalMessage;
 
-            instance.IsOnCallModeOn = section.GetValue<bool>("IsOnCallModeOn") == baseBool ? false : section.GetValue<bool>("IsOnCallModeOn");
-            instance.StartMinimized = section.GetValue<bool>("StartMinimized") == baseBool ? false : section.GetValue<bool>("StartMinimized");
+            instance.IsOnCallModeOn = OOFSponderConfig.OOFData.IsOnCallModeOn == baseBool ? false : OOFSponderConfig.OOFData.IsOnCallModeOn;
+            instance.StartMinimized = OOFSponderConfig.OOFData.StartMinimized == baseBool ? false : OOFSponderConfig.OOFData.StartMinimized;
 
-
-            //old approach using app.config
-            //instance.PermaOOFDate = OOFScheduling.Properties.Settings.Default.PermaOOFDate;
-            //instance.WorkingHours = OOFScheduling.Properties.Settings.Default.workingHours == baseValue ? string.Empty : Properties.Settings.Default.workingHours;
-
-            //while reading in the Primary External, also store that value in a secondary Stored field for the Save comparison
-            //instance.PrimaryOOFExternalMessage = instance.StoredPrimaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFExternal;
-
-            //while reading in the Primary Internal, also store that value in a secondary Stored field for the Save comparison
-            //instance.PrimaryOOFInternalMessage = instance.StoredPrimaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.PrimaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.PrimaryOOFInternal;
-
-            //while reading in the Secondary External, also store that value in a secondary Stored field for the Save comparison
-            //instance.SecondaryOOFExternalMessage = instance.StoredSecondaryOOFExternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFExternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFExternal;
-
-            //while reading in the Secondary Internal, also store that value in a secondary Stored field for the Save comparison
-            //instance.SecondaryOOFInternalMessage = instance.StoredSecondaryOOFInternalMessage = OOFScheduling.Properties.Settings.Default.SecondaryOOFInternal == baseValue ? string.Empty : Properties.Settings.Default.SecondaryOOFInternal;
-
-            //instance.IsOnCallModeOn = OOFScheduling.Properties.Settings.Default.enableOnCallMode == baseBool ? false : Properties.Settings.Default.enableOnCallMode;
-            //instance.StartMinimized = OOFScheduling.Properties.Settings.Default.startMinimized == baseBool ? false : Properties.Settings.Default.startMinimized;
+            instance.UserSettingsSource = OOFSponderConfig.UserSettingsSource;
 
             LogProperties();
-
-            var configurationSection = config.GetSection("UserSettingsSource");
-            Logger.Info("userproperties.json source:" + configurationSection.Value);
 
             OOFSponder.Logger.Info("Successfully read settings");
         }
@@ -353,69 +341,40 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("Persisting settings");
 
             //special logging and message box for the intermittent nulling of the message
-            if (instance.PrimaryOOFExternalMessage == "<BODY scroll=auto></BODY>")
+            if (instance.PrimaryOOFExternalMessage == DummyHTML)
             {
 #if DEBUG
                 MessageBox.Show("OOF message has been nulled!!!");
 #endif
-                Logger.Error("OOF message has been nulled!!!");
+                Logger.Error("NULLED: OOF message has been nulled!!!");
             }
 
-            //new method using appsettings.json
-            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFExternalMessage", instance.PrimaryOOFExternalMessage);
-            OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
+            //new method using appsettings.json and JsonSerializer
+            //map everything to an OOFSponderConfig object, then serialize to disk
+            OOFSponderConfig.Root config = new OOFSponderConfig.Root();
+            config.OOFData.PrimaryOOFExternalMessage = instance.PrimaryOOFExternalMessage;
+            config.OOFData.PrimaryOOFInternalMessage = instance.PrimaryOOFInternalMessage;
+            config.OOFData.SecondaryOOFExternalMessage = instance.SecondaryOOFExternalMessage;
+            config.OOFData.SecondaryOOFInternalMessage = instance.SecondaryOOFInternalMessage;
+            config.OOFData.PermaOOFDate = instance.PermaOOFDate;
+            config.OOFData.WorkingHours = instance.WorkingHours;
+            config.OOFData.IsOnCallModeOn = instance.IsOnCallModeOn;
+            config.OOFData.StartMinimized = instance.StartMinimized;
+            config.UserSettingsSource = instance.UserSettingsSource;
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PrimaryOOFInternalMessage", instance.PrimaryOOFInternalMessage);
-            OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFData:SecondaryOOFExternalMessage", instance.SecondaryOOFExternalMessage);
-            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
+            // Serialize the person object to JSON
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+            string jsonString = System.Text.Json.JsonSerializer.Serialize(config, options);
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFData:SecondaryOOFInternalMessage", instance.SecondaryOOFInternalMessage);
-            OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
+            // Write the JSON string to a file
+            //user-specific appsettings.json
+            string userappsettingsFile = Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile());
+            System.IO.File.WriteAllText(userappsettingsFile, jsonString);
 
-            SettingsHelpers.AddOrUpdateAppSetting("OOFData:PermaOOFDate", instance.PermaOOFDate);
-            OOFSponder.Logger.Info("Persisted PermaOOFDate");
-
-            SettingsHelpers.AddOrUpdateAppSetting("OOFData:WorkingHours", instance.WorkingHours);
-            OOFSponder.Logger.Info("Persisted WorkingHours");
-
-            SettingsHelpers.AddOrUpdateAppSetting("OOFData:IsOnCallModeOn", instance.IsOnCallModeOn);
-            OOFSponder.Logger.Info("Persisted IsOnCallModeOn");
-
-            SettingsHelpers.AddOrUpdateAppSetting("OOFData:StartMinimized", instance.StartMinimized);
-            OOFSponder.Logger.Info("Persisted StartMinimized");
-
-            //log where the settings file is coming from
-            SettingsHelpers.AddOrUpdateAppSetting("UserSettingsSource", "OOFSponder_Core");
-            OOFSponder.Logger.Info("Persisted UserSettingsSource");
-
-            //old method using appsettings.config
-            //Properties.Settings.Default.PrimaryOOFExternal = instance.PrimaryOOFExternalMessage;
-            //OOFSponder.Logger.Info("Persisted PrimaryOOFExternalMessage");
-
-            //Properties.Settings.Default.PrimaryOOFInternal = instance.PrimaryOOFInternalMessage;
-            //OOFSponder.Logger.Info("Persisted PrimaryOOFInternalMessage");
-
-            //Properties.Settings.Default.SecondaryOOFExternal = instance.SecondaryOOFExternalMessage;
-            //OOFSponder.Logger.Info("Persisted SecondaryOOFExternalMessage");
-
-            //Properties.Settings.Default.SecondaryOOFInternal = instance.SecondaryOOFInternalMessage;
-            //OOFSponder.Logger.Info("Persisted SecondaryOOFInternalMessage");
-
-            //Properties.Settings.Default.PermaOOFDate = instance.PermaOOFDate;
-            //OOFSponder.Logger.Info("Persisted PermaOOFDate");
-
-            //Properties.Settings.Default.workingHours = instance.WorkingHours;
-            //OOFSponder.Logger.Info("Persisted WorkingHours");
-
-            //Properties.Settings.Default.enableOnCallMode = instance.IsOnCallModeOn;
-            //OOFSponder.Logger.Info("Persisted enableOnCallMode = " + instance.IsOnCallModeOn.ToString());
-
-            //Properties.Settings.Default.startMinimized = instance.StartMinimized;
-            //OOFSponder.Logger.Info("Persisted startMinimized = " + instance.StartMinimized.ToString());
-
-            //Properties.Settings.Default.Save();
             OOFSponder.Logger.Info("Persisted settings");
 
             if (disposing)

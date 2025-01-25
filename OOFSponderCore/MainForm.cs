@@ -806,6 +806,14 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info("Saving settings");
 
+            //adding to prevent even trying to save when we don't have all the necessary data
+            //attempted fix of https://github.com/EvanBasalik/OOFSponder/issues/103
+            if (!OOFData.Instance.HaveNecessaryData)
+            {
+                Logger.Warning("Missing necessary data, so not persisting settings!");
+                return;
+            }
+
             if (primaryToolStripMenuItem.Checked)
             {
                 OOFSponder.Logger.Info("Saving Primary OOF message");
