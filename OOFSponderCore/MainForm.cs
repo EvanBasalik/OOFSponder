@@ -20,8 +20,6 @@ namespace OOFScheduling
 {
     public partial class MainForm : Form
     {
-        static string DummyHTML = @"<BODY scroll=auto></BODY>";
-
         private ContextMenuStrip trayMenu;
 
         //Track if force close or just hitting X to minimize
