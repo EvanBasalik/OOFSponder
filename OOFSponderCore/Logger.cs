@@ -61,9 +61,9 @@ namespace OOFSponder
 
         public static void InfoPotentialPII(string property, string value)
         {
-            if (value.Length >= 21)
+            if (value.Length >= 26)
             {
-                WriteEntry(property + " = " + value.Substring(0, 20), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
+                WriteEntry(property + " = " + value.Substring(0, 25), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name);
             }
             else
             {
