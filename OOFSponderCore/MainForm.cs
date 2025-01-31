@@ -1449,6 +1449,9 @@ namespace OOFScheduling
 
         private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
         {
+            //Adding b/c I think this might be where the nulled messages are coming from
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             //force a save if the StartMinimize is adjusted
             saveSettings();
         }

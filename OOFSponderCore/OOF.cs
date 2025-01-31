@@ -17,6 +17,17 @@ namespace OOFScheduling
         internal DateTime PermaOOFDate { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
 
+        internal bool isEmptyOrDefaultOOFMessage(string input)
+        {
+            bool _result = false;
+            if (input == string.Empty && input == DummyHTML)
+            {
+                _result = true;
+            }
+
+            return _result;
+        }
+
         internal string UserSettingsSource { get; set; }
 
         private string _workingHours;
@@ -44,7 +55,7 @@ namespace OOFScheduling
             {
                 //if a new value is being passed in, then persist to offline AppData storage
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != _primaryOOFExternalMessage && value != "" && value != DummyHTML)
+                if (value != _primaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value))
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message
@@ -71,7 +82,7 @@ namespace OOFScheduling
             {
                 //if a new value is being passed in, then persist to offline AppData storage
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != _primaryOOFInternalMessage && value != "" && value != DummyHTML)
+                if (value != _primaryOOFInternalMessage && !isEmptyOrDefaultOOFMessage(value))
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message
@@ -98,7 +109,7 @@ namespace OOFScheduling
             {
                 //if a new value is being passed in, then persist to offline AppData storage
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != _secondaryOOFExternalMessage && value != "" && value != DummyHTML)
+                if (value != _secondaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value))
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message
@@ -126,7 +137,7 @@ namespace OOFScheduling
             {
                 //if a new value is being passed in, then persist to offline AppData storage
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != _secondaryOOFInternalMessage && value != "" && value != DummyHTML)
+                if (value != _secondaryOOFInternalMessage && !isEmptyOrDefaultOOFMessage(value))
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message
@@ -217,14 +228,13 @@ namespace OOFScheduling
             {
                 bool _result = false;
                 
-                //TO DO: need to add additional check for the default HTML
-                //to catch when this hits before ReadProperties is done
-                if (OOFData.Instance.PrimaryOOFExternalMessage != "" && OOFData.Instance.PrimaryOOFInternalMessage != ""
+                if (!isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFInternalMessage)
     && OOFData.Instance.WorkingHours != "")
                 {
                     _result = true;
                 }
 
+                OOFSponder.Logger.Info("HaveNecessaryData: ", _result);
                 return _result;
             }
         }
