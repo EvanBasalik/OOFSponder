@@ -187,7 +187,6 @@
             tsmiStartMinimized.Name = "tsmiStartMinimized";
             tsmiStartMinimized.Size = new System.Drawing.Size(232, 22);
             tsmiStartMinimized.Text = "&Start minimized";
-            tsmiStartMinimized.CheckStateChanged += tsmiStartMinimized_CheckStateChanged;
             // 
             // enableOnCallModeToolStripMenuItem
             // 

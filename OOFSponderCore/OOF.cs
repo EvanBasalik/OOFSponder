@@ -227,7 +227,11 @@ namespace OOFScheduling
             get
             {
                 bool _result = false;
-                
+
+                //we need the OOF messages and working hours
+                //also, don't need to check SecondaryOOF messages for two reasons:
+                //1) they won't always be set
+                //2) the UI flow won't let you get here with permaOOF if they aren't set
                 if (!isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFInternalMessage)
     && OOFData.Instance.WorkingHours != "")
                 {
