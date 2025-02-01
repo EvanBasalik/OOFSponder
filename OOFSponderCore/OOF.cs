@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using mshtml;
 using Newtonsoft.Json.Linq;
 using OOFSponder;
 using System;
@@ -16,6 +17,17 @@ namespace OOFScheduling
         internal DateTime PermaOOFDate { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
 
+        internal bool isEmptyOrDefaultOOFMessage(string input)
+        {
+            bool _result = false;
+            if (input == string.Empty && input == DummyHTML)
+            {
+                _result = true;
+            }
+
+            return _result;
+        }
+
         internal string UserSettingsSource { get; set; }
 
         private string _workingHours;
@@ -32,7 +44,6 @@ namespace OOFScheduling
                 _OOFCollection = null;
             }
         }
-        private string StoredPrimaryOOFExternalMessage { get; set; }
         private string _primaryOOFExternalMessage = string.Empty;
         internal string PrimaryOOFExternalMessage { 
             get
@@ -43,19 +54,22 @@ namespace OOFScheduling
             set
             {
                 //if a new value is being passed in, then persist to offline AppData storage
-                //also update the stored value
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != StoredPrimaryOOFExternalMessage && value != "" && value != DummyHTML)
+                if (value != _primaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value))
                 {
-                    Logger.Info("Primary OOF External has changed - persisting to AppData and updating stored value");
-                    OOFData.Instance.StoredPrimaryOOFExternalMessage = value;
-                    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryExternal, value);
+                    //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
+                    //so it isn't an actual change in the OOF message
+                    if (_primaryOOFExternalMessage != string.Empty)
+                    {
+                        Logger.Info("Primary OOF External has changed - persisting to AppData");
+                        OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryExternal, value);
+                    }
                 }
                 _primaryOOFExternalMessage = value;
             }
         
         }
-        private string StoredPrimaryOOFInternalMessage { get; set; }
+
         private string _primaryOOFInternalMessage = string.Empty;
         internal string PrimaryOOFInternalMessage
         {
@@ -67,19 +81,22 @@ namespace OOFScheduling
             set
             {
                 //if a new value is being passed in, then persist to offline AppData storage
-                //also update the stored value
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != StoredPrimaryOOFInternalMessage && value != "" && value != DummyHTML)
+                if (value != _primaryOOFInternalMessage && !isEmptyOrDefaultOOFMessage(value))
                 {
-                    Logger.Info("Primary OOF Internal has changed - persisting to AppData and updating stored value");
-                    OOFData.Instance.StoredPrimaryOOFInternalMessage = value;
-                    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryInternal, value);
+                    //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
+                    //so it isn't an actual change in the OOF message
+                    if (_primaryOOFInternalMessage != string.Empty)
+                    {
+                        Logger.Info("Primary OOF Internal has changed - persisting to AppData");
+                        OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryInternal, value);
+                    }
                 }
+
                 _primaryOOFInternalMessage = value;
             }
 
         }
-        internal string StoredSecondaryOOFExternalMessage { get; set; }
         private string _secondaryOOFExternalMessage = string.Empty;
         internal string SecondaryOOFExternalMessage
         {
@@ -91,20 +108,23 @@ namespace OOFScheduling
             set
             {
                 //if a new value is being passed in, then persist to offline AppData storage
-                //also update the stored value
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != StoredSecondaryOOFExternalMessage && value != "" && value != DummyHTML)
+                if (value != _secondaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value))
                 {
-                    Logger.Info("Secondary OOF External has changed - persisting to AppData and updating stored value");
-                    OOFData.Instance.StoredSecondaryOOFExternalMessage = value;
-                    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, value);
+                    //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
+                    //so it isn't an actual change in the OOF message
+                    if (_secondaryOOFExternalMessage != string.Empty)
+                    {
+                        Logger.Info("Secondary OOF External has changed - persisting to AppData");
+                        OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, value);
+                    }
                 }
+
                 _secondaryOOFExternalMessage = value;
             }
 
         }
 
-        internal string StoredSecondaryOOFInternalMessage { get; set; }
         private string _secondaryOOFInternalMessage = string.Empty;
         internal string SecondaryOOFInternalMessage
         {
@@ -116,14 +136,18 @@ namespace OOFScheduling
             set
             {
                 //if a new value is being passed in, then persist to offline AppData storage
-                //also update the stored value
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != StoredSecondaryOOFInternalMessage && value != "" && value != DummyHTML)
+                if (value != _secondaryOOFInternalMessage && !isEmptyOrDefaultOOFMessage(value))
                 {
-                    Logger.Info("Secondary OOF Internal has changed - persisting to AppData and updating stored value");
-                    OOFData.Instance.StoredSecondaryOOFInternalMessage = value;
-                    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, value);
+                    //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
+                    //so it isn't an actual change in the OOF message
+                    if (_secondaryOOFInternalMessage != string.Empty)
+                    {
+                        Logger.Info("Secondary OOF Internal has changed - persisting to AppData");
+                        OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, value);
+                    }
                 }
+
                 _secondaryOOFInternalMessage = value;
             }
 
@@ -190,6 +214,7 @@ namespace OOFScheduling
 
                 if (instance == null)
                 {
+                    OOFSponder.Logger.Info("Instace null - instantiating via ReadProperties");
                     instance = new OOFData();
                     instance.ReadProperties();
                 }
@@ -203,12 +228,17 @@ namespace OOFScheduling
             {
                 bool _result = false;
 
-                if (OOFData.Instance.PrimaryOOFExternalMessage != "" && OOFData.Instance.PrimaryOOFInternalMessage != ""
+                //we need the OOF messages and working hours
+                //also, don't need to check SecondaryOOF messages for two reasons:
+                //1) they won't always be set
+                //2) the UI flow won't let you get here with permaOOF if they aren't set
+                if (!isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFInternalMessage)
     && OOFData.Instance.WorkingHours != "")
                 {
                     _result = true;
                 }
 
+                OOFSponder.Logger.Info("HaveNecessaryData: ", _result);
                 return _result;
             }
         }
@@ -294,24 +324,23 @@ namespace OOFScheduling
             OOFSponderConfig.Root OOFSponderConfig = new OOFSponderConfig.Root();
             config.Bind(OOFSponderConfig);
 
+            OOFSponder.Logger.Info("Successfully read properties and bound to class");
+            OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFSponderConfig.OOFData.PrimaryOOFExternalMessage);
+
             instance.PermaOOFDate = OOFSponderConfig.OOFData.PermaOOFDate;
             instance.WorkingHours = OOFSponderConfig.OOFData.WorkingHours == baseValue ? string.Empty : OOFSponderConfig.OOFData.WorkingHours;
 
             //while reading in the Primary External, also store that value in a secondary Stored field for the Save comparison
             instance.PrimaryOOFExternalMessage = OOFSponderConfig.OOFData.PrimaryOOFExternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.PrimaryOOFExternalMessage;
-            instance.StoredPrimaryOOFExternalMessage = instance.PrimaryOOFExternalMessage;
 
             //while reading in the Primary Internal, also store that value in a secondary Stored field for the Save comparison
             instance.PrimaryOOFInternalMessage = OOFSponderConfig.OOFData.PrimaryOOFInternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.PrimaryOOFInternalMessage;
-            instance.StoredPrimaryOOFInternalMessage = instance.PrimaryOOFInternalMessage;
 
             //while reading in the Secondary External, also store that value in a secondary Stored field for the Save comparison
-            instance.SecondaryOOFExternalMessage = instance.StoredSecondaryOOFExternalMessage = OOFSponderConfig.OOFData.SecondaryOOFExternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.SecondaryOOFExternalMessage;
-            instance.StoredSecondaryOOFExternalMessage = instance.SecondaryOOFExternalMessage;
+            instance.SecondaryOOFExternalMessage = OOFSponderConfig.OOFData.SecondaryOOFExternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.SecondaryOOFExternalMessage;
 
             //while reading in the Secondary Internal, also store that value in a secondary Stored field for the Save comparison
             instance.SecondaryOOFInternalMessage = OOFSponderConfig.OOFData.SecondaryOOFInternalMessage == baseValue ? string.Empty : OOFSponderConfig.OOFData.SecondaryOOFInternalMessage;
-            instance.StoredSecondaryOOFInternalMessage = instance.SecondaryOOFInternalMessage;
 
             instance.IsOnCallModeOn = OOFSponderConfig.OOFData.IsOnCallModeOn == baseBool ? false : OOFSponderConfig.OOFData.IsOnCallModeOn;
             instance.StartMinimized = OOFSponderConfig.OOFData.StartMinimized == baseBool ? false : OOFSponderConfig.OOFData.StartMinimized;

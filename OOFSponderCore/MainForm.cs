@@ -20,16 +20,20 @@ namespace OOFScheduling
 {
     public partial class MainForm : Form
     {
-        static string DummyHTML = @"<BODY scroll=auto></BODY>";
-
         private ContextMenuStrip trayMenu;
 
-        //Track if force close or just hitting X to minimize
-        //private bool minimize = true;
+        //track if we are in the base instantiation
+        //if we are, don't pop the OOFSponder toast on minimize
+        private bool inInitialization = false;
+
+        //controls whether or not the we show the form by default
+        private bool allowshowdisplay = false;
 
         public MainForm()
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
+            inInitialization = true;
 
             InitializeComponent();
 
@@ -49,6 +53,28 @@ namespace OOFScheduling
                 wn.Show();
             }
 #endif
+
+            #region Minimize decision and setup
+            //if we have all the inputs and "start minimized" is checked in the menu, then minimize
+            //if we are missing some necessar input, then need to show the window regardless
+            Logger.Info("StartMinimized:" + OOFData.Instance.StartMinimized.ToString());
+            Logger.Info("HaveNecessaryData:" + OOFData.Instance.HaveNecessaryData.ToString());
+            if (OOFData.Instance.StartMinimized && OOFData.Instance.HaveNecessaryData)
+            {
+                //don't call Show() here b/c we run minimized
+                this.WindowState = FormWindowState.Minimized;
+
+                //but do make the tray icon visible
+                notifyIcon1.Visible = true;
+            }
+            else
+            {
+                allowshowdisplay = true;
+                this.WindowState = FormWindowState.Normal;
+                this.Show();
+            }
+            Logger.Info("Starting WindowState:" + this.WindowState.ToString());
+            #endregion
 
             //need to wire up the day checkboxes first so that it takes effect
             //when we set the value
@@ -216,33 +242,33 @@ namespace OOFScheduling
             htmlEditorControl1.Validated += htmlEditorValidated;
             htmlEditorControl2.Validated += htmlEditorValidated;
 
+            #region StartMinimized Setup
+            //make sure to set the state of the Start Minimized menu item appropriately
+            tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
+
+            //now that the value is properly set, can add the handler
+            tsmiStartMinimized.Click += tsmiStartMinimized_CheckStateChanged;
+            #endregion
+
             //wait on async auth stuff if not null
             if (AuthTask != null)
             {
                 AuthTask.Wait();
             }
 
-            //trigger a check on current status
-            System.Threading.Tasks.Task.Run(() => RunSetOofO365());
-
             radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
             //fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
 
-            //if we have all the inputs and "start minimized" is checked in the menu, then minimize
-            //if we are missing some necessar input, then need to show the window regardless
-            Logger.Info("StartMinimized:" + OOFData.Instance.StartMinimized.ToString());
-            Logger.Info("HaveNecessaryData:" + OOFData.Instance.HaveNecessaryData.ToString());
-            if (OOFData.Instance.StartMinimized && OOFData.Instance.HaveNecessaryData)
-            {
-                this.WindowState = FormWindowState.Minimized;
-            }
-            else
-            {
-                this.WindowState = FormWindowState.Normal;
-            }
-            Logger.Info("Starting WindowState:" + this.WindowState.ToString());
+            //now that everything is loaded, trigger a check on current status
+            System.Threading.Tasks.Task.Run(() => RunSetOofO365());
 
-            this.Show();
+            //unset the base instantiation tracker
+            inInitialization = false;
+        }
+
+        protected override void SetVisibleCore(bool value)
+        {
+            base.SetVisibleCore(allowshowdisplay ? value : allowshowdisplay);
         }
 
         private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
@@ -391,22 +417,8 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
-            bool haveNecessaryData = false;
-
-            //we need the OOF messages and working hours
-            //also, don't need to check SecondaryOOF messages for two reasons:
-            //1) they won't always be set
-            //2) the UI flow won't let you get here with permaOOF if they aren't set
-            if (OOFData.Instance.PrimaryOOFExternalMessage != "" &&
-                OOFData.Instance.PrimaryOOFInternalMessage != "" &&
-                OOFData.Instance.WorkingHours != "")
-            {
-                haveNecessaryData = true;
-                OOFSponderInsights.Track("HaveNecessaryData");
-            }
-
             bool result = false;
-            if (haveNecessaryData)
+            if (OOFData.Instance.HaveNecessaryData)
             {
                 OOFSponder.Logger.Info("Getting OOF times");
                 DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
@@ -892,7 +904,10 @@ namespace OOFScheduling
             {
                 OOFSponder.Logger.Info("Main window just minimized, so show tooltip, etc.");
                 notifyIcon1.Visible = true;
-                notifyIcon1.ShowBalloonTip(100);
+
+                //if this is coming from the initial data load, don't pop the ballon
+                if (!inInitialization) notifyIcon1.ShowBalloonTip(100);
+
                 this.ShowInTaskbar = false;
             }
 
@@ -913,12 +928,10 @@ namespace OOFScheduling
             if (this.WindowState == FormWindowState.Minimized)
             {
                 this.WindowState = FormWindowState.Normal;
+                this.allowshowdisplay = true;
                 this.ShowInTaskbar = true;
                 notifyIcon1.Visible = false;
                 this.Show();
-
-                //be sure to update the UI to match the stored value for Start Minized
-                this.tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
             }
         }
 
@@ -1451,14 +1464,16 @@ namespace OOFScheduling
 
         private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
         {
+            //Adding b/c I think this might be where the nulled messages are coming from
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             //force a save if the StartMinimize is adjusted
             saveSettings();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //make sure to set the state of the Start Minimized menu item appropriately
-            tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
+
         }
 
         private void tsmiSavedOOFMessage_Click(object sender, EventArgs e)
