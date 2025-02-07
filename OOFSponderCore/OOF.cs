@@ -20,7 +20,7 @@ namespace OOFScheduling
         internal bool isEmptyOrDefaultOOFMessage(string input)
         {
             bool _result = false;
-            if (input == string.Empty && input == DummyHTML)
+            if (input == string.Empty || input == DummyHTML)
             {
                 _result = true;
             }
