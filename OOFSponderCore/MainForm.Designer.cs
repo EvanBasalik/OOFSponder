@@ -91,6 +91,7 @@
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             radPrimary = new System.Windows.Forms.RadioButton();
             radSecondary = new System.Windows.Forms.RadioButton();
+            comboBox1 = new System.Windows.Forms.ComboBox();
             statusStrip1.SuspendLayout();
             htmlEditorControl2.BeginInit();
             htmlEditorControl1.BeginInit();
@@ -769,12 +770,21 @@
             radSecondary.Text = "Secondary OOF";
             radSecondary.UseVisualStyleBackColor = true;
             // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new System.Drawing.Point(380, 142);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new System.Drawing.Size(121, 23);
+            comboBox1.TabIndex = 58;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new System.Drawing.Size(794, 686);
+            Controls.Add(comboBox1);
             Controls.Add(lblInternalMessage);
             Controls.Add(statusStrip1);
             Controls.Add(label13);
@@ -895,5 +905,6 @@
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
