@@ -1,4 +1,9 @@
-﻿using System;
+﻿using Microsoft.Graph;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OOFSponderConfig
 {
@@ -10,6 +15,7 @@ namespace OOFSponderConfig
     //    "PrimaryOOFInternalMessage": "default",
     //    "SecondaryOOFExternalMessage": "default",
     //    "SecondaryOOFInternalMessage": "default",
+    //    "ExternalAudienceScope": "All",
     //    "IsOnCallModeOn": false,
     //    "StartMinimized": false
     //  },
@@ -24,6 +30,7 @@ namespace OOFSponderConfig
         public string PrimaryOOFInternalMessage { get; set; }
         public string SecondaryOOFExternalMessage { get; set; }
         public string SecondaryOOFInternalMessage { get; set; }
+        public ExternalAudienceScope ExternalAudienceScope { get; set; }
         public bool IsOnCallModeOn { get; set; }
         public bool StartMinimized { get; set; }
     }
@@ -31,8 +38,7 @@ namespace OOFSponderConfig
     internal class Root
     {
         OOFData _OOFData;
-        public OOFData OOFData
-        {
+        public OOFData OOFData { 
             get
             {
                 if (_OOFData == null)
