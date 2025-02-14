@@ -70,6 +70,13 @@ namespace OOFScheduling
         
         }
 
+        private enum ExternalAudienceScope
+        {
+            All = 0, ContactsOnly=1, None=2
+        }
+
+        private ExternalAudienceScope _externalAudienceScope;
+
         private string _primaryOOFInternalMessage = string.Empty;
         internal string PrimaryOOFInternalMessage
         {
@@ -317,6 +324,10 @@ namespace OOFScheduling
             var config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 //later added files override previous ones
+                //this is critical when we add new properties
+                //we just need to add them to the base appsettings.json
+                //and if the user's file doesn't have them, the new default gets added
+                //from the updated appsettings.json
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()),true)
                 .Build();
