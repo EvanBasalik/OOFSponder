@@ -69,13 +69,6 @@ namespace OOFScheduling
 
         }
 
-        private enum ExternalAudienceScope
-        {
-            All = 0, ContactsOnly=1, None=2
-        }
-
-        private ExternalAudienceScope _externalAudienceScope;
-
         private string _primaryOOFInternalMessage = string.Empty;
         internal string PrimaryOOFInternalMessage
         {
@@ -300,7 +293,9 @@ namespace OOFScheduling
 
         public bool useNewOOFMath { get; internal set; }
         public bool StartMinimized { get; internal set; }
-        public object get { get; private set; }
+
+        public Microsoft.Graph.ExternalAudienceScope _externalAudienceScope;
+        public Microsoft.Graph.ExternalAudienceScope ExternalAudienceScope { get => _externalAudienceScope; set => _externalAudienceScope = value; }
 
         private void LogProperties()
         {
@@ -310,6 +305,7 @@ namespace OOFScheduling
             OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", PrimaryOOFInternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFExternalMessage", SecondaryOOFExternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", SecondaryOOFInternalMessage);
+            OOFSponder.Logger.Info("ExternalAudienceScope: " + ExternalAudienceScope.ToString());
             OOFSponder.Logger.Info("IsOnCallModeOn: " + IsOnCallModeOn);
             OOFSponder.Logger.Info("StartMinimized: " + StartMinimized);
             OOFSponder.Logger.Info("UserSettingsSource: " + UserSettingsSource);
@@ -335,7 +331,6 @@ namespace OOFScheduling
             config.Bind(OOFSponderConfig);
 
             OOFSponder.Logger.Info("Successfully read properties and bound to class");
-            OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFSponderConfig.OOFData.PrimaryOOFExternalMessage);
 
             instance.PermaOOFDate = OOFSponderConfig.OOFData.PermaOOFDate;
             instance.WorkingHours = OOFSponderConfig.OOFData.WorkingHours == baseValue ? string.Empty : OOFSponderConfig.OOFData.WorkingHours;
@@ -356,6 +351,8 @@ namespace OOFScheduling
             instance.StartMinimized = OOFSponderConfig.OOFData.StartMinimized == baseBool ? false : OOFSponderConfig.OOFData.StartMinimized;
 
             instance.UserSettingsSource = OOFSponderConfig.UserSettingsSource;
+
+            instance.ExternalAudienceScope = OOFSponderConfig.OOFData.ExternalAudienceScope;
 
             LogProperties();
 
@@ -399,6 +396,7 @@ namespace OOFScheduling
             config.OOFData.WorkingHours = instance.WorkingHours;
             config.OOFData.IsOnCallModeOn = instance.IsOnCallModeOn;
             config.OOFData.StartMinimized = instance.StartMinimized;
+            config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope) instance.ExternalAudienceScope;
             config.UserSettingsSource = instance.UserSettingsSource;
 
 

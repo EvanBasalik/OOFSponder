@@ -91,8 +91,7 @@
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             radPrimary = new System.Windows.Forms.RadioButton();
             radSecondary = new System.Windows.Forms.RadioButton();
-            comboBox1 = new System.Windows.Forms.ComboBox();
-            comboBox2 = new System.Windows.Forms.ComboBox();
+            cboExternalAudienceScope = new System.Windows.Forms.ComboBox();
             statusStrip1.SuspendLayout();
             htmlEditorControl2.BeginInit();
             htmlEditorControl1.BeginInit();
@@ -771,21 +770,15 @@
             radSecondary.Text = "Secondary OOF";
             radSecondary.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // cboExternalAudienceScope
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new System.Drawing.Point(380, 142);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new System.Drawing.Size(121, 23);
-            comboBox1.TabIndex = 58;
-            // 
-            // comboBox2
-            // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new System.Drawing.Point(629, 149);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new System.Drawing.Size(121, 23);
-            comboBox2.TabIndex = 59;
+            cboExternalAudienceScope.FormattingEnabled = true;
+            cboExternalAudienceScope.Items.AddRange(new object[] { "All", "Contacts Only", "None" });
+            cboExternalAudienceScope.Location = new System.Drawing.Point(629, 149);
+            cboExternalAudienceScope.Name = "cboExternalAudienceScope";
+            cboExternalAudienceScope.Size = new System.Drawing.Size(121, 23);
+            cboExternalAudienceScope.TabIndex = 59;
+            cboExternalAudienceScope.SelectedIndexChanged += cboExternalAudienceScope_SelectedIndexChanged;
             // 
             // MainForm
             // 
@@ -793,8 +786,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new System.Drawing.Size(794, 686);
-            Controls.Add(comboBox2);
-            Controls.Add(comboBox1);
+            Controls.Add(cboExternalAudienceScope);
             Controls.Add(lblInternalMessage);
             Controls.Add(statusStrip1);
             Controls.Add(label13);
@@ -915,7 +907,6 @@
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cboExternalAudienceScope;
     }
 }
