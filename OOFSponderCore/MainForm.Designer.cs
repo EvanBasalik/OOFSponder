@@ -92,6 +92,7 @@
             radPrimary = new System.Windows.Forms.RadioButton();
             radSecondary = new System.Windows.Forms.RadioButton();
             comboBox1 = new System.Windows.Forms.ComboBox();
+            comboBox2 = new System.Windows.Forms.ComboBox();
             statusStrip1.SuspendLayout();
             htmlEditorControl2.BeginInit();
             htmlEditorControl1.BeginInit();
@@ -778,12 +779,21 @@
             comboBox1.Size = new System.Drawing.Size(121, 23);
             comboBox1.TabIndex = 58;
             // 
+            // comboBox2
+            // 
+            comboBox2.FormattingEnabled = true;
+            comboBox2.Location = new System.Drawing.Point(629, 149);
+            comboBox2.Name = "comboBox2";
+            comboBox2.Size = new System.Drawing.Size(121, 23);
+            comboBox2.TabIndex = 59;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new System.Drawing.Size(794, 686);
+            Controls.Add(comboBox2);
             Controls.Add(comboBox1);
             Controls.Add(lblInternalMessage);
             Controls.Add(statusStrip1);
@@ -906,5 +916,6 @@
         private System.Windows.Forms.RadioButton radSecondary;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }
