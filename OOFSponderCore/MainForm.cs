@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -145,6 +146,17 @@ namespace OOFScheduling
                 Logger.Warning("Don't have WorkingHours");
             }
 
+            //populate the dropdown with the possible ExternalAudienceScope values
+            var enumValues = Enum.GetValues(typeof(Microsoft.Graph.ExternalAudienceScope)).Cast<Microsoft.Graph.ExternalAudienceScope>();
+            foreach (var value in enumValues)
+            {
+                cboExternalAudienceScope.Items.Add(EnumHelper.GetEnumDescription(value));
+            }
+
+            cboExternalAudienceScope.SelectedIndex = (int)OOFData.Instance.ExternalAudienceScope;
+            //need to decide if the External Message needs to be marked ReadOnly
+            DecideonHTMLReadOnly();
+
             //pull all the runtime accessibility work into one place
             //wire up to respond to changes
             SystemEvents.UserPreferenceChanged += new UserPreferenceChangedEventHandler(SystemEvents_UserPreferenceChanged);
@@ -211,13 +223,6 @@ namespace OOFScheduling
             button2.Text = "Save NoOOF";
 #endif
 
-            var enumValues = Enum.GetValues(typeof(Microsoft.Graph.ExternalAudienceScope)).Cast<Microsoft.Graph.ExternalAudienceScope>();
-            foreach (var value in enumValues)
-            {
-                cboExternalAudienceScope.Items.Add(EnumHelper.GetEnumDescription(value));
-            }
-
-            cboExternalAudienceScope.SelectedIndex = (int) OOFData.Instance.ExternalAudienceScope;
             if (OOFData.Instance.IsPermaOOFOn)
             {
                 SetUIforSecondary();
@@ -850,31 +855,11 @@ namespace OOFScheduling
 
         private void saveSettings()
         {
-            OOFSponder.Logger.Info("Saving settings");
-
-            //adding to prevent even trying to save when we don't have all the necessary data
-            //attempted fix of https://github.com/EvanBasalik/OOFSponder/issues/103
-            if (!OOFData.Instance.HaveNecessaryData)
-            {
-                Logger.Warning("Missing necessary data, so not persisting settings!");
-                return;
-            }
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             if (primaryToolStripMenuItem.Checked)
             {
                 OOFSponder.Logger.Info("Saving Primary OOF message");
-
-                //if the current messages don't match the stored ones, then save them in AppData
-                //important to do this first so we can compare to the older message before updating
-                //the instance data in a few lines
-                //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
-                //if (OOFData.Instance.PrimaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
-                //{
-                //    Logger.Info("Primary OOF Internal has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryInternal, htmlEditorControl2.BodyHtml);
-                //}
-
-                //and also in the instance data
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
@@ -882,23 +867,6 @@ namespace OOFScheduling
             //since customer is editing Secondary message, save text in Secondary
             {
                 OOFSponder.Logger.Info("Saving Secondary OOF message");
-
-                //if the current messages don't match the stored ones, then save them in AppData
-                //important to do this first so we can compare to the older message before updating
-                //the instance data in a few lines
-                //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
-                //if (OOFData.Instance.SecondaryOOFExternalMessage != htmlEditorControl1.BodyHtml)
-                //{
-                //    Logger.Info("Secondary OOF External has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, htmlEditorControl1.BodyHtml);
-                //}
-                //if (OOFData.Instance.SecondaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
-                //{
-                //    Logger.Info("Secondary OOF Internal has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, htmlEditorControl2.BodyHtml);
-                //}
-
-                //and also in the instance data
                 OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
@@ -912,6 +880,16 @@ namespace OOFScheduling
 
             OOFData.Instance.WorkingHours = ScheduleString();
 
+            //check to make sure we have the minimum data
+            if (!OOFData.Instance.HaveNecessaryData)
+            {
+                Logger.Warning("Missing necessary data, so not persisting settings!");
+                MessageBox.Show("Missing necessary data. Unless you aren't sending an OOF message to external senders, you must specify all a message for both internal and external",
+                    "Missing settings!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            OOFSponder.Logger.Info("Saving settings");
             OOFData.Instance.WriteProperties();
 
             toolStripStatusLabel1.Text = "Settings Saved";
@@ -1624,7 +1602,33 @@ namespace OOFScheduling
 
         private void cboExternalAudienceScope_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //don't do anything - rely on the SaveSetting()
+            //if in the initial load, don't react
+            if (inInitialization)
+            {
+                return;
+            }
+
+            OOFData.Instance.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)cboExternalAudienceScope.SelectedIndex;
+
+            DecideonHTMLReadOnly();
+
+            //don't do anything to persist setting change - rely on SaveSetting()
+        }
+
+        private void DecideonHTMLReadOnly()
+        {
+            //disable the External Message entry box if Audience Scope = None
+            bool editable = !(OOFData.Instance.ExternalAudienceScope == ExternalAudienceScope.None);
+
+            htmlEditorControl1.Enabled = editable;
+            if (editable)
+            {
+                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("style=\"BACKGROUND: darkgray\" scroll=auto", "scroll=auto");
+            }
+            else
+            {
+                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("scroll=auto", "scroll=auto style='BACKGROUND: darkgray'");
+            }
         }
     }
 

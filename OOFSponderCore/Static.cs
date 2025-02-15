@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,6 +16,16 @@ namespace OOFScheduling
         internal static string CleanReplyMessage(this string input)
         {
             return Regex.Replace(input, @"\r\n|\n\r|\n|\r", "\r\n");
+        }
+
+        private static string RemoveHTMLRegex(this string input)
+        {
+            return Regex.Replace(input, "<.*?>", string.Empty);
+        }
+        internal static string RemoveHTML(this string input)
+        {
+            var result = RemoveHTMLRegex(input);
+            return WebUtility.HtmlDecode(result);
         }
 
         public static T GetPrivateField<T>(this object obj, string name)

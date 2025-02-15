@@ -6,7 +6,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace OOFScheduling
@@ -20,7 +22,11 @@ namespace OOFScheduling
         internal bool isEmptyOrDefaultOOFMessage(string input)
         {
             bool _result = false;
-            if (input == string.Empty || input == DummyHTML)
+
+            string output1 = input.RemoveHTML();
+            string output = new string(output1.Where(c => !char.IsWhiteSpace(c)).ToArray());
+
+            if (output == string.Empty || output == DummyHTML)
             {
                 _result = true;
             }
@@ -228,14 +234,49 @@ namespace OOFScheduling
             {
                 bool _result = false;
 
+                if (OOFData.Instance.WorkingHours == "")
+                {
+                    OOFSponder.Logger.Info("HaveNecessaryData: " + _result);
+                    return _result;
+                }
+
                 //we need the OOF messages and working hours
                 //also, don't need to check SecondaryOOF messages for two reasons:
                 //1) they won't always be set
                 //2) the UI flow won't let you get here with permaOOF if they aren't set
-                if (!isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFInternalMessage)
-    && OOFData.Instance.WorkingHours != "")
+                if (!IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFInternalMessage))
                 {
                     _result = true;
+                    OOFSponder.Logger.Info("HaveNecessaryData: Normal OOF");
+                    return _result;
+                }
+
+                //check the secondary condition where External Message Audience Scope == None
+                //and PermaOOF is NOT on
+                //in that case, it is OK for PrimaryOOFExternalMessage to be empty
+                if (!OOFData.instance.IsPermaOOFOn && isEmptyOrDefaultOOFMessage(OOFData.instance.PrimaryOOFExternalMessage) && OOFData.instance.ExternalAudienceScope == Microsoft.Graph.ExternalAudienceScope.None)
+                {
+                    _result = true;
+                    OOFSponder.Logger.Info("HaveNecessaryData: Normal OOF with Scope=None");
+                    return _result;
+                }
+
+                //check the tertiary condition where External Message Audience Scope == None
+                //and PermaOOF is on
+                //in that case, it is OK for SecondaryOOFExternalMessage to be empty
+                if (OOFData.instance.IsPermaOOFOn && isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFExternalMessage) && OOFData.instance.ExternalAudienceScope == Microsoft.Graph.ExternalAudienceScope.None)
+                {
+                    _result = true;
+                    OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF with Scope=None");
+                    return _result;
+                }
+
+                if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
+                    && OOFData.Instance.WorkingHours != "")
+                {
+                    _result = true;
+                    OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
+                    return _result;
                 }
 
                 OOFSponder.Logger.Info("HaveNecessaryData: ", _result);
