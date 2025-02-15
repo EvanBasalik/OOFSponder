@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Graph;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -34,6 +36,26 @@ namespace OOFScheduling
                 case null: throw new ArgumentNullException(nameof(input));
                 case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
                 default: return input[0].ToString().ToUpper() + input.Substring(1);
+            }
+        }
+    }
+
+    public static class EnumHelper
+    {
+        public static string GetEnumDescription(Enum value)
+        {
+            var field = value.GetType().GetField(value.ToString());
+            var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
+
+            //TODO: fix this VERY hacky code
+            //need to add special code for ContactsOnly to add a space
+            if (value.ToString() == ExternalAudienceScope.ContactsOnly.ToString())
+            {
+                return "Contacts Only";
+            }
+            else
+            {
+                return value.ToString();
             }
         }
     }

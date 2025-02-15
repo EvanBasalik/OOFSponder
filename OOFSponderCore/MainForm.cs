@@ -68,6 +68,8 @@ namespace OOFScheduling
                 //don't call Show() here b/c we run minimized
                 this.WindowState = FormWindowState.Minimized;
 #else
+                allowshowdisplay = true;
+                this.WindowState = FormWindowState.Normal;
                 this.Show();
 #endif
                 //but do make the tray icon visible
@@ -208,7 +210,14 @@ namespace OOFScheduling
             //if a NOOOF build, then update the Save Settings button visibly
             button2.Text = "Save NoOOF";
 #endif
-            cboExternalAudienceScope.SelectedItem = OOFData.Instance.ExternalAudienceScope.ToString();
+
+            var enumValues = Enum.GetValues(typeof(Microsoft.Graph.ExternalAudienceScope)).Cast<Microsoft.Graph.ExternalAudienceScope>();
+            foreach (var value in enumValues)
+            {
+                cboExternalAudienceScope.Items.Add(EnumHelper.GetEnumDescription(value));
+            }
+
+            cboExternalAudienceScope.SelectedIndex = (int) OOFData.Instance.ExternalAudienceScope;
             if (OOFData.Instance.IsPermaOOFOn)
             {
                 SetUIforSecondary();

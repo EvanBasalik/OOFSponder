@@ -778,7 +778,6 @@
             cboExternalAudienceScope.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
             cboExternalAudienceScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboExternalAudienceScope.FormattingEnabled = true;
-            cboExternalAudienceScope.Items.AddRange(new object[] { "All", "Contacts Only", "None" });
             cboExternalAudienceScope.Location = new System.Drawing.Point(663, 146);
             cboExternalAudienceScope.Name = "cboExternalAudienceScope";
             cboExternalAudienceScope.Size = new System.Drawing.Size(121, 23);
