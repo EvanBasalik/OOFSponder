@@ -511,12 +511,14 @@ namespace OOFScheduling
             DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
 
             //create local OOF object
+            //TODO: why not use OOFData.Instance??
             AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
             localOOF.ExternalReplyMessage = oofMessageExternal;
             localOOF.InternalReplyMessage = oofMessageInternal;
             localOOF.ScheduledStartDateTime = oofStart;
             localOOF.ScheduledEndDateTime = oofEnd;
             localOOF.Status = AutomaticRepliesStatus.Scheduled;
+            localOOF.ExternalAudience = OOFData.Instance.ExternalAudienceScope;
 
             try
             {
@@ -567,15 +569,32 @@ namespace OOFScheduling
                     scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
                     scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //do nothing because we will just take the initialized false values;
+                    //don't care - just take the initialized value of false
+                    //log error just in case
+                    OOFSponder.Logger.Error(ex);
                 }
+
+                //don't know if this value could ever be null, so set to false by default
+                bool externalAudienceScopeEqual = false;
+                try
+                {
+                    externalAudienceScopeEqual = remoteOOF.ExternalAudience == localOOF.ExternalAudience;
+                }
+                catch (Exception ex)
+                {
+                    //don't care - just take the initialized value of false
+                    //log error just in case
+                    OOFSponder.Logger.Error(ex);
+                }
+
 
                 if (!externalReplyMessageEqual
                         || !internalReplyMessageEqual
                         || !scheduledStartDateTimeEqual
                         || !scheduledEndDateTimeEqual
+                        || !externalAudienceScopeEqual
                         )
                 {
                     OOFSponder.Logger.Info("Local OOF doesn't match remote OOF");
