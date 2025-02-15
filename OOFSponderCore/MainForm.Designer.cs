@@ -92,6 +92,7 @@
             radPrimary = new System.Windows.Forms.RadioButton();
             radSecondary = new System.Windows.Forms.RadioButton();
             cboExternalAudienceScope = new System.Windows.Forms.ComboBox();
+            lblExternalMessageAudience = new System.Windows.Forms.Label();
             statusStrip1.SuspendLayout();
             htmlEditorControl2.BeginInit();
             htmlEditorControl1.BeginInit();
@@ -772,6 +773,10 @@
             // 
             // cboExternalAudienceScope
             // 
+            cboExternalAudienceScope.AccessibleDescription = "Dropdown for selecting the External Audience Scope for the External OOF message";
+            cboExternalAudienceScope.AccessibleName = "External Audience Scope";
+            cboExternalAudienceScope.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            cboExternalAudienceScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboExternalAudienceScope.FormattingEnabled = true;
             cboExternalAudienceScope.Items.AddRange(new object[] { "All", "Contacts Only", "None" });
             cboExternalAudienceScope.Location = new System.Drawing.Point(629, 149);
@@ -780,12 +785,25 @@
             cboExternalAudienceScope.TabIndex = 59;
             cboExternalAudienceScope.SelectedIndexChanged += cboExternalAudienceScope_SelectedIndexChanged;
             // 
+            // lblExternalMessageAudience
+            // 
+            lblExternalMessageAudience.AccessibleDescription = "Label for External Message Audience Scope";
+            lblExternalMessageAudience.AutoSize = true;
+            lblExternalMessageAudience.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            lblExternalMessageAudience.Location = new System.Drawing.Point(344, 337);
+            lblExternalMessageAudience.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            lblExternalMessageAudience.Name = "lblExternalMessageAudience";
+            lblExternalMessageAudience.Size = new System.Drawing.Size(233, 13);
+            lblExternalMessageAudience.TabIndex = 60;
+            lblExternalMessageAudience.Text = "External OOF Message Audience Scope";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
             ClientSize = new System.Drawing.Size(794, 686);
+            Controls.Add(lblExternalMessageAudience);
             Controls.Add(cboExternalAudienceScope);
             Controls.Add(lblInternalMessage);
             Controls.Add(statusStrip1);
@@ -908,5 +926,6 @@
         private System.Windows.Forms.RadioButton radSecondary;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ComboBox cboExternalAudienceScope;
+        private System.Windows.Forms.Label lblExternalMessageAudience;
     }
 }
