@@ -779,23 +779,24 @@
             cboExternalAudienceScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboExternalAudienceScope.FormattingEnabled = true;
             cboExternalAudienceScope.Items.AddRange(new object[] { "All", "Contacts Only", "None" });
-            cboExternalAudienceScope.Location = new System.Drawing.Point(629, 149);
+            cboExternalAudienceScope.Location = new System.Drawing.Point(663, 146);
             cboExternalAudienceScope.Name = "cboExternalAudienceScope";
             cboExternalAudienceScope.Size = new System.Drawing.Size(121, 23);
-            cboExternalAudienceScope.TabIndex = 59;
+            cboExternalAudienceScope.TabIndex = 30;
             cboExternalAudienceScope.SelectedIndexChanged += cboExternalAudienceScope_SelectedIndexChanged;
             // 
             // lblExternalMessageAudience
             // 
             lblExternalMessageAudience.AccessibleDescription = "Label for External Message Audience Scope";
+            lblExternalMessageAudience.AccessibleName = "Label for External Message Audience Scope";
             lblExternalMessageAudience.AutoSize = true;
             lblExternalMessageAudience.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblExternalMessageAudience.Location = new System.Drawing.Point(344, 337);
+            lblExternalMessageAudience.Location = new System.Drawing.Point(420, 152);
             lblExternalMessageAudience.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblExternalMessageAudience.Name = "lblExternalMessageAudience";
-            lblExternalMessageAudience.Size = new System.Drawing.Size(233, 13);
-            lblExternalMessageAudience.TabIndex = 60;
-            lblExternalMessageAudience.Text = "External OOF Message Audience Scope";
+            lblExternalMessageAudience.Size = new System.Drawing.Size(237, 13);
+            lblExternalMessageAudience.TabIndex = 29;
+            lblExternalMessageAudience.Text = "External OOF Message Audience Scope:";
             // 
             // MainForm
             // 

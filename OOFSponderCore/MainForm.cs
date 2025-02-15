@@ -64,9 +64,11 @@ namespace OOFScheduling
             {
 
                 //if in DEBUG, then always show the form
-#if DEBUG
+#if !DEBUG
                 //don't call Show() here b/c we run minimized
                 this.WindowState = FormWindowState.Minimized;
+#else
+                this.Show();
 #endif
                 //but do make the tray icon visible
                 notifyIcon1.Visible = true;
