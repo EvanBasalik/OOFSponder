@@ -1,13 +1,10 @@
 ﻿using Microsoft.Graph;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace OOFScheduling
 {
@@ -53,21 +50,33 @@ namespace OOFScheduling
 
     public static class EnumHelper
     {
+        /// <summary>
+        /// Converts the Enum values to strings using the (generally valid) assumption
+        /// the removed spaces are to make it work at the code level
+        /// but re-adding them makes it human-readable
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>Enum value with spaces in between where capitals were</returns>
         public static string GetEnumDescription(Enum value)
         {
             var field = value.GetType().GetField(value.ToString());
             var attribute = (DescriptionAttribute)Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute));
 
-            //TODO: fix this VERY hacky code
-            //need to add special code for ContactsOnly to add a space
-            if (value.ToString() == ExternalAudienceScope.ContactsOnly.ToString())
+            //regex from https://stackoverflow.com/questions/4488969/split-a-string-by-capital-letters
+            var r = new Regex(@"
+                (?<=[A-Z])(?=[A-Z][a-z]) |
+                 (?<=[^A-Z])(?=[A-Z]) |
+                 (?<=[A-Za-z])(?=[^A-Za-z])", RegexOptions.IgnorePatternWhitespace);
+
+            string[] result = r.Split(value.ToString());
+            string resultFinal = result[0];
+            for (int i = 1; i < result.Count(); i++)
             {
-                return "Contacts Only";
+                resultFinal = resultFinal + " ";
+                resultFinal += result[i].ToString();
             }
-            else
-            {
-                return value.ToString();
-            }
+
+            return resultFinal;
         }
     }
 }
