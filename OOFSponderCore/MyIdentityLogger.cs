@@ -1,10 +1,5 @@
 ﻿using Microsoft.IdentityModel.Abstractions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace OOFScheduling
 {
@@ -34,7 +29,7 @@ namespace OOFScheduling
             {
                 MinLogLevel = msalLogLevel;
             }
-                
+
             OOFSponder.Logger.Info("MSAL_LOG_LEVEL: " + msalLogLevel);
         }
 

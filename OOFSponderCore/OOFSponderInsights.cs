@@ -65,18 +65,19 @@ namespace OOFScheduling
         }
 
         private static string _userGUID;
-        public static string UserGUID {
+        public static string UserGUID
+        {
             get
-            { 
+            {
                 return _userGUID;
             }
-          
-            
+
+
             set
             {
                 _userGUID = value;
                 appInsightsClient.Context.User.Id = value;
-            } 
+            }
         }
 
 
