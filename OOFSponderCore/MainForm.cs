@@ -1646,11 +1646,14 @@ namespace OOFScheduling
 
         private void DecideonHTMLReadOnly()
         {
-            //disable the External Message entry box if Audience Scope = None
-            bool editable = !(OOFData.Instance.ExternalAudienceScope == ExternalAudienceScope.None);
+            // Determine whether the External Message entry box should be editable based on Audience Scope
+            bool isEditable = OOFData.Instance.ExternalAudienceScope != ExternalAudienceScope.None;
 
-            htmlEditorControl1.Enabled = editable;
-            if (editable)
+            // Enable or disable the External Message entry box
+            htmlEditorControl1.Enabled = isEditable;
+
+            // Update the HTML content to reflect the read-only state
+            if (isEditable)
             {
                 htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("style=\"" + OOFData.HTMLReadOnlyIndicator + "\" scroll=auto", "scroll=auto");
             }
