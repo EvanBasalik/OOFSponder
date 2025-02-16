@@ -148,8 +148,6 @@ namespace OOFScheduling
 
             //if this is a click-once deployment, grab the version from there
             //otherwise, use the assembly version
-            //TODO: set version number for assembly to the click-once version we 
-            //set as part of the GitHub action
             if (Environment.GetEnvironmentVariable("ClickOnce_CurrentVersion") != null)
             {
                 OOFData.version = lblBuild.Text = Environment.GetEnvironmentVariable("ClickOnce_CurrentVersion");
