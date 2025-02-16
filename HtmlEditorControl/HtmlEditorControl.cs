@@ -525,7 +525,6 @@ namespace MSDN.Html.Editor
             }
             else
             {
-                // TODO Should ensure the following are no executed for the editor navigation
                 //   Scripts
                 //   Java
                 //   ActiveX Controls
