@@ -73,7 +73,13 @@ namespace OOFScheduling
                         OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryExternal, value);
                     }
                 }
-                _primaryOOFExternalMessage = value;
+
+                //if value contains the special code, then it is for visualization only
+                //and shouldn't be saved
+                if (!value.Contains(HTMLReadOnlyIndicator))
+                {
+                    _primaryOOFExternalMessage = value;
+                }
             }
         
         }
@@ -132,7 +138,12 @@ namespace OOFScheduling
                     }
                 }
 
-                _secondaryOOFExternalMessage = value;
+                //if value contains the special code, then it is for visualization only
+                //and shouldn't be saved
+                if (!value.Contains(HTMLReadOnlyIndicator))
+                {
+                    _secondaryOOFExternalMessage = value;
+                }
             }
 
         }
