@@ -1175,7 +1175,6 @@ namespace OOFScheduling
 
             //do one last save in case we missed any changes
             saveSettings();
-
             System.Windows.Forms.Application.Exit();
         }
 
@@ -1663,6 +1662,14 @@ namespace OOFScheduling
         {
             LastDateTimePicker picker = sender as LastDateTimePicker;
 
+            
+            if (usedKeys)
+            {
+                //reset the usedKeys bool so that a spinner operation works
+                usedKeys = false;
+                return;
+            }
+
             if (picker != null)
             {
                 if (!navigatingDateTimePicker)
@@ -1696,6 +1703,14 @@ namespace OOFScheduling
                     navigatingDateTimePicker = false;
                 }
             }
+        }
+
+        //use this to allow manual input of times that aren't aligned to the spinner increment
+        private bool usedKeys = false;
+        private void LastDateTimePicker_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            LastDateTimePicker picker = sender as LastDateTimePicker;
+            usedKeys = true;
         }
     }
 

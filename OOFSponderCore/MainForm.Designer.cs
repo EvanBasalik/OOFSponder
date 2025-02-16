@@ -474,6 +474,7 @@
             saturdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             saturdayEndTimepicker.TabIndex = 26;
             saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            saturdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // fridayEndTimepicker
             // 
@@ -487,6 +488,7 @@
             fridayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             fridayEndTimepicker.TabIndex = 23;
             fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            fridayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // thursdayEndTimepicker
             // 
@@ -500,6 +502,7 @@
             thursdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             thursdayEndTimepicker.TabIndex = 20;
             thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            thursdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // wednesdayEndTimepicker
             // 
@@ -513,6 +516,7 @@
             wednesdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             wednesdayEndTimepicker.TabIndex = 17;
             wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            wednesdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // tuesdayEndTimepicker
             // 
@@ -526,6 +530,7 @@
             tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             tuesdayEndTimepicker.TabIndex = 14;
             tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            tuesdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // mondayEndTimepicker
             // 
@@ -539,6 +544,7 @@
             mondayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             mondayEndTimepicker.TabIndex = 11;
             mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            mondayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // sundayEndTimepicker
             // 
@@ -552,6 +558,7 @@
             sundayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             sundayEndTimepicker.TabIndex = 8;
             sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
+            sundayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // saturdayStartTimepicker
             // 
@@ -565,6 +572,7 @@
             saturdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             saturdayStartTimepicker.TabIndex = 25;
             saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            saturdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // fridayStartTimepicker
             // 
@@ -578,6 +586,7 @@
             fridayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             fridayStartTimepicker.TabIndex = 22;
             fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            fridayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // thursdayStartTimepicker
             // 
@@ -591,6 +600,7 @@
             thursdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             thursdayStartTimepicker.TabIndex = 19;
             thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            thursdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // wednesdayStartTimepicker
             // 
@@ -604,6 +614,7 @@
             wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             wednesdayStartTimepicker.TabIndex = 16;
             wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            wednesdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // tuesdayStartTimepicker
             // 
@@ -617,6 +628,7 @@
             tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             tuesdayStartTimepicker.TabIndex = 13;
             tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            tuesdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // mondayStartTimepicker
             // 
@@ -630,6 +642,7 @@
             mondayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             mondayStartTimepicker.TabIndex = 10;
             mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            mondayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // sundayStartTimepicker
             // 
@@ -644,6 +657,7 @@
             sundayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             sundayStartTimepicker.TabIndex = 7;
             sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
+            sundayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
             // label7
             // 
