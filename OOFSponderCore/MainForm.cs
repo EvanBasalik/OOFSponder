@@ -1135,6 +1135,12 @@ namespace OOFScheduling
             //do one last save in case we missed any changes
             saveSettings();
 
+            //do one last flush in case anything not persisted
+            foreach (TextWriterTraceListener logger in Trace.Listeners)
+            {
+                logger.Flush();
+            }
+
             System.Windows.Forms.Application.Exit();
         }
 
