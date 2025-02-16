@@ -15,7 +15,6 @@ namespace OOFScheduling
     {
 
         private static string ClientId = "c0eceb27-8cd3-4bb8-9271-c90596069f74";
-        private static string logonUrl = "https://login.microsoftonline.com/organizations/";
         internal static IPublicClientApplication PublicClientApp;
         internal static string AutomatedReplySettingsURL = "/mailboxSettings/automaticRepliesSetting";
         internal static string MailboxSettingsURL = "/mailboxSettings";
