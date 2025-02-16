@@ -1663,7 +1663,6 @@ namespace OOFScheduling
         {
             LastDateTimePicker picker = sender as LastDateTimePicker;
 
-            //TODO: make this actually work
             if (picker != null)
             {
                 if (!navigatingDateTimePicker)
