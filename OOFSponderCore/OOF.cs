@@ -61,7 +61,9 @@ namespace OOFScheduling
             {
                 //if a new value is being passed in, then persist to offline AppData storage
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != _primaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value))
+                //also add special case for the UI read-only stuff
+                //TODO: think about if ^^ could cause problems
+                if (value != _primaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value) && !value.Contains(HTMLReadOnlyIndicator))
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message
@@ -104,6 +106,8 @@ namespace OOFScheduling
 
         }
         private string _secondaryOOFExternalMessage = string.Empty;
+        internal static readonly string HTMLReadOnlyIndicator = "BACKGROUND: darkgray";
+
         internal string SecondaryOOFExternalMessage
         {
             get
@@ -115,7 +119,9 @@ namespace OOFScheduling
             {
                 //if a new value is being passed in, then persist to offline AppData storage
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != _secondaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value))
+                //also add special case for the UI read-only stuff
+                //TODO: think about if ^^ could cause problems
+                if (value != _secondaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value) && !value.Contains(HTMLReadOnlyIndicator))
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message

@@ -110,36 +110,50 @@ namespace OOFScheduling
                 if (dayHours[2] == "0") { sundayOffWorkCB.Checked = true; } else { sundayOffWorkCB.Checked = false; }
                 sundayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 sundayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                sundayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                sundayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[1].Split('~');
                 if (dayHours[2] == "0") { mondayOffWorkCB.Checked = true; } else { mondayOffWorkCB.Checked = false; }
                 mondayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 mondayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                mondayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                mondayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[2].Split('~');
                 if (dayHours[2] == "0") { tuesdayOffWorkCB.Checked = true; } else { tuesdayOffWorkCB.Checked = false; }
                 tuesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 tuesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                tuesdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                tuesdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[3].Split('~');
                 if (dayHours[2] == "0") { wednesdayOffWorkCB.Checked = true; } else { wednesdayOffWorkCB.Checked = false; }
                 wednesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 wednesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                wednesdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                wednesdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[4].Split('~');
                 if (dayHours[2] == "0") { thursdayOffWorkCB.Checked = true; } else { thursdayOffWorkCB.Checked = false; }
                 thursdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 thursdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                thursdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                thursdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[5].Split('~');
                 if (dayHours[2] == "0") { fridayOffWorkCB.Checked = true; } else { fridayOffWorkCB.Checked = false; }
                 fridayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 fridayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                fridayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                fridayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[6].Split('~');
                 if (dayHours[2] == "0") { saturdayOffWorkCB.Checked = true; } else { saturdayOffWorkCB.Checked = false; }
                 saturdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                saturdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                saturdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
             }
             else
             {
@@ -239,8 +253,17 @@ namespace OOFScheduling
             if (!OOFData.Instance.HaveNecessaryData)
             {
                 //we are missing data, so log the three we are checking
-                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
-                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
+                if (OOFData.Instance.IsPermaOOFOn)
+                {
+                    OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
+                    OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
+                }
+                else
+                {
+                    OOFSponder.Logger.InfoPotentialPII("SecondaryOOFExternalMessage", OOFData.Instance.SecondaryOOFExternalMessage);
+                    OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", OOFData.Instance.SecondaryOOFInternalMessage);
+                }
+
                 OOFSponder.Logger.InfoPotentialPII("WorkingHours", OOFData.Instance.WorkingHours);
             }
 
@@ -1623,11 +1646,35 @@ namespace OOFScheduling
             htmlEditorControl1.Enabled = editable;
             if (editable)
             {
-                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("style=\"BACKGROUND: darkgray\" scroll=auto", "scroll=auto");
+                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("style=\"" + OOFData.HTMLReadOnlyIndicator + "\" scroll=auto", "scroll=auto");
             }
             else
             {
-                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("scroll=auto", "scroll=auto style='BACKGROUND: darkgray'");
+                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("scroll=auto", "scroll=auto style='" + OOFData.HTMLReadOnlyIndicator + "'");
+            }
+        }
+
+        private DateTime prevTimePicker1;
+        private bool navigatingDateTimePicker = false;
+        private int MinutestoIncrement = 5;
+        private void DateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            DateTimePicker picker = sender as DateTimePicker;
+
+            //TODO: make this actually work
+            if (picker != null)
+            {
+                //if (picker.Value.Minute == 59)
+                //    picker.Value = picker.Value.AddHours(-1);
+
+                //if (picker.Value.Minute % 5 == 0)
+                //    return;
+
+                //if (picker.Value.Minute % 5 == 1)
+                //    picker.Value = picker.Value.AddMinutes(4);
+
+                //if (picker.Value.Minute % 5 == 4)
+                //    picker.Value = picker.Value.AddMinutes(-4);
             }
         }
     }
