@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOFSponderConfig
 {
@@ -35,7 +31,8 @@ namespace OOFSponderConfig
     internal class Root
     {
         OOFData _OOFData;
-        public OOFData OOFData { 
+        public OOFData OOFData
+        {
             get
             {
                 if (_OOFData == null)

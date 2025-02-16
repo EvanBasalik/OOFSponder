@@ -7,7 +7,7 @@ namespace OOFSponder
 {
     public static class Logger
     {
-        public static readonly string FileName  = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\OOFSponder.log");
+        public static readonly string FileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\OOFSponder.log");
         public static void Error(string message)
         {
             StackFrame fr = new StackFrame(1, true);
@@ -54,7 +54,7 @@ namespace OOFSponder
             WriteEntry(ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "warning", fr.GetMethod().Name + ":" + st.ToString());
         }
 
-        public static void Info(string message, bool SendToAppInsights=true)
+        public static void Info(string message, bool SendToAppInsights = true)
         {
             WriteEntry(ScrubMessage(message), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name, SendToAppInsights);
         }
