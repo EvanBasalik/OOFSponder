@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.VisualBasic.Devices;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using OOFSponder;
@@ -1050,11 +1051,11 @@ namespace OOFScheduling
         //enable/disable the various daily DateTimePickers as appropriate
         private void OffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            var listofDataTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
+            var listofDataTimePickers = GetControlsOfSpecificType(this, typeof(LastDateTimePicker));
             foreach (var dateTimePicker in listofDataTimePickers)
             {
                 CheckBox cb = ((CheckBox)sender);
-                DateTimePicker dt = ((DateTimePicker)dateTimePicker);
+                LastDateTimePicker dt = ((LastDateTimePicker)dateTimePicker);
                 string cbName = cb.Name.Replace("OffWorkCB", "");
                 string dtpName = dt.Name.Replace("StartTimepicker", "").Replace("EndTimepicker", "");
                 if (cbName == dtpName)
@@ -1655,27 +1656,46 @@ namespace OOFScheduling
             }
         }
 
-        private DateTime prevTimePicker1;
         private bool navigatingDateTimePicker = false;
-        private int MinutestoIncrement = 5;
+        private int incrementMinutes = 15;
+
         private void DateTimePicker_ValueChanged(object sender, EventArgs e)
         {
-            DateTimePicker picker = sender as DateTimePicker;
+            LastDateTimePicker picker = sender as LastDateTimePicker;
 
             //TODO: make this actually work
             if (picker != null)
             {
-                //if (picker.Value.Minute == 59)
-                //    picker.Value = picker.Value.AddHours(-1);
+                if (!navigatingDateTimePicker)
+                {
+                    /* First set the navigating flag to true so this method doesn't get called again while updating */
+                    navigatingDateTimePicker = true;
 
-                //if (picker.Value.Minute % 5 == 0)
-                //    return;
+                    /* using timespan because that's the only way I know how to round times well */
+                    TimeSpan tempTS = picker.Value - picker.Value.Date;
+                    TimeSpan roundedTimeSpan;
 
-                //if (picker.Value.Minute % 5 == 1)
-                //    picker.Value = picker.Value.AddMinutes(4);
-
-                //if (picker.Value.Minute % 5 == 4)
-                //    picker.Value = picker.Value.AddMinutes(-4);
+                    TimeSpan TDBug = picker.Value - picker.LastValue;
+                    if (TDBug.TotalMinutes == 59)
+                    {
+                        // first: if we are going back and skipping an hour it needs an adjustment
+                        roundedTimeSpan = TimeSpan.FromMinutes(incrementMinutes * Math.Floor((tempTS.TotalMinutes - 60) / incrementMinutes));
+                        picker.Value = picker.Value.Date + roundedTimeSpan;
+                    }
+                    else if (picker.Value > picker.LastValue)
+                    {
+                        // round up to the nearest interval
+                        roundedTimeSpan = TimeSpan.FromMinutes(incrementMinutes * Math.Ceiling(tempTS.TotalMinutes / incrementMinutes));
+                        picker.Value = picker.Value.Date + roundedTimeSpan;
+                    }
+                    else
+                    {
+                        // round down to the nearest interval from prev
+                        roundedTimeSpan = TimeSpan.FromMinutes(incrementMinutes * Math.Floor(tempTS.TotalMinutes / incrementMinutes));
+                        picker.Value = picker.Value.Date + roundedTimeSpan;
+                    }
+                    navigatingDateTimePicker = false;
+                }
             }
         }
     }
