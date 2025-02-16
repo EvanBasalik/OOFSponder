@@ -160,6 +160,13 @@ namespace OOFScheduling
                 Logger.Warning("Don't have WorkingHours");
             }
 
+            //set the time format for the DateTimePickers
+            foreach (DateTimePicker item in this.Controls.OfType<DateTimePicker>())
+            {
+                item.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+                item.CustomFormat = " h:mm tt";
+            }
+
             //populate the dropdown with the possible ExternalAudienceScope values
             var enumValues = Enum.GetValues(typeof(Microsoft.Graph.ExternalAudienceScope)).Cast<Microsoft.Graph.ExternalAudienceScope>();
             foreach (var value in enumValues)
@@ -360,23 +367,17 @@ namespace OOFScheduling
             if (SystemInformation.HighContrast)
             {
                 OOFSponder.Logger.Info("HighContrast mode = true, so setting DataTimePickers to ControlLight");
-                foreach (Control item in this.Controls)
+                foreach (DateTimePicker item in this.Controls.OfType<DateTimePicker>())
                 {
-                    if (item.GetType() == typeof(DateTimePicker))
-                    {
-                        item.ForeColor = SystemColors.ControlLight;
-                    }
+                    item.ForeColor = SystemColors.ControlLight;
                 }
             }
             else
             {
                 OOFSponder.Logger.Info("HighContrast mode = false, so setting DataTimePickers to ControlText");
-                foreach (Control item in this.Controls)
+                foreach (DateTimePicker item in this.Controls.OfType<DateTimePicker>())
                 {
-                    if (item.GetType() == typeof(DateTimePicker))
-                    {
-                        item.ForeColor = SystemColors.WindowText;
-                    }
+                    item.ForeColor = SystemColors.WindowText;
                 }
             }
         }

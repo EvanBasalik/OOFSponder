@@ -467,11 +467,11 @@
             saturdayEndTimepicker.AccessibleName = "Enter your working hours end time for Saturday";
             saturdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             saturdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            saturdayEndTimepicker.Location = new System.Drawing.Point(681, 81);
+            saturdayEndTimepicker.Location = new System.Drawing.Point(688, 81);
             saturdayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
             saturdayEndTimepicker.Name = "saturdayEndTimepicker";
             saturdayEndTimepicker.ShowUpDown = true;
-            saturdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            saturdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             saturdayEndTimepicker.TabIndex = 26;
             saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -480,11 +480,11 @@
             fridayEndTimepicker.AccessibleName = "Enter your working hours end time for Friday";
             fridayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             fridayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            fridayEndTimepicker.Location = new System.Drawing.Point(569, 81);
+            fridayEndTimepicker.Location = new System.Drawing.Point(576, 81);
             fridayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
             fridayEndTimepicker.Name = "fridayEndTimepicker";
             fridayEndTimepicker.ShowUpDown = true;
-            fridayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            fridayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             fridayEndTimepicker.TabIndex = 23;
             fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -493,11 +493,11 @@
             thursdayEndTimepicker.AccessibleName = "Enter your working hours end time for Thursday";
             thursdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             thursdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            thursdayEndTimepicker.Location = new System.Drawing.Point(457, 81);
+            thursdayEndTimepicker.Location = new System.Drawing.Point(464, 81);
             thursdayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
             thursdayEndTimepicker.Name = "thursdayEndTimepicker";
             thursdayEndTimepicker.ShowUpDown = true;
-            thursdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            thursdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             thursdayEndTimepicker.TabIndex = 20;
             thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -506,11 +506,11 @@
             wednesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Wednesday";
             wednesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             wednesdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            wednesdayEndTimepicker.Location = new System.Drawing.Point(345, 81);
+            wednesdayEndTimepicker.Location = new System.Drawing.Point(352, 81);
             wednesdayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
             wednesdayEndTimepicker.Name = "wednesdayEndTimepicker";
             wednesdayEndTimepicker.ShowUpDown = true;
-            wednesdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            wednesdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             wednesdayEndTimepicker.TabIndex = 17;
             wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -519,11 +519,11 @@
             tuesdayEndTimepicker.AccessibleName = "Enter your working hours end time for Tuesday";
             tuesdayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             tuesdayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            tuesdayEndTimepicker.Location = new System.Drawing.Point(233, 81);
+            tuesdayEndTimepicker.Location = new System.Drawing.Point(240, 81);
             tuesdayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
             tuesdayEndTimepicker.Name = "tuesdayEndTimepicker";
             tuesdayEndTimepicker.ShowUpDown = true;
-            tuesdayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             tuesdayEndTimepicker.TabIndex = 14;
             tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -532,11 +532,11 @@
             mondayEndTimepicker.AccessibleName = "Enter your working hours end time for Monday";
             mondayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             mondayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            mondayEndTimepicker.Location = new System.Drawing.Point(121, 81);
+            mondayEndTimepicker.Location = new System.Drawing.Point(128, 81);
             mondayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
             mondayEndTimepicker.Name = "mondayEndTimepicker";
             mondayEndTimepicker.ShowUpDown = true;
-            mondayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            mondayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             mondayEndTimepicker.TabIndex = 11;
             mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -545,11 +545,11 @@
             sundayEndTimepicker.AccessibleName = "Enter your working hours end time for Sunday";
             sundayEndTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             sundayEndTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            sundayEndTimepicker.Location = new System.Drawing.Point(9, 81);
+            sundayEndTimepicker.Location = new System.Drawing.Point(16, 81);
             sundayEndTimepicker.Margin = new System.Windows.Forms.Padding(4);
             sundayEndTimepicker.Name = "sundayEndTimepicker";
             sundayEndTimepicker.ShowUpDown = true;
-            sundayEndTimepicker.Size = new System.Drawing.Size(104, 23);
+            sundayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             sundayEndTimepicker.TabIndex = 8;
             sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             // 
@@ -558,11 +558,11 @@
             saturdayStartTimepicker.AccessibleName = "Enter your working hours start time for Saturday";
             saturdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             saturdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            saturdayStartTimepicker.Location = new System.Drawing.Point(681, 51);
+            saturdayStartTimepicker.Location = new System.Drawing.Point(688, 51);
             saturdayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
             saturdayStartTimepicker.Name = "saturdayStartTimepicker";
             saturdayStartTimepicker.ShowUpDown = true;
-            saturdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            saturdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             saturdayStartTimepicker.TabIndex = 25;
             saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -571,11 +571,11 @@
             fridayStartTimepicker.AccessibleName = "Enter your working hours start time for Friday";
             fridayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             fridayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            fridayStartTimepicker.Location = new System.Drawing.Point(569, 51);
+            fridayStartTimepicker.Location = new System.Drawing.Point(576, 51);
             fridayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
             fridayStartTimepicker.Name = "fridayStartTimepicker";
             fridayStartTimepicker.ShowUpDown = true;
-            fridayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            fridayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             fridayStartTimepicker.TabIndex = 22;
             fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -584,11 +584,11 @@
             thursdayStartTimepicker.AccessibleName = "Enter your working hours start time for Thursday";
             thursdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             thursdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            thursdayStartTimepicker.Location = new System.Drawing.Point(457, 51);
+            thursdayStartTimepicker.Location = new System.Drawing.Point(464, 51);
             thursdayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
             thursdayStartTimepicker.Name = "thursdayStartTimepicker";
             thursdayStartTimepicker.ShowUpDown = true;
-            thursdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            thursdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             thursdayStartTimepicker.TabIndex = 19;
             thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -597,11 +597,11 @@
             wednesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Wednesday";
             wednesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             wednesdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            wednesdayStartTimepicker.Location = new System.Drawing.Point(345, 51);
+            wednesdayStartTimepicker.Location = new System.Drawing.Point(352, 51);
             wednesdayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
             wednesdayStartTimepicker.Name = "wednesdayStartTimepicker";
             wednesdayStartTimepicker.ShowUpDown = true;
-            wednesdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             wednesdayStartTimepicker.TabIndex = 16;
             wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -610,11 +610,11 @@
             tuesdayStartTimepicker.AccessibleName = "Enter your working hours start time for Tuesday";
             tuesdayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             tuesdayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            tuesdayStartTimepicker.Location = new System.Drawing.Point(233, 51);
+            tuesdayStartTimepicker.Location = new System.Drawing.Point(240, 51);
             tuesdayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
             tuesdayStartTimepicker.Name = "tuesdayStartTimepicker";
             tuesdayStartTimepicker.ShowUpDown = true;
-            tuesdayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             tuesdayStartTimepicker.TabIndex = 13;
             tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -623,11 +623,11 @@
             mondayStartTimepicker.AccessibleName = "Enter your working hours start time for Monday";
             mondayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
             mondayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            mondayStartTimepicker.Location = new System.Drawing.Point(121, 51);
+            mondayStartTimepicker.Location = new System.Drawing.Point(128, 51);
             mondayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
             mondayStartTimepicker.Name = "mondayStartTimepicker";
             mondayStartTimepicker.ShowUpDown = true;
-            mondayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            mondayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             mondayStartTimepicker.TabIndex = 10;
             mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
@@ -635,12 +635,13 @@
             // 
             sundayStartTimepicker.AccessibleName = "Enter your working hours start time for Sunday";
             sundayStartTimepicker.AccessibleRole = System.Windows.Forms.AccessibleRole.SpinButton;
-            sundayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            sundayStartTimepicker.Location = new System.Drawing.Point(9, 51);
+            sundayStartTimepicker.CustomFormat = "  h:mm tt";
+            sundayStartTimepicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            sundayStartTimepicker.Location = new System.Drawing.Point(16, 51);
             sundayStartTimepicker.Margin = new System.Windows.Forms.Padding(4);
             sundayStartTimepicker.Name = "sundayStartTimepicker";
             sundayStartTimepicker.ShowUpDown = true;
-            sundayStartTimepicker.Size = new System.Drawing.Size(104, 23);
+            sundayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             sundayStartTimepicker.TabIndex = 7;
             sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             // 
