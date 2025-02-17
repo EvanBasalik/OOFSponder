@@ -768,6 +768,7 @@
             cboExternalAudienceScope.AccessibleDescription = "Allows the selection of the audience for the External Message";
             cboExternalAudienceScope.AccessibleName = "Dropdown for selecting who should get the External Message";
             cboExternalAudienceScope.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            cboExternalAudienceScope.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             cboExternalAudienceScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboExternalAudienceScope.FormattingEnabled = true;
             cboExternalAudienceScope.Location = new System.Drawing.Point(663, 136);
@@ -780,6 +781,7 @@
             // 
             lblExternalMessageAudience.AccessibleDescription = "Label for Send External Message to:";
             lblExternalMessageAudience.AccessibleName = "Label for Send External Message to:";
+            lblExternalMessageAudience.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             lblExternalMessageAudience.AutoSize = true;
             lblExternalMessageAudience.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             lblExternalMessageAudience.Location = new System.Drawing.Point(500, 142);
