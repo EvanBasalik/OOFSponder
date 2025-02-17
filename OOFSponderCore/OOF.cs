@@ -16,6 +16,12 @@ namespace OOFScheduling
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
         internal static readonly string HTMLReadOnlyIndicator = "BACKGROUND: darkgray";
 
+        internal enum CurrentUIState
+        {
+            Primary = 0,
+            Secondary = 1
+        }
+
         internal bool isEmptyOrDefaultOOFMessage(string input)
         {
             bool _result = false;

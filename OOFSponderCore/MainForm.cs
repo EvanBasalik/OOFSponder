@@ -1183,14 +1183,29 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
+            int debugPermaOOF = 0;
+#if DEBUG
+            //if in DEBUG, set it a few more days out from the default to make
+            //it easier to see visually it was set
+            if (((Button)sender).Tag.ToString() == "Enable")
+            {
+                debugPermaOOF = 4;
+            }
+#endif
+
             //to be thread-safe, grab the value of dtPermaOOF here and store it
             DateTime dtPermaOOFValue = new DateTime();
             if (dtPermaOOF.InvokeRequired)
             {
-                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate () { dtPermaOOFValue = dtPermaOOF.Value; }));
+                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
+                {
+                    dtPermaOOF.Value = dtPermaOOF.Value.AddDays(debugPermaOOF);
+                    dtPermaOOFValue = dtPermaOOF.Value;
+                }));
             }
             else
             {
+                dtPermaOOF.Value = dtPermaOOF.Value.AddDays(debugPermaOOF);
                 dtPermaOOFValue = dtPermaOOF.Value;
             }
 
@@ -1215,7 +1230,17 @@ namespace OOFScheduling
             }
             else
             {
+                //flipping back to normal operations
+                //don't need to enable button. That's handled later
                 OOFData.Instance.PermaOOFDate = DateTime.Now;
+                //if (dtPermaOOF.InvokeRequired)
+                //{
+                //    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate () { dtPermaOOF.Value = OOFData.Instance.PermaOOFDate; }));
+                //}
+                //else
+                //{
+                //    dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
+                //}
             }
 
             //actually go OOF now
@@ -1225,10 +1250,12 @@ namespace OOFScheduling
             {
                 if (((Button)sender).Tag.ToString() == "Enable")
                 {
+                    SetUIforSecondary();
                     OOFSponderInsights.Track("Enabled PermaOOF");
                 }
                 else
                 {
+                    SetUIforPrimary();
                     OOFSponderInsights.Track("Disabled PermaOOF");
                 }
             }
@@ -1239,7 +1266,6 @@ namespace OOFScheduling
 
             }
 
-            SetUIforSecondary();
         }
 
         private void secondaryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1271,6 +1297,14 @@ namespace OOFScheduling
             htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
 
+            //update the UI according to PermaOOF
+            SetPermaOOFUIControlState();
+
+            OOFSponderInsights.Track("Configured for secondary");
+        }
+
+        private void SetPermaOOFUIControlState()
+        {
             //update the UI
             if (OOFData.Instance.IsPermaOOFOn)
             {
@@ -1281,15 +1315,13 @@ namespace OOFScheduling
                 if (dtPermaOOF.InvokeRequired)
                 {
                     dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
-                        {
-                            dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
-                            dtPermaOOF.Enabled = false;
-                        }));
+                    {
+                        UpdatedtPermaOOFSettings();
+                    }));
                 }
                 else
                 {
-                    dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
-                    dtPermaOOF.Enabled = false;
+                    UpdatedtPermaOOFSettings();
                 }
 
             }
@@ -1303,22 +1335,34 @@ namespace OOFScheduling
                 {
                     dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
                     {
-                        dtPermaOOF.Value = DateTime.Now.AddDays(1);
-                        dtPermaOOF.Enabled = true;
+                        UpdatedtPermaOOFSettings();
                     }));
                 }
                 else
                 {
-                    dtPermaOOF.Value = DateTime.Now.AddDays(1);
-                    dtPermaOOF.Enabled = true;
+                    UpdatedtPermaOOFSettings();
                 }
+            }
+        }
 
+        private void UpdatedtPermaOOFSettings()
+        {
+            if (OOFData.Instance.IsPermaOOFOn)
+            {
+                //set the date to PermaOOF date
+                //and disable the control
+                dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
+                dtPermaOOF.Enabled = false;
+            }
+            else
+            {
+                //set it to an arbitrary time in the future
+                //and enable the control
+                dtPermaOOF.Value = DateTime.Now.AddDays(1);
+                dtPermaOOF.Enabled = true;
             }
 
-            //lastly, enable the permaOOF controls to help with some UI flow issues
-            btnPermaOOF.Enabled = true;
 
-            OOFSponderInsights.Track("Configured for secondary");
         }
 
         private void primaryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1337,9 +1381,6 @@ namespace OOFScheduling
             //we know that the UI is currently in Secondary mode (or first run)
             //so HTML controls have the Secondary messages
 
-            //disable PermaOOF by setting date to time in the past
-            OOFData.Instance.PermaOOFDate = DateTime.Now.AddMinutes(-1);
-
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
             radPrimary.Checked = true;
@@ -1356,23 +1397,23 @@ namespace OOFScheduling
             htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
             htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
 
-            //lastly, disable the permaOOF controls to help with some UI flow issues
-            btnPermaOOF.Enabled = false;
+            //update the UI according to PermaOOF
+            SetPermaOOFUIControlState();
 
-            //need to be thread-safe
-            if (dtPermaOOF.InvokeRequired)
-            {
-                dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
-                {
-                    dtPermaOOF.Enabled = false;
-                    dtPermaOOF.Value = DateTime.Now;
-                }));
-            }
-            else
-            {
-                dtPermaOOF.Enabled = false;
-                dtPermaOOF.Value = DateTime.Now;
-            }
+            ////need to be thread-safe
+            //if (dtPermaOOF.InvokeRequired)
+            //{
+            //    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
+            //    {
+            //        dtPermaOOF.Enabled = false;
+            //        dtPermaOOF.Value = DateTime.Now;
+            //    }));
+            //}
+            //else
+            //{
+            //    dtPermaOOF.Enabled = false;
+            //    dtPermaOOF.Value = DateTime.Now;
+            //}
 
             OOFSponderInsights.Track("Configured for primary");
         }

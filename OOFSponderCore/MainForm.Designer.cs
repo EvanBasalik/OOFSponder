@@ -313,7 +313,7 @@
             dtPermaOOF.AccessibleName = "Perma OOF date";
             dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(551, 610);
+            dtPermaOOF.Location = new System.Drawing.Point(551, 612);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
