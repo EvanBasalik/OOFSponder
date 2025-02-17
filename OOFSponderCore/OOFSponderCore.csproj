@@ -33,7 +33,7 @@
     <Configurations>Debug;Release without Sending OOF;Release</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>$(DefineConstants);NOOOF;MEDIUMOOF</DefineConstants>
+    <DefineConstants>$(DefineConstants);MEDIUMOOF</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
