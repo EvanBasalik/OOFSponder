@@ -4,7 +4,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace OOFScheduling
@@ -18,7 +20,11 @@ namespace OOFScheduling
         internal bool isEmptyOrDefaultOOFMessage(string input)
         {
             bool _result = false;
-            if (input == string.Empty || input == DummyHTML)
+
+            string output1 = input.RemoveHTML();
+            string output = new string(output1.Where(c => !char.IsWhiteSpace(c)).ToArray());
+
+            if (output == string.Empty || output == DummyHTML)
             {
                 _result = true;
             }
@@ -54,7 +60,9 @@ namespace OOFScheduling
             {
                 //if a new value is being passed in, then persist to offline AppData storage
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != _primaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value))
+                //also add special case for the UI read-only stuff
+                //TODO: think about if ^^ could cause problems
+                if (value != _primaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value) && !value.Contains(HTMLReadOnlyIndicator))
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message
@@ -64,7 +72,13 @@ namespace OOFScheduling
                         OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryExternal, value);
                     }
                 }
-                _primaryOOFExternalMessage = value;
+
+                //if value contains the special code, then it is for visualization only
+                //and shouldn't be saved
+                if (!value.Contains(HTMLReadOnlyIndicator))
+                {
+                    _primaryOOFExternalMessage = value;
+                }
             }
 
         }
@@ -97,6 +111,8 @@ namespace OOFScheduling
 
         }
         private string _secondaryOOFExternalMessage = string.Empty;
+        internal static readonly string HTMLReadOnlyIndicator = "BACKGROUND: darkgray";
+
         internal string SecondaryOOFExternalMessage
         {
             get
@@ -108,7 +124,9 @@ namespace OOFScheduling
             {
                 //if a new value is being passed in, then persist to offline AppData storage
                 //fail out if value is empty or the same as DummyHTML (the default prior to any editing)
-                if (value != _secondaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value))
+                //also add special case for the UI read-only stuff
+                //TODO: think about if ^^ could cause problems
+                if (value != _secondaryOOFExternalMessage && !isEmptyOrDefaultOOFMessage(value) && !value.Contains(HTMLReadOnlyIndicator))
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message
@@ -119,7 +137,12 @@ namespace OOFScheduling
                     }
                 }
 
-                _secondaryOOFExternalMessage = value;
+                //if value contains the special code, then it is for visualization only
+                //and shouldn't be saved
+                if (!value.Contains(HTMLReadOnlyIndicator))
+                {
+                    _secondaryOOFExternalMessage = value;
+                }
             }
 
         }
@@ -227,14 +250,49 @@ namespace OOFScheduling
             {
                 bool _result = false;
 
+                if (OOFData.Instance.WorkingHours == "")
+                {
+                    OOFSponder.Logger.Info("HaveNecessaryData: " + _result);
+                    return _result;
+                }
+
                 //we need the OOF messages and working hours
                 //also, don't need to check SecondaryOOF messages for two reasons:
                 //1) they won't always be set
                 //2) the UI flow won't let you get here with permaOOF if they aren't set
-                if (!isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFInternalMessage)
-    && OOFData.Instance.WorkingHours != "")
+                if (!IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.Instance.PrimaryOOFInternalMessage))
                 {
                     _result = true;
+                    OOFSponder.Logger.Info("HaveNecessaryData: Normal OOF");
+                    return _result;
+                }
+
+                //check the secondary condition where External Message Audience Scope == None
+                //and PermaOOF is NOT on
+                //in that case, it is OK for PrimaryOOFExternalMessage to be empty
+                if (!OOFData.instance.IsPermaOOFOn && isEmptyOrDefaultOOFMessage(OOFData.instance.PrimaryOOFExternalMessage) && OOFData.instance.ExternalAudienceScope == Microsoft.Graph.ExternalAudienceScope.None)
+                {
+                    _result = true;
+                    OOFSponder.Logger.Info("HaveNecessaryData: Normal OOF with Scope=None");
+                    return _result;
+                }
+
+                //check the tertiary condition where External Message Audience Scope == None
+                //and PermaOOF is on
+                //in that case, it is OK for SecondaryOOFExternalMessage to be empty
+                if (OOFData.instance.IsPermaOOFOn && isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFExternalMessage) && OOFData.instance.ExternalAudienceScope == Microsoft.Graph.ExternalAudienceScope.None)
+                {
+                    _result = true;
+                    OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF with Scope=None");
+                    return _result;
+                }
+
+                if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
+                    && OOFData.Instance.WorkingHours != "")
+                {
+                    _result = true;
+                    OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
+                    return _result;
                 }
 
                 OOFSponder.Logger.Info("HaveNecessaryData: ", _result);
@@ -293,7 +351,9 @@ namespace OOFScheduling
 
         public bool useNewOOFMath { get; internal set; }
         public bool StartMinimized { get; internal set; }
-        public object get { get; private set; }
+
+        public Microsoft.Graph.ExternalAudienceScope _externalAudienceScope;
+        public Microsoft.Graph.ExternalAudienceScope ExternalAudienceScope { get => _externalAudienceScope; set => _externalAudienceScope = value; }
 
         private void LogProperties()
         {
@@ -303,6 +363,7 @@ namespace OOFScheduling
             OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", PrimaryOOFInternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFExternalMessage", SecondaryOOFExternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", SecondaryOOFInternalMessage);
+            OOFSponder.Logger.Info("ExternalAudienceScope: " + ExternalAudienceScope.ToString());
             OOFSponder.Logger.Info("IsOnCallModeOn: " + IsOnCallModeOn);
             OOFSponder.Logger.Info("StartMinimized: " + StartMinimized);
             OOFSponder.Logger.Info("UserSettingsSource: " + UserSettingsSource);
@@ -316,6 +377,10 @@ namespace OOFScheduling
             var config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
                 //later added files override previous ones
+                //this is critical when we add new properties
+                //we just need to add them to the base appsettings.json
+                //and if the user's file doesn't have them, the new default gets added
+                //from the updated appsettings.json
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()), true)
                 .Build();
@@ -324,7 +389,6 @@ namespace OOFScheduling
             config.Bind(OOFSponderConfig);
 
             OOFSponder.Logger.Info("Successfully read properties and bound to class");
-            OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFSponderConfig.OOFData.PrimaryOOFExternalMessage);
 
             instance.PermaOOFDate = OOFSponderConfig.OOFData.PermaOOFDate;
             instance.WorkingHours = OOFSponderConfig.OOFData.WorkingHours == baseValue ? string.Empty : OOFSponderConfig.OOFData.WorkingHours;
@@ -345,6 +409,8 @@ namespace OOFScheduling
             instance.StartMinimized = OOFSponderConfig.OOFData.StartMinimized == baseBool ? false : OOFSponderConfig.OOFData.StartMinimized;
 
             instance.UserSettingsSource = OOFSponderConfig.UserSettingsSource;
+
+            instance.ExternalAudienceScope = OOFSponderConfig.OOFData.ExternalAudienceScope;
 
             LogProperties();
 
@@ -388,6 +454,7 @@ namespace OOFScheduling
             config.OOFData.WorkingHours = instance.WorkingHours;
             config.OOFData.IsOnCallModeOn = instance.IsOnCallModeOn;
             config.OOFData.StartMinimized = instance.StartMinimized;
+            config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope) instance.ExternalAudienceScope;
             config.UserSettingsSource = instance.UserSettingsSource;
 
 

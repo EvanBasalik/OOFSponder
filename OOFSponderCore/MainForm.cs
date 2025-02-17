@@ -1,4 +1,5 @@
 ﻿using Microsoft.Graph;
+using Microsoft.VisualBasic.Devices;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using OOFSponder;
@@ -6,6 +7,10 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -52,11 +57,19 @@ namespace OOFScheduling
             //if we are missing some necessar input, then need to show the window regardless
             Logger.Info("StartMinimized:" + OOFData.Instance.StartMinimized.ToString());
             Logger.Info("HaveNecessaryData:" + OOFData.Instance.HaveNecessaryData.ToString());
+
             if (OOFData.Instance.StartMinimized && OOFData.Instance.HaveNecessaryData)
             {
+
+                //if in DEBUG, then always show the form
+#if !DEBUG
                 //don't call Show() here b/c we run minimized
                 this.WindowState = FormWindowState.Minimized;
-
+#else
+                allowshowdisplay = true;
+                this.WindowState = FormWindowState.Normal;
+                this.Show();
+#endif
                 //but do make the tray icon visible
                 notifyIcon1.Visible = true;
             }
@@ -94,41 +107,73 @@ namespace OOFScheduling
                 if (dayHours[2] == "0") { sundayOffWorkCB.Checked = true; } else { sundayOffWorkCB.Checked = false; }
                 sundayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 sundayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                sundayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                sundayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[1].Split('~');
                 if (dayHours[2] == "0") { mondayOffWorkCB.Checked = true; } else { mondayOffWorkCB.Checked = false; }
                 mondayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 mondayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                mondayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                mondayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[2].Split('~');
                 if (dayHours[2] == "0") { tuesdayOffWorkCB.Checked = true; } else { tuesdayOffWorkCB.Checked = false; }
                 tuesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 tuesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                tuesdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                tuesdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[3].Split('~');
                 if (dayHours[2] == "0") { wednesdayOffWorkCB.Checked = true; } else { wednesdayOffWorkCB.Checked = false; }
                 wednesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 wednesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                wednesdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                wednesdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[4].Split('~');
                 if (dayHours[2] == "0") { thursdayOffWorkCB.Checked = true; } else { thursdayOffWorkCB.Checked = false; }
                 thursdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 thursdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                thursdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                thursdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[5].Split('~');
                 if (dayHours[2] == "0") { fridayOffWorkCB.Checked = true; } else { fridayOffWorkCB.Checked = false; }
                 fridayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 fridayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                fridayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                fridayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
 
                 dayHours = workingHours[6].Split('~');
                 if (dayHours[2] == "0") { saturdayOffWorkCB.Checked = true; } else { saturdayOffWorkCB.Checked = false; }
                 saturdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
                 saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
+                saturdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                saturdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
             }
             else
             {
                 Logger.Warning("Don't have WorkingHours");
             }
+
+            //set the time format for the DateTimePickers
+            foreach (DateTimePicker item in this.Controls.OfType<DateTimePicker>())
+            {
+                item.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+                item.CustomFormat = " h:mm tt";
+            }
+
+            //populate the dropdown with the possible ExternalAudienceScope values
+            var enumValues = Enum.GetValues(typeof(Microsoft.Graph.ExternalAudienceScope)).Cast<Microsoft.Graph.ExternalAudienceScope>();
+            foreach (var value in enumValues)
+            {
+                cboExternalAudienceScope.Items.Add(EnumHelper.GetEnumDescription(value));
+            }
+
+            cboExternalAudienceScope.SelectedIndex = (int)OOFData.Instance.ExternalAudienceScope;
+            //need to decide if the External Message needs to be marked ReadOnly
+            DecideonHTMLReadOnly();
 
             //pull all the runtime accessibility work into one place
             //wire up to respond to changes
@@ -210,8 +255,17 @@ namespace OOFScheduling
             if (!OOFData.Instance.HaveNecessaryData)
             {
                 //we are missing data, so log the three we are checking
-                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
-                OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
+                if (OOFData.Instance.IsPermaOOFOn)
+                {
+                    OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
+                    OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
+                }
+                else
+                {
+                    OOFSponder.Logger.InfoPotentialPII("SecondaryOOFExternalMessage", OOFData.Instance.SecondaryOOFExternalMessage);
+                    OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", OOFData.Instance.SecondaryOOFInternalMessage);
+                }
+
                 OOFSponder.Logger.InfoPotentialPII("WorkingHours", OOFData.Instance.WorkingHours);
             }
 
@@ -308,23 +362,17 @@ namespace OOFScheduling
             if (SystemInformation.HighContrast)
             {
                 OOFSponder.Logger.Info("HighContrast mode = true, so setting DataTimePickers to ControlLight");
-                foreach (Control item in this.Controls)
+                foreach (DateTimePicker item in this.Controls.OfType<DateTimePicker>())
                 {
-                    if (item.GetType() == typeof(DateTimePicker))
-                    {
-                        item.ForeColor = SystemColors.ControlLight;
-                    }
+                    item.ForeColor = SystemColors.ControlLight;
                 }
             }
             else
             {
                 OOFSponder.Logger.Info("HighContrast mode = false, so setting DataTimePickers to ControlText");
-                foreach (Control item in this.Controls)
+                foreach (DateTimePicker item in this.Controls.OfType<DateTimePicker>())
                 {
-                    if (item.GetType() == typeof(DateTimePicker))
-                    {
-                        item.ForeColor = SystemColors.WindowText;
-                    }
+                    item.ForeColor = SystemColors.WindowText;
                 }
             }
         }
@@ -487,12 +535,14 @@ namespace OOFScheduling
             DateTimeTimeZone oofEnd = new DateTimeTimeZone { DateTime = EndTime.ToUniversalTime().ToString("u").Replace("Z", ""), TimeZone = "UTC" };
 
             //create local OOF object
+            //TODO: why not use OOFData.Instance??
             AutomaticRepliesSetting localOOF = new AutomaticRepliesSetting();
             localOOF.ExternalReplyMessage = oofMessageExternal;
             localOOF.InternalReplyMessage = oofMessageInternal;
             localOOF.ScheduledStartDateTime = oofStart;
             localOOF.ScheduledEndDateTime = oofEnd;
             localOOF.Status = AutomaticRepliesStatus.Scheduled;
+            localOOF.ExternalAudience = OOFData.Instance.ExternalAudienceScope;
 
             try
             {
@@ -543,15 +593,32 @@ namespace OOFScheduling
                     scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
                     scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //do nothing because we will just take the initialized false values;
+                    //don't care - just take the initialized value of false
+                    //log error just in case
+                    OOFSponder.Logger.Error(ex);
                 }
+
+                //don't know if this value could ever be null, so set to false by default
+                bool externalAudienceScopeEqual = false;
+                try
+                {
+                    externalAudienceScopeEqual = remoteOOF.ExternalAudience == localOOF.ExternalAudience;
+                }
+                catch (Exception ex)
+                {
+                    //don't care - just take the initialized value of false
+                    //log error just in case
+                    OOFSponder.Logger.Error(ex);
+                }
+
 
                 if (!externalReplyMessageEqual
                         || !internalReplyMessageEqual
                         || !scheduledStartDateTimeEqual
                         || !scheduledEndDateTimeEqual
+                        || !externalAudienceScopeEqual
                         )
                 {
                     OOFSponder.Logger.Info("Local OOF doesn't match remote OOF");
@@ -807,31 +874,11 @@ namespace OOFScheduling
 
         private void saveSettings()
         {
-            OOFSponder.Logger.Info("Saving settings");
-
-            //adding to prevent even trying to save when we don't have all the necessary data
-            //attempted fix of https://github.com/EvanBasalik/OOFSponder/issues/103
-            if (!OOFData.Instance.HaveNecessaryData)
-            {
-                Logger.Warning("Missing necessary data, so not persisting settings!");
-                return;
-            }
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             if (primaryToolStripMenuItem.Checked)
             {
                 OOFSponder.Logger.Info("Saving Primary OOF message");
-
-                //if the current messages don't match the stored ones, then save them in AppData
-                //important to do this first so we can compare to the older message before updating
-                //the instance data in a few lines
-                //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
-                //if (OOFData.Instance.PrimaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
-                //{
-                //    Logger.Info("Primary OOF Internal has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.PrimaryInternal, htmlEditorControl2.BodyHtml);
-                //}
-
-                //and also in the instance data
                 OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
@@ -839,23 +886,6 @@ namespace OOFScheduling
             //since customer is editing Secondary message, save text in Secondary
             {
                 OOFSponder.Logger.Info("Saving Secondary OOF message");
-
-                //if the current messages don't match the stored ones, then save them in AppData
-                //important to do this first so we can compare to the older message before updating
-                //the instance data in a few lines
-                //TODO: this really should be reworked so WriteProperties and SaveOffline use the same logic
-                //if (OOFData.Instance.SecondaryOOFExternalMessage != htmlEditorControl1.BodyHtml)
-                //{
-                //    Logger.Info("Secondary OOF External has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, htmlEditorControl1.BodyHtml);
-                //}
-                //if (OOFData.Instance.SecondaryOOFInternalMessage != htmlEditorControl2.BodyHtml)
-                //{
-                //    Logger.Info("Secondary OOF Internal has changed - persisting to AppData");
-                //    OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, htmlEditorControl2.BodyHtml);
-                //}
-
-                //and also in the instance data
                 OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
                 OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
             }
@@ -863,8 +893,22 @@ namespace OOFScheduling
             //persist if they want the UI minimized on start up
             OOFData.Instance.StartMinimized = tsmiStartMinimized.Checked;
 
+            //persist the external message scope
+            Enum.TryParse(cboExternalAudienceScope.SelectedItem.ToString().Replace(" ", ""), out ExternalAudienceScope result);
+            OOFData.Instance.ExternalAudienceScope = result;
+
             OOFData.Instance.WorkingHours = ScheduleString();
 
+            //check to make sure we have the minimum data
+            if (!OOFData.Instance.HaveNecessaryData)
+            {
+                Logger.Warning("Missing necessary data, so not persisting settings!");
+                MessageBox.Show("Missing necessary data. Unless you aren't sending an OOF message to external senders, you must specify all a message for both internal and external",
+                    "Missing settings!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            OOFSponder.Logger.Info("Saving settings");
             OOFData.Instance.WriteProperties();
 
             toolStripStatusLabel1.Text = "Settings Saved";
@@ -1001,11 +1045,11 @@ namespace OOFScheduling
         //enable/disable the various daily DateTimePickers as appropriate
         private void OffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
-            var listofDataTimePickers = GetControlsOfSpecificType(this, typeof(DateTimePicker));
+            var listofDataTimePickers = GetControlsOfSpecificType(this, typeof(LastDateTimePicker));
             foreach (var dateTimePicker in listofDataTimePickers)
             {
                 CheckBox cb = ((CheckBox)sender);
-                DateTimePicker dt = ((DateTimePicker)dateTimePicker);
+                LastDateTimePicker dt = ((LastDateTimePicker)dateTimePicker);
                 string cbName = cb.Name.Replace("OffWorkCB", "");
                 string dtpName = dt.Name.Replace("StartTimepicker", "").Replace("EndTimepicker", "");
                 if (cbName == dtpName)
@@ -1579,6 +1623,98 @@ namespace OOFScheduling
         {
             AboutBox a = new AboutBox();
             a.Show();
+        }
+
+        private void cboExternalAudienceScope_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //if in the initial load, don't react
+            if (inInitialization)
+            {
+                return;
+            }
+
+            OOFData.Instance.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)cboExternalAudienceScope.SelectedIndex;
+
+            DecideonHTMLReadOnly();
+
+            //don't do anything to persist setting change - rely on SaveSetting()
+        }
+
+        private void DecideonHTMLReadOnly()
+        {
+            // Determine whether the External Message entry box should be editable based on Audience Scope
+            bool isEditable = OOFData.Instance.ExternalAudienceScope != ExternalAudienceScope.None;
+
+            // Enable or disable the External Message entry box
+            htmlEditorControl1.Enabled = isEditable;
+
+            // Update the HTML content to reflect the read-only state
+            if (isEditable)
+            {
+                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("style=\"" + OOFData.HTMLReadOnlyIndicator + "\" scroll=auto", "scroll=auto");
+            }
+            else
+            {
+                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("scroll=auto", "scroll=auto style='" + OOFData.HTMLReadOnlyIndicator + "'");
+            }
+        }
+
+        private bool navigatingDateTimePicker = false;
+        private int incrementMinutes = 15;
+
+        private void DateTimePicker_ValueChanged(object sender, EventArgs e)
+        {
+            LastDateTimePicker picker = sender as LastDateTimePicker;
+
+            
+            if (usedKeys)
+            {
+                //reset the usedKeys bool so that a spinner operation works
+                usedKeys = false;
+                return;
+            }
+
+            if (picker != null)
+            {
+                if (!navigatingDateTimePicker)
+                {
+                    /* First set the navigating flag to true so this method doesn't get called again while updating */
+                    navigatingDateTimePicker = true;
+
+                    /* using timespan because that's the only way I know how to round times well */
+                    TimeSpan tempTS = picker.Value - picker.Value.Date;
+                    TimeSpan roundedTimeSpan;
+
+                    TimeSpan TDBug = picker.Value - picker.LastValue;
+                    if (TDBug.TotalMinutes == 59)
+                    {
+                        // first: if we are going back and skipping an hour it needs an adjustment
+                        roundedTimeSpan = TimeSpan.FromMinutes(incrementMinutes * Math.Floor((tempTS.TotalMinutes - 60) / incrementMinutes));
+                        picker.Value = picker.Value.Date + roundedTimeSpan;
+                    }
+                    else if (picker.Value > picker.LastValue)
+                    {
+                        // round up to the nearest interval
+                        roundedTimeSpan = TimeSpan.FromMinutes(incrementMinutes * Math.Ceiling(tempTS.TotalMinutes / incrementMinutes));
+                        picker.Value = picker.Value.Date + roundedTimeSpan;
+                    }
+                    else
+                    {
+                        // round down to the nearest interval from prev
+                        roundedTimeSpan = TimeSpan.FromMinutes(incrementMinutes * Math.Floor(tempTS.TotalMinutes / incrementMinutes));
+                        picker.Value = picker.Value.Date + roundedTimeSpan;
+                    }
+                    navigatingDateTimePicker = false;
+                }
+            }
+        }
+
+        //use this to allow manual input of times that aren't aligned to the spinner increment
+        private bool usedKeys = false;
+        private void LastDateTimePicker_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            LastDateTimePicker picker = sender as LastDateTimePicker;
+            usedKeys = true;
         }
     }
 
