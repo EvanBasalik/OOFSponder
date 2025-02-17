@@ -1258,9 +1258,13 @@ namespace OOFScheduling
                     SetUIforPrimary();
                     OOFSponderInsights.Track("Disabled PermaOOF");
                 }
+
+                //if everything is set, save settings
+                saveSettings();
             }
             else
             {
+                MessageBox.Show("Failed to set OOF message. Please check your settings and try again");
                 //if we fail to set OOF, disable PermaOOF to reset the UI
                 OOFData.Instance.PermaOOFDate = DateTime.Now;
 
