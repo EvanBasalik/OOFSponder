@@ -153,8 +153,8 @@ namespace OOFScheduling
                 Logger.Warning("Don't have WorkingHours");
             }
 
-            //set the time format for the DateTimePickers
-            foreach (DateTimePicker item in this.Controls.OfType<DateTimePicker>())
+            //set the time format for the LastDateTimePickers
+            foreach (LastDateTimePicker item in this.Controls.OfType<LastDateTimePicker>())
             {
                 item.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
                 item.CustomFormat = " h:mm tt";
