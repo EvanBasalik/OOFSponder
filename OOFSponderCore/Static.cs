@@ -1,8 +1,4 @@
-﻿using Microsoft.Graph;
 using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 

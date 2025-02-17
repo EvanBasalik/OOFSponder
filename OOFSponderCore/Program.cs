@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Threading;
-using System.Diagnostics;
 using OOFSponder;
+using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace OOFScheduling
 {
@@ -28,7 +24,7 @@ namespace OOFScheduling
 
             //Add our custom logger
             //Trace.Listeners.Add(new TextWriterTraceListener("OOFSponder.log", "myListener"));
-            System.IO.TextWriter mylog= System.IO.File.AppendText(Logger.FileName);
+            System.IO.TextWriter mylog = System.IO.File.AppendText(Logger.FileName);
             Trace.Listeners.Add(new TextWriterTraceListener(mylog, "OOFSponderFileLogger"));
             #endregion
 
@@ -88,9 +84,9 @@ namespace OOFScheduling
                 return;
             }
 
- 
+
         }
 
-        
+
     }
 }

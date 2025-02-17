@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using mshtml;
-using Newtonsoft.Json.Linq;
 using OOFSponder;
 using System;
 using System.Collections.ObjectModel;
@@ -51,12 +49,13 @@ namespace OOFScheduling
             }
         }
         private string _primaryOOFExternalMessage = string.Empty;
-        internal string PrimaryOOFExternalMessage { 
+        internal string PrimaryOOFExternalMessage
+        {
             get
             {
                 return _primaryOOFExternalMessage;
             }
-            
+
             set
             {
                 //if a new value is being passed in, then persist to offline AppData storage
@@ -81,7 +80,7 @@ namespace OOFScheduling
                     _primaryOOFExternalMessage = value;
                 }
             }
-        
+
         }
 
         private string _primaryOOFInternalMessage = string.Empty;
@@ -176,7 +175,7 @@ namespace OOFScheduling
 
         }
 
-        internal static string OOFFileName (OOFMessageType messageType) 
+        internal static string OOFFileName(OOFMessageType messageType)
         {
             return Path.Combine(SettingsHelpers.PerUserDataFolder(), DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + messageType.ToString() + ".html");
         }
@@ -383,7 +382,7 @@ namespace OOFScheduling
                 //and if the user's file doesn't have them, the new default gets added
                 //from the updated appsettings.json
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()),true)
+                .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()), true)
                 .Build();
 
             OOFSponderConfig.Root OOFSponderConfig = new OOFSponderConfig.Root();
@@ -482,10 +481,10 @@ namespace OOFScheduling
 
         internal enum OOFMessageType
         {
-            PrimaryInternal=0,
-            PrimaryExternal=1,
-            SecondaryInternal=2,
-            SecondaryExternal=3
+            PrimaryInternal = 0,
+            PrimaryExternal = 1,
+            SecondaryInternal = 2,
+            SecondaryExternal = 3
         }
 
         internal bool SaveOOFMessageOffline(OOFMessageType messageType, string OOFMessageAsHTML)

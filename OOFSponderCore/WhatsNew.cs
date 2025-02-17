@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OOFScheduling
@@ -22,10 +15,10 @@ namespace OOFScheduling
             this.Icon = Properties.Resources.OOFSponderIcon;
 
             richTextBox1.LoadFile(System.IO.Path.Combine(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location), "whatsnew.rtf"));
-            
+
             //set up the self-destruct
             iCountdown = _iCountdown;
-                        //start the countdown
+            //start the countdown
             if (iCountdown > 0)
             {
                 tmDismiss.Interval = 1000;

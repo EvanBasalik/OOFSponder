@@ -1,4 +1,4 @@
-﻿using Microsoft.Graph;
+using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +38,8 @@ namespace OOFSponderConfig
     internal class Root
     {
         OOFData _OOFData;
-        public OOFData OOFData { 
+        public OOFData OOFData
+        {
             get
             {
                 if (_OOFData == null)

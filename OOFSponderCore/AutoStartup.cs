@@ -1,13 +1,7 @@
 ﻿using ClickOnceHelper;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOFScheduling
 {
@@ -41,7 +35,7 @@ namespace OOFScheduling
             return Path.Combine(startupPath, ProductName) + ApprefExtension;
         }
 
-        public static void AddToStartup(bool UseRegistry=false)
+        public static void AddToStartup(bool UseRegistry = false)
         {
             OOFSponder.Logger.Info("UseRegistry: " + UseRegistry);
 

@@ -1,13 +1,12 @@
 ﻿using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Broker;
 using System;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
-using Microsoft.Identity.Client.Broker;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OOFScheduling
 {
@@ -84,13 +83,13 @@ namespace OOFScheduling
                 //for checking if logged in, want to do an exact match
                 OOFSponder.Logger.Info("Checking for the logged in user");
                 IAccount account = null;
-                try 
+                try
                 {
                     OOFSponder.Logger.Info("Comparing GetAccountsAsyncFirstOrDefault.UserName to DefaultUserUPN");
-                    account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower()); 
-                } 
-                catch (Exception ex) 
-                { 
+                    account = accountTask.Result.FirstOrDefault(p => p.Username.ToLower() == DefaultUserUPN.ToLower());
+                }
+                catch (Exception ex)
+                {
                     OOFSponder.Logger.Error(ex);
                 }
 
