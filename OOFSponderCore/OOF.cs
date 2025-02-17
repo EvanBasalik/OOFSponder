@@ -4,9 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace OOFScheduling
@@ -16,6 +14,7 @@ namespace OOFScheduling
     {
         internal DateTime PermaOOFDate { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
+        internal static readonly string HTMLReadOnlyIndicator = "BACKGROUND: darkgray";
 
         internal bool isEmptyOrDefaultOOFMessage(string input)
         {
@@ -111,7 +110,6 @@ namespace OOFScheduling
 
         }
         private string _secondaryOOFExternalMessage = string.Empty;
-        internal static readonly string HTMLReadOnlyIndicator = "BACKGROUND: darkgray";
 
         internal string SecondaryOOFExternalMessage
         {
@@ -454,7 +452,7 @@ namespace OOFScheduling
             config.OOFData.WorkingHours = instance.WorkingHours;
             config.OOFData.IsOnCallModeOn = instance.IsOnCallModeOn;
             config.OOFData.StartMinimized = instance.StartMinimized;
-            config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope) instance.ExternalAudienceScope;
+            config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)instance.ExternalAudienceScope;
             config.UserSettingsSource = instance.UserSettingsSource;
 
 
