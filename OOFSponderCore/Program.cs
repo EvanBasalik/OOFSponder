@@ -44,8 +44,6 @@ namespace OOFScheduling
                     //switch to the new form since cannot fix the HTMLEditor scaling on Form1
                     //Application.Run(new Form1());
                     Application.Run(new MainForm());
-
-
                     GC.KeepAlive(m);
                 }
                 else

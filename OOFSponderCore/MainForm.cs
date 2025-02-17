@@ -244,6 +244,9 @@ namespace OOFScheduling
                 SetUIforPrimary();
             }
 
+            //now that we have set up the UI properly, can add the handlers for primary/secondary
+            radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
+
             //Need to update the UI as appropriate based on On-Call mode
             SetUIforOnCallMode();
 
@@ -297,7 +300,6 @@ namespace OOFScheduling
                 AuthTask.Wait();
             }
 
-            radPrimary.CheckedChanged += new System.EventHandler(radPrimary_CheckedChanged);
             //fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
 
             //now that everything is loaded, trigger a check on current status
@@ -1254,6 +1256,8 @@ namespace OOFScheduling
 
             primaryToolStripMenuItem.Checked = false;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
+            radSecondary.Checked = true;
+
 
             //set the tags on the Internal/External OOF message load items to Secondary
             //do this before setting the AccessibleName and AccessibleDescription so we can use the tag
@@ -1276,10 +1280,15 @@ namespace OOFScheduling
                 //need to be thread-safe
                 if (dtPermaOOF.InvokeRequired)
                 {
-                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate () { dtPermaOOF.Enabled = false; }));
+                    dtPermaOOF.Invoke(new System.Windows.Forms.MethodInvoker(delegate ()
+                        {
+                            dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
+                            dtPermaOOF.Enabled = false;
+                        }));
                 }
                 else
                 {
+                    dtPermaOOF.Value = OOFData.Instance.PermaOOFDate;
                     dtPermaOOF.Enabled = false;
                 }
 
@@ -1333,6 +1342,7 @@ namespace OOFScheduling
 
             primaryToolStripMenuItem.Checked = true;
             secondaryToolStripMenuItem.Checked = !primaryToolStripMenuItem.Checked;
+            radPrimary.Checked = true;
 
             //set the tags on the Internal/External OOF message load items to Primary
             //do this before setting the AccessibleName and AccessibleDescription so we can use the tag
