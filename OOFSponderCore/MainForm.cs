@@ -1702,11 +1702,35 @@ namespace OOFScheduling
             // Update the HTML content to reflect the read-only state
             if (isEditable)
             {
-                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("style=\"" + OOFData.HTMLReadOnlyIndicator + "\" scroll=auto", "scroll=auto");
+                //htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("style=\"" + OOFData.HTMLReadOnlyIndicator + "\" scroll=auto", "scroll=auto");
+                foreach (Panel item in htmlEditorControl1.Controls.OfType<Panel>())
+                {
+                    //we know there is only one in the control, so can cheat
+                    foreach (WebBrowser wb in item.Controls.OfType<WebBrowser>())
+                    {
+                        //really would prefer to use the transparent panel, but cannot 
+                        //get it show on top. Oh well - maybe another day
+                        //got this from Copilot!
+                        wb.Document.InvokeScript("execScript", new object[] { "document.body.style.backgroundColor = 'white';", "JavaScript" });
+                    }
+
+                }
             }
             else
             {
-                htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("scroll=auto", "scroll=auto style='" + OOFData.HTMLReadOnlyIndicator + "'");
+                foreach (Panel item in htmlEditorControl1.Controls.OfType<Panel>())
+                {
+                    //we know there is only one in the control, so can cheat
+                    foreach (WebBrowser wb in item.Controls.OfType<WebBrowser>())
+                    {
+                        //really would prefer to use the transparent panel, but cannot 
+                        //get it show on top. Oh well - maybe another day
+                        //got this from Copilot!
+                        wb.Document.InvokeScript("execScript", new object[] { "document.body.style.backgroundColor = 'lightgray';", "JavaScript" });
+                    }
+
+                }
+                // htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("scroll=auto", "scroll=auto style='" + OOFData.HTMLReadOnlyIndicator + "'");
             }
         }
 
