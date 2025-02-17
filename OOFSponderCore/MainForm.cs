@@ -1,20 +1,13 @@
 ﻿using Microsoft.Graph;
-using Microsoft.VisualBasic.Devices;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using OOFSponder;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -162,7 +155,7 @@ namespace OOFScheduling
             }
 
             //set the time format for the DateTimePickers
-            foreach (DateTimePicker item in this.Controls.OfType<DateTimePicker>())
+            foreach (LastDateTimePicker item in this.Controls.OfType<LastDateTimePicker>())
             {
                 item.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
                 item.CustomFormat = " h:mm tt";
@@ -1667,7 +1660,7 @@ namespace OOFScheduling
         {
             LastDateTimePicker picker = sender as LastDateTimePicker;
 
-            
+
             if (usedKeys)
             {
                 //reset the usedKeys bool so that a spinner operation works
