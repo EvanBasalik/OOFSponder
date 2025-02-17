@@ -313,7 +313,7 @@
             dtPermaOOF.AccessibleName = "Perma OOF date";
             dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(559, 610);
+            dtPermaOOF.Location = new System.Drawing.Point(551, 610);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
@@ -321,7 +321,7 @@
             // 
             // btnPermaOOF
             // 
-            btnPermaOOF.Location = new System.Drawing.Point(403, 608);
+            btnPermaOOF.Location = new System.Drawing.Point(395, 608);
             btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             btnPermaOOF.Name = "btnPermaOOF";
             btnPermaOOF.Size = new System.Drawing.Size(152, 26);
@@ -368,7 +368,7 @@
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(38, 608);
+            button2.Location = new System.Drawing.Point(30, 608);
             button2.Margin = new System.Windows.Forms.Padding(4);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(133, 26);
@@ -793,7 +793,7 @@
             // 
             groupBox1.Controls.Add(radSecondary);
             groupBox1.Controls.Add(radPrimary);
-            groupBox1.Location = new System.Drawing.Point(178, 593);
+            groupBox1.Location = new System.Drawing.Point(170, 593);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size(220, 43);
             groupBox1.TabIndex = 58;
