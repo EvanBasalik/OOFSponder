@@ -89,21 +89,23 @@
             label1 = new System.Windows.Forms.Label();
             menuStrip1 = new System.Windows.Forms.MenuStrip();
             aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            radPrimary = new System.Windows.Forms.RadioButton();
-            radSecondary = new System.Windows.Forms.RadioButton();
             cboExternalAudienceScope = new System.Windows.Forms.ComboBox();
             lblExternalMessageAudience = new System.Windows.Forms.Label();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            radSecondary = new System.Windows.Forms.RadioButton();
+            radPrimary = new System.Windows.Forms.RadioButton();
             statusStrip1.SuspendLayout();
             htmlEditorControl2.BeginInit();
             htmlEditorControl1.BeginInit();
             menuStrip1.SuspendLayout();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // lblInternalMessage
             // 
             lblInternalMessage.AutoSize = true;
             lblInternalMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblInternalMessage.Location = new System.Drawing.Point(9, 379);
+            lblInternalMessage.Location = new System.Drawing.Point(9, 369);
             lblInternalMessage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblInternalMessage.Name = "lblInternalMessage";
             lblInternalMessage.Size = new System.Drawing.Size(104, 13);
@@ -266,7 +268,7 @@
             // 
             statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripStatusLabel1, toolStripStatusLabel2, lblBuild });
-            statusStrip1.Location = new System.Drawing.Point(0, 662);
+            statusStrip1.Location = new System.Drawing.Point(0, 667);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 9, 0);
             statusStrip1.Size = new System.Drawing.Size(794, 24);
@@ -311,7 +313,7 @@
             dtPermaOOF.AccessibleName = "Perma OOF date";
             dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(559, 606);
+            dtPermaOOF.Location = new System.Drawing.Point(551, 612);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
@@ -319,7 +321,7 @@
             // 
             // btnPermaOOF
             // 
-            btnPermaOOF.Location = new System.Drawing.Point(403, 604);
+            btnPermaOOF.Location = new System.Drawing.Point(395, 608);
             btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             btnPermaOOF.Name = "btnPermaOOF";
             btnPermaOOF.Size = new System.Drawing.Size(152, 26);
@@ -337,7 +339,7 @@
             // 
             lblExternalMesage.AutoSize = true;
             lblExternalMesage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblExternalMesage.Location = new System.Drawing.Point(9, 152);
+            lblExternalMesage.Location = new System.Drawing.Point(9, 142);
             lblExternalMesage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblExternalMesage.Name = "lblExternalMesage";
             lblExternalMesage.Size = new System.Drawing.Size(107, 13);
@@ -358,7 +360,7 @@
             // 
             htmlEditorControl2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             htmlEditorControl2.InnerText = null;
-            htmlEditorControl2.Location = new System.Drawing.Point(9, 396);
+            htmlEditorControl2.Location = new System.Drawing.Point(9, 386);
             htmlEditorControl2.Margin = new System.Windows.Forms.Padding(4);
             htmlEditorControl2.Name = "htmlEditorControl2";
             htmlEditorControl2.Size = new System.Drawing.Size(776, 200);
@@ -366,7 +368,7 @@
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(38, 604);
+            button2.Location = new System.Drawing.Point(30, 608);
             button2.Margin = new System.Windows.Forms.Padding(4);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(133, 26);
@@ -379,7 +381,7 @@
             // 
             htmlEditorControl1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             htmlEditorControl1.InnerText = null;
-            htmlEditorControl1.Location = new System.Drawing.Point(9, 169);
+            htmlEditorControl1.Location = new System.Drawing.Point(9, 159);
             htmlEditorControl1.Margin = new System.Windows.Forms.Padding(4);
             htmlEditorControl1.Name = "htmlEditorControl1";
             htmlEditorControl1.Size = new System.Drawing.Size(776, 200);
@@ -761,39 +763,15 @@
             aboutToolStripMenuItem.Text = "&Help...";
             aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
             // 
-            // radPrimary
-            // 
-            radPrimary.AutoSize = true;
-            radPrimary.Checked = true;
-            radPrimary.Location = new System.Drawing.Point(178, 608);
-            radPrimary.Margin = new System.Windows.Forms.Padding(4);
-            radPrimary.Name = "radPrimary";
-            radPrimary.Size = new System.Drawing.Size(93, 19);
-            radPrimary.TabIndex = 56;
-            radPrimary.TabStop = true;
-            radPrimary.Text = "Primary OOF";
-            radPrimary.UseVisualStyleBackColor = true;
-            // 
-            // radSecondary
-            // 
-            radSecondary.AutoSize = true;
-            radSecondary.Location = new System.Drawing.Point(276, 608);
-            radSecondary.Margin = new System.Windows.Forms.Padding(4);
-            radSecondary.Name = "radSecondary";
-            radSecondary.Size = new System.Drawing.Size(107, 19);
-            radSecondary.TabIndex = 57;
-            radSecondary.TabStop = true;
-            radSecondary.Text = "Secondary OOF";
-            radSecondary.UseVisualStyleBackColor = true;
-            // 
             // cboExternalAudienceScope
             // 
             cboExternalAudienceScope.AccessibleDescription = "Allows the selection of the audience for the External Message";
             cboExternalAudienceScope.AccessibleName = "Dropdown for selecting who should get the External Message";
             cboExternalAudienceScope.AccessibleRole = System.Windows.Forms.AccessibleRole.ComboBox;
+            cboExternalAudienceScope.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             cboExternalAudienceScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             cboExternalAudienceScope.FormattingEnabled = true;
-            cboExternalAudienceScope.Location = new System.Drawing.Point(663, 146);
+            cboExternalAudienceScope.Location = new System.Drawing.Point(663, 136);
             cboExternalAudienceScope.Name = "cboExternalAudienceScope";
             cboExternalAudienceScope.Size = new System.Drawing.Size(121, 23);
             cboExternalAudienceScope.TabIndex = 30;
@@ -803,21 +781,57 @@
             // 
             lblExternalMessageAudience.AccessibleDescription = "Label for Send External Message to:";
             lblExternalMessageAudience.AccessibleName = "Label for Send External Message to:";
+            lblExternalMessageAudience.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             lblExternalMessageAudience.AutoSize = true;
             lblExternalMessageAudience.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblExternalMessageAudience.Location = new System.Drawing.Point(500, 152);
+            lblExternalMessageAudience.Location = new System.Drawing.Point(500, 142);
             lblExternalMessageAudience.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblExternalMessageAudience.Name = "lblExternalMessageAudience";
             lblExternalMessageAudience.Size = new System.Drawing.Size(159, 13);
             lblExternalMessageAudience.TabIndex = 29;
             lblExternalMessageAudience.Text = "Send External Message to:";
             // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(radSecondary);
+            groupBox1.Controls.Add(radPrimary);
+            groupBox1.Location = new System.Drawing.Point(170, 593);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(220, 43);
+            groupBox1.TabIndex = 58;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "OOF Message";
+            // 
+            // radSecondary
+            // 
+            radSecondary.AutoSize = true;
+            radSecondary.Location = new System.Drawing.Point(110, 19);
+            radSecondary.Name = "radSecondary";
+            radSecondary.Size = new System.Drawing.Size(107, 19);
+            radSecondary.TabIndex = 56;
+            radSecondary.TabStop = true;
+            radSecondary.Text = "Secondary OOF";
+            radSecondary.UseVisualStyleBackColor = true;
+            // 
+            // radPrimary
+            // 
+            radPrimary.AutoSize = true;
+            radPrimary.Checked = true;
+            radPrimary.Location = new System.Drawing.Point(16, 19);
+            radPrimary.Name = "radPrimary";
+            radPrimary.Size = new System.Drawing.Size(93, 19);
+            radPrimary.TabIndex = 56;
+            radPrimary.TabStop = true;
+            radPrimary.Text = "Primary OOF";
+            radPrimary.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             AutoScroll = true;
-            ClientSize = new System.Drawing.Size(794, 686);
+            ClientSize = new System.Drawing.Size(794, 691);
+            Controls.Add(groupBox1);
             Controls.Add(lblExternalMessageAudience);
             Controls.Add(cboExternalAudienceScope);
             Controls.Add(lblInternalMessage);
@@ -857,10 +871,8 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(menuStrip1);
-            Controls.Add(radPrimary);
-            Controls.Add(radSecondary);
             Controls.Add(htmlEditorControl1);
-            MaximumSize = new System.Drawing.Size(1300, 725);
+            MaximumSize = new System.Drawing.Size(1300, 730);
             Name = "MainForm";
             Text = "OOFSponder";
             FormClosing += MainForm_FormClosing;
@@ -873,6 +885,8 @@
             htmlEditorControl1.EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -923,8 +937,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.RadioButton radPrimary;
-        private System.Windows.Forms.RadioButton radSecondary;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ComboBox cboExternalAudienceScope;
         private System.Windows.Forms.Label lblExternalMessageAudience;
@@ -942,5 +954,8 @@
         private LastDateTimePicker tuesdayStartTimepicker;
         private LastDateTimePicker mondayStartTimepicker;
         private LastDateTimePicker sundayStartTimepicker;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radPrimary;
+        private System.Windows.Forms.RadioButton radSecondary;
     }
 }
