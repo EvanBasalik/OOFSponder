@@ -30,7 +30,7 @@ param (
     [switch]$Commit,
     [switch]$NoCommit
 )
-$supportingFiles=$pwd.ToString().replace("\SupportingFiles","")
+$supportingFiles=$pwd.ToString().replace("\SupportingFiles\Legacy","")
 $OOFSponderLocalPath = "$($supportingFiles)\OOFScheduling\"
 [xml]$doc = Get-Content -Path "$($OOFSponderLocalPath)\OOFSponder.csproj"
 [version]$currentVersion = ([string]$doc.Project.PropertyGroup.ApplicationVersion).Trim()
