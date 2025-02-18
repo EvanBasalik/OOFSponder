@@ -1,10 +1,8 @@
 ﻿using Microsoft.Graph;
 using Microsoft.Win32;
-using MSDN.Html.Editor;
 using Newtonsoft.Json;
 using OOFSponder;
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -24,6 +22,10 @@ namespace OOFScheduling
 
         public Form1()
         {
+#if DEBUGSTARTUP
+            MessageBox.Show("Attach debugger now for startup testing");
+#endif
+
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             InitializeComponent();
