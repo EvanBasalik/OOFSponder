@@ -208,7 +208,6 @@ namespace OOFScheduling
                 OOFSponder.Logger.Info("Left critical section for auth code");
             }
 
-            OOFSponderInsights.UserGUID = authResult.UniqueId;
             OOFSponder.Logger.Info("UserGUID: " + OOFSponderInsights.UserGUID);
 
             return _result;
