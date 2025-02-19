@@ -43,7 +43,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;FASTLOOP;NOOOF;NETFRAMEWORK;DEBUGSTARTUP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;FASTLOOP;NOOOF;NETFRAMEWORK;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
