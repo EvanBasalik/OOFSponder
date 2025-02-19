@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://oofsponderinstall.blob.core.windows.net/alpha/</InstallUrl>
-    <UpdateUrl>https://oofsponderinstall.blob.core.windows.net/alpha/</UpdateUrl>
+    <UpdateUrl>https://evanbasalik.github.io/OOFSponder/alpha/</UpdateUrl>
     <SupportUrl>http://github.com/evanbasalik/oofsponder</SupportUrl>
     <ProductName>OOFSponder</ProductName>
     <PublisherName>Evan Basalik</PublisherName>
@@ -32,7 +32,7 @@
     <WebPage>install.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
     <ApplicationRevision>3</ApplicationRevision>
-    <ApplicationVersion>2.7.0.6</ApplicationVersion>
+    <ApplicationVersion>2.7.0.7</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
