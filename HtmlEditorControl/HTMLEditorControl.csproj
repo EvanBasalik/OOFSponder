@@ -103,9 +103,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.mshtml">
-      <Name>Microsoft.mshtml</Name>
-      <HintPath>..\..\..\..\Program Files\Microsoft.NET\Primary Interop Assemblies\Microsoft.mshtml.dll</HintPath>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\Unofficial.Microsoft.mshtml.7.0.3300\lib\net40\Microsoft.mshtml.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -223,6 +224,7 @@
     <Content Include="Resources\ToolbarCopy.bmp" />
     <Content Include="Resources\ToolBarCut.bmp" />
     <Content Include="Resources\ToolbarDelete.bmp" />
+    <None Include="packages.config" />
     <None Include="Resources\ToolbarFileOpen.bmp" />
     <None Include="Resources\ToolbarFileSave.bmp" />
     <Content Include="Resources\ToolbarFind.bmp" />

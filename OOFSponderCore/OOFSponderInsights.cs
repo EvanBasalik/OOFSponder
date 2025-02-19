@@ -64,7 +64,7 @@ namespace OOFScheduling
             }
         }
 
-        private static string _userGUID;
+        private static string _userGUID = "";
         public static string UserGUID
         {
             get
