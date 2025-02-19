@@ -1,12 +1,11 @@
 ﻿using Microsoft.Identity.Client;
 using System;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace OOFScheduling
 {
@@ -200,6 +199,7 @@ namespace OOFScheduling
                 if (authResult != null)
                 {
                     DefaultUserUPN = authResult.Account.Username;
+                    OOFSponderInsights.UserGUID = authResult.UniqueId;
                 }
 
                 //release the critical section we are using to prevent multiple auth prompts
