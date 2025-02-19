@@ -901,8 +901,9 @@ namespace OOFScheduling
             if (!OOFData.Instance.HaveNecessaryData)
             {
                 Logger.Warning("Missing necessary data, so not persisting settings!");
-                MessageBox.Show("Missing necessary data. Unless you aren't sending an OOF message to external senders, you must specify all a message for both internal and external",
-                    "Missing settings!", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MessageBox.Show(Resources.MissingNecessaryData,
+                    Resources.MissingNecessaryDataMessageBoxTitle,
+                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
 

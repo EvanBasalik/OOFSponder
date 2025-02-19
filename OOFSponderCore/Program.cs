@@ -17,17 +17,6 @@ namespace OOFScheduling
         [STAThread]
         static void Main()
         {
-
-            #region ConfigureLogger
-            //remove the Default logger we don't use
-            Trace.Listeners.Remove("Default");
-
-            //Add our custom logger
-            //Trace.Listeners.Add(new TextWriterTraceListener("OOFSponder.log", "myListener"));
-            System.IO.TextWriter mylog = System.IO.File.AppendText(Logger.FileName);
-            Trace.Listeners.Add(new TextWriterTraceListener(mylog, "OOFSponderFileLogger"));
-            #endregion
-
             try
             {
                 //http://covingtoninnovations.com/mc/SingleInstance.html
@@ -38,6 +27,21 @@ namespace OOFScheduling
                 //http://covingtoninnovations.com/mc/SingleInstance.html
                 if (gotMutex)
                 {
+
+                    #region ConfigureLogger
+                    //this needs to be inside the mutex since we are now trying
+                    //to grab a pointer to the log file that might be in use
+                    //by the other OOFSponder process
+
+                    //remove the Default logger we don't use
+                    Trace.Listeners.Remove("Default");
+
+                    //Add our custom logger
+                    //Trace.Listeners.Add(new TextWriterTraceListener("OOFSponder.log", "myListener"));
+                    System.IO.TextWriter mylog = System.IO.File.AppendText(Logger.FileName);
+                    Trace.Listeners.Add(new TextWriterTraceListener(mylog, "OOFSponderFileLogger"));
+                    #endregion
+
                     Application.SetHighDpiMode(HighDpiMode.SystemAware);
                     Application.SetCompatibleTextRenderingDefault(false);
 
