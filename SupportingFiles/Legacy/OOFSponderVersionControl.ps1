@@ -199,7 +199,7 @@ switch ($lcRing) {
    default  ##Default to just using the ring name
         {
             $doc.Project.PropertyGroup[0].InstallUrl = "https://oofsponderinstall.blob.core.windows.net/$lcRing/"
-            $doc.Project.PropertyGroup[0].UpdateUrl = "https://oofsponderinstall.blob.core.windows.net/$lcRing/"
+            $doc.Project.PropertyGroup[0].UpdateUrl = "https://evanbasalik.github.io/OOFSponder/$lcRing/"
             break
         }
     }
