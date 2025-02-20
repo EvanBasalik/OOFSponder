@@ -61,7 +61,9 @@ namespace OOFScheduling {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Missing necessary data. Unless you aren&apos;t sending an OOF message to external senders, you must specify both an internal and external message.
+        ///   Looks up a localized string similar to By default, you must set both an internal and external message. 
+        ///
+        ///To avoid responding to external users, select &apos;Contacts Only&apos; or &apos;None&apos; from the dropdown. Use the dropdown above the External Message box to choose who receives your OOF message. .
         /// </summary>
         internal static string MissingNecessaryData {
             get {

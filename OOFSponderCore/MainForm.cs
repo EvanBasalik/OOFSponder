@@ -903,7 +903,7 @@ namespace OOFScheduling
                 Logger.Warning("Missing necessary data, so not persisting settings!");
                 MessageBox.Show(Resources.MissingNecessaryData,
                     Resources.MissingNecessaryDataMessageBoxTitle,
-                    MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 

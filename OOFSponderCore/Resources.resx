@@ -118,7 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MissingNecessaryData" xml:space="preserve">
-    <value>Missing necessary data. Unless you aren't sending an OOF message to external senders, you must specify both an internal and external message</value>
+    <value>By default, you must set both an internal and external message. 
+
+To avoid responding to external users, select 'Contacts Only' or 'None' from the dropdown. Use the dropdown above the External Message box to choose who receives your OOF message. </value>
   </data>
   <data name="MissingNecessaryDataMessageBoxTitle" xml:space="preserve">
     <value>Missing necessary data!</value>
