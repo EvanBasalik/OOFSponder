@@ -21,7 +21,7 @@ namespace OOFScheduling
             //if not set, then default to Informational
             if (msalEnvLogLevel == null)
             {
-                msalEnvLogLevel = EventLogLevel.Informational.ToString();
+                msalEnvLogLevel = EventLogLevel.Error.ToString();
             }
 
             //parse the environment variable

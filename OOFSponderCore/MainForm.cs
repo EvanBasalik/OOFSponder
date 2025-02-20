@@ -577,25 +577,47 @@ namespace OOFScheduling
                 }
 
 
-                bool externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
-                bool internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
+                bool internalReplyMessageEqual = false;
+                try
+                {
+                    internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
+                }
+                catch (Exception)
+                {
+
+                    throw new Exception("Internal message comparison failure");
+                }
+
+                bool externalReplyMessageEqual = false;
+                try
+                {
+                    externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
+                }
+                catch (Exception)
+                {
+                    throw new Exception("External message comparison failure");
+                }
 
                 //local and remote are both UTC, so just compare times
                 //Not sure it can ever happen to have the DateTime empty, but wrap this in a TryCatch just in case
-                //set both to false - that way, we don't care if either one blows up 
-                //because if one is false, the overall evaluation is false anyway
                 bool scheduledStartDateTimeEqual = false;
-                bool scheduledEndDateTimeEqual = false;
                 try
                 {
                     scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Start time comparison failure");
+                }
+
+                bool scheduledEndDateTimeEqual = false;
+                try
+                {
                     scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
                 }
                 catch (Exception ex)
                 {
-                    //don't care - just take the initialized value of false
-                    //log error just in case
-                    OOFSponder.Logger.Error(ex);
+                    throw new Exception("End time comparison failure");
                 }
 
                 //don't know if this value could ever be null, so set to false by default
@@ -606,9 +628,7 @@ namespace OOFScheduling
                 }
                 catch (Exception ex)
                 {
-                    //don't care - just take the initialized value of false
-                    //log error just in case
-                    OOFSponder.Logger.Error(ex);
+                    throw new Exception("External message comparison failure");
                 }
 
 
@@ -636,7 +656,7 @@ namespace OOFScheduling
                     }
                     else
                     {
-                        OOFSponder.Logger.Error("Unable to set OOF");
+                        OOFSponder.Logger.Error("Unable to set OOF. HttpStatusCode: " + result.StatusCode.ToString());
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
                         return false;
                     }
