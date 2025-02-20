@@ -636,7 +636,7 @@ namespace OOFScheduling
                     }
                     else
                     {
-                        OOFSponder.Logger.Error("Unable to set OOF");
+                        OOFSponder.Logger.Error("Unable to set OOF. HttpStatusCode: " + result.StatusCode.ToString());
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF message");
                         return false;
                     }
@@ -650,6 +650,7 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
+                //TODO: Andre is failing inside this Try/Catch
                 notifyIcon1.ShowBalloonTip(100, "OOF Exception", "Unable to set OOF: " + ex.Message, ToolTipIcon.Error);
                 UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - Unable to set OOF");
                 OOFSponder.Logger.Error("Unable to set OOF: " + ex.Message, ex);
