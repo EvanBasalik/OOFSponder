@@ -5,6 +5,7 @@ using OOFSponder;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Timers;
@@ -598,12 +599,19 @@ namespace OOFScheduling
                     throw new Exception("External message comparison failure");
                 }
 
+                //get the culture info so we can properly parse
+
                 //local and remote are both UTC, so just compare times
                 //Not sure it can ever happen to have the DateTime empty, but wrap this in a TryCatch just in case
                 bool scheduledStartDateTimeEqual = false;
                 try
                 {
-                    scheduledStartDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledStartDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
+                    //remote OOF comes back in UTC time zone
+                    //02/21/2025 01:00:00
+                    string format = "MM/dd/yyyy HH:mm:ss";
+                    scheduledStartDateTimeEqual = DateTime.ParseExact(remoteOOF.ScheduledStartDateTime.DateTime,
+                                                                            format, CultureInfo.InvariantCulture)
+                                                    == DateTime.Parse(localOOF.ScheduledStartDateTime.DateTime);
                 }
                 catch (Exception ex)
                 {
@@ -613,7 +621,10 @@ namespace OOFScheduling
                 bool scheduledEndDateTimeEqual = false;
                 try
                 {
-                    scheduledEndDateTimeEqual = DateTime.Parse(remoteOOF.ScheduledEndDateTime.DateTime) == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
+                    string format = "MM/dd/yyyy HH:mm:ss";
+                    scheduledEndDateTimeEqual = DateTime.ParseExact(remoteOOF.ScheduledEndDateTime.DateTime,
+                                                                            format, CultureInfo.InvariantCulture)
+                                                    == DateTime.Parse(localOOF.ScheduledEndDateTime.DateTime);
                 }
                 catch (Exception ex)
                 {
