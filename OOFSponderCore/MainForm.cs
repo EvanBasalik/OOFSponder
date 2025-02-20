@@ -870,7 +870,8 @@ namespace OOFScheduling
             }
         }
 
-        private void saveSettings()
+        bool stopExit = false;
+        private void saveSettings(bool onExit = false)
         {
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
@@ -901,10 +902,41 @@ namespace OOFScheduling
             if (!OOFData.Instance.HaveNecessaryData)
             {
                 Logger.Warning("Missing necessary data, so not persisting settings!");
-                MessageBox.Show(Resources.MissingNecessaryData,
+
+                //if exiting, give the option to OK (exit) or Cancel (go back)
+                //if just the result of a Save, then just show OK
+
+                MessageBoxButtons buttons;
+                if (onExit)
+                {
+                    buttons = MessageBoxButtons.OKCancel;
+                }
+                else
+                {
+                    buttons = MessageBoxButtons.OK;
+                }
+
+                DialogResult resultMsgBox = MessageBox.Show(Resources.MissingNecessaryData,
                     Resources.MissingNecessaryDataMessageBoxTitle,
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                    buttons, MessageBoxIcon.Error);
+
+                //if Cancel -> return back to main form
+                if (resultMsgBox == DialogResult.Cancel)
+                {
+                    //in case this came from an Exit call, break the Exit
+                    stopExit = true;
+                    return;
+                }
+
+                //if OK and not from Exit -> don't allow save
+                if (resultMsgBox == DialogResult.OK && !onExit)
+                {
+                    return;
+                }
+
+                //if OK and from Exit -> allow to Exit to contine
+                //however, once we get into writing the actual settings
+                //the save won't happen - just silently
             }
 
             OOFSponder.Logger.Info("Saving settings");
@@ -1167,7 +1199,14 @@ namespace OOFScheduling
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             //do one last save in case we missed any changes
-            saveSettings();
+            saveSettings(true);
+
+            //inside saveSettings, if they clicked cancel
+            //we should stop the Exit
+            if (stopExit)
+            {
+                return;
+            }
 
             //do one last flush in case anything not persisted
             foreach (TextWriterTraceListener logger in Trace.Listeners)
