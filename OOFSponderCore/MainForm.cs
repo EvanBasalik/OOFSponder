@@ -175,6 +175,9 @@ namespace OOFScheduling
             //wire up to respond to changes
             SystemEvents.UserPreferenceChanged += new UserPreferenceChangedEventHandler(SystemEvents_UserPreferenceChanged);
 
+            //detect when being shut down due to the system shutting down so we can gracefully close
+            SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
+
             //actually do the work
             DoAccessibilityUIWork();
 
@@ -903,41 +906,48 @@ namespace OOFScheduling
             {
                 Logger.Warning("Missing necessary data, so not persisting settings!");
 
-                //if exiting, give the option to OK (exit) or Cancel (go back)
-                //if just the result of a Save, then just show OK
-
-                MessageBoxButtons buttons;
-                if (onExit)
+                //if we are just shutting down, then do everything silently
+                //otherwise, show some dialog boxes to allow the user to correct
+                //missing data
+                if (!systemShuttingDown)
                 {
-                    buttons = MessageBoxButtons.OKCancel;
-                }
-                else
-                {
-                    buttons = MessageBoxButtons.OK;
-                }
 
-                DialogResult resultMsgBox = MessageBox.Show(Resources.MissingNecessaryData,
-                    Resources.MissingNecessaryDataMessageBoxTitle,
-                    buttons, MessageBoxIcon.Error);
+                    //if exiting, give the option to OK (exit) or Cancel (go back)
+                    //if just the result of a Save, then just show OK
+                    MessageBoxButtons buttons;
+                    if (onExit)
+                    {
+                        buttons = MessageBoxButtons.OKCancel;
+                    }
+                    else
+                    {
+                        buttons = MessageBoxButtons.OK;
+                    }
 
-                //if Cancel -> return back to main form
-                if (resultMsgBox == DialogResult.Cancel)
-                {
-                    //in case this came from an Exit call, break the Exit
-                    stopExit = true;
-                    return;
+                    DialogResult resultMsgBox = MessageBox.Show(Resources.MissingNecessaryData,
+                        Resources.MissingNecessaryDataMessageBoxTitle,
+                        buttons, MessageBoxIcon.Error);
+
+                    //if Cancel -> return back to main form
+                    if (resultMsgBox == DialogResult.Cancel)
+                    {
+                        //in case this came from an Exit call, break the Exit
+                        stopExit = true;
+                        return;
+                    }
+
+                    //if OK and not from Exit -> don't allow save
+                    if (resultMsgBox == DialogResult.OK && !onExit)
+                    {
+                        return;
+                    }
+
+                    //if OK and from Exit -> allow to Exit to contine
+                    //however, once we get into writing the actual settings
+                    //the save won't happen - just silently
                 }
-
-                //if OK and not from Exit -> don't allow save
-                if (resultMsgBox == DialogResult.OK && !onExit)
-                {
-                    return;
-                }
-
-                //if OK and from Exit -> allow to Exit to contine
-                //however, once we get into writing the actual settings
-                //the save won't happen - just silently
             }
+
 
             OOFSponder.Logger.Info("Saving settings");
             OOFData.Instance.WriteProperties();
@@ -952,6 +962,16 @@ namespace OOFScheduling
         #endregion
 
         #region Events
+
+        private static bool systemShuttingDown = false;
+        static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        {
+            // Perform necessary cleanup here
+            systemShuttingDown = true;
+
+            e.Cancel = false; // Set to true to cancel shutdown/logoff
+        }
+
         private void OnExit(object sender, EventArgs e)
         {
             OOFSponder.Logger.Info("Exiting - triggered by system tray Exit");
