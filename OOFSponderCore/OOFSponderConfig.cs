@@ -14,7 +14,7 @@ namespace OOFSponderConfig
     //    "IsOnCallModeOn": false,
     //    "StartMinimized": false
     //  },
-    //  "UserSettingsSource": "OOFSponder_Core"
+    //  "UserSettingsSource": "OOFSponder_Core_{.NET version}"
     //}
 
     internal class OOFData
@@ -49,6 +49,8 @@ namespace OOFSponderConfig
                 _OOFData = value;
             }
         }
+
+        //always emit OOFSponder_Core to indicate the new .NET Core variant
         public string UserSettingsSource { get; set; }
     }
 }

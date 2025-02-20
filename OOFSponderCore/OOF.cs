@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Windows.Forms;
 
@@ -457,7 +458,7 @@ namespace OOFScheduling
             config.OOFData.IsOnCallModeOn = instance.IsOnCallModeOn;
             config.OOFData.StartMinimized = instance.StartMinimized;
             config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)instance.ExternalAudienceScope;
-            config.UserSettingsSource = instance.UserSettingsSource;
+            config.UserSettingsSource = "OOFSponder_Core_" + RuntimeInformation.FrameworkDescription;
 
 
             // Serialize the person object to JSON
