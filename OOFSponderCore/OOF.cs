@@ -255,7 +255,7 @@ namespace OOFScheduling
 
                 if (OOFData.Instance.WorkingHours == "")
                 {
-                    OOFSponder.Logger.Info("HaveNecessaryData: " + _result);
+                    OOFSponder.Logger.Info("HaveNecessaryData - WorkingHours:" + _result);
                     return _result;
                 }
 
