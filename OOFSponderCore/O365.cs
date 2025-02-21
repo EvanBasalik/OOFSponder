@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace OOFScheduling
 {
     internal class O365
@@ -94,9 +95,19 @@ namespace OOFScheduling
                     OOFSponder.Logger.Error(ex);
                 }
 
-                OOFSponder.Logger.Info("DefaultUserUPN IsNullorEmpty: " + string.IsNullOrEmpty(DefaultUserUPN));
-                OOFSponder.Logger.Info("account is not null: " + (account == null).ToString());
-                OOFSponder.Logger.Info("Username == DefaultUserUPN: " + (account.Username.ToLower() == DefaultUserUPN.ToLower()).ToString());
+                //TODO - don't do if null
+                if (account != null)
+                {
+                    OOFSponder.Logger.Info("DefaultUserUPN IsNullorEmpty: " + string.IsNullOrEmpty(DefaultUserUPN));
+                    OOFSponder.Logger.Info("account is not null: " + (account == null).ToString());
+                    OOFSponder.Logger.Info("Username == DefaultUserUPN: " + (account.Username.ToLower() == DefaultUserUPN.ToLower()).ToString());
+
+                }
+                else
+                {
+                    OOFSponder.Logger.Error("account is null!!");
+                }
+
                 return (account != null && account.Username.ToLower() == DefaultUserUPN.ToLower());
             }
         }
@@ -235,6 +246,7 @@ namespace OOFScheduling
                 if (authResult != null)
                 {
                     DefaultUserUPN = authResult.Account.Username;
+                    OOFSponderInsights.UserGUID = authResult.UniqueId;
                 }
 
                 //release the critical section we are using to prevent multiple auth prompts
@@ -243,7 +255,6 @@ namespace OOFScheduling
                 OOFSponder.Logger.Info("Left critical section for auth code");
             }
 
-            OOFSponderInsights.UserGUID = authResult.UniqueId;
             OOFSponder.Logger.Info("UserGUID: " + OOFSponderInsights.UserGUID);
 
             return _result;

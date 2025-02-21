@@ -21,7 +21,16 @@ namespace OOFSponder
             StackFrame fr = new StackFrame(1, true);
             StackTrace st = new StackTrace(fr);
 
-            WriteEntry(ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "error", fr.GetMethod().Name + ":" + st.ToString());
+            //make sure InnerException exists
+            if (ex.InnerException is null)
+            {
+                WriteEntry(ScrubMessage(ex.Message), "error", fr.GetMethod().Name + ":" + st.ToString());
+            }
+            else
+            {
+                WriteEntry(ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "error", fr.GetMethod().Name + ":" + st.ToString());
+            }
+
         }
 
         public static void Error(string message, Exception ex)
