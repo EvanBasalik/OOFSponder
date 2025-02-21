@@ -307,6 +307,11 @@ namespace OOFScheduling
             htmlEditorControl1.Validated += htmlEditorValidated;
             htmlEditorControl2.Validated += htmlEditorValidated;
 
+            //ensure the UI is right for AudienceScope
+            //do this really late in load due to dependencies making it tough
+            //to know when the PrimaryMessage won't change any more
+            DecideonHTMLReadOnly();
+
             #region StartMinimized Setup
             //make sure to set the state of the Start Minimized menu item appropriately
             tsmiStartMinimized.Checked = OOFData.Instance.StartMinimized;
@@ -1796,7 +1801,8 @@ namespace OOFScheduling
 
             DecideonHTMLReadOnly();
 
-            //don't do anything to persist setting change - rely on SaveSetting()
+            //persist since settings change
+            saveSettings();
         }
 
         private void DecideonHTMLReadOnly()
