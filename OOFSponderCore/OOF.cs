@@ -298,7 +298,7 @@ namespace OOFScheduling
                     return _result;
                 }
 
-                OOFSponder.Logger.Info("HaveNecessaryData: ", _result);
+                OOFSponder.Logger.Info("HaveNecessaryData: " + _result);
                 return _result;
             }
         }
