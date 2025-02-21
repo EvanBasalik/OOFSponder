@@ -155,10 +155,25 @@ namespace OOFScheduling
             }
 
             //set the time format for the LastDateTimePickers
+            int index = 0;
             foreach (LastDateTimePicker item in this.Controls.OfType<LastDateTimePicker>())
             {
-                item.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-                item.CustomFormat = " h:mm tt";
+                //need to map the format to the culture
+                // Get the current culture info
+                CultureInfo currentCulture = CultureInfo.CurrentCulture;
+
+                //get the shortDateTimeString and then add padding as necessary
+                string shortDateTimeString = currentCulture.DateTimeFormat.ShortTimePattern;
+                shortDateTimeString = shortDateTimeString.PadLeft(9);
+
+                //on the first time through, log the format for debugging purposes
+                if (index == 0)
+                {
+                    Logger.Info("shortDateTimeString with spaces: " + shortDateTimeString);
+                }
+
+                item.Format = DateTimePickerFormat.Custom;
+                item.CustomFormat = shortDateTimeString;
             }
 
             //populate the dropdown with the possible ExternalAudienceScope values
