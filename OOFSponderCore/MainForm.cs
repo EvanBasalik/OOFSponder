@@ -275,7 +275,7 @@ namespace OOFScheduling
             if (!OOFData.Instance.HaveNecessaryData)
             {
                 //we are missing data, so log the three we are checking
-                if (OOFData.Instance.IsPermaOOFOn)
+                if (!OOFData.Instance.IsPermaOOFOn)
                 {
                     OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
                     OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
