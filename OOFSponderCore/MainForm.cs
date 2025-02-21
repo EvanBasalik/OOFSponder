@@ -174,6 +174,8 @@ namespace OOFScheduling
 
                 item.Format = DateTimePickerFormat.Custom;
                 item.CustomFormat = shortDateTimeString;
+
+                index++;
             }
 
             //populate the dropdown with the possible ExternalAudienceScope values
@@ -273,7 +275,7 @@ namespace OOFScheduling
             if (!OOFData.Instance.HaveNecessaryData)
             {
                 //we are missing data, so log the three we are checking
-                if (OOFData.Instance.IsPermaOOFOn)
+                if (!OOFData.Instance.IsPermaOOFOn)
                 {
                     OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", OOFData.Instance.PrimaryOOFExternalMessage);
                     OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", OOFData.Instance.PrimaryOOFInternalMessage);
@@ -304,6 +306,11 @@ namespace OOFScheduling
             //set up handlers to persist OOF messages
             htmlEditorControl1.Validated += htmlEditorValidated;
             htmlEditorControl2.Validated += htmlEditorValidated;
+
+            //ensure the UI is right for AudienceScope
+            //do this really late in load due to dependencies making it tough
+            //to know when the PrimaryMessage won't change any more
+            DecideonHTMLReadOnly();
 
             #region StartMinimized Setup
             //make sure to set the state of the Start Minimized menu item appropriately
@@ -1794,7 +1801,8 @@ namespace OOFScheduling
 
             DecideonHTMLReadOnly();
 
-            //don't do anything to persist setting change - rely on SaveSetting()
+            //persist since settings change
+            saveSettings();
         }
 
         private void DecideonHTMLReadOnly()
@@ -1810,8 +1818,9 @@ namespace OOFScheduling
             {
                 //if it editable, then just reload the saved text
                 //reload primary/secondary based on which one is active
+                //just copy from appropriate Internal
                 htmlEditorControl1.BodyHtml = radPrimary.Checked ?
-                    OOFData.Instance.PrimaryOOFExternalMessage : OOFData.Instance.SecondaryOOFExternalMessage;
+                    OOFData.Instance.PrimaryOOFInternalMessage : OOFData.Instance.SecondaryOOFInternalMessage;
             }
             else
             {
