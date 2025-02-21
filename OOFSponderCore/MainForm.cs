@@ -174,6 +174,8 @@ namespace OOFScheduling
 
                 item.Format = DateTimePickerFormat.Custom;
                 item.CustomFormat = shortDateTimeString;
+
+                index++;
             }
 
             //populate the dropdown with the possible ExternalAudienceScope values
