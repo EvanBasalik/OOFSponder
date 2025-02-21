@@ -15,7 +15,7 @@ namespace OOFScheduling
     {
         internal DateTime PermaOOFDate { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
-        internal static readonly string HTMLReadOnlyIndicator = "BACKGROUND-COLOR";
+        internal static readonly string HTMLReadOnlyIndicator = "BACKGROUND-COLOR: lightgray";
 
         internal enum CurrentUIState
         {
@@ -71,6 +71,7 @@ namespace OOFScheduling
                 {
                     //if _primaryOOFExternalMessage is an empty string, then this is the initial data load
                     //so it isn't an actual change in the OOF message
+                    //TODO: account for moving to None
                     if (_primaryOOFExternalMessage != string.Empty)
                     {
                         Logger.Info("Primary OOF External has changed - persisting to AppData");

@@ -1812,8 +1812,9 @@ namespace OOFScheduling
             {
                 //if it editable, then just reload the saved text
                 //reload primary/secondary based on which one is active
+                //just copy from appropriate Internal
                 htmlEditorControl1.BodyHtml = radPrimary.Checked ?
-                    OOFData.Instance.PrimaryOOFExternalMessage : OOFData.Instance.SecondaryOOFExternalMessage;
+                    OOFData.Instance.PrimaryOOFInternalMessage : OOFData.Instance.SecondaryOOFInternalMessage;
             }
             else
             {
