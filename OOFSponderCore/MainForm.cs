@@ -11,8 +11,13 @@ using System.Reflection;
 using System.Timers;
 using System.Windows.Forms;
 
+// FASTLOOP = run Loopy every 30 seconds - good for fast testing
+// MEDIUMLOOP = run Loop every 5 minutes - good for human testing
+// NOOOF = don't actually send to M365
+
 namespace OOFScheduling
 {
+
     public partial class MainForm : Form
     {
         private ContextMenuStrip trayMenu;
@@ -463,12 +468,16 @@ namespace OOFScheduling
 
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+
             OOFSponder.Logger.Info("Loopy elapsed - saving settings and running RunSetOofO365");
             saveSettings();
 
             //no longer necessary - we are doing it inside the saveSettings call above
             //await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
             //await checkOOFStatus();
+
+            //to save money on AppInsights, every other call don't send
+            Logger.shouldSendtoAppInsights = !Logger.shouldSendtoAppInsights;
         }
         #endregion
 
@@ -1090,6 +1099,11 @@ namespace OOFScheduling
 
         private void button2_Click(object sender, EventArgs e)
         {
+            //since this is an explicit call to save settings
+            //always force to AppInsights
+
+            Logger.shouldSendtoAppInsights = true;
+
             saveSettings();
         }
 
@@ -1281,11 +1295,6 @@ namespace OOFScheduling
                 return;
             }
 
-            //do one last flush in case anything not persisted
-            foreach (TextWriterTraceListener logger in Trace.Listeners)
-            {
-                logger.Flush();
-            }
 
             System.Windows.Forms.Application.Exit();
         }
@@ -1632,25 +1641,13 @@ namespace OOFScheduling
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
 
-            ////should be this name, but we'll get it dynamically later just to check
-            //string loggerFileName = Logger.FileName;
-
-            //getting ready to show logs, so force a flush
-            foreach (TextWriterTraceListener logger in Trace.Listeners)
-            {
-                logger.Flush();
-
-                //don't need this any more b/c we have this info in Logger.FileName
-                //FieldInfo fieldInfo = typeof(TextWriterTraceListener).GetField("_fileName", BindingFlags.NonPublic | BindingFlags.Instance);
-                //loggerFileName = (string)fieldInfo.GetValue(logger);
-            }
 
             //default to opening the file, but if the user
             //picked the folder open in the UI, then switch to just the folder
-            string FileorFoldertoOpen = Logger.FileName;
+            string FileorFoldertoOpen = Logger.LogFileName;
             if (((ToolStripMenuItem)sender).Tag.ToString() == "Folder")
             {
-                FileorFoldertoOpen = System.IO.Path.GetDirectoryName(Logger.FileName);
+                FileorFoldertoOpen = System.IO.Path.GetDirectoryName(Logger.LogFileName);
             }
 
             var psi = new System.Diagnostics.ProcessStartInfo()

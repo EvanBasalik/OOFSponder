@@ -33,7 +33,7 @@
     <Configurations>Debug;Release without Sending OOF;Release</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>$(DefineConstants);MEDIUMOOF</DefineConstants>
+    <DefineConstants>$(DefineConstants);NOOOF</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -46,7 +46,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release without Sending OOF|AnyCPU'">
     <OutputPath>bin\Release without Sending OOF\</OutputPath>
-    <DefineConstants>$(DefineConstants);NOOOF</DefineConstants>
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
@@ -140,4 +139,5 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <!--<Import Project="$(SolutionDir)CommonSettings.targets" />-->
 </Project>
