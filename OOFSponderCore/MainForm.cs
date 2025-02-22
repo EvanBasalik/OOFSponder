@@ -1274,11 +1274,6 @@ namespace OOFScheduling
                 return;
             }
 
-            //do one last flush in case anything not persisted
-            foreach (TextWriterTraceListener logger in Trace.Listeners)
-            {
-                logger.Flush();
-            }
 
             System.Windows.Forms.Application.Exit();
         }
@@ -1625,25 +1620,13 @@ namespace OOFScheduling
             string strExeFilePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string strWorkPath = System.IO.Path.GetDirectoryName(strExeFilePath);
 
-            ////should be this name, but we'll get it dynamically later just to check
-            //string loggerFileName = Logger.FileName;
-
-            //getting ready to show logs, so force a flush
-            foreach (TextWriterTraceListener logger in Trace.Listeners)
-            {
-                logger.Flush();
-
-                //don't need this any more b/c we have this info in Logger.FileName
-                //FieldInfo fieldInfo = typeof(TextWriterTraceListener).GetField("_fileName", BindingFlags.NonPublic | BindingFlags.Instance);
-                //loggerFileName = (string)fieldInfo.GetValue(logger);
-            }
 
             //default to opening the file, but if the user
             //picked the folder open in the UI, then switch to just the folder
-            string FileorFoldertoOpen = Logger.FileName;
+            string FileorFoldertoOpen = Logger.LogFileName;
             if (((ToolStripMenuItem)sender).Tag.ToString() == "Folder")
             {
-                FileorFoldertoOpen = System.IO.Path.GetDirectoryName(Logger.FileName);
+                FileorFoldertoOpen = System.IO.Path.GetDirectoryName(Logger.LogFileName);
             }
 
             var psi = new System.Diagnostics.ProcessStartInfo()
