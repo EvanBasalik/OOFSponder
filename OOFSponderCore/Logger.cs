@@ -10,6 +10,7 @@ namespace OOFSponder
     {
         internal static readonly string LogFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\OOFSponder.log");
         readonly static int MaxRolledLogCount = 3;
+        private static readonly object _lockforlogger = new object();
 
         //static bool we can use to control whether or not any one round of logging 
         //goes to AppInsights. This is used to allow very detailed local logging
@@ -96,7 +97,7 @@ namespace OOFSponder
         private static void WriteEntry(string message, string type, string module, bool isNotSensitive = true)
         {
 
-            lock (LogFileName) // should this ever be called by multiple threads
+            lock (_lockforlogger) // should this ever be called by multiple threads
             {
                 RollLogFile(LogFileName);
 
