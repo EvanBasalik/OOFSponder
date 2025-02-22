@@ -11,9 +11,9 @@ namespace OOFSponder
         public static readonly string LogFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\OOFSponder.log");
         readonly static int MaxRolledLogCount = 3;
 
-        // 1 * 1024 = 1M; <- small enough to make easy to share
+        // 1 * 1024 * 1024 = 1M; <- small enough to make easy to share
         // while still covering lots of real-world time
-        readonly static int MaxLogSize = 1 * 1024;
+        readonly static int MaxLogSize = 1 * 1024 * 1024;
 
         public static void Error(string message)
         {
