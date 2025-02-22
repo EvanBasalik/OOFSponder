@@ -11,8 +11,13 @@ using System.Reflection;
 using System.Timers;
 using System.Windows.Forms;
 
+// FASTLOOP = run Loopy every 30 seconds - good for fast testing
+// MEDIUMLOOP = run Loop every 5 minutes - good for human testing
+// NOOOF = don't actually send to M365
+
 namespace OOFScheduling
 {
+
     public partial class MainForm : Form
     {
         private ContextMenuStrip trayMenu;
@@ -456,12 +461,16 @@ namespace OOFScheduling
 
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+
             OOFSponder.Logger.Info("Loopy elapsed - saving settings and running RunSetOofO365");
             saveSettings();
 
             //no longer necessary - we are doing it inside the saveSettings call above
             //await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
             //await checkOOFStatus();
+
+            //to save money on AppInsights, every other call don't send
+            Logger.shouldSendtoAppInsights = !Logger.shouldSendtoAppInsights;
         }
         #endregion
 
@@ -1083,6 +1092,11 @@ namespace OOFScheduling
 
         private void button2_Click(object sender, EventArgs e)
         {
+            //since this is an explicit call to save settings
+            //always force to AppInsights
+
+            Logger.shouldSendtoAppInsights = true;
+
             saveSettings();
         }
 

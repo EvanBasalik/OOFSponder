@@ -8,8 +8,13 @@ namespace OOFSponder
 {
     public static class Logger
     {
-        public static readonly string LogFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\OOFSponder.log");
+        internal static readonly string LogFileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder\\OOFSponder.log");
         readonly static int MaxRolledLogCount = 3;
+
+        //static bool we can use to control whether or not any one round of logging 
+        //goes to AppInsights. This is used to allow very detailed local logging
+        //while still reducing the AI cost
+        internal static bool shouldSendtoAppInsights = true;
 
         // 1 * 1024 * 1024 = 1M; <- small enough to make easy to share
         // while still covering lots of real-world time
@@ -88,7 +93,7 @@ namespace OOFSponder
 
         }
 
-        private static void WriteEntry(string message, string type, string module, bool SendToAppInsights = true)
+        private static void WriteEntry(string message, string type, string module, bool isNotSensitive = true)
         {
 
             lock (LogFileName) // should this ever be called by multiple threads
@@ -117,9 +122,10 @@ namespace OOFSponder
 #endif
             }
 
-            //default is to send everything to AppInsights
+            //default is to use the global static to control
             //but need the ability to log sensitive information to the log file only
-            if (SendToAppInsights)
+            Debug.WriteLine("SendtoAppInsights: " + shouldSendtoAppInsights);
+            if (isNotSensitive && shouldSendtoAppInsights)
             {
                 //also send everything to AppInsights
                 OOFSponderInsights.Track(
@@ -142,6 +148,7 @@ namespace OOFSponder
 
                 if (length > MaxLogSize)
                 {
+                    Logger.Info("Rolling log file");
                     var path = Path.GetDirectoryName(logFilePath);
                     var wildLogName = Path.GetFileNameWithoutExtension(logFilePath) + "*" + Path.GetExtension(logFilePath);
                     var bareLogFilePath = Path.Combine(path, Path.GetFileNameWithoutExtension(logFilePath));
