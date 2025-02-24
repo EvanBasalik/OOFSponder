@@ -313,7 +313,7 @@
             dtPermaOOF.AccessibleName = "Perma OOF date";
             dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(555, 610);
+            dtPermaOOF.Location = new System.Drawing.Point(555, 612);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
@@ -797,7 +797,7 @@
             groupBox1.Controls.Add(radPrimary);
             groupBox1.Location = new System.Drawing.Point(166, 593);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(224, 43);
+            groupBox1.Size = new System.Drawing.Size(228, 43);
             groupBox1.TabIndex = 58;
             groupBox1.TabStop = false;
             groupBox1.Text = "OOF Message";
