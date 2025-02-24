@@ -313,7 +313,7 @@
             dtPermaOOF.AccessibleName = "Perma OOF date";
             dtPermaOOF.AccessibleRole = System.Windows.Forms.AccessibleRole.Clock;
             dtPermaOOF.Enabled = false;
-            dtPermaOOF.Location = new System.Drawing.Point(551, 612);
+            dtPermaOOF.Location = new System.Drawing.Point(555, 612);
             dtPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             dtPermaOOF.Name = "dtPermaOOF";
             dtPermaOOF.Size = new System.Drawing.Size(215, 23);
@@ -321,7 +321,7 @@
             // 
             // btnPermaOOF
             // 
-            btnPermaOOF.Location = new System.Drawing.Point(395, 608);
+            btnPermaOOF.Location = new System.Drawing.Point(399, 608);
             btnPermaOOF.Margin = new System.Windows.Forms.Padding(2);
             btnPermaOOF.Name = "btnPermaOOF";
             btnPermaOOF.Size = new System.Drawing.Size(152, 26);
@@ -368,7 +368,7 @@
             // 
             // button2
             // 
-            button2.Location = new System.Drawing.Point(30, 608);
+            button2.Location = new System.Drawing.Point(26, 608);
             button2.Margin = new System.Windows.Forms.Padding(4);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(133, 26);
@@ -784,7 +784,7 @@
             lblExternalMessageAudience.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
             lblExternalMessageAudience.AutoSize = true;
             lblExternalMessageAudience.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lblExternalMessageAudience.Location = new System.Drawing.Point(500, 142);
+            lblExternalMessageAudience.Location = new System.Drawing.Point(496, 142);
             lblExternalMessageAudience.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lblExternalMessageAudience.Name = "lblExternalMessageAudience";
             lblExternalMessageAudience.Size = new System.Drawing.Size(159, 13);
@@ -795,9 +795,9 @@
             // 
             groupBox1.Controls.Add(radSecondary);
             groupBox1.Controls.Add(radPrimary);
-            groupBox1.Location = new System.Drawing.Point(170, 593);
+            groupBox1.Location = new System.Drawing.Point(166, 593);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(220, 43);
+            groupBox1.Size = new System.Drawing.Size(228, 43);
             groupBox1.TabIndex = 58;
             groupBox1.TabStop = false;
             groupBox1.Text = "OOF Message";
