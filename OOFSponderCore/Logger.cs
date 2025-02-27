@@ -149,7 +149,6 @@ namespace OOFSponder
 
                 if (length > MaxLogSize)
                 {
-                    Logger.Info("Rolling log file");
                     var path = Path.GetDirectoryName(logFilePath);
                     var wildLogName = Path.GetFileNameWithoutExtension(logFilePath) + "*" + Path.GetExtension(logFilePath);
                     var bareLogFilePath = Path.Combine(path, Path.GetFileNameWithoutExtension(logFilePath));
