@@ -617,10 +617,10 @@ namespace OOFScheduling
                 {
                     internalReplyMessageEqual = remoteOOF.InternalReplyMessage.CleanReplyMessage() == localOOF.InternalReplyMessage.CleanReplyMessage();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
-                    throw new Exception("Internal message comparison failure");
+                    throw new Exception("Internal message comparison failure", ex);
                 }
 
                 bool externalReplyMessageEqual = false;
@@ -628,9 +628,9 @@ namespace OOFScheduling
                 {
                     externalReplyMessageEqual = remoteOOF.ExternalReplyMessage.CleanReplyMessage() == localOOF.ExternalReplyMessage.CleanReplyMessage();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new Exception("External message comparison failure");
+                    throw new Exception("External message comparison failure", ex);
                 }
 
                 //get the culture info so we can properly parse
@@ -649,7 +649,7 @@ namespace OOFScheduling
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Start time comparison failure");
+                    throw new Exception("Start time comparison failure", ex);
                 }
 
                 bool scheduledEndDateTimeEqual = false;
@@ -662,7 +662,7 @@ namespace OOFScheduling
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("End time comparison failure");
+                    throw new Exception("End time comparison failure", ex);
                 }
 
                 //don't know if this value could ever be null, so set to false by default
@@ -673,7 +673,7 @@ namespace OOFScheduling
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("External message comparison failure");
+                    throw new Exception("External message comparison failure", ex);
                 }
 
 
