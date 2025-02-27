@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace OOFScheduling
 {
     static class Program
     {
+
+        internal static string AppDataRoamingFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder");
+
 
         //http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
 
@@ -71,9 +71,9 @@ namespace OOFScheduling
                 return;
             }
 
- 
+
         }
 
-        
+
     }
 }

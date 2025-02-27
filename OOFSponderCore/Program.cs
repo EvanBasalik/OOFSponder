@@ -1,4 +1,6 @@
+using OOFSponder;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace OOFScheduling
@@ -6,9 +8,10 @@ namespace OOFScheduling
     static class Program
     {
 
+        internal static string AppDataRoamingFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder");
+
+
         //http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
-
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -25,6 +28,9 @@ namespace OOFScheduling
                 //http://covingtoninnovations.com/mc/SingleInstance.html
                 if (gotMutex)
                 {
+                    //need to do this first so we have a place to log anything!!!
+                    Logger.CreateAppDataFolder();
+
                     Application.SetHighDpiMode(HighDpiMode.SystemAware);
                     Application.SetCompatibleTextRenderingDefault(false);
 
