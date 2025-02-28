@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace OOFSponder
 {
@@ -102,11 +103,13 @@ namespace OOFSponder
 
         private static void WriteEntry(string message, string type, string module, bool isNotSensitive = true)
         {
-            lock (_lockforlogger) // should this ever be called by multiple threads
+            try
             {
-                RollLogFile(LogFileName);
+                lock (_lockforlogger) // should this ever be called by multiple threads
+                {
+                    RollLogFile(LogFileName);
 
-                //keep the Trace calls for backward compatability with Legacy
+                    //keep the Trace calls for backward compatability with Legacy
 #if NETFRAMEWORK
                 Trace.WriteLine(
                         string.Format("{0},{1},{2},{3}",
@@ -116,30 +119,38 @@ namespace OOFSponder
                                       ScrubMessage(message)));
 #endif
 #if NET
-                using (StreamWriter writer = new StreamWriter(LogFileName, true))
-                {
-                    writer.WriteLine(
-                        string.Format("{0},{1},{2},{3}",
-                                      DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
-                                      type,
-                                      module,
-                                      ScrubMessage(message)));
-                }
+                    using (StreamWriter writer = new StreamWriter(LogFileName, true))
+                    {
+                        writer.WriteLine(
+                            string.Format("{0},{1},{2},{3}",
+                                          DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
+                                          type,
+                                          module,
+                                          ScrubMessage(message)));
+                    }
 #endif
-            }
+                }
 
-            //default is to use the global static to control
-            //but need the ability to log sensitive information to the log file only
-            Debug.WriteLine("SendtoAppInsights: " + shouldSendtoAppInsights);
-            if (isNotSensitive && shouldSendtoAppInsights)
+                //default is to use the global static to control
+                //but need the ability to log sensitive information to the log file only
+                Debug.WriteLine("SendtoAppInsights: " + shouldSendtoAppInsights);
+                if (isNotSensitive && shouldSendtoAppInsights)
+                {
+                    //also send everything to AppInsights
+                    OOFSponderInsights.Track(
+                            string.Format("{0},{1},{2}",
+                                          type,
+                                          module,
+                                          ScrubMessage(message))
+                        );
+                }
+            }
+            catch (Exception)
             {
-                //also send everything to AppInsights
-                OOFSponderInsights.Track(
-                        string.Format("{0},{1},{2}",
-                                      type,
-                                      module,
-                                      ScrubMessage(message))
-                    );
+                MessageBox.Show(Resources.MissingLogFileMessage,
+                        Resources.MissingLogFileMessageBoxTitle,
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw new FileNotFoundException("Unable to write to log file");
             }
 
         }

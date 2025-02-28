@@ -61,6 +61,24 @@ namespace OOFScheduling {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to write to log file.
+        /// </summary>
+        internal static string MissingLogFileMessage {
+            get {
+                return ResourceManager.GetString("MissingLogFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fatal error!.
+        /// </summary>
+        internal static string MissingLogFileMessageBoxTitle {
+            get {
+                return ResourceManager.GetString("MissingLogFileMessageBoxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to By default, you must set both an internal and external message. 
         ///
         ///To avoid responding to external users, select &apos;Contacts Only&apos; or &apos;None&apos; from the dropdown. Use the dropdown above the External Message box to choose who receives your OOF message. .
