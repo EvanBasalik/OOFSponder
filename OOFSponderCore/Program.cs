@@ -1,4 +1,3 @@
-using OOFSponder;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -7,8 +6,8 @@ namespace OOFScheduling
 {
     static class Program
     {
-
-        internal static string AppDataRoamingFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "OOFSponder");
+        internal static string AppName = "OOFSponder";
+        internal static string AppDataRoamingFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), AppName);
 
 
         //http://sanity-free.org/143/csharp_dotnet_single_instance_application.html
@@ -28,8 +27,9 @@ namespace OOFScheduling
                 //http://covingtoninnovations.com/mc/SingleInstance.html
                 if (gotMutex)
                 {
-                    //need to do this first so we have a place to log anything!!!
-                    Logger.CreateAppDataFolder();
+                    //need to do this first because we use this folder 
+                    //for logging, settings files, everything
+                    CreateAppDataFolder();
 
                     Application.SetHighDpiMode(HighDpiMode.SystemAware);
                     Application.SetCompatibleTextRenderingDefault(false);
@@ -76,6 +76,34 @@ namespace OOFScheduling
             }
 
 
+        }
+
+        internal static bool CreateAppDataFolder()
+        {
+            bool _result = false;
+            //check to make sure it exists. If not, create AppData\Roaming\OOFSponder
+            try
+            {
+#if NET8_0_OR_GREATER
+                if (!Path.Exists(Program.AppDataRoamingFolder))
+#endif
+#if NETFRAMEWORK
+                if (!System.IO.Directory.Exists(Program.AppDataRoamingFolder))
+#endif
+                {
+                    System.IO.Directory.CreateDirectory(Program.AppDataRoamingFolder);
+                }
+
+                _result = true;
+
+            }
+            catch (Exception ex)
+            {
+                string _errorMessage = "Unable to create " + Program.AppDataRoamingFolder;
+                throw new Exception(_errorMessage, ex);
+            }
+
+            return _result;
         }
 
 
