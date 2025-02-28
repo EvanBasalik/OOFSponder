@@ -181,7 +181,7 @@ namespace OOFScheduling
 
         internal static string OOFFileName(OOFMessageType messageType)
         {
-            return Path.Combine(SettingsHelpers.PerUserDataFolder(), DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + messageType.ToString() + ".html");
+            return Path.Combine(Logger.PerUserDataFolder(), DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + messageType.ToString() + ".html");
         }
 
         internal Collection<OOFInstance> _OOFCollection;
@@ -386,7 +386,7 @@ namespace OOFScheduling
                 //and if the user's file doesn't have them, the new default gets added
                 //from the updated appsettings.json
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile(Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()), true)
+                .AddJsonFile(Path.Combine(Logger.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()), true)
                 .Build();
 
             OOFSponderConfig.Root OOFSponderConfig = new OOFSponderConfig.Root();
@@ -471,7 +471,7 @@ namespace OOFScheduling
 
             // Write the JSON string to a file
             //user-specific appsettings.json
-            string userappsettingsFile = Path.Combine(SettingsHelpers.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile());
+            string userappsettingsFile = Path.Combine(Logger.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile());
             System.IO.File.WriteAllText(userappsettingsFile, jsonString);
 
             OOFSponder.Logger.Info("Persisted settings");
@@ -494,7 +494,7 @@ namespace OOFScheduling
         internal bool SaveOOFMessageOffline(OOFMessageType messageType, string OOFMessageAsHTML)
         {
             bool _result = false;
-            string _folderName = SettingsHelpers.PerUserDataFolder();
+            string _folderName = Logger.PerUserDataFolder();
             string _fileName = OOFFileName(messageType);
 
             try

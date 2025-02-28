@@ -1696,7 +1696,7 @@ namespace OOFScheduling
             openFileDialog.FilterIndex = 1;
 
             openFileDialog.Title = "Select an existing OOF message file";
-            openFileDialog.InitialDirectory = SettingsHelpers.PerUserDataFolder();
+            openFileDialog.InitialDirectory = Logger.PerUserDataFolder();
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -1727,7 +1727,7 @@ namespace OOFScheduling
 
             //get the AppData folder and open
             //this is for generic manipulation of the saved messages
-            string FileorFoldertoOpen = System.IO.Path.GetDirectoryName(SettingsHelpers.PerUserDataFolder());
+            string FileorFoldertoOpen = System.IO.Path.GetDirectoryName(Logger.PerUserDataFolder());
 
             var psi = new System.Diagnostics.ProcessStartInfo()
             {
