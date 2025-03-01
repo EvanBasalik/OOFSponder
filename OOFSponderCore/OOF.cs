@@ -438,6 +438,7 @@ namespace OOFScheduling
 
             OOFSponder.Logger.Info("Persisting settings");
 
+            //TODO: rewrite this for real failures
             //special logging and message box for the intermittent nulling of the message
             if (instance.PrimaryOOFExternalMessage == DummyHTML)
             {
