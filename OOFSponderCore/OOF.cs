@@ -14,6 +14,7 @@ namespace OOFScheduling
     public class OOFData
     {
         internal DateTime PermaOOFDate { get; set; }
+        internal bool UseNewPermaOOFMath { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
         internal static readonly string HTMLReadOnlyIndicator = "<BODY style=\"BACKGROUND-COLOR: lightgray\"";
 
@@ -370,6 +371,7 @@ namespace OOFScheduling
             OOFSponder.Logger.Info("ExternalAudienceScope: " + ExternalAudienceScope.ToString());
             OOFSponder.Logger.Info("IsOnCallModeOn: " + IsOnCallModeOn);
             OOFSponder.Logger.Info("StartMinimized: " + StartMinimized);
+            OOFSponder.Logger.InfoValue("UseNewPermaOOFMath", UseNewPermaOOFMath.ToString());
             OOFSponder.Logger.Info("UserSettingsSource: " + UserSettingsSource);
         }
 
@@ -411,6 +413,7 @@ namespace OOFScheduling
 
             instance.IsOnCallModeOn = OOFSponderConfig.OOFData.IsOnCallModeOn == baseBool ? false : OOFSponderConfig.OOFData.IsOnCallModeOn;
             instance.StartMinimized = OOFSponderConfig.OOFData.StartMinimized == baseBool ? false : OOFSponderConfig.OOFData.StartMinimized;
+            instance.UseNewPermaOOFMath = OOFSponderConfig.OOFData.UseNewPermaOOFMath == baseBool ? false : OOFSponderConfig.OOFData.UseNewPermaOOFMath;
 
             instance.UserSettingsSource = OOFSponderConfig.UserSettingsSource;
 
@@ -459,6 +462,7 @@ namespace OOFScheduling
             config.OOFData.WorkingHours = instance.WorkingHours;
             config.OOFData.IsOnCallModeOn = instance.IsOnCallModeOn;
             config.OOFData.StartMinimized = instance.StartMinimized;
+            config.OOFData.UseNewPermaOOFMath = instance.UseNewPermaOOFMath;
             config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)instance.ExternalAudienceScope;
             config.UserSettingsSource = "OOFSponder_Core_" + RuntimeInformation.FrameworkDescription;
 

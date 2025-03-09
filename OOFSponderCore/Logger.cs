@@ -82,6 +82,11 @@ namespace OOFSponder
             WriteEntry(ScrubMessage(message), "info", new System.Diagnostics.StackFrame(1).GetMethod().Name, SendToAppInsights);
         }
 
+        public static void InfoValue(string infoName, string infoValue, bool sendToAppInsights = true)
+        {
+            Info(ScrubMessage(infoName + ": " + infoValue), sendToAppInsights);
+        }
+
         public static void InfoPotentialPII(string property, string value)
         {
             if (value.Length >= 26)

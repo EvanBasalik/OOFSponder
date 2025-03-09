@@ -444,22 +444,28 @@ namespace OOFScheduling
         }
 
         #region Set Oof Timed Loop
+
+        //normal logic
+        //Every 10 minutes for automation
+        Int32 LoopTimer = 600000;
         void Loopy()
         {
             OOFSponder.Logger.Info("Setting up Loopy");
 
             //normal logic
             //Every 10 minutes for automation
-            var timer = new System.Timers.Timer(600000);
+            System.Timers.Timer timer = new System.Timers.Timer(LoopTimer);
 
 #if FASTLOOP
             //Every 30 seconds for rapid testing
-            timer = new System.Timers.Timer(30000);
+            LoopTimer = 30000;
+            timer = new System.Timers.Timer(LoopTimer);
 #endif
 
 #if MEDIUMLOOP
             //Every 5 min for human-based testing
-            timer = new System.Timers.Timer(300000);
+            LoopTimer = 300000;
+            timer = new System.Timers.Timer(LoopTimer);
 #endif
             timer.Enabled = true;
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
@@ -529,22 +535,36 @@ namespace OOFScheduling
                     result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
                 }
                 else
-                //since permaOOF is on, need to adjust the end date such that is permaOOFDate
-                //if permaOOF>oofTimes[0] and permaOOF<oofTimes[1], then AddDays((permaOOFDate - oofTimes[1]).Days
-                //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
                 {
+                    //feature flag for new PermaOOF math
                     int adjustmentDays = 0;
-                    if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                    if (OOFData.Instance.UseNewPermaOOFMath)
                     {
-                        adjustmentDays = 1;
-                    }
+                        OOFSponderInsights.Track("Using old PermaOOF math");
+                        if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                        {
+                            adjustmentDays = 1;
+                        }
 
-                    //in order to accomodate someone going OOF mid-schedule
-                    //check if now is before the next scheduled "OFF" slot
-                    //if it is, then adjust start time to NOW
-                    if (oofTimes[0] > DateTime.Now)
+                        //in order to accomodate someone going OOF mid-schedule
+                        //check if now is before the next scheduled "OFF" slot
+                        //if it is, then adjust start time to NOW
+                        if (oofTimes[0] > DateTime.Now)
+                        {
+                            oofTimes[0] = DateTime.Now;
+                        }
+                    }
+                    else
                     {
-                        oofTimes[0] = DateTime.Now;
+                        //since permaOOF is on, need to adjust the end date such that it's permaOOFDate
+                        //rather than the next startTime
+                        //if permaOOF < oofTimes[0] (startTime for next shift) - loop time, then use oofTimes[0] 
+                        //      --> basically, let permaOOF expire, then shift to a normal schedule
+                        //if permaOOF > oofTimes[0] (startTime for next shift) + loop time *and* less than
+                        //  oofTimes[1] (endTime for next shift), then use permaOOF
+                        //      --> permaOOF will end will be on-shift
+                        //if permaOOF > oofTimes[1] (end of next shift), same rules applies as if < oofTimes[0]
+                        OOFSponderInsights.Track("Using new PermaOOF math");
                     }
 
                     OOFSponderInsights.Track("TrySetPermaOOF");

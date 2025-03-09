@@ -12,7 +12,8 @@ namespace OOFSponderConfig
     //    "SecondaryOOFInternalMessage": "default",
     //    "ExternalAudienceScopeEnum": "All",
     //    "IsOnCallModeOn": false,
-    //    "StartMinimized": false
+    //    "StartMinimized": false,
+    //    "UseNewPermaOOFMath": false
     //  },
     //  "UserSettingsSource": "OOFSponder_Core_{.NET version}"
     //}
@@ -28,6 +29,7 @@ namespace OOFSponderConfig
         public Microsoft.Graph.ExternalAudienceScope ExternalAudienceScope { get; set; }
         public bool IsOnCallModeOn { get; set; }
         public bool StartMinimized { get; set; }
+        public bool UseNewPermaOOFMath { get; set; }
     }
 
     internal class Root
