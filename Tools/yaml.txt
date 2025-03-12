@@ -1,0 +1,61 @@
+Absolutely! Here’s an example of a GitHub Action workflow that checks for specific text in a .docx file. This workflow uses Python with the python-docx library to read the .docx file and search for the text.
+First, ensure you have a Python script (check_text.py) that performs the text checking:
+# check_text.py
+import sys
+from docx import Document
+
+def check_text_in_docx(file_path, search_text):
+    doc = Document(file_path)
+    for paragraph in doc.paragraphs:
+        if search_text in paragraph.text:
+            print(f"Found '{search_text}' in the document.")
+            return True
+    print(f"'{search_text}' not found in the document.")
+    return False
+
+if __name__ == "__main__":
+    file_path = sys.argv[1]
+    search_text = sys.argv[2]
+    if not check_text_in_docx(file_path, search_text):
+        sys.exit(1)
+Next, create a GitHub Action workflow file (.github/workflows/check-docx.yml):
+name: Check Text in DOCX
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-docx:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install python-docx
+
+    - name: Check text in DOCX
+      run: |
+        python check_text.py path/to/your/document.docx "search text"
+Explanation:
+1.	Python Script (check_text.py):
+o	This script reads a .docx file and searches for a specific text.
+o	If the text is found, it prints a message and exits with a status code of 0.
+o	If the text is not found, it prints a message and exits with a status code of 1.
+2.	GitHub Action Workflow (.github/workflows/check-docx.yml):
+o	The workflow triggers on pushes and pull requests to the main branch.
+o	It checks out the repository, sets up Python, installs the python-docx library, and runs the check_text.py script with the path to the .docx file and the text to search for.
+Feel free to adapt the paths and search text to fit your specific needs. If you have any questions or need further assistance, I'm here to help!
