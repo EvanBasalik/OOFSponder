@@ -13,7 +13,7 @@ namespace OOFScheduling
 
     public class OOFData
     {
-        internal DateTime PermaOOFDate { get; set; }
+        public DateTime PermaOOFDate { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
         internal static readonly string HTMLReadOnlyIndicator = "<BODY style=\"BACKGROUND-COLOR: lightgray\"";
 
@@ -38,10 +38,10 @@ namespace OOFScheduling
             return _result;
         }
 
-        internal string UserSettingsSource { get; set; }
+        public string UserSettingsSource { get; set; }
 
         private string _workingHours;
-        internal string WorkingHours
+        public string WorkingHours
         {
             get
             {
@@ -185,7 +185,7 @@ namespace OOFScheduling
         }
 
         internal Collection<OOFInstance> _OOFCollection;
-        internal Collection<OOFInstance> OOFCollection
+        public Collection<OOFInstance> OOFCollection
         {
             get
             {
@@ -202,7 +202,7 @@ namespace OOFScheduling
                     {
                         string[] currentWorkingTime = workingTimes[i].Split('~');
                         OOFInstance OOFItem = new OOFInstance();
-                        OOFItem.dayOfWeek = (DayOfWeek)i;
+                        OOFItem.DayOfWeek = (DayOfWeek)i;
                         OOFItem.StartTime = DateTime.Parse(currentWorkingTime[0]);
                         OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
                         if (currentWorkingTime[2] == "0")
@@ -213,7 +213,7 @@ namespace OOFScheduling
                         {
                             OOFItem.IsOOF = true;
                         }
-                        OOFItem.isOnCallModeEnabled = this.IsOnCallModeOn;
+                        OOFItem.IsOnCallModeEnabled = this.IsOnCallModeOn;
 
                         _OOFCollection.Add(OOFItem);
                     }
@@ -221,12 +221,14 @@ namespace OOFScheduling
 
                 return _OOFCollection;
             }
+
+            set { _OOFCollection = value; }
         }
 
         //Track whether or not to run in OnCallMode
         //When in this mode, the OOF times get flipped and instead of 
         //tracking days on/days off, they will track a start/end for OOF *during* the working day
-        internal bool IsOnCallModeOn { get; set; }
+        public bool IsOnCallModeOn { get; set; }
 
         private const string baseValue = "default";
         private const bool baseBool = false;
@@ -361,16 +363,29 @@ namespace OOFScheduling
 
         private void LogProperties()
         {
-            OOFSponder.Logger.InfoPotentialPII("PermaOOFDate", PermaOOFDate.ToString());
-            OOFSponder.Logger.InfoPotentialPII("WorkingHours", WorkingHours);
+            //manually log the ones with potential PII
             OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", PrimaryOOFExternalMessage);
             OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", PrimaryOOFInternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFExternalMessage", SecondaryOOFExternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", SecondaryOOFInternalMessage);
-            OOFSponder.Logger.Info("ExternalAudienceScope: " + ExternalAudienceScope.ToString());
-            OOFSponder.Logger.Info("IsOnCallModeOn: " + IsOnCallModeOn);
-            OOFSponder.Logger.Info("StartMinimized: " + StartMinimized);
-            OOFSponder.Logger.Info("UserSettingsSource: " + UserSettingsSource);
+
+            //for everything else, use ObjectDumper
+            //exclude the properties from above
+            String _instanceString = ObjectDumper.Dump(instance, new DumpOptions()
+            {
+                //IndentChar = '\t',
+                //IndentSize = 1,
+                //LineBreakChar = Environment.NewLine,
+                //DumpStyle = DumpStyle.Console,
+                ExcludeProperties = new string[]
+                {
+                    nameof(instance.PrimaryOOFExternalMessage),
+                    nameof(instance.PrimaryOOFInternalMessage),
+                    nameof(instance.SecondaryOOFExternalMessage),
+                    nameof(instance.SecondaryOOFInternalMessage)
+                }
+            });
+            OOFSponder.Logger.Info(_instanceString);
         }
 
         private void ReadProperties()
@@ -415,6 +430,7 @@ namespace OOFScheduling
             instance.UserSettingsSource = OOFSponderConfig.UserSettingsSource;
 
             instance.ExternalAudienceScope = OOFSponderConfig.OOFData.ExternalAudienceScope;
+            instance.OOFCollection = OOFSponderConfig.OOFData.OOFCollection;
 
             LogProperties();
 
@@ -461,6 +477,7 @@ namespace OOFScheduling
             config.OOFData.StartMinimized = instance.StartMinimized;
             config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)instance.ExternalAudienceScope;
             config.UserSettingsSource = "OOFSponder_Core_" + RuntimeInformation.FrameworkDescription;
+            config.OOFData.OOFCollection = instance.OOFCollection;
 
 
             // Serialize the person object to JSON
@@ -596,15 +613,15 @@ namespace OOFScheduling
     {
         private DateTime _startTime;
         private DateTime _endTime;
-        internal DayOfWeek dayOfWeek;
-        internal bool isOnCallModeEnabled = false;
+        public DayOfWeek DayOfWeek { get; set; }
+        public bool IsOnCallModeEnabled { get; set; } = false;
 
         private bool _isOOF;
         public bool IsOOF
         {
             get
             {
-                if (isOnCallModeEnabled)
+                if (IsOnCallModeEnabled)
                 {
                     return !_isOOF;
                 }
@@ -617,7 +634,7 @@ namespace OOFScheduling
             set => _isOOF = value;
         }
 
-        internal DateTime StartTime
+        public DateTime StartTime
         {
             get
             {
@@ -626,7 +643,7 @@ namespace OOFScheduling
             }
             set => _startTime = value;
         }
-        internal DateTime EndTime
+        public DateTime EndTime
         {
             get
             {

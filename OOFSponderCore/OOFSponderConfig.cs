@@ -1,4 +1,5 @@
 using System;
+using System.Collections.ObjectModel;
 
 namespace OOFSponderConfig
 {
@@ -16,6 +17,14 @@ namespace OOFSponderConfig
     //  },
     //  "UserSettingsSource": "OOFSponder_Core_{.NET version}"
     //}
+    public class OOFCollection
+    {
+        public string DayOfWeek { get; set; }
+        public bool IsOnCallModeEnabled { get; set; }
+        public bool IsOOF { get; set; }
+        public string StartTime { get; set; }
+        public string EndTime { get; set; }
+    }
 
     internal class OOFData
     {
@@ -28,6 +37,7 @@ namespace OOFSponderConfig
         public Microsoft.Graph.ExternalAudienceScope ExternalAudienceScope { get; set; }
         public bool IsOnCallModeOn { get; set; }
         public bool StartMinimized { get; set; }
+        public Collection<OOFScheduling.OOFInstance> OOFCollection { get; set; }
     }
 
     internal class Root
