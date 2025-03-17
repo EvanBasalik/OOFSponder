@@ -208,13 +208,12 @@ namespace OOFScheduling
                         OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
                         if (currentWorkingTime[2] == "0")
                         {
-                            OOFItem.IsOOF = false;
+                            OOFItem.IsOOF = true;
                         }
                         else
                         {
-                            OOFItem.IsOOF = true;
+                            OOFItem.IsOOF = false;
                         }
-                        OOFItem.IsOnCallModeEnabled = this.IsOnCallModeOn;
 
                         _OOFCollection.Add(OOFItem);
                     }
@@ -663,6 +662,7 @@ namespace OOFScheduling
             config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)instance.ExternalAudienceScope;
             config.UserSettingsSource = "OOFSponder_Core_" + RuntimeInformation.FrameworkDescription;
             config.OOFData.OOFCollection = instance.OOFCollection;
+            config.OOFData.UseNewOOFMath = instance.useNewOOFMath;
 
 
             // Serialize the person object to JSON
@@ -799,21 +799,13 @@ namespace OOFScheduling
         private DateTime _startTime;
         private DateTime _endTime;
         public DayOfWeek DayOfWeek { get; set; }
-        public bool IsOnCallModeEnabled { get; set; } = false;
 
         private bool _isOOF;
         public bool IsOOF
         {
             get
             {
-                if (IsOnCallModeEnabled)
-                {
-                    return !_isOOF;
-                }
-                else
-                {
-                    return _isOOF;
-                }
+                return _isOOF;
             }
 
             set => _isOOF = value;

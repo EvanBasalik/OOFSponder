@@ -1105,10 +1105,11 @@ namespace OOFScheduling
         //enable/disable the various daily DateTimePickers as appropriate
         private void OffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
+            CheckBox cb = ((CheckBox)sender);
+
             var listofDataTimePickers = GetControlsOfSpecificType(this, typeof(LastDateTimePicker));
             foreach (var dateTimePicker in listofDataTimePickers)
             {
-                CheckBox cb = ((CheckBox)sender);
                 LastDateTimePicker dt = ((LastDateTimePicker)dateTimePicker);
                 string cbName = cb.Name.Replace("OffWorkCB", "");
                 string dtpName = dt.Name.Replace("StartTimepicker", "").Replace("EndTimepicker", "");
@@ -1121,105 +1122,10 @@ namespace OOFScheduling
                 }
             }
 
-        }
+            //update the OOFCollection
+            OOFData.Instance.OOFCollection.First(x => x.DayOfWeek.ToString() == cb.Tag.ToString())
+                .IsOOF = !cb.Checked;
 
-        //these are all deprecated, but leaving to not have to mess with the base event handlers
-        private void sundayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (sundayOffWorkCB.Checked)
-            //{
-            //    sundayStartTimepicker.Enabled = false;
-            //    sundayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    sundayStartTimepicker.Enabled = true;
-            //    sundayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void mondayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (mondayOffWorkCB.Checked)
-            //{
-            //    mondayStartTimepicker.Enabled = false;
-            //    mondayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    mondayStartTimepicker.Enabled = true;
-            //    mondayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void tuesdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (tuesdayOffWorkCB.Checked)
-            //{
-            //    tuesdayStartTimepicker.Enabled = false;
-            //    tuesdayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    tuesdayStartTimepicker.Enabled = true;
-            //    tuesdayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void wednesdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (wednesdayOffWorkCB.Checked)
-            //{
-            //    wednesdayStartTimepicker.Enabled = false;
-            //    wednesdayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    wednesdayStartTimepicker.Enabled = true;
-            //    wednesdayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void thursdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (thursdayOffWorkCB.Checked)
-            //{
-            //    thursdayStartTimepicker.Enabled = false;
-            //    thursdayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    thursdayStartTimepicker.Enabled = true;
-            //    thursdayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void fridayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (fridayOffWorkCB.Checked)
-            //{
-            //    fridayStartTimepicker.Enabled = false;
-            //    fridayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    fridayStartTimepicker.Enabled = true;
-            //    fridayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void saturdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (saturdayOffWorkCB.Checked)
-            //{
-            //    saturdayStartTimepicker.Enabled = false;
-            //    saturdayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    saturdayStartTimepicker.Enabled = true;
-            //    saturdayEndTimepicker.Enabled = true;
-            //}
         }
         #endregion
 
@@ -1825,6 +1731,19 @@ namespace OOFScheduling
                         picker.Value = picker.Value.Date + roundedTimeSpan;
                     }
                     navigatingDateTimePicker = false;
+
+                    //Update the corresponding item in OOFCollection
+                    //need to find the right day and decide Start vs. End
+                    if (picker.Name.Contains("Start"))
+                    {
+                        OOFData.Instance.OOFCollection.First(x => x.DayOfWeek.ToString() == picker.Tag.ToString())
+                            .StartTime = picker.Value;
+                    }
+                    else
+                    {
+                        OOFData.Instance.OOFCollection.First(x => x.DayOfWeek.ToString() == picker.Tag.ToString())
+                            .EndTime = picker.Value;
+                    }
                 }
             }
         }

@@ -395,6 +395,7 @@
             saturdayOffWorkCB.Name = "saturdayOffWorkCB";
             saturdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             saturdayOffWorkCB.TabIndex = 27;
+            saturdayOffWorkCB.Tag = "Saturday";
             saturdayOffWorkCB.Text = "Off Work";
             saturdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -406,6 +407,7 @@
             fridayOffWorkCB.Name = "fridayOffWorkCB";
             fridayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             fridayOffWorkCB.TabIndex = 24;
+            fridayOffWorkCB.Tag = "Friday";
             fridayOffWorkCB.Text = "Off Work";
             fridayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -417,6 +419,7 @@
             thursdayOffWorkCB.Name = "thursdayOffWorkCB";
             thursdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             thursdayOffWorkCB.TabIndex = 21;
+            thursdayOffWorkCB.Tag = "Thursday";
             thursdayOffWorkCB.Text = "Off Work";
             thursdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -428,6 +431,7 @@
             wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
             wednesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             wednesdayOffWorkCB.TabIndex = 18;
+            wednesdayOffWorkCB.Tag = "Wednesday";
             wednesdayOffWorkCB.Text = "Off Work";
             wednesdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -439,6 +443,7 @@
             tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
             tuesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             tuesdayOffWorkCB.TabIndex = 15;
+            tuesdayOffWorkCB.Tag = "Tuesday";
             tuesdayOffWorkCB.Text = "Off Work";
             tuesdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -450,6 +455,7 @@
             mondayOffWorkCB.Name = "mondayOffWorkCB";
             mondayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             mondayOffWorkCB.TabIndex = 12;
+            mondayOffWorkCB.Tag = "Monday";
             mondayOffWorkCB.Text = "Off Work";
             mondayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -461,6 +467,7 @@
             sundayOffWorkCB.Name = "sundayOffWorkCB";
             sundayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             sundayOffWorkCB.TabIndex = 9;
+            sundayOffWorkCB.Tag = "Sunday";
             sundayOffWorkCB.Text = "Off Work";
             sundayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -475,6 +482,7 @@
             saturdayEndTimepicker.ShowUpDown = true;
             saturdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             saturdayEndTimepicker.TabIndex = 26;
+            saturdayEndTimepicker.Tag = "Saturday";
             saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             saturdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -489,6 +497,7 @@
             fridayEndTimepicker.ShowUpDown = true;
             fridayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             fridayEndTimepicker.TabIndex = 23;
+            fridayEndTimepicker.Tag = "Friday";
             fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             fridayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -503,6 +512,7 @@
             thursdayEndTimepicker.ShowUpDown = true;
             thursdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             thursdayEndTimepicker.TabIndex = 20;
+            thursdayEndTimepicker.Tag = "Thursday";
             thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             thursdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -517,6 +527,7 @@
             wednesdayEndTimepicker.ShowUpDown = true;
             wednesdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             wednesdayEndTimepicker.TabIndex = 17;
+            wednesdayEndTimepicker.Tag = "Wednesday";
             wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             wednesdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -531,6 +542,7 @@
             tuesdayEndTimepicker.ShowUpDown = true;
             tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             tuesdayEndTimepicker.TabIndex = 14;
+            tuesdayEndTimepicker.Tag = "Tuesday";
             tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             tuesdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -545,6 +557,7 @@
             mondayEndTimepicker.ShowUpDown = true;
             mondayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             mondayEndTimepicker.TabIndex = 11;
+            mondayEndTimepicker.Tag = "Monday";
             mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             mondayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -559,6 +572,7 @@
             sundayEndTimepicker.ShowUpDown = true;
             sundayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             sundayEndTimepicker.TabIndex = 8;
+            sundayEndTimepicker.Tag = "Sunday";
             sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             sundayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -573,6 +587,7 @@
             saturdayStartTimepicker.ShowUpDown = true;
             saturdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             saturdayStartTimepicker.TabIndex = 25;
+            saturdayStartTimepicker.Tag = "Saturday";
             saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             saturdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -587,6 +602,7 @@
             fridayStartTimepicker.ShowUpDown = true;
             fridayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             fridayStartTimepicker.TabIndex = 22;
+            fridayStartTimepicker.Tag = "Friday";
             fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             fridayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -601,6 +617,7 @@
             thursdayStartTimepicker.ShowUpDown = true;
             thursdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             thursdayStartTimepicker.TabIndex = 19;
+            thursdayStartTimepicker.Tag = "Thursday";
             thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             thursdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -615,6 +632,7 @@
             wednesdayStartTimepicker.ShowUpDown = true;
             wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             wednesdayStartTimepicker.TabIndex = 16;
+            wednesdayStartTimepicker.Tag = "Wednesday";
             wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             wednesdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -629,6 +647,7 @@
             tuesdayStartTimepicker.ShowUpDown = true;
             tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             tuesdayStartTimepicker.TabIndex = 13;
+            tuesdayStartTimepicker.Tag = "Tuesday";
             tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             tuesdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -643,6 +662,7 @@
             mondayStartTimepicker.ShowUpDown = true;
             mondayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             mondayStartTimepicker.TabIndex = 10;
+            mondayStartTimepicker.Tag = "Monday";
             mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             mondayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -658,6 +678,7 @@
             sundayStartTimepicker.ShowUpDown = true;
             sundayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             sundayStartTimepicker.TabIndex = 7;
+            sundayStartTimepicker.Tag = "Sunday";
             sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             sundayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
