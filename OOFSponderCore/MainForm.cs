@@ -490,67 +490,77 @@ namespace OOFScheduling
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             bool result = false;
-            if (OOFData.Instance.HaveNecessaryData)
+
+            //TODO: Add Try/Catch
+            try
             {
-                OOFSponder.Logger.Info("Getting OOF times");
-                DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
-                OOFSponder.Logger.Info("Got OOF times");
-
-                //persist settings just in case
-                string oofMessageExternal = htmlEditorControl1.BodyHtml;
-                string oofMessageInternal = htmlEditorControl2.BodyHtml;
-
-                //if not logged in, give the user a chance to log in
-                OOFSponder.Logger.Info("Checking to make sure the user is logged in before doing OOF work");
-                if (!O365.isLoggedIn)
+                if (OOFData.Instance.HaveNecessaryData)
                 {
-                    OOFSponder.Logger.Error("Not logged in when trying to Save Settings. Giving them one more try.");
+                    OOFSponder.Logger.Info("Getting OOF times");
+                    DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
+                    OOFSponder.Logger.Info("Got OOF times");
 
-                    OOFSponder.Logger.Info("Trying to log in again inside " + OOFSponderInsights.CurrentMethod());
-                    System.Threading.Tasks.Task AuthTask = null;
-                    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
-                    AuthTask.Wait(10000);
-                    OOFSponder.Logger.Info("Successfully logged in inside " + OOFSponderInsights.CurrentMethod());
+                    //persist settings just in case
+                    string oofMessageExternal = htmlEditorControl1.BodyHtml;
+                    string oofMessageInternal = htmlEditorControl2.BodyHtml;
 
-                    //if still not logged in, bail
+                    //if not logged in, give the user a chance to log in
+                    OOFSponder.Logger.Info("Checking to make sure the user is logged in before doing OOF work");
                     if (!O365.isLoggedIn)
                     {
-                        OOFSponder.Logger.Error("STILL not logged in, so stopping from saving");
-                        MessageBox.Show("Not logged in!. Please hit Save Settings again and log in with a valid user");
-                        return false;
-                    }
-                }
+                        OOFSponder.Logger.Error("Not logged in when trying to Save Settings. Giving them one more try.");
 
-                OOFSponder.Logger.Info("Getting ready to set either PermaOOF or NormalOOF");
-                //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
-                if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
-                {
-                    OOFSponder.Logger.Info("TrySetNormalOOF");
-                    result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
-                }
-                else
-                //since permaOOF is on, need to adjust the end date such that is permaOOFDate
-                //if permaOOF>oofTimes[0] and permaOOF<oofTimes[1], then AddDays((permaOOFDate - oofTimes[1]).Days
-                //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
-                {
-                    int adjustmentDays = 0;
-                    if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                        OOFSponder.Logger.Info("Trying to log in again inside " + OOFSponderInsights.CurrentMethod());
+                        System.Threading.Tasks.Task AuthTask = null;
+                        AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+                        AuthTask.Wait(10000);
+                        OOFSponder.Logger.Info("Successfully logged in inside " + OOFSponderInsights.CurrentMethod());
+
+                        //if still not logged in, bail
+                        if (!O365.isLoggedIn)
+                        {
+                            OOFSponder.Logger.Error("STILL not logged in, so stopping from saving");
+                            MessageBox.Show("Not logged in!. Please hit Save Settings again and log in with a valid user");
+                            return false;
+                        }
+                    }
+
+                    OOFSponder.Logger.Info("Getting ready to set either PermaOOF or NormalOOF");
+                    //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
+                    if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                     {
-                        adjustmentDays = 1;
+                        OOFSponder.Logger.Info("TrySetNormalOOF");
+                        result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
                     }
-
-                    //in order to accomodate someone going OOF mid-schedule
-                    //check if now is before the next scheduled "OFF" slot
-                    //if it is, then adjust start time to NOW
-                    if (oofTimes[0] > DateTime.Now)
+                    else
+                    //since permaOOF is on, need to adjust the end date such that is permaOOFDate
+                    //if permaOOF>oofTimes[0] and permaOOF<oofTimes[1], then AddDays((permaOOFDate - oofTimes[1]).Days
+                    //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
                     {
-                        oofTimes[0] = DateTime.Now;
+                        int adjustmentDays = 0;
+                        if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                        {
+                            adjustmentDays = 1;
+                        }
+
+                        //in order to accomodate someone going OOF mid-schedule
+                        //check if now is before the next scheduled "OFF" slot
+                        //if it is, then adjust start time to NOW
+                        if (oofTimes[0] > DateTime.Now)
+                        {
+                            oofTimes[0] = DateTime.Now;
+                        }
+
+                        OOFSponderInsights.Track("TrySetPermaOOF");
+
+                        result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
                     }
-
-                    OOFSponderInsights.Track("TrySetPermaOOF");
-
-                    result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                throw ex;
             }
 
             return result;
@@ -774,14 +784,21 @@ namespace OOFScheduling
             DateTime[] OofTimes = new DateTime[2];
             DateTime StartTime, EndTime;
 
-            //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
-            if (!OOFData.Instance.IsOnCallModeOn && !OOFData.Instance.useNewOOFMath)
+            if (OOFData.Instance.useNewOOFMath)
             {
-                CalculateOOFTimes(OOFData.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
+                CalculateOOFTimes2(out StartTime, out EndTime, OOFData.Instance.IsOnCallModeOn);
             }
             else
             {
-                CalculateOOFTimes2(out StartTime, out EndTime, OOFData.Instance.IsOnCallModeOn);
+                //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
+                if (!OOFData.Instance.IsOnCallModeOn && !OOFData.Instance.useNewOOFMath)
+                {
+                    CalculateOOFTimes(OOFData.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
+                }
+                else
+                {
+                    CalculateOOFTimes2(out StartTime, out EndTime, OOFData.Instance.IsOnCallModeOn);
+                }
             }
 
             OofTimes[0] = StartTime;

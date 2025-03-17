@@ -2,6 +2,7 @@
 using OOFSponder;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -318,9 +319,36 @@ namespace OOFScheduling
         {
             get
             {
-                string datePart = DateTime.Now.AddDays(-1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(-1).DayOfWeek)].EndTime.ToShortTimeString();
-                DateTime _previousOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
+                //need to find the EndTime of the last working day
+                int daysback = -1;
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysback >= -6)
+                {
+                    if (!OOFCollection[(int)(DateTime.Now.AddDays(daysback).DayOfWeek)].IsOOF)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        daysback--;
+                    }
+                }
+
+                DateTime datePart = DateTime.Now.AddDays(daysback);
+                DateTime timePart = OOFCollection[(int)(DateTime.Now.AddDays(daysback).DayOfWeek)].EndTime;
+                long ticks = new DateTime(
+                                        datePart.Year,
+                                        datePart.Month,
+                                        datePart.Day,
+                                        timePart.Hour,
+                                        timePart.Minute,
+                                        0,
+                                        new CultureInfo("en-US", false).Calendar).Ticks;
+                DateTime _previousOOFPeriodEnd = new DateTime(ticks);
+
+                string datePartOld = DateTime.Now.AddDays(daysback).ToShortDateString();
+                string timePartOld = this.OOFCollection[(int)(DateTime.Now.AddDays(daysback).DayOfWeek)].EndTime.ToShortTimeString();
+                DateTime _previousOOFPeriodEndOld = DateTime.Parse(datePartOld + " " + timePartOld);
                 return _previousOOFPeriodEnd;
             }
         }
@@ -430,6 +458,9 @@ namespace OOFScheduling
             instance.UserSettingsSource = OOFSponderConfig.UserSettingsSource;
 
             instance.ExternalAudienceScope = OOFSponderConfig.OOFData.ExternalAudienceScope;
+
+            instance.useNewOOFMath = OOFSponderConfig.OOFData.UseNewOOFMath;
+
             instance.OOFCollection = OOFSponderConfig.OOFData.OOFCollection;
 
             LogProperties();
