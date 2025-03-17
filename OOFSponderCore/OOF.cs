@@ -250,7 +250,79 @@ namespace OOFScheduling
                 return instance;
             }
         }
+        public void CalculateOOFTimes2(out DateTime StartTime, out DateTime EndTime, bool enableOnCallMode)
+        {
+            OOFSponder.Logger.Info("Using CalculationOOFTimes2");
 
+            StartTime = DateTime.Now;
+            EndTime = DateTime.Now;
+
+
+            DateTime currentCheckDate = DateTime.Now;
+            OOFSponder.Logger.Info("currentCheckDate = " + currentCheckDate.ToString());
+
+            OOFInstance currentWorkingTime = OOFData.Instance.currentOOFPeriod;
+            OOFSponder.Logger.Info("currentWorkingTime.StartTime = " + currentWorkingTime.StartTime);
+            OOFSponder.Logger.Info("currentWorkingtime.Endtime = " + currentWorkingTime.EndTime);
+
+            DateTime previousDayPeriodEnd = OOFData.Instance.previousOOFPeriodEnd;
+            OOFSponder.Logger.Info("previousDayPeriodEnd = " + previousDayPeriodEnd);
+
+            DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriodStart;
+            OOFSponder.Logger.Info("nextDayPeriodState = " + nextDayPeriodStart);
+
+            DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriodEnd;
+            OOFSponder.Logger.Info("nextDayPeriodEnd =" + nextDayPeriodEnd);
+
+            OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
+
+            //between the end of the previous OOF period and the start of the next one
+            if (currentCheckDate > previousDayPeriodEnd && currentCheckDate < currentWorkingTime.StartTime)
+            {
+                OOFSponder.Logger.Info("currentCheckDate greater than previousDayPeriodEnd and less than currentWorkingTime.StartTime");
+                if (enableOnCallMode)
+                {
+                    StartTime = currentWorkingTime.StartTime;
+                    EndTime = currentWorkingTime.EndTime;
+                }
+                else
+                {
+                    StartTime = previousDayPeriodEnd;
+                    EndTime = currentWorkingTime.StartTime;
+                }
+            }
+
+            //between the start of the current period and the end of the current period
+            if (currentCheckDate > currentWorkingTime.StartTime && currentCheckDate < currentWorkingTime.EndTime)
+            {
+                OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingTime.StartTime and less than currentWorkingTime.EndTime");
+                if (enableOnCallMode)
+                {
+                    StartTime = currentWorkingTime.StartTime;
+                    EndTime = currentWorkingTime.EndTime;
+                }
+                else
+                {
+                    StartTime = nextDayPeriodStart;
+                    EndTime = nextDayPeriodEnd;
+                }
+            }
+
+            if (currentCheckDate > currentWorkingTime.EndTime)
+            {
+                OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingTime.EndTime");
+                if (enableOnCallMode)
+                {
+                    StartTime = nextDayPeriodStart;
+                    EndTime = nextDayPeriodEnd;
+                }
+                else
+                {
+                    StartTime = currentWorkingTime.EndTime;
+                    EndTime = nextDayPeriodStart;
+                }
+            }
+        }
         internal bool HaveNecessaryData
         {
             get
