@@ -357,9 +357,50 @@ namespace OOFScheduling
         {
             get
             {
-                string datePart = DateTime.Now.AddDays(1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].StartTime.ToShortTimeString();
-                DateTime _nextOOFPeriodStart = DateTime.Parse(datePart + " " + timePart);
+                //need to find the StartTime of the next working day
+
+                //by default start with today
+                //and look starting tomorrow
+                DateTime targetDateTime = DateTime.Now;
+                int daysforward = 1;
+
+                //if PermaOOF is on, then the target date is actually the day of PermaOOF
+                //and look starting on PermaOOF
+                if (IsPermaOOFOn)
+                {
+                    targetDateTime = PermaOOFDate;
+                    daysforward = 0;
+                }
+
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysforward <= 6)
+                {
+
+                    if (!OOFCollection[(int)(targetDateTime.AddDays(daysforward).DayOfWeek)].IsOOF)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        daysforward++;
+                    }
+                }
+
+                DateTime datePart = targetDateTime.AddDays(daysforward);
+                DateTime timePart = OOFCollection[(int)(targetDateTime.AddDays(daysforward).DayOfWeek)].StartTime;
+                long ticks = new DateTime(
+                                        datePart.Year,
+                                        datePart.Month,
+                                        datePart.Day,
+                                        timePart.Hour,
+                                        timePart.Minute,
+                                        0,
+                                        new CultureInfo("en-US", false).Calendar).Ticks;
+                DateTime _nextOOFPeriodStart = new DateTime(ticks);
+
+                //string datePartOld = DateTime.Now.AddDays(daysforward).ToShortDateString();
+                //string timePartOld = this.OOFCollection[(int)(DateTime.Now.AddDays(daysforward).DayOfWeek)].StartTime.ToShortTimeString();
+                //DateTime _nextOOFPeriodStartOld = DateTime.Parse(datePartOld + " " + timePartOld);
                 return _nextOOFPeriodStart;
             }
         }
@@ -368,9 +409,50 @@ namespace OOFScheduling
         {
             get
             {
-                string datePart = DateTime.Now.AddDays(1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].EndTime.ToShortTimeString();
-                DateTime _nextOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
+                //need to find the EndTime of the next working day
+
+                //by default start with today
+                //and look starting tomorrow
+                DateTime targetDateTime = DateTime.Now;
+                int daysforward = 1;
+
+                //if PermaOOF is on, then the target date is actually the day of PermaOOF
+                //and look starting on PermaOOF
+                if (IsPermaOOFOn)
+                {
+                    targetDateTime = PermaOOFDate;
+                    daysforward = 0;
+                }
+
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysforward <= 6)
+                {
+
+                    if (!OOFCollection[(int)(targetDateTime.AddDays(daysforward).DayOfWeek)].IsOOF)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        daysforward++;
+                    }
+                }
+
+                DateTime datePart = targetDateTime.AddDays(daysforward);
+                DateTime timePart = OOFCollection[(int)(targetDateTime.AddDays(daysforward).DayOfWeek)].EndTime;
+                long ticks = new DateTime(
+                                        datePart.Year,
+                                        datePart.Month,
+                                        datePart.Day,
+                                        timePart.Hour,
+                                        timePart.Minute,
+                                        0,
+                                        new CultureInfo("en-US", false).Calendar).Ticks;
+                DateTime _nextOOFPeriodEnd = new DateTime(ticks);
+
+                string datePartOld = DateTime.Now.AddDays(1).ToShortDateString();
+                string timePartOld = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].EndTime.ToShortTimeString();
+                DateTime _nextOOFPeriodEndOld = DateTime.Parse(datePart + " " + timePart);
                 return _nextOOFPeriodEnd;
             }
         }
