@@ -99,65 +99,41 @@ namespace OOFScheduling
             }
 
             //and now we can set the values
-            if (OOFData.Instance.WorkingHours != "")
+            if (OOFData.Instance.WorkingDayCollection != null)
             {
-                string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
-                Logger.InfoPotentialPII("workingHours", OOFData.Instance.WorkingHours);
+                //reflect the working schedule in the UI
+                //we can cheat a bit because we have the DayofWeek in the tag
+                //and can get the Start/End based on the picker name
+                foreach (CheckBox cb in this.Controls.OfType<CheckBox>())
+                {
+                    System.DayOfWeek day;
+                    Enum.TryParse(cb.Tag.ToString(), true, out day);
+                    var _workingday = OOFData.Instance.WorkingDayCollection[(int)(day)];
+                    cb.Checked = _workingday.IsOOF;
+                }
 
-                //Zero means you are off that day (not working) therefore the box is checked
-                string[] dayHours = workingHours[0].Split('~');
-                if (dayHours[2] == "0") { sundayOffWorkCB.Checked = true; } else { sundayOffWorkCB.Checked = false; }
-                sundayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                sundayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                sundayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                sundayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                foreach (LastDateTimePicker picker in this.Controls.OfType<LastDateTimePicker>())
+                {
+                    System.DayOfWeek day;
+                    Enum.TryParse(picker.Tag.ToString(), true, out day);
+                    var _workingday = OOFData.Instance.WorkingDayCollection[(int)(day)];
+                    if (picker.Name.Contains("Start"))
+                    {
+                        picker.Value = _workingday.StartTime;
+                    }
+                    else
+                    {
+                        picker.Value = _workingday.EndTime;
+                    }
 
-                dayHours = workingHours[1].Split('~');
-                if (dayHours[2] == "0") { mondayOffWorkCB.Checked = true; } else { mondayOffWorkCB.Checked = false; }
-                mondayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                mondayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                mondayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                mondayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[2].Split('~');
-                if (dayHours[2] == "0") { tuesdayOffWorkCB.Checked = true; } else { tuesdayOffWorkCB.Checked = false; }
-                tuesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                tuesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                tuesdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                tuesdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[3].Split('~');
-                if (dayHours[2] == "0") { wednesdayOffWorkCB.Checked = true; } else { wednesdayOffWorkCB.Checked = false; }
-                wednesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                wednesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                wednesdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                wednesdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[4].Split('~');
-                if (dayHours[2] == "0") { thursdayOffWorkCB.Checked = true; } else { thursdayOffWorkCB.Checked = false; }
-                thursdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                thursdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                thursdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                thursdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[5].Split('~');
-                if (dayHours[2] == "0") { fridayOffWorkCB.Checked = true; } else { fridayOffWorkCB.Checked = false; }
-                fridayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                fridayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                fridayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                fridayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[6].Split('~');
-                if (dayHours[2] == "0") { saturdayOffWorkCB.Checked = true; } else { saturdayOffWorkCB.Checked = false; }
-                saturdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                saturdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                saturdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
+                    picker.ValueChanged += DateTimePicker_ValueChanged;
+                }
             }
             else
             {
-                Logger.Warning("Don't have WorkingHours");
+                Logger.Warning("Don't have WorkingDayCollection");
             }
+
 
             //set the time format for the LastDateTimePickers
             int index = 0;

@@ -328,11 +328,23 @@ namespace OOFScheduling
             {
                 bool _result = false;
 
-                if (OOFData.Instance.WorkingHours == "")
+                if (useNewOOFMath)
                 {
-                    OOFSponder.Logger.Info("HaveNecessaryData - WorkingHours:" + _result);
-                    return _result;
+                    if (OOFData.Instance.WorkingDayCollection.Count != 7)
+                    {
+                        OOFSponder.Logger.Info("HaveNecessaryData - WorkingDayCollection:" + _result);
+                        return _result;
+                    }
                 }
+                else
+                {
+                    if (OOFData.Instance.WorkingHours == "")
+                    {
+                        OOFSponder.Logger.Info("HaveNecessaryData - WorkingHours:" + _result);
+                        return _result;
+                    }
+                }
+
 
                 //we need the OOF messages and working hours
                 //also, don't need to check SecondaryOOF messages for two reasons:
@@ -365,12 +377,25 @@ namespace OOFScheduling
                     return _result;
                 }
 
-                if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
-                    && OOFData.Instance.WorkingHours != "")
+                if (useNewOOFMath)
                 {
-                    _result = true;
-                    OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
-                    return _result;
+                    if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
+    && OOFData.Instance.WorkingDayCollection.Count != 7)
+                    {
+                        _result = true;
+                        OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
+                        return _result;
+                    }
+                }
+                else
+                {
+                    if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
+    && OOFData.Instance.WorkingHours != "")
+                    {
+                        _result = true;
+                        OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
+                        return _result;
+                    }
                 }
 
                 OOFSponder.Logger.Info("HaveNecessaryData: " + _result);
@@ -664,6 +689,18 @@ namespace OOFScheduling
             config.OOFData.WorkingDayCollection = instance.WorkingDayCollection;
             config.OOFData.UseNewOOFMath = instance.useNewOOFMath;
 
+            //TODO: reenable once I have confidence in the new workingDayCollection approach
+            ////special code to deprecate WorkingHours if the new WorkingDayCollection
+            ////is properly populate
+            //if (instance.WorkingDayCollection.Count == 7)
+            //{
+            //    config.OOFData.WorkingHours = "No longer in use and can be deleted";
+            //    Logger.Info("Wrote WorkingHours deprecation message");
+            //}
+            //else
+            //{
+            //    Logger.Info("WorkingHours still in use");
+            //}
 
             // Serialize the person object to JSON
             var options = new JsonSerializerOptions
