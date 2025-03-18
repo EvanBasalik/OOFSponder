@@ -18,7 +18,7 @@ namespace OOFSponderConfig
     //  },
     //  "UserSettingsSource": "OOFSponder_Core_{.NET version}"
     //}
-    public class OOFCollection
+    public class WorkingDayCollection
     {
         public string DayOfWeek { get; set; }
         public bool IsOnCallModeEnabled { get; set; }
@@ -40,7 +40,7 @@ namespace OOFSponderConfig
         public bool StartMinimized { get; set; }
 
         public bool UseNewOOFMath { get; set; }
-        public Collection<OOFScheduling.OOFInstance> OOFCollection { get; set; }
+        public Collection<OOFScheduling.WorkingDay> WorkingDayCollection { get; set; }
     }
 
     internal class Root

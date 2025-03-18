@@ -1122,8 +1122,8 @@ namespace OOFScheduling
                 }
             }
 
-            //update the OOFCollection
-            OOFData.Instance.OOFCollection.First(x => x.DayOfWeek.ToString() == cb.Tag.ToString())
+            //update the WorkingDayCollection
+            OOFData.Instance.WorkingDayCollection.First(x => x.DayOfWeek.ToString() == cb.Tag.ToString())
                 .IsOOF = !cb.Checked;
 
         }
@@ -1732,16 +1732,16 @@ namespace OOFScheduling
                     }
                     navigatingDateTimePicker = false;
 
-                    //Update the corresponding item in OOFCollection
+                    //Update the corresponding item in WorkingDayCollection
                     //need to find the right day and decide Start vs. End
                     if (picker.Name.Contains("Start"))
                     {
-                        OOFData.Instance.OOFCollection.First(x => x.DayOfWeek.ToString() == picker.Tag.ToString())
+                        OOFData.Instance.WorkingDayCollection.First(x => x.DayOfWeek.ToString() == picker.Tag.ToString())
                             .StartTime = picker.Value;
                     }
                     else
                     {
-                        OOFData.Instance.OOFCollection.First(x => x.DayOfWeek.ToString() == picker.Tag.ToString())
+                        OOFData.Instance.WorkingDayCollection.First(x => x.DayOfWeek.ToString() == picker.Tag.ToString())
                             .EndTime = picker.Value;
                     }
                 }
