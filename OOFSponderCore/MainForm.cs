@@ -236,6 +236,16 @@ namespace OOFScheduling
             //if a NOOOF build, then update the Save Settings button visibly
             button2.Text = "Save NoOOF";
 #endif
+
+            //add a visual indicator of using the new OOF logic
+            tsmiUseNewOOFMath.Checked = OOFData.Instance.useNewOOFMath;
+            if (OOFData.Instance.useNewOOFMath)
+            {
+#if DEBUG
+                button2.Text += "-New";
+#endif
+            }
+
             cboExternalAudienceScope.SelectedItem = OOFData.Instance.ExternalAudienceScope.ToString();
             if (OOFData.Instance.IsPermaOOFOn)
             {
@@ -1481,12 +1491,6 @@ namespace OOFScheduling
             System.Diagnostics.Process.Start(psi);
         }
 
-        private void bETAEnableNewOOFToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
-            OOFData.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
-        }
-
         private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
         {
             //Adding b/c I think this might be where the nulled messages are coming from
@@ -1729,6 +1733,11 @@ namespace OOFScheduling
         {
             LastDateTimePicker picker = sender as LastDateTimePicker;
             usedKeys = true;
+        }
+
+        private void tsmiUseNewOOFMath_CheckStateChanged(object sender, EventArgs e)
+        {
+            OOFData.Instance.useNewOOFMath = tsmiUseNewOOFMath.Checked;
         }
     }
 

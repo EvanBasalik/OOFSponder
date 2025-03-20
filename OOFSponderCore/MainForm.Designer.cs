@@ -41,11 +41,11 @@
             tsmiStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiUseNewOOFMath = new System.Windows.Forms.ToolStripMenuItem();
             showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             oOFSponderLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             oOFSponderLogFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            bETAEnableNewOOFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -119,7 +119,7 @@
             toolStripMenuItem1.CheckOnClick = true;
             toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { primaryToolStripMenuItem, secondaryToolStripMenuItem });
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
+            toolStripMenuItem1.Size = new System.Drawing.Size(225, 22);
             toolStripMenuItem1.Text = "&Message";
             // 
             // primaryToolStripMenuItem
@@ -130,7 +130,7 @@
             primaryToolStripMenuItem.Checked = true;
             primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
-            primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            primaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             primaryToolStripMenuItem.Text = "&Primary";
             primaryToolStripMenuItem.Click += primaryToolStripMenuItem_Click;
             // 
@@ -140,7 +140,7 @@
             secondaryToolStripMenuItem.AccessibleName = "Secondary message";
             secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
-            secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            secondaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             secondaryToolStripMenuItem.Text = "&Secondary";
             secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
@@ -151,7 +151,7 @@
             tsmiSavedOOFMessage.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             tsmiSavedOOFMessage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiExternal, tsmiInternal, tsmiShowOOFMessageFolder });
             tsmiSavedOOFMessage.Name = "tsmiSavedOOFMessage";
-            tsmiSavedOOFMessage.Size = new System.Drawing.Size(232, 22);
+            tsmiSavedOOFMessage.Size = new System.Drawing.Size(225, 22);
             tsmiSavedOOFMessage.Text = "&Open saved OOF message...";
             // 
             // tsmiExternal
@@ -189,7 +189,7 @@
             tsmiStartMinimized.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             tsmiStartMinimized.CheckOnClick = true;
             tsmiStartMinimized.Name = "tsmiStartMinimized";
-            tsmiStartMinimized.Size = new System.Drawing.Size(232, 22);
+            tsmiStartMinimized.Size = new System.Drawing.Size(225, 22);
             tsmiStartMinimized.Text = "&Start minimized";
             // 
             // enableOnCallModeToolStripMenuItem
@@ -198,7 +198,7 @@
             enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode";
             enableOnCallModeToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
-            enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
             enableOnCallModeToolStripMenuItem.Visible = false;
             enableOnCallModeToolStripMenuItem.Click += enableOnCallModeToolStripMenuItem_Click;
@@ -208,12 +208,23 @@
             fileToolStripMenuItem.AccessibleDescription = "File";
             fileToolStripMenuItem.AccessibleName = "File";
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, tsmiUseNewOOFMath, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(46, 22);
             fileToolStripMenuItem.Text = "&File...";
             fileToolStripMenuItem.MouseEnter += fileToolStripMenuItem_MouseEnter;
             fileToolStripMenuItem.MouseLeave += fileToolStripMenuItem_MouseLeave;
+            // 
+            // tsmiUseNewOOFMath
+            // 
+            tsmiUseNewOOFMath.AccessibleDescription = "A menu item that causes OOFSponder to use the new OOF math";
+            tsmiUseNewOOFMath.AccessibleName = "Use new OOF math";
+            tsmiUseNewOOFMath.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiUseNewOOFMath.CheckOnClick = true;
+            tsmiUseNewOOFMath.Name = "tsmiUseNewOOFMath";
+            tsmiUseNewOOFMath.Size = new System.Drawing.Size(225, 22);
+            tsmiUseNewOOFMath.Text = "Use &new OOF math";
+            tsmiUseNewOOFMath.CheckStateChanged += tsmiUseNewOOFMath_CheckStateChanged;
             // 
             // showLogsToolStripMenuItem
             // 
@@ -222,7 +233,7 @@
             showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             showLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { oOFSponderLogToolStripMenuItem, oOFSponderLogFolderToolStripMenuItem });
             showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
-            showLogsToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            showLogsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             showLogsToolStripMenuItem.Text = "Show &logs...";
             // 
             // oOFSponderLogToolStripMenuItem
@@ -250,19 +261,9 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-            // 
-            // bETAEnableNewOOFToolStripMenuItem
-            // 
-            bETAEnableNewOOFToolStripMenuItem.AccessibleName = "(BETA) Enable new OOF math";
-            bETAEnableNewOOFToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            bETAEnableNewOOFToolStripMenuItem.Name = "bETAEnableNewOOFToolStripMenuItem";
-            bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
-            bETAEnableNewOOFToolStripMenuItem.Visible = false;
-            bETAEnableNewOOFToolStripMenuItem.Click += bETAEnableNewOOFToolStripMenuItem_Click;
             // 
             // statusStrip1
             // 
@@ -929,7 +930,6 @@
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bETAEnableNewOOFToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
@@ -978,5 +978,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
+        private System.Windows.Forms.ToolStripMenuItem tsmiUseNewOOFMath;
     }
 }
