@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using System.Windows.Forms;
 
 namespace OOFScheduling
 {
@@ -302,7 +301,7 @@ namespace OOFScheduling
                 }
                 else
                 {
-                    StartTime = nextDayPeriodStart;
+                    StartTime = currentWorkingDay.EndTime;
                     EndTime = nextDayPeriodEnd;
                 }
             }
