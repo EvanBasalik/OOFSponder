@@ -239,12 +239,6 @@ namespace OOFScheduling
 
             //add a visual indicator of using the new OOF logic
             tsmiUseNewOOFMath.Checked = OOFData.Instance.useNewOOFMath;
-            if (OOFData.Instance.useNewOOFMath)
-            {
-#if DEBUG
-                button2.Text += "-New";
-#endif
-            }
 
             cboExternalAudienceScope.SelectedItem = OOFData.Instance.ExternalAudienceScope.ToString();
             if (OOFData.Instance.IsPermaOOFOn)
@@ -1735,9 +1729,22 @@ namespace OOFScheduling
             usedKeys = true;
         }
 
+        private string _newOOFMathIndicator = "-New";
         private void tsmiUseNewOOFMath_CheckStateChanged(object sender, EventArgs e)
         {
             OOFData.Instance.useNewOOFMath = tsmiUseNewOOFMath.Checked;
+
+            //add UI representation of UseNewOOF when debugging
+#if DEBUG
+            if (OOFData.Instance.useNewOOFMath)
+            {
+                button2.Text += _newOOFMathIndicator;
+            }
+            else
+            {
+                button2.Text = button2.Text.Replace(_newOOFMathIndicator, "");
+            }
+#endif
         }
     }
 
