@@ -84,21 +84,7 @@ namespace OOFScheduling
             Logger.Info("Starting WindowState:" + this.WindowState.ToString());
             #endregion
 
-            //need to wire up the day checkboxes first so that it takes effect
-            //when we set the value
-            //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
-            var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
-            foreach (var checkBox in listOfCheckBoxControls)
-            {
-                if (checkBox.Name.Contains("OffWorkCB"))
-                {
-                    ((CheckBox)checkBox).CheckedChanged += OffWorkCB_CheckedChanged;
-
-                    checkBox.AccessibleName = checkBox.Name.Replace("OffWorkCB", "").FirstCharToUpper() + "Off Work";
-                }
-            }
-
-            //and now we can set the values
+            //need to set the values first to prevent the CheckChanged event from triggering
             if (OOFData.Instance.WorkingDayCollection != null)
             {
                 //reflect the working schedule in the UI
@@ -132,6 +118,20 @@ namespace OOFScheduling
             else
             {
                 Logger.Warning("Don't have WorkingDayCollection");
+            }
+
+            //now that the values are set, can apply the event handler
+            //and while we are looping through, the accessibility
+            //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
+            var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
+            foreach (var checkBox in listOfCheckBoxControls)
+            {
+                if (checkBox.Name.Contains("OffWorkCB"))
+                {
+                    ((CheckBox)checkBox).CheckedChanged += OffWorkCB_CheckedChanged;
+
+                    checkBox.AccessibleName = checkBox.Name.Replace("OffWorkCB", "").FirstCharToUpper() + "Off Work";
+                }
             }
 
 
