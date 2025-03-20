@@ -666,9 +666,6 @@ namespace OOFScheduling
             //special logging and message box for the intermittent nulling of the message
             if (instance.PrimaryOOFExternalMessage == DummyHTML)
             {
-#if DEBUG
-                MessageBox.Show("OOF message has been nulled!!!");
-#endif
                 Logger.Error("NULLED: OOF message has been nulled!!!");
             }
 
