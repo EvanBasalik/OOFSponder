@@ -113,6 +113,10 @@ namespace OOFScheduling
                     }
 
                     picker.ValueChanged += DateTimePicker_ValueChanged;
+
+                    //also need to set initial state of picker based on associated checkbox
+                    picker.Enabled = !this.Controls.OfType<CheckBox>()
+                        .First(x => x.Tag.ToString() == day.ToString()).Checked;
                 }
             }
             else

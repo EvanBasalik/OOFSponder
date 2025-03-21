@@ -259,25 +259,25 @@ namespace OOFScheduling
             DateTime currentCheckDate = DateTime.Now;
             OOFSponder.Logger.Info("currentCheckDate = " + currentCheckDate.ToString());
 
-            WorkingDay currentWorkingDay = OOFData.Instance.currentOOFPeriod;
+            WorkingDay currentWorkingDay = OOFData.Instance.currentWorkingDay;
             OOFSponder.Logger.Info("currentWorkingDay.StartTime = " + currentWorkingDay.StartTime);
             OOFSponder.Logger.Info("currentWorkingDay.Endtime = " + currentWorkingDay.EndTime);
 
-            DateTime previousDayPeriodEnd = OOFData.Instance.previousOOFPeriodEnd;
-            OOFSponder.Logger.Info("previousDayPeriodEnd = " + previousDayPeriodEnd);
+            DateTime previousWorkingDayEnd = OOFData.Instance.PreviousWorkingDayEnd;
+            OOFSponder.Logger.Info("previousWorkingDayEnd = " + previousWorkingDayEnd);
 
-            DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriodStart;
-            OOFSponder.Logger.Info("nextDayPeriodStart = " + nextDayPeriodStart);
+            DateTime nextWorkingDayStart = OOFData.Instance.nextWorkingDayStart;
+            OOFSponder.Logger.Info("nextWorkingDayStart = " + nextWorkingDayStart);
 
-            DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriodEnd;
-            OOFSponder.Logger.Info("nextDayPeriodEnd =" + nextDayPeriodEnd);
+            DateTime nextWorkingDayEnd = OOFData.Instance.nextWorkingDayEnd;
+            OOFSponder.Logger.Info("nextWorkingDayEnd =" + nextWorkingDayEnd);
 
             OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
 
             //between the end of the previous OOF period and the start of the next one
-            if (currentCheckDate > previousDayPeriodEnd && currentCheckDate < currentWorkingDay.StartTime)
+            if (currentCheckDate > previousWorkingDayEnd && currentCheckDate < currentWorkingDay.StartTime)
             {
-                OOFSponder.Logger.Info("currentCheckDate greater than previousDayPeriodEnd and less than currentWorkingDay.StartTime");
+                OOFSponder.Logger.Info("currentCheckDate greater than previousWorkingDayEnd and less than currentWorkingDay.StartTime");
                 if (enableOnCallMode)
                 {
                     StartTime = currentWorkingDay.StartTime;
@@ -285,8 +285,8 @@ namespace OOFScheduling
                 }
                 else
                 {
-                    StartTime = previousDayPeriodEnd;
-                    EndTime = currentWorkingDay.StartTime;
+                    StartTime = previousWorkingDayEnd;
+                    EndTime = nextWorkingDayStart;
                 }
             }
 
@@ -302,7 +302,7 @@ namespace OOFScheduling
                 else
                 {
                     StartTime = currentWorkingDay.EndTime;
-                    EndTime = nextDayPeriodStart;
+                    EndTime = nextWorkingDayStart;
                 }
             }
 
@@ -311,13 +311,13 @@ namespace OOFScheduling
                 OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingDay.EndTime");
                 if (enableOnCallMode)
                 {
-                    StartTime = nextDayPeriodStart;
-                    EndTime = nextDayPeriodEnd;
+                    StartTime = nextWorkingDayStart;
+                    EndTime = nextWorkingDayEnd;
                 }
                 else
                 {
                     StartTime = currentWorkingDay.EndTime;
-                    EndTime = nextDayPeriodStart;
+                    EndTime = nextWorkingDayStart;
                 }
             }
         }
@@ -402,7 +402,7 @@ namespace OOFScheduling
             }
         }
 
-        internal WorkingDay currentOOFPeriod
+        internal WorkingDay currentWorkingDay
         {
             get
             {
@@ -410,7 +410,7 @@ namespace OOFScheduling
             }
         }
 
-        internal DateTime previousOOFPeriodEnd
+        internal DateTime PreviousWorkingDayEnd
         {
             get
             {
@@ -439,16 +439,16 @@ namespace OOFScheduling
                                         timePart.Minute,
                                         0,
                                         new CultureInfo("en-US", false).Calendar).Ticks;
-                DateTime _previousOOFPeriodEnd = new DateTime(ticks);
+                DateTime _previousWorkingDayEnd = new DateTime(ticks);
 
-                string datePartOld = DateTime.Now.AddDays(daysback).ToShortDateString();
-                string timePartOld = this.WorkingDayCollection[(int)(DateTime.Now.AddDays(daysback).DayOfWeek)].EndTime.ToShortTimeString();
-                DateTime _previousOOFPeriodEndOld = DateTime.Parse(datePartOld + " " + timePartOld);
-                return _previousOOFPeriodEnd;
+                //string datePartOld = DateTime.Now.AddDays(daysback).ToShortDateString();
+                //string timePartOld = this.WorkingDayCollection[(int)(DateTime.Now.AddDays(daysback).DayOfWeek)].EndTime.ToShortTimeString();
+                //DateTime _previousOOFPeriodEndOld = DateTime.Parse(datePartOld + " " + timePartOld);
+                return _previousWorkingDayEnd;
             }
         }
 
-        internal DateTime nextOOFPeriodStart
+        internal DateTime nextWorkingDayStart
         {
             get
             {
@@ -457,14 +457,13 @@ namespace OOFScheduling
                 //by default start with today
                 //and look starting tomorrow
                 DateTime targetDateTime = DateTime.Now;
-                int daysforward = 1;
+                int daysforward = 0;
 
                 //if PermaOOF is on, then the target date is actually the day of PermaOOF
                 //and look starting on PermaOOF
                 if (IsPermaOOFOn)
                 {
                     targetDateTime = PermaOOFDate;
-                    daysforward = 0;
                 }
 
                 //create a way to exit if someone has all 7 days marked as OOF
@@ -491,16 +490,16 @@ namespace OOFScheduling
                                         timePart.Minute,
                                         0,
                                         new CultureInfo("en-US", false).Calendar).Ticks;
-                DateTime _nextOOFPeriodStart = new DateTime(ticks);
+                DateTime _nextWorkingDayStart = new DateTime(ticks);
 
                 //string datePartOld = DateTime.Now.AddDays(daysforward).ToShortDateString();
                 //string timePartOld = this.WorkingDayCollection[(int)(DateTime.Now.AddDays(daysforward).DayOfWeek)].StartTime.ToShortTimeString();
                 //DateTime _nextOOFPeriodStartOld = DateTime.Parse(datePartOld + " " + timePartOld);
-                return _nextOOFPeriodStart;
+                return _nextWorkingDayStart;
             }
         }
 
-        internal DateTime nextOOFPeriodEnd
+        internal DateTime nextWorkingDayEnd
         {
             get
             {
