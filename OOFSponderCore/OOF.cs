@@ -255,29 +255,27 @@ namespace OOFScheduling
             StartTime = DateTime.Now;
             EndTime = DateTime.Now;
 
-
             DateTime currentCheckDate = DateTime.Now;
-            OOFSponder.Logger.Info("currentCheckDate = " + currentCheckDate.ToString());
+            OOFSponder.Logger.Info($"currentCheckDate = {currentCheckDate}");
 
             WorkingDay currentWorkingDay = OOFData.Instance.currentWorkingDay;
-            OOFSponder.Logger.Info("currentWorkingDay.StartTime = " + currentWorkingDay.StartTime);
-            OOFSponder.Logger.Info("currentWorkingDay.Endtime = " + currentWorkingDay.EndTime);
+            OOFSponder.Logger.Info($"currentWorkingDay.StartTime = {currentWorkingDay.StartTime}");
+            OOFSponder.Logger.Info($"currentWorkingDay.Endtime = {currentWorkingDay.EndTime}");
 
             DateTime previousWorkingDayEnd = OOFData.Instance.PreviousWorkingDayEnd;
-            OOFSponder.Logger.Info("previousWorkingDayEnd = " + previousWorkingDayEnd);
+            OOFSponder.Logger.Info($"previousWorkingDayEnd = {previousWorkingDayEnd}");
 
             DateTime nextWorkingDayStart = OOFData.Instance.nextWorkingDayStart;
-            OOFSponder.Logger.Info("nextWorkingDayStart = " + nextWorkingDayStart);
+            OOFSponder.Logger.Info($"nextWorkingDayStart = {nextWorkingDayStart}");
 
             DateTime nextWorkingDayEnd = OOFData.Instance.nextWorkingDayEnd;
-            OOFSponder.Logger.Info("nextWorkingDayEnd =" + nextWorkingDayEnd);
+            OOFSponder.Logger.Info($"nextWorkingDayEnd = {nextWorkingDayEnd}");
 
-            OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
+            OOFSponder.Logger.Info($"enableOnCallMode = {enableOnCallMode}");
 
-            //between the end of the previous OOF period and the start of the next one
-            if (currentCheckDate > previousWorkingDayEnd && currentCheckDate < currentWorkingDay.StartTime)
+            if (currentCheckDate > previousWorkingDayEnd && currentCheckDate < nextWorkingDayStart)
             {
-                OOFSponder.Logger.Info("currentCheckDate greater than previousWorkingDayEnd and less than currentWorkingDay.StartTime");
+                OOFSponder.Logger.Info("currentCheckDate greater than previousWorkingDayEnd and less than nextWorkingDayStart");
                 if (enableOnCallMode)
                 {
                     StartTime = currentWorkingDay.StartTime;
@@ -289,9 +287,7 @@ namespace OOFScheduling
                     EndTime = nextWorkingDayStart;
                 }
             }
-
-            //between the start of the current period and the end of the current period
-            if (currentCheckDate > currentWorkingDay.StartTime && currentCheckDate < currentWorkingDay.EndTime)
+            else if (currentCheckDate > currentWorkingDay.StartTime && currentCheckDate < currentWorkingDay.EndTime)
             {
                 OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingDay.StartTime and less than currentWorkingDay.EndTime");
                 if (enableOnCallMode)
@@ -305,8 +301,7 @@ namespace OOFScheduling
                     EndTime = nextWorkingDayStart;
                 }
             }
-
-            if (currentCheckDate > currentWorkingDay.EndTime)
+            else
             {
                 OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingDay.EndTime");
                 if (enableOnCallMode)
@@ -406,6 +401,7 @@ namespace OOFScheduling
         {
             get
             {
+                //
                 return this.WorkingDayCollection[(int)DateTime.Now.DayOfWeek];
             }
         }
@@ -454,8 +450,7 @@ namespace OOFScheduling
             {
                 //need to find the StartTime of the next working day
 
-                //by default start with today
-                //and look starting tomorrow
+                //start with today
                 DateTime targetDateTime = DateTime.Now;
                 int daysforward = 0;
 
