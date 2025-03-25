@@ -503,7 +503,7 @@ namespace OOFScheduling
                 //by default start with today
                 //and look starting tomorrow
                 DateTime targetDateTime = DateTime.Now;
-                int daysforward = 1;
+                int daysforward = 0;
 
                 //if PermaOOF is on, then the target date is actually the day of PermaOOF
                 //and look starting on PermaOOF
