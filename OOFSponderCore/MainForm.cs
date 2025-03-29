@@ -84,8 +84,48 @@ namespace OOFScheduling
             Logger.Info("Starting WindowState:" + this.WindowState.ToString());
             #endregion
 
-            //need to wire up the day checkboxes first so that it takes effect
-            //when we set the value
+            //need to set the values first to prevent the CheckChanged event from triggering
+            if (OOFData.Instance.WorkingDayCollection != null)
+            {
+                //reflect the working schedule in the UI
+                //we can cheat a bit because we have the DayofWeek in the tag
+                //and can get the Start/End based on the picker name
+                foreach (CheckBox cb in this.Controls.OfType<CheckBox>())
+                {
+                    System.DayOfWeek day;
+                    Enum.TryParse(cb.Tag.ToString(), true, out day);
+                    var _workingday = OOFData.Instance.WorkingDayCollection[(int)(day)];
+                    cb.Checked = _workingday.IsOOF;
+                }
+
+                foreach (LastDateTimePicker picker in this.Controls.OfType<LastDateTimePicker>())
+                {
+                    System.DayOfWeek day;
+                    Enum.TryParse(picker.Tag.ToString(), true, out day);
+                    var _workingday = OOFData.Instance.WorkingDayCollection[(int)(day)];
+                    if (picker.Name.Contains("Start"))
+                    {
+                        picker.Value = _workingday.StartTime;
+                    }
+                    else
+                    {
+                        picker.Value = _workingday.EndTime;
+                    }
+
+                    picker.ValueChanged += DateTimePicker_ValueChanged;
+
+                    //also need to set initial state of picker based on associated checkbox
+                    picker.Enabled = !this.Controls.OfType<CheckBox>()
+                        .First(x => x.Tag.ToString() == day.ToString()).Checked;
+                }
+            }
+            else
+            {
+                Logger.Warning("Don't have WorkingDayCollection");
+            }
+
+            //now that the values are set, can apply the event handler
+            //and while we are looping through, the accessibility
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones
             var listOfCheckBoxControls = GetControlsOfSpecificType(this, typeof(CheckBox));
             foreach (var checkBox in listOfCheckBoxControls)
@@ -98,66 +138,6 @@ namespace OOFScheduling
                 }
             }
 
-            //and now we can set the values
-            if (OOFData.Instance.WorkingHours != "")
-            {
-                string[] workingHours = OOFData.Instance.WorkingHours.Split('|');
-                Logger.InfoPotentialPII("workingHours", OOFData.Instance.WorkingHours);
-
-                //Zero means you are off that day (not working) therefore the box is checked
-                string[] dayHours = workingHours[0].Split('~');
-                if (dayHours[2] == "0") { sundayOffWorkCB.Checked = true; } else { sundayOffWorkCB.Checked = false; }
-                sundayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                sundayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                sundayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                sundayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[1].Split('~');
-                if (dayHours[2] == "0") { mondayOffWorkCB.Checked = true; } else { mondayOffWorkCB.Checked = false; }
-                mondayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                mondayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                mondayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                mondayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[2].Split('~');
-                if (dayHours[2] == "0") { tuesdayOffWorkCB.Checked = true; } else { tuesdayOffWorkCB.Checked = false; }
-                tuesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                tuesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                tuesdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                tuesdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[3].Split('~');
-                if (dayHours[2] == "0") { wednesdayOffWorkCB.Checked = true; } else { wednesdayOffWorkCB.Checked = false; }
-                wednesdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                wednesdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                wednesdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                wednesdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[4].Split('~');
-                if (dayHours[2] == "0") { thursdayOffWorkCB.Checked = true; } else { thursdayOffWorkCB.Checked = false; }
-                thursdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                thursdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                thursdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                thursdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[5].Split('~');
-                if (dayHours[2] == "0") { fridayOffWorkCB.Checked = true; } else { fridayOffWorkCB.Checked = false; }
-                fridayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                fridayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                fridayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                fridayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-
-                dayHours = workingHours[6].Split('~');
-                if (dayHours[2] == "0") { saturdayOffWorkCB.Checked = true; } else { saturdayOffWorkCB.Checked = false; }
-                saturdayStartTimepicker.Value = DateTime.Parse(dayHours[0]);
-                saturdayEndTimepicker.Value = DateTime.Parse(dayHours[1]);
-                saturdayEndTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-                saturdayStartTimepicker.ValueChanged += DateTimePicker_ValueChanged;
-            }
-            else
-            {
-                Logger.Warning("Don't have WorkingHours");
-            }
 
             //set the time format for the LastDateTimePickers
             int index = 0;
@@ -260,6 +240,10 @@ namespace OOFScheduling
             //if a NOOOF build, then update the Save Settings button visibly
             button2.Text = "Save NoOOF";
 #endif
+
+            //add a visual indicator of using the new OOF logic
+            tsmiUseNewOOFMath.Checked = OOFData.Instance.useNewOOFMath;
+
             cboExternalAudienceScope.SelectedItem = OOFData.Instance.ExternalAudienceScope.ToString();
             if (OOFData.Instance.IsPermaOOFOn)
             {
@@ -476,8 +460,16 @@ namespace OOFScheduling
             //await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
             //await checkOOFStatus();
 
-            //to save money on AppInsights, every other call don't send
-            Logger.shouldSendtoAppInsights = !Logger.shouldSendtoAppInsights;
+            //to save money on AppInsights, 3 out of 4 calls don't send
+            Logger.shouldSendtoAppInsightsL1 = !Logger.shouldSendtoAppInsightsL1;
+            Logger.Info("shouldSendtoAppInsightsL1: " + Logger.shouldSendtoAppInsightsL1.ToString());
+
+            if (Logger.shouldSendtoAppInsightsL1)
+            {
+                Logger.shouldSendtoAppInsightsL2 = !Logger.shouldSendtoAppInsightsL2;
+                Logger.Info("shouldSendtoAppInsightsL2: " + Logger.shouldSendtoAppInsightsL2.ToString());
+            }
+
         }
         #endregion
 
@@ -490,67 +482,77 @@ namespace OOFScheduling
             OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
 
             bool result = false;
-            if (OOFData.Instance.HaveNecessaryData)
+
+            //TODO: Add Try/Catch
+            try
             {
-                OOFSponder.Logger.Info("Getting OOF times");
-                DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
-                OOFSponder.Logger.Info("Got OOF times");
-
-                //persist settings just in case
-                string oofMessageExternal = htmlEditorControl1.BodyHtml;
-                string oofMessageInternal = htmlEditorControl2.BodyHtml;
-
-                //if not logged in, give the user a chance to log in
-                OOFSponder.Logger.Info("Checking to make sure the user is logged in before doing OOF work");
-                if (!O365.isLoggedIn)
+                if (OOFData.Instance.HaveNecessaryData)
                 {
-                    OOFSponder.Logger.Error("Not logged in when trying to Save Settings. Giving them one more try.");
+                    OOFSponder.Logger.Info("Getting OOF times");
+                    DateTime[] oofTimes = getOofTime(OOFData.Instance.WorkingHours);
+                    OOFSponder.Logger.Info("Got OOF times");
 
-                    OOFSponder.Logger.Info("Trying to log in again inside " + OOFSponderInsights.CurrentMethod());
-                    System.Threading.Tasks.Task AuthTask = null;
-                    AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
-                    AuthTask.Wait(10000);
-                    OOFSponder.Logger.Info("Successfully logged in inside " + OOFSponderInsights.CurrentMethod());
+                    //persist settings just in case
+                    string oofMessageExternal = htmlEditorControl1.BodyHtml;
+                    string oofMessageInternal = htmlEditorControl2.BodyHtml;
 
-                    //if still not logged in, bail
+                    //if not logged in, give the user a chance to log in
+                    OOFSponder.Logger.Info("Checking to make sure the user is logged in before doing OOF work");
                     if (!O365.isLoggedIn)
                     {
-                        OOFSponder.Logger.Error("STILL not logged in, so stopping from saving");
-                        MessageBox.Show("Not logged in!. Please hit Save Settings again and log in with a valid user");
-                        return false;
-                    }
-                }
+                        OOFSponder.Logger.Error("Not logged in when trying to Save Settings. Giving them one more try.");
 
-                OOFSponder.Logger.Info("Getting ready to set either PermaOOF or NormalOOF");
-                //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
-                if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
-                {
-                    OOFSponder.Logger.Info("TrySetNormalOOF");
-                    result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
-                }
-                else
-                //since permaOOF is on, need to adjust the end date such that is permaOOFDate
-                //if permaOOF>oofTimes[0] and permaOOF<oofTimes[1], then AddDays((permaOOFDate - oofTimes[1]).Days
-                //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
-                {
-                    int adjustmentDays = 0;
-                    if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                        OOFSponder.Logger.Info("Trying to log in again inside " + OOFSponderInsights.CurrentMethod());
+                        System.Threading.Tasks.Task AuthTask = null;
+                        AuthTask = System.Threading.Tasks.Task.Run((Action)(() => { O365.MSALWork(O365.AADAction.SignIn); }));
+                        AuthTask.Wait(10000);
+                        OOFSponder.Logger.Info("Successfully logged in inside " + OOFSponderInsights.CurrentMethod());
+
+                        //if still not logged in, bail
+                        if (!O365.isLoggedIn)
+                        {
+                            OOFSponder.Logger.Error("STILL not logged in, so stopping from saving");
+                            MessageBox.Show("Not logged in!. Please hit Save Settings again and log in with a valid user");
+                            return false;
+                        }
+                    }
+
+                    OOFSponder.Logger.Info("Getting ready to set either PermaOOF or NormalOOF");
+                    //if PermaOOF isn't turned on, use the standard logic based on the stored schedule
+                    if ((oofTimes[0] != oofTimes[1]) && !OOFData.Instance.IsPermaOOFOn)
                     {
-                        adjustmentDays = 1;
+                        OOFSponder.Logger.Info("TrySetNormalOOF");
+                        result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
                     }
-
-                    //in order to accomodate someone going OOF mid-schedule
-                    //check if now is before the next scheduled "OFF" slot
-                    //if it is, then adjust start time to NOW
-                    if (oofTimes[0] > DateTime.Now)
+                    else
+                    //since permaOOF is on, need to adjust the end date such that is permaOOFDate
+                    //if permaOOF>oofTimes[0] and permaOOF<oofTimes[1], then AddDays((permaOOFDate - oofTimes[1]).Days
+                    //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
                     {
-                        oofTimes[0] = DateTime.Now;
+                        int adjustmentDays = 0;
+                        if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                        {
+                            adjustmentDays = 1;
+                        }
+
+                        //in order to accomodate someone going OOF mid-schedule
+                        //check if now is before the next scheduled "OFF" slot
+                        //if it is, then adjust start time to NOW
+                        if (oofTimes[0] > DateTime.Now)
+                        {
+                            oofTimes[0] = DateTime.Now;
+                        }
+
+                        OOFSponderInsights.Track("TrySetPermaOOF");
+
+                        result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
                     }
-
-                    OOFSponderInsights.Track("TrySetPermaOOF");
-
-                    result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex);
+                throw;
             }
 
             return result;
@@ -773,14 +775,21 @@ namespace OOFScheduling
             DateTime[] OofTimes = new DateTime[2];
             DateTime StartTime, EndTime;
 
-            //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
-            if (!OOFData.Instance.IsOnCallModeOn && !OOFData.Instance.useNewOOFMath)
+            if (OOFData.Instance.useNewOOFMath)
             {
-                CalculateOOFTimes(OOFData.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
+                OOFData.Instance.CalculateOOFTimes2(out StartTime, out EndTime, OOFData.Instance.IsOnCallModeOn);
             }
             else
             {
-                CalculateOOFTimes2(out StartTime, out EndTime, OOFData.Instance.IsOnCallModeOn);
+                //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
+                if (!OOFData.Instance.IsOnCallModeOn && !OOFData.Instance.useNewOOFMath)
+                {
+                    CalculateOOFTimes(OOFData.Instance.WorkingHours.Split('|'), out StartTime, out EndTime);
+                }
+                else
+                {
+                    OOFData.Instance.CalculateOOFTimes2(out StartTime, out EndTime, OOFData.Instance.IsOnCallModeOn);
+                }
             }
 
             OofTimes[0] = StartTime;
@@ -855,81 +864,6 @@ namespace OOFScheduling
                     {
                         daysforward++;
                     }
-                }
-            }
-        }
-
-        //add new variant that can handle OnCallMode - don't convert old code to this at this time due to the risk
-        void CalculateOOFTimes2(out DateTime StartTime, out DateTime EndTime, bool enableOnCallMode)
-        {
-            OOFSponder.Logger.Info("Using CalculationOOFTimes2");
-
-            StartTime = DateTime.Now;
-            EndTime = DateTime.Now;
-
-
-            DateTime currentCheckDate = DateTime.Now;
-            OOFSponder.Logger.Info("currentCheckDate = " + currentCheckDate.ToString());
-
-            OOFInstance currentWorkingTime = OOFData.Instance.currentOOFPeriod;
-            OOFSponder.Logger.Info("currentWorkingTime.StartTime = " + currentWorkingTime.StartTime);
-            OOFSponder.Logger.Info("currentWorkingtime.Endtime = " + currentWorkingTime.EndTime);
-
-            DateTime previousDayPeriodEnd = OOFData.Instance.previousOOFPeriodEnd;
-            OOFSponder.Logger.Info("previousDayPeriodEnd = " + previousDayPeriodEnd);
-
-            DateTime nextDayPeriodStart = OOFData.Instance.nextOOFPeriodStart;
-            OOFSponder.Logger.Info("nextDayPeriodState = " + nextDayPeriodStart);
-
-            DateTime nextDayPeriodEnd = OOFData.Instance.nextOOFPeriodEnd;
-            OOFSponder.Logger.Info("nextDayPeriodEnd =" + nextDayPeriodEnd);
-
-            OOFSponder.Logger.Info("enableOnCallMode = " + enableOnCallMode);
-
-            //between the end of the previous OOF period and the start of the next one
-            if (currentCheckDate > previousDayPeriodEnd && currentCheckDate < currentWorkingTime.StartTime)
-            {
-                OOFSponder.Logger.Info("currentCheckDate greater than previousDayPeriodEnd and less than currentWorkingTime.StartTime");
-                if (enableOnCallMode)
-                {
-                    StartTime = currentWorkingTime.StartTime;
-                    EndTime = currentWorkingTime.EndTime;
-                }
-                else
-                {
-                    StartTime = previousDayPeriodEnd;
-                    EndTime = currentWorkingTime.StartTime;
-                }
-            }
-
-            //between the start of the current period and the end of the current period
-            if (currentCheckDate > currentWorkingTime.StartTime && currentCheckDate < currentWorkingTime.EndTime)
-            {
-                OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingTime.StartTime and less than currentWorkingTime.EndTime");
-                if (enableOnCallMode)
-                {
-                    StartTime = currentWorkingTime.StartTime;
-                    EndTime = currentWorkingTime.EndTime;
-                }
-                else
-                {
-                    StartTime = nextDayPeriodStart;
-                    EndTime = nextDayPeriodEnd;
-                }
-            }
-
-            if (currentCheckDate > currentWorkingTime.EndTime)
-            {
-                OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingTime.EndTime");
-                if (enableOnCallMode)
-                {
-                    StartTime = nextDayPeriodStart;
-                    EndTime = nextDayPeriodEnd;
-                }
-                else
-                {
-                    StartTime = currentWorkingTime.EndTime;
-                    EndTime = nextDayPeriodStart;
                 }
             }
         }
@@ -1101,7 +1035,7 @@ namespace OOFScheduling
             //since this is an explicit call to save settings
             //always force to AppInsights
 
-            Logger.shouldSendtoAppInsights = true;
+            Logger.shouldSendtoAppInsightsL1 = true;
 
             saveSettings();
         }
@@ -1162,10 +1096,11 @@ namespace OOFScheduling
         //enable/disable the various daily DateTimePickers as appropriate
         private void OffWorkCB_CheckedChanged(object sender, EventArgs e)
         {
+            CheckBox cb = ((CheckBox)sender);
+
             var listofDataTimePickers = GetControlsOfSpecificType(this, typeof(LastDateTimePicker));
             foreach (var dateTimePicker in listofDataTimePickers)
             {
-                CheckBox cb = ((CheckBox)sender);
                 LastDateTimePicker dt = ((LastDateTimePicker)dateTimePicker);
                 string cbName = cb.Name.Replace("OffWorkCB", "");
                 string dtpName = dt.Name.Replace("StartTimepicker", "").Replace("EndTimepicker", "");
@@ -1178,105 +1113,10 @@ namespace OOFScheduling
                 }
             }
 
-        }
+            //update the WorkingDayCollection
+            OOFData.Instance.WorkingDayCollection.First(x => x.DayOfWeek.ToString() == cb.Tag.ToString())
+                .IsOOF = !cb.Checked;
 
-        //these are all deprecated, but leaving to not have to mess with the base event handlers
-        private void sundayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (sundayOffWorkCB.Checked)
-            //{
-            //    sundayStartTimepicker.Enabled = false;
-            //    sundayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    sundayStartTimepicker.Enabled = true;
-            //    sundayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void mondayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (mondayOffWorkCB.Checked)
-            //{
-            //    mondayStartTimepicker.Enabled = false;
-            //    mondayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    mondayStartTimepicker.Enabled = true;
-            //    mondayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void tuesdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (tuesdayOffWorkCB.Checked)
-            //{
-            //    tuesdayStartTimepicker.Enabled = false;
-            //    tuesdayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    tuesdayStartTimepicker.Enabled = true;
-            //    tuesdayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void wednesdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (wednesdayOffWorkCB.Checked)
-            //{
-            //    wednesdayStartTimepicker.Enabled = false;
-            //    wednesdayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    wednesdayStartTimepicker.Enabled = true;
-            //    wednesdayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void thursdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (thursdayOffWorkCB.Checked)
-            //{
-            //    thursdayStartTimepicker.Enabled = false;
-            //    thursdayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    thursdayStartTimepicker.Enabled = true;
-            //    thursdayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void fridayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (fridayOffWorkCB.Checked)
-            //{
-            //    fridayStartTimepicker.Enabled = false;
-            //    fridayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    fridayStartTimepicker.Enabled = true;
-            //    fridayEndTimepicker.Enabled = true;
-            //}
-        }
-
-        private void saturdayOffWorkCB_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (saturdayOffWorkCB.Checked)
-            //{
-            //    saturdayStartTimepicker.Enabled = false;
-            //    saturdayEndTimepicker.Enabled = false;
-            //}
-            //else
-            //{
-            //    saturdayStartTimepicker.Enabled = true;
-            //    saturdayEndTimepicker.Enabled = true;
-            //}
         }
         #endregion
 
@@ -1657,12 +1497,6 @@ namespace OOFScheduling
             System.Diagnostics.Process.Start(psi);
         }
 
-        private void bETAEnableNewOOFToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            bETAEnableNewOOFToolStripMenuItem.Checked = !bETAEnableNewOOFToolStripMenuItem.Checked;
-            OOFData.Instance.useNewOOFMath = bETAEnableNewOOFToolStripMenuItem.Checked;
-        }
-
         private void tsmiStartMinimized_CheckStateChanged(object sender, EventArgs e)
         {
             //Adding b/c I think this might be where the nulled messages are coming from
@@ -1882,6 +1716,19 @@ namespace OOFScheduling
                         picker.Value = picker.Value.Date + roundedTimeSpan;
                     }
                     navigatingDateTimePicker = false;
+
+                    //Update the corresponding item in WorkingDayCollection
+                    //need to find the right day and decide Start vs. End
+                    if (picker.Name.Contains("Start"))
+                    {
+                        OOFData.Instance.WorkingDayCollection.First(x => x.DayOfWeek.ToString() == picker.Tag.ToString())
+                            .StartTime = picker.Value;
+                    }
+                    else
+                    {
+                        OOFData.Instance.WorkingDayCollection.First(x => x.DayOfWeek.ToString() == picker.Tag.ToString())
+                            .EndTime = picker.Value;
+                    }
                 }
             }
         }
@@ -1892,6 +1739,24 @@ namespace OOFScheduling
         {
             LastDateTimePicker picker = sender as LastDateTimePicker;
             usedKeys = true;
+        }
+
+        private string _newOOFMathIndicator = "-New";
+        private void tsmiUseNewOOFMath_CheckStateChanged(object sender, EventArgs e)
+        {
+            OOFData.Instance.useNewOOFMath = tsmiUseNewOOFMath.Checked;
+
+            //add UI representation of UseNewOOF when debugging
+#if DEBUG
+            if (OOFData.Instance.useNewOOFMath)
+            {
+                button2.Text += _newOOFMathIndicator;
+            }
+            else
+            {
+                button2.Text = button2.Text.Replace(_newOOFMathIndicator, "");
+            }
+#endif
         }
     }
 

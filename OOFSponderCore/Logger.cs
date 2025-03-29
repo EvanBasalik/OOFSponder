@@ -16,7 +16,8 @@ namespace OOFSponder
         //static bool we can use to control whether or not any one round of logging 
         //goes to AppInsights. This is used to allow very detailed local logging
         //while still reducing the AI cost
-        internal static bool shouldSendtoAppInsights = true;
+        internal static bool shouldSendtoAppInsightsL1 = true;
+        internal static bool shouldSendtoAppInsightsL2 = true;
 
         // 1 * 1024 * 1024 = 1M; <- small enough to make easy to share
         // while still covering lots of real-world time
@@ -138,8 +139,9 @@ namespace OOFSponder
 
                 //default is to use the global static to control
                 //but need the ability to log sensitive information to the log file only
-                Debug.WriteLine("SendtoAppInsights: " + shouldSendtoAppInsights);
-                if (isNotSensitive && shouldSendtoAppInsights)
+                Debug.WriteLine("SendtoAppInsightsL1: " + shouldSendtoAppInsightsL1);
+                Debug.WriteLine("SendtoAppInsightsL2: " + shouldSendtoAppInsightsL2);
+                if (isNotSensitive && shouldSendtoAppInsightsL1 && shouldSendtoAppInsightsL2)
                 {
                     //also send everything to AppInsights
                     OOFSponderInsights.Track(
