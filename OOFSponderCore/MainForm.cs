@@ -552,7 +552,7 @@ namespace OOFScheduling
             catch (Exception ex)
             {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
 
             return result;
