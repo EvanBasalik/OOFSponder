@@ -460,8 +460,16 @@ namespace OOFScheduling
             //await System.Threading.Tasks.Task.Run(() => RunSetOofO365());
             //await checkOOFStatus();
 
-            //to save money on AppInsights, every other call don't send
-            Logger.shouldSendtoAppInsights = !Logger.shouldSendtoAppInsights;
+            //to save money on AppInsights, 3 out of 4 calls don't send
+            Logger.shouldSendtoAppInsightsL1 = !Logger.shouldSendtoAppInsightsL1;
+            Logger.Info("shouldSendtoAppInsightsL1: " + Logger.shouldSendtoAppInsightsL1.ToString());
+
+            if (Logger.shouldSendtoAppInsightsL1)
+            {
+                Logger.shouldSendtoAppInsightsL2 = !Logger.shouldSendtoAppInsightsL2;
+                Logger.Info("shouldSendtoAppInsightsL2: " + Logger.shouldSendtoAppInsightsL2.ToString());
+            }
+
         }
         #endregion
 
@@ -1027,7 +1035,7 @@ namespace OOFScheduling
             //since this is an explicit call to save settings
             //always force to AppInsights
 
-            Logger.shouldSendtoAppInsights = true;
+            Logger.shouldSendtoAppInsightsL1 = true;
 
             saveSettings();
         }
