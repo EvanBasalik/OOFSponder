@@ -2,18 +2,18 @@
 using OOFSponder;
 using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using System.Windows.Forms;
 
 namespace OOFScheduling
 {
 
     public class OOFData
     {
-        internal DateTime PermaOOFDate { get; set; }
+        public DateTime PermaOOFDate { get; set; }
         static string DummyHTML = @"<BODY scroll=auto></BODY>";
         internal static readonly string HTMLReadOnlyIndicator = "<BODY style=\"BACKGROUND-COLOR: lightgray\"";
 
@@ -38,10 +38,10 @@ namespace OOFScheduling
             return _result;
         }
 
-        internal string UserSettingsSource { get; set; }
+        public string UserSettingsSource { get; set; }
 
         private string _workingHours;
-        internal string WorkingHours
+        public string WorkingHours
         {
             get
             {
@@ -50,8 +50,8 @@ namespace OOFScheduling
             set
             {
                 _workingHours = value;
-                //if we update WorkingHours, then blow away OOFCollection
-                _OOFCollection = null;
+                //if we update WorkingHours, then blow away WorkingDayCollection
+                _WorkingDayCollection = null;
             }
         }
         private string _primaryOOFExternalMessage = string.Empty;
@@ -184,49 +184,50 @@ namespace OOFScheduling
             return Path.Combine(Logger.PerUserDataFolder(), DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss") + "_" + messageType.ToString() + ".html");
         }
 
-        internal Collection<OOFInstance> _OOFCollection;
-        internal Collection<OOFInstance> OOFCollection
+        internal Collection<WorkingDay> _WorkingDayCollection;
+        public Collection<WorkingDay> WorkingDayCollection
         {
             get
             {
-                if (_OOFCollection == null)
+                if (_WorkingDayCollection == null)
                 {
-                    _OOFCollection = new Collection<OOFInstance>();
+                    _WorkingDayCollection = new Collection<WorkingDay>();
                 }
 
-                if (_OOFCollection.Count != 7)
+                if (_WorkingDayCollection.Count != 7)
                 {
                     //convert the array of string objects to real objects
                     string[] workingTimes = WorkingHours.Split('|');
                     for (int i = 0; i < 7; i++)
                     {
                         string[] currentWorkingTime = workingTimes[i].Split('~');
-                        OOFInstance OOFItem = new OOFInstance();
-                        OOFItem.dayOfWeek = (DayOfWeek)i;
+                        WorkingDay OOFItem = new WorkingDay();
+                        OOFItem.DayOfWeek = (DayOfWeek)i;
                         OOFItem.StartTime = DateTime.Parse(currentWorkingTime[0]);
                         OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
                         if (currentWorkingTime[2] == "0")
                         {
-                            OOFItem.IsOOF = false;
+                            OOFItem.IsOOF = true;
                         }
                         else
                         {
-                            OOFItem.IsOOF = true;
+                            OOFItem.IsOOF = false;
                         }
-                        OOFItem.isOnCallModeEnabled = this.IsOnCallModeOn;
 
-                        _OOFCollection.Add(OOFItem);
+                        _WorkingDayCollection.Add(OOFItem);
                     }
                 }
 
-                return _OOFCollection;
+                return _WorkingDayCollection;
             }
+
+            set { _WorkingDayCollection = value; }
         }
 
         //Track whether or not to run in OnCallMode
         //When in this mode, the OOF times get flipped and instead of 
         //tracking days on/days off, they will track a start/end for OOF *during* the working day
-        internal bool IsOnCallModeOn { get; set; }
+        public bool IsOnCallModeOn { get; set; }
 
         private const string baseValue = "default";
         private const bool baseBool = false;
@@ -247,18 +248,97 @@ namespace OOFScheduling
                 return instance;
             }
         }
+        public void CalculateOOFTimes2(out DateTime StartTime, out DateTime EndTime, bool enableOnCallMode)
+        {
+            OOFSponder.Logger.Info("Using CalculationOOFTimes2");
 
+            StartTime = DateTime.Now;
+            EndTime = DateTime.Now;
+
+            DateTime currentCheckDate = DateTime.Now;
+            OOFSponder.Logger.Info($"currentCheckDate = {currentCheckDate}");
+
+            WorkingDay currentWorkingDay = OOFData.Instance.currentWorkingDay;
+            OOFSponder.Logger.Info($"currentWorkingDay.StartTime = {currentWorkingDay.StartTime}");
+            OOFSponder.Logger.Info($"currentWorkingDay.Endtime = {currentWorkingDay.EndTime}");
+
+            DateTime previousWorkingDayEnd = OOFData.Instance.PreviousWorkingDayEnd;
+            OOFSponder.Logger.Info($"previousWorkingDayEnd = {previousWorkingDayEnd}");
+
+            DateTime nextWorkingDayStart = OOFData.Instance.nextWorkingDayStart;
+            OOFSponder.Logger.Info($"nextWorkingDayStart = {nextWorkingDayStart}");
+
+            DateTime nextWorkingDayEnd = OOFData.Instance.nextWorkingDayEnd;
+            OOFSponder.Logger.Info($"nextWorkingDayEnd = {nextWorkingDayEnd}");
+
+            OOFSponder.Logger.Info($"enableOnCallMode = {enableOnCallMode}");
+
+            if (currentCheckDate > previousWorkingDayEnd && currentCheckDate < nextWorkingDayStart)
+            {
+                OOFSponder.Logger.Info("currentCheckDate greater than previousWorkingDayEnd and less than nextWorkingDayStart");
+                if (enableOnCallMode)
+                {
+                    StartTime = currentWorkingDay.StartTime;
+                    EndTime = currentWorkingDay.EndTime;
+                }
+                else
+                {
+                    StartTime = previousWorkingDayEnd;
+                    EndTime = nextWorkingDayStart;
+                }
+            }
+            else if (currentCheckDate > currentWorkingDay.StartTime && currentCheckDate < currentWorkingDay.EndTime)
+            {
+                OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingDay.StartTime and less than currentWorkingDay.EndTime");
+                if (enableOnCallMode)
+                {
+                    StartTime = currentWorkingDay.StartTime;
+                    EndTime = currentWorkingDay.EndTime;
+                }
+                else
+                {
+                    StartTime = currentWorkingDay.EndTime;
+                    EndTime = nextWorkingDayStart;
+                }
+            }
+            else
+            {
+                OOFSponder.Logger.Info("currentCheckDate greater than currentWorkingDay.EndTime");
+                if (enableOnCallMode)
+                {
+                    StartTime = nextWorkingDayStart;
+                    EndTime = nextWorkingDayEnd;
+                }
+                else
+                {
+                    StartTime = currentWorkingDay.EndTime;
+                    EndTime = nextWorkingDayStart;
+                }
+            }
+        }
         internal bool HaveNecessaryData
         {
             get
             {
                 bool _result = false;
 
-                if (OOFData.Instance.WorkingHours == "")
+                if (useNewOOFMath)
                 {
-                    OOFSponder.Logger.Info("HaveNecessaryData - WorkingHours:" + _result);
-                    return _result;
+                    if (OOFData.Instance.WorkingDayCollection.Count != 7)
+                    {
+                        OOFSponder.Logger.Info("HaveNecessaryData - WorkingDayCollection:" + _result);
+                        return _result;
+                    }
                 }
+                else
+                {
+                    if (OOFData.Instance.WorkingHours == "")
+                    {
+                        OOFSponder.Logger.Info("HaveNecessaryData - WorkingHours:" + _result);
+                        return _result;
+                    }
+                }
+
 
                 //we need the OOF messages and working hours
                 //also, don't need to check SecondaryOOF messages for two reasons:
@@ -291,12 +371,25 @@ namespace OOFScheduling
                     return _result;
                 }
 
-                if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
-                    && OOFData.Instance.WorkingHours != "")
+                if (useNewOOFMath)
                 {
-                    _result = true;
-                    OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
-                    return _result;
+                    if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
+    && OOFData.Instance.WorkingDayCollection.Count != 7)
+                    {
+                        _result = true;
+                        OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
+                        return _result;
+                    }
+                }
+                else
+                {
+                    if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
+    && OOFData.Instance.WorkingHours != "")
+                    {
+                        _result = true;
+                        OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
+                        return _result;
+                    }
                 }
 
                 OOFSponder.Logger.Info("HaveNecessaryData: " + _result);
@@ -304,43 +397,151 @@ namespace OOFScheduling
             }
         }
 
-        internal OOFInstance currentOOFPeriod
+        internal WorkingDay currentWorkingDay
         {
             get
             {
-                return this.OOFCollection[(int)DateTime.Now.DayOfWeek];
+                //
+                return this.WorkingDayCollection[(int)DateTime.Now.DayOfWeek];
             }
         }
 
-        internal DateTime previousOOFPeriodEnd
+        internal DateTime PreviousWorkingDayEnd
         {
             get
             {
-                string datePart = DateTime.Now.AddDays(-1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(-1).DayOfWeek)].EndTime.ToShortTimeString();
-                DateTime _previousOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
-                return _previousOOFPeriodEnd;
+                //need to find the EndTime of the last working day
+                int daysback = -1;
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysback >= -6)
+                {
+                    if (!WorkingDayCollection[(int)(DateTime.Now.AddDays(daysback).DayOfWeek)].IsOOF)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        daysback--;
+                    }
+                }
+
+                DateTime datePart = DateTime.Now.AddDays(daysback);
+                DateTime timePart = WorkingDayCollection[(int)(DateTime.Now.AddDays(daysback).DayOfWeek)].EndTime;
+                long ticks = new DateTime(
+                                        datePart.Year,
+                                        datePart.Month,
+                                        datePart.Day,
+                                        timePart.Hour,
+                                        timePart.Minute,
+                                        0,
+                                        new CultureInfo("en-US", false).Calendar).Ticks;
+                DateTime _previousWorkingDayEnd = new DateTime(ticks);
+
+                //string datePartOld = DateTime.Now.AddDays(daysback).ToShortDateString();
+                //string timePartOld = this.WorkingDayCollection[(int)(DateTime.Now.AddDays(daysback).DayOfWeek)].EndTime.ToShortTimeString();
+                //DateTime _previousOOFPeriodEndOld = DateTime.Parse(datePartOld + " " + timePartOld);
+                return _previousWorkingDayEnd;
             }
         }
 
-        internal DateTime nextOOFPeriodStart
+        internal DateTime nextWorkingDayStart
         {
             get
             {
-                string datePart = DateTime.Now.AddDays(1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].StartTime.ToShortTimeString();
-                DateTime _nextOOFPeriodStart = DateTime.Parse(datePart + " " + timePart);
-                return _nextOOFPeriodStart;
+                //need to find the StartTime of the next working day
+
+                //start with today
+                DateTime targetDateTime = DateTime.Now;
+                int daysforward = 0;
+
+                //if PermaOOF is on, then the target date is actually the day of PermaOOF
+                //and look starting on PermaOOF
+                if (IsPermaOOFOn)
+                {
+                    targetDateTime = PermaOOFDate;
+                }
+
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysforward <= 6)
+                {
+
+                    if (!WorkingDayCollection[(int)(targetDateTime.AddDays(daysforward).DayOfWeek)].IsOOF)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        daysforward++;
+                    }
+                }
+
+                DateTime datePart = targetDateTime.AddDays(daysforward);
+                DateTime timePart = WorkingDayCollection[(int)(targetDateTime.AddDays(daysforward).DayOfWeek)].StartTime;
+                long ticks = new DateTime(
+                                        datePart.Year,
+                                        datePart.Month,
+                                        datePart.Day,
+                                        timePart.Hour,
+                                        timePart.Minute,
+                                        0,
+                                        new CultureInfo("en-US", false).Calendar).Ticks;
+                DateTime _nextWorkingDayStart = new DateTime(ticks);
+
+                //string datePartOld = DateTime.Now.AddDays(daysforward).ToShortDateString();
+                //string timePartOld = this.WorkingDayCollection[(int)(DateTime.Now.AddDays(daysforward).DayOfWeek)].StartTime.ToShortTimeString();
+                //DateTime _nextOOFPeriodStartOld = DateTime.Parse(datePartOld + " " + timePartOld);
+                return _nextWorkingDayStart;
             }
         }
 
-        internal DateTime nextOOFPeriodEnd
+        internal DateTime nextWorkingDayEnd
         {
             get
             {
-                string datePart = DateTime.Now.AddDays(1).ToShortDateString();
-                string timePart = this.OOFCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].EndTime.ToShortTimeString();
-                DateTime _nextOOFPeriodEnd = DateTime.Parse(datePart + " " + timePart);
+                //need to find the EndTime of the next working day
+
+                //by default start with today
+                //and look starting tomorrow
+                DateTime targetDateTime = DateTime.Now;
+                int daysforward = 0;
+
+                //if PermaOOF is on, then the target date is actually the day of PermaOOF
+                //and look starting on PermaOOF
+                if (IsPermaOOFOn)
+                {
+                    targetDateTime = PermaOOFDate;
+                    daysforward = 0;
+                }
+
+                //create a way to exit if someone has all 7 days marked as OOF
+                while (daysforward <= 6)
+                {
+
+                    if (!WorkingDayCollection[(int)(targetDateTime.AddDays(daysforward).DayOfWeek)].IsOOF)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        daysforward++;
+                    }
+                }
+
+                DateTime datePart = targetDateTime.AddDays(daysforward);
+                DateTime timePart = WorkingDayCollection[(int)(targetDateTime.AddDays(daysforward).DayOfWeek)].EndTime;
+                long ticks = new DateTime(
+                                        datePart.Year,
+                                        datePart.Month,
+                                        datePart.Day,
+                                        timePart.Hour,
+                                        timePart.Minute,
+                                        0,
+                                        new CultureInfo("en-US", false).Calendar).Ticks;
+                DateTime _nextOOFPeriodEnd = new DateTime(ticks);
+
+                string datePartOld = DateTime.Now.AddDays(1).ToShortDateString();
+                string timePartOld = this.WorkingDayCollection[(int)(DateTime.Now.AddDays(1).DayOfWeek)].EndTime.ToShortTimeString();
+                DateTime _nextOOFPeriodEndOld = DateTime.Parse(datePartOld + " " + timePartOld);
                 return _nextOOFPeriodEnd;
             }
         }
@@ -361,16 +562,29 @@ namespace OOFScheduling
 
         private void LogProperties()
         {
-            OOFSponder.Logger.InfoPotentialPII("PermaOOFDate", PermaOOFDate.ToString());
-            OOFSponder.Logger.InfoPotentialPII("WorkingHours", WorkingHours);
+            //manually log the ones with potential PII
             OOFSponder.Logger.InfoPotentialPII("PrimaryOOFExternalMessage", PrimaryOOFExternalMessage);
             OOFSponder.Logger.InfoPotentialPII("PrimaryOOFInternalMessage", PrimaryOOFInternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFExternalMessage", SecondaryOOFExternalMessage);
             OOFSponder.Logger.InfoPotentialPII("SecondaryOOFInternalMessage", SecondaryOOFInternalMessage);
-            OOFSponder.Logger.Info("ExternalAudienceScope: " + ExternalAudienceScope.ToString());
-            OOFSponder.Logger.Info("IsOnCallModeOn: " + IsOnCallModeOn);
-            OOFSponder.Logger.Info("StartMinimized: " + StartMinimized);
-            OOFSponder.Logger.Info("UserSettingsSource: " + UserSettingsSource);
+
+            //for everything else, use ObjectDumper
+            //exclude the properties from above
+            String _instanceString = ObjectDumper.Dump(instance, new DumpOptions()
+            {
+                //IndentChar = '\t',
+                //IndentSize = 1,
+                //LineBreakChar = Environment.NewLine,
+                //DumpStyle = DumpStyle.Console,
+                ExcludeProperties = new string[]
+                {
+                    nameof(instance.PrimaryOOFExternalMessage),
+                    nameof(instance.PrimaryOOFInternalMessage),
+                    nameof(instance.SecondaryOOFExternalMessage),
+                    nameof(instance.SecondaryOOFInternalMessage)
+                }
+            });
+            OOFSponder.Logger.Info(_instanceString);
         }
 
         private void ReadProperties()
@@ -416,6 +630,10 @@ namespace OOFScheduling
 
             instance.ExternalAudienceScope = OOFSponderConfig.OOFData.ExternalAudienceScope;
 
+            instance.useNewOOFMath = OOFSponderConfig.OOFData.UseNewOOFMath;
+
+            instance.WorkingDayCollection = OOFSponderConfig.OOFData.WorkingDayCollection;
+
             LogProperties();
 
             OOFSponder.Logger.Info("Successfully read settings");
@@ -442,9 +660,6 @@ namespace OOFScheduling
             //special logging and message box for the intermittent nulling of the message
             if (instance.PrimaryOOFExternalMessage == DummyHTML)
             {
-#if DEBUG
-                MessageBox.Show("OOF message has been nulled!!!");
-#endif
                 Logger.Error("NULLED: OOF message has been nulled!!!");
             }
 
@@ -461,7 +676,21 @@ namespace OOFScheduling
             config.OOFData.StartMinimized = instance.StartMinimized;
             config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)instance.ExternalAudienceScope;
             config.UserSettingsSource = "OOFSponder_Core_" + RuntimeInformation.FrameworkDescription;
+            config.OOFData.WorkingDayCollection = instance.WorkingDayCollection;
+            config.OOFData.UseNewOOFMath = instance.useNewOOFMath;
 
+            //TODO: reenable once I have confidence in the new workingDayCollection approach
+            ////special code to deprecate WorkingHours if the new WorkingDayCollection
+            ////is properly populate
+            //if (instance.WorkingDayCollection.Count == 7)
+            //{
+            //    config.OOFData.WorkingHours = "No longer in use and can be deleted";
+            //    Logger.Info("Wrote WorkingHours deprecation message");
+            //}
+            //else
+            //{
+            //    Logger.Info("WorkingHours still in use");
+            //}
 
             // Serialize the person object to JSON
             var options = new JsonSerializerOptions
@@ -592,32 +821,24 @@ namespace OOFScheduling
             WriteProperties(disposing);
         }
     }
-    public class OOFInstance
+    public class WorkingDay
     {
         private DateTime _startTime;
         private DateTime _endTime;
-        internal DayOfWeek dayOfWeek;
-        internal bool isOnCallModeEnabled = false;
+        public DayOfWeek DayOfWeek { get; set; }
 
         private bool _isOOF;
         public bool IsOOF
         {
             get
             {
-                if (isOnCallModeEnabled)
-                {
-                    return !_isOOF;
-                }
-                else
-                {
-                    return _isOOF;
-                }
+                return _isOOF;
             }
 
             set => _isOOF = value;
         }
 
-        internal DateTime StartTime
+        public DateTime StartTime
         {
             get
             {
@@ -626,7 +847,7 @@ namespace OOFScheduling
             }
             set => _startTime = value;
         }
-        internal DateTime EndTime
+        public DateTime EndTime
         {
             get
             {

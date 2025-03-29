@@ -41,11 +41,11 @@
             tsmiStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiUseNewOOFMath = new System.Windows.Forms.ToolStripMenuItem();
             showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             oOFSponderLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             oOFSponderLogFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            bETAEnableNewOOFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             statusStrip1 = new System.Windows.Forms.StatusStrip();
             toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -119,7 +119,7 @@
             toolStripMenuItem1.CheckOnClick = true;
             toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { primaryToolStripMenuItem, secondaryToolStripMenuItem });
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new System.Drawing.Size(232, 22);
+            toolStripMenuItem1.Size = new System.Drawing.Size(225, 22);
             toolStripMenuItem1.Text = "&Message";
             // 
             // primaryToolStripMenuItem
@@ -130,7 +130,7 @@
             primaryToolStripMenuItem.Checked = true;
             primaryToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             primaryToolStripMenuItem.Name = "primaryToolStripMenuItem";
-            primaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            primaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             primaryToolStripMenuItem.Text = "&Primary";
             primaryToolStripMenuItem.Click += primaryToolStripMenuItem_Click;
             // 
@@ -140,7 +140,7 @@
             secondaryToolStripMenuItem.AccessibleName = "Secondary message";
             secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
-            secondaryToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            secondaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             secondaryToolStripMenuItem.Text = "&Secondary";
             secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
@@ -151,7 +151,7 @@
             tsmiSavedOOFMessage.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             tsmiSavedOOFMessage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { tsmiExternal, tsmiInternal, tsmiShowOOFMessageFolder });
             tsmiSavedOOFMessage.Name = "tsmiSavedOOFMessage";
-            tsmiSavedOOFMessage.Size = new System.Drawing.Size(232, 22);
+            tsmiSavedOOFMessage.Size = new System.Drawing.Size(225, 22);
             tsmiSavedOOFMessage.Text = "&Open saved OOF message...";
             // 
             // tsmiExternal
@@ -189,7 +189,7 @@
             tsmiStartMinimized.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             tsmiStartMinimized.CheckOnClick = true;
             tsmiStartMinimized.Name = "tsmiStartMinimized";
-            tsmiStartMinimized.Size = new System.Drawing.Size(232, 22);
+            tsmiStartMinimized.Size = new System.Drawing.Size(225, 22);
             tsmiStartMinimized.Text = "&Start minimized";
             // 
             // enableOnCallModeToolStripMenuItem
@@ -198,7 +198,7 @@
             enableOnCallModeToolStripMenuItem.AccessibleName = "(BETA) Enable On-Call Mode";
             enableOnCallModeToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             enableOnCallModeToolStripMenuItem.Name = "enableOnCallModeToolStripMenuItem";
-            enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            enableOnCallModeToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             enableOnCallModeToolStripMenuItem.Text = "(BETA) Enable On-Call Mode";
             enableOnCallModeToolStripMenuItem.Visible = false;
             enableOnCallModeToolStripMenuItem.Click += enableOnCallModeToolStripMenuItem_Click;
@@ -208,12 +208,23 @@
             fileToolStripMenuItem.AccessibleDescription = "File";
             fileToolStripMenuItem.AccessibleName = "File";
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem, bETAEnableNewOOFToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, tsmiUseNewOOFMath, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(46, 22);
             fileToolStripMenuItem.Text = "&File...";
             fileToolStripMenuItem.MouseEnter += fileToolStripMenuItem_MouseEnter;
             fileToolStripMenuItem.MouseLeave += fileToolStripMenuItem_MouseLeave;
+            // 
+            // tsmiUseNewOOFMath
+            // 
+            tsmiUseNewOOFMath.AccessibleDescription = "A menu item that causes OOFSponder to use the new OOF math";
+            tsmiUseNewOOFMath.AccessibleName = "Use new OOF math";
+            tsmiUseNewOOFMath.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiUseNewOOFMath.CheckOnClick = true;
+            tsmiUseNewOOFMath.Name = "tsmiUseNewOOFMath";
+            tsmiUseNewOOFMath.Size = new System.Drawing.Size(225, 22);
+            tsmiUseNewOOFMath.Text = "Use &new OOF math";
+            tsmiUseNewOOFMath.CheckStateChanged += tsmiUseNewOOFMath_CheckStateChanged;
             // 
             // showLogsToolStripMenuItem
             // 
@@ -222,7 +233,7 @@
             showLogsToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             showLogsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { oOFSponderLogToolStripMenuItem, oOFSponderLogFolderToolStripMenuItem });
             showLogsToolStripMenuItem.Name = "showLogsToolStripMenuItem";
-            showLogsToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            showLogsToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             showLogsToolStripMenuItem.Text = "Show &logs...";
             // 
             // oOFSponderLogToolStripMenuItem
@@ -250,19 +261,9 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+            exitToolStripMenuItem.Size = new System.Drawing.Size(225, 22);
             exitToolStripMenuItem.Text = "E&xit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-            // 
-            // bETAEnableNewOOFToolStripMenuItem
-            // 
-            bETAEnableNewOOFToolStripMenuItem.AccessibleName = "(BETA) Enable new OOF math";
-            bETAEnableNewOOFToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            bETAEnableNewOOFToolStripMenuItem.Name = "bETAEnableNewOOFToolStripMenuItem";
-            bETAEnableNewOOFToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-            bETAEnableNewOOFToolStripMenuItem.Text = "(BETA) Enable New OOF Math";
-            bETAEnableNewOOFToolStripMenuItem.Visible = false;
-            bETAEnableNewOOFToolStripMenuItem.Click += bETAEnableNewOOFToolStripMenuItem_Click;
             // 
             // statusStrip1
             // 
@@ -395,6 +396,7 @@
             saturdayOffWorkCB.Name = "saturdayOffWorkCB";
             saturdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             saturdayOffWorkCB.TabIndex = 27;
+            saturdayOffWorkCB.Tag = "Saturday";
             saturdayOffWorkCB.Text = "Off Work";
             saturdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -406,6 +408,7 @@
             fridayOffWorkCB.Name = "fridayOffWorkCB";
             fridayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             fridayOffWorkCB.TabIndex = 24;
+            fridayOffWorkCB.Tag = "Friday";
             fridayOffWorkCB.Text = "Off Work";
             fridayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -417,6 +420,7 @@
             thursdayOffWorkCB.Name = "thursdayOffWorkCB";
             thursdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             thursdayOffWorkCB.TabIndex = 21;
+            thursdayOffWorkCB.Tag = "Thursday";
             thursdayOffWorkCB.Text = "Off Work";
             thursdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -428,6 +432,7 @@
             wednesdayOffWorkCB.Name = "wednesdayOffWorkCB";
             wednesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             wednesdayOffWorkCB.TabIndex = 18;
+            wednesdayOffWorkCB.Tag = "Wednesday";
             wednesdayOffWorkCB.Text = "Off Work";
             wednesdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -439,6 +444,7 @@
             tuesdayOffWorkCB.Name = "tuesdayOffWorkCB";
             tuesdayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             tuesdayOffWorkCB.TabIndex = 15;
+            tuesdayOffWorkCB.Tag = "Tuesday";
             tuesdayOffWorkCB.Text = "Off Work";
             tuesdayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -450,6 +456,7 @@
             mondayOffWorkCB.Name = "mondayOffWorkCB";
             mondayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             mondayOffWorkCB.TabIndex = 12;
+            mondayOffWorkCB.Tag = "Monday";
             mondayOffWorkCB.Text = "Off Work";
             mondayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -461,6 +468,7 @@
             sundayOffWorkCB.Name = "sundayOffWorkCB";
             sundayOffWorkCB.Size = new System.Drawing.Size(74, 19);
             sundayOffWorkCB.TabIndex = 9;
+            sundayOffWorkCB.Tag = "Sunday";
             sundayOffWorkCB.Text = "Off Work";
             sundayOffWorkCB.UseVisualStyleBackColor = true;
             // 
@@ -475,6 +483,7 @@
             saturdayEndTimepicker.ShowUpDown = true;
             saturdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             saturdayEndTimepicker.TabIndex = 26;
+            saturdayEndTimepicker.Tag = "Saturday";
             saturdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             saturdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -489,6 +498,7 @@
             fridayEndTimepicker.ShowUpDown = true;
             fridayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             fridayEndTimepicker.TabIndex = 23;
+            fridayEndTimepicker.Tag = "Friday";
             fridayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             fridayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -503,6 +513,7 @@
             thursdayEndTimepicker.ShowUpDown = true;
             thursdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             thursdayEndTimepicker.TabIndex = 20;
+            thursdayEndTimepicker.Tag = "Thursday";
             thursdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             thursdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -517,6 +528,7 @@
             wednesdayEndTimepicker.ShowUpDown = true;
             wednesdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             wednesdayEndTimepicker.TabIndex = 17;
+            wednesdayEndTimepicker.Tag = "Wednesday";
             wednesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             wednesdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -531,6 +543,7 @@
             tuesdayEndTimepicker.ShowUpDown = true;
             tuesdayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             tuesdayEndTimepicker.TabIndex = 14;
+            tuesdayEndTimepicker.Tag = "Tuesday";
             tuesdayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             tuesdayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -545,6 +558,7 @@
             mondayEndTimepicker.ShowUpDown = true;
             mondayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             mondayEndTimepicker.TabIndex = 11;
+            mondayEndTimepicker.Tag = "Monday";
             mondayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             mondayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -559,6 +573,7 @@
             sundayEndTimepicker.ShowUpDown = true;
             sundayEndTimepicker.Size = new System.Drawing.Size(90, 23);
             sundayEndTimepicker.TabIndex = 8;
+            sundayEndTimepicker.Tag = "Sunday";
             sundayEndTimepicker.Value = new System.DateTime(2015, 4, 6, 17, 0, 0, 0);
             sundayEndTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -573,6 +588,7 @@
             saturdayStartTimepicker.ShowUpDown = true;
             saturdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             saturdayStartTimepicker.TabIndex = 25;
+            saturdayStartTimepicker.Tag = "Saturday";
             saturdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             saturdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -587,6 +603,7 @@
             fridayStartTimepicker.ShowUpDown = true;
             fridayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             fridayStartTimepicker.TabIndex = 22;
+            fridayStartTimepicker.Tag = "Friday";
             fridayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             fridayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -601,6 +618,7 @@
             thursdayStartTimepicker.ShowUpDown = true;
             thursdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             thursdayStartTimepicker.TabIndex = 19;
+            thursdayStartTimepicker.Tag = "Thursday";
             thursdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             thursdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -615,6 +633,7 @@
             wednesdayStartTimepicker.ShowUpDown = true;
             wednesdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             wednesdayStartTimepicker.TabIndex = 16;
+            wednesdayStartTimepicker.Tag = "Wednesday";
             wednesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             wednesdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -629,6 +648,7 @@
             tuesdayStartTimepicker.ShowUpDown = true;
             tuesdayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             tuesdayStartTimepicker.TabIndex = 13;
+            tuesdayStartTimepicker.Tag = "Tuesday";
             tuesdayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             tuesdayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -643,6 +663,7 @@
             mondayStartTimepicker.ShowUpDown = true;
             mondayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             mondayStartTimepicker.TabIndex = 10;
+            mondayStartTimepicker.Tag = "Monday";
             mondayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             mondayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -658,6 +679,7 @@
             sundayStartTimepicker.ShowUpDown = true;
             sundayStartTimepicker.Size = new System.Drawing.Size(90, 23);
             sundayStartTimepicker.TabIndex = 7;
+            sundayStartTimepicker.Tag = "Sunday";
             sundayStartTimepicker.Value = new System.DateTime(2015, 4, 6, 8, 0, 0, 0);
             sundayStartTimepicker.PreviewKeyDown += LastDateTimePicker_PreviewKeyDown;
             // 
@@ -908,7 +930,6 @@
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogFolderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bETAEnableNewOOFToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
@@ -957,5 +978,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
+        private System.Windows.Forms.ToolStripMenuItem tsmiUseNewOOFMath;
     }
 }
