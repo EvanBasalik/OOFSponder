@@ -8,7 +8,8 @@
     "SecondaryOOFInternalMessage": "default",
     "ExternalAudienceScope":  "All",
     "IsOnCallModeOn": false,
-    "StartMinimized": false
+    "StartMinimized": false,
+    "UseNewOOFMath":  false
   },
   "UserSettingsSource": "OOFSponder_Core"
 }
