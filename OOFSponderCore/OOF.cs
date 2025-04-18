@@ -374,7 +374,7 @@ namespace OOFScheduling
                 if (useNewOOFMath)
                 {
                     if (OOFData.instance.IsPermaOOFOn && !isEmptyOrDefaultOOFMessage(OOFData.Instance.SecondaryOOFExternalMessage) && !isEmptyOrDefaultOOFMessage(OOFData.instance.SecondaryOOFInternalMessage)
-    && OOFData.Instance.WorkingDayCollection.Count != 7)
+    && OOFData.Instance.WorkingDayCollection.Count == 7)
                     {
                         _result = true;
                         OOFSponder.Logger.Info("HaveNecessaryData: PermaOOF");
