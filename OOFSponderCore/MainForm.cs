@@ -1236,7 +1236,7 @@ namespace OOFScheduling
             }
             else
             {
-                MessageBox.Show("Failed to set OOF message. Please check your settings and try again");
+                MessageBox.Show("Failed to set OOF message. Please check your settings and try again", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //if we fail to set OOF, disable PermaOOF to reset the UI
                 OOFData.Instance.PermaOOFDate = DateTime.Now;
 
