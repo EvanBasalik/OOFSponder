@@ -95,8 +95,8 @@
             radSecondary = new System.Windows.Forms.RadioButton();
             radPrimary = new System.Windows.Forms.RadioButton();
             statusStrip1.SuspendLayout();
-            htmlEditorControl2.BeginInit();
-            htmlEditorControl1.BeginInit();
+            (htmlEditorControl2).BeginInit();
+            (htmlEditorControl1).BeginInit();
             menuStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -141,7 +141,7 @@
             secondaryToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
             secondaryToolStripMenuItem.Name = "secondaryToolStripMenuItem";
             secondaryToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            secondaryToolStripMenuItem.Text = "&Secondary";
+            secondaryToolStripMenuItem.Text = "Extended";
             secondaryToolStripMenuItem.Click += secondaryToolStripMenuItem_Click;
             // 
             // tsmiSavedOOFMessage
@@ -829,10 +829,10 @@
             radSecondary.AutoSize = true;
             radSecondary.Location = new System.Drawing.Point(110, 19);
             radSecondary.Name = "radSecondary";
-            radSecondary.Size = new System.Drawing.Size(107, 19);
+            radSecondary.Size = new System.Drawing.Size(100, 19);
             radSecondary.TabIndex = 56;
             radSecondary.TabStop = true;
-            radSecondary.Text = "Secondary OOF";
+            radSecondary.Text = "Extended OOF";
             radSecondary.UseVisualStyleBackColor = true;
             // 
             // radPrimary
@@ -903,8 +903,8 @@
             Resize += MainForm_Resize;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
-            htmlEditorControl2.EndInit();
-            htmlEditorControl1.EndInit();
+            (htmlEditorControl2).EndInit();
+            (htmlEditorControl1).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             groupBox1.ResumeLayout(false);
