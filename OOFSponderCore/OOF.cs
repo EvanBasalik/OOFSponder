@@ -137,7 +137,7 @@ namespace OOFScheduling
                     if (_secondaryOOFExternalMessage != string.Empty)
                     {
                         Logger.Info("Secondary OOF External has changed - persisting to AppData");
-                        OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryExternal, value);
+                        OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.ExtendedExternal, value);
                     }
                 }
 
@@ -170,7 +170,7 @@ namespace OOFScheduling
                     if (_secondaryOOFInternalMessage != string.Empty)
                     {
                         Logger.Info("Secondary OOF Internal has changed - persisting to AppData");
-                        OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.SecondaryInternal, value);
+                        OOFData.Instance.SaveOOFMessageOffline(OOFData.OOFMessageType.ExtendedInternal, value);
                     }
                 }
 
@@ -717,8 +717,8 @@ namespace OOFScheduling
         {
             PrimaryInternal = 0,
             PrimaryExternal = 1,
-            SecondaryInternal = 2,
-            SecondaryExternal = 3
+            ExtendedInternal = 2,
+            ExtendedExternal = 3
         }
 
         internal bool SaveOOFMessageOffline(OOFMessageType messageType, string OOFMessageAsHTML)

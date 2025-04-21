@@ -1191,7 +1191,7 @@ namespace OOFScheduling
             //only set up for permaOOF if we have OOF messages
             if (OOFData.Instance.SecondaryOOFExternalMessage == String.Empty | OOFData.Instance.SecondaryOOFInternalMessage == String.Empty)
             {
-                MessageBox.Show("Unable to turn on extended OOF - Secondary OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to turn on extended OOF - Extended OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
