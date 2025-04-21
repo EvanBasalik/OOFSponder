@@ -530,11 +530,13 @@ namespace OOFScheduling
                     //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
                     {
                         int adjustmentDays = 0;
-                        if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                        if (!OOFData.Instance.useNewOOFMath)
                         {
-                            adjustmentDays = 1;
+                            if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                            {
+                                adjustmentDays = 1;
+                            }
                         }
-
                         //in order to accomodate someone going OOF mid-schedule
                         //check if now is before the next scheduled "OFF" slot
                         //if it is, then adjust start time to NOW
@@ -543,9 +545,18 @@ namespace OOFScheduling
                             oofTimes[0] = DateTime.Now;
                         }
 
-                        OOFSponderInsights.Track("TrySetPermaOOF");
-
-                        result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1].AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+                        if (!OOFData.Instance.useNewOOFMath)
+                        {   //if we are using the old OOF math, then need to add a day to the end time
+                            //to account for the fact that we are setting it to PermaOOFDate
+                            OOFSponderInsights.Track("TrySetPermaOOF");
+                            result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], OOFData.Instance.PermaOOFDate.AddDays(1).AddDays((OOFData.Instance.PermaOOFDate - oofTimes[1]).Days + adjustmentDays)));
+                        }
+                        else
+                        {
+                            //if we are using the new OOF math, can just use oofTimes directly
+                            OOFSponderInsights.Track("TrySetPermaOOF-NewOOFMath");
+                            result = await System.Threading.Tasks.Task.Run(() => TrySetOOF365(oofMessageExternal, oofMessageInternal, oofTimes[0], oofTimes[1]));
+                        }
                     }
                 }
             }
@@ -1180,7 +1191,7 @@ namespace OOFScheduling
             //only set up for permaOOF if we have OOF messages
             if (OOFData.Instance.SecondaryOOFExternalMessage == String.Empty | OOFData.Instance.SecondaryOOFInternalMessage == String.Empty)
             {
-                MessageBox.Show("Unable to turn on extended OOF - Secondary OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Unable to turn on extended OOF - Extended OOF messages not set", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -1225,7 +1236,7 @@ namespace OOFScheduling
             }
             else
             {
-                MessageBox.Show("Failed to set OOF message. Please check your settings and try again");
+                MessageBox.Show("Failed to set OOF message. Please check your settings and try again", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //if we fail to set OOF, disable PermaOOF to reset the UI
                 OOFData.Instance.PermaOOFDate = DateTime.Now;
 
@@ -1250,9 +1261,9 @@ namespace OOFScheduling
             radSecondary.Checked = true;
 
 
-            //set the tags on the Internal/External OOF message load items to Secondary
+            //set the tags on the Internal/External OOF message load items to Extended
             //do this before setting the AccessibleName and AccessibleDescription so we can use the tag
-            tsmiExternal.Tag = tsmiInternal.Tag = "Secondary";
+            tsmiExternal.Tag = tsmiInternal.Tag = "Extended";
 
             //Accessibility settings
             lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Extended OOF External Message";
