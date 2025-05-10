@@ -453,7 +453,16 @@ namespace OOFScheduling
         private async void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
 
-            OOFSponder.Logger.Info("Loopy elapsed - saving settings and running RunSetOofO365");
+            OOFSponder.Logger.Info("Loopy elapsed - updating UI, saving settings and running RunSetOofO365");
+            if (OOFData.Instance.IsPermaOOFOn)
+            {
+                SetUIforSecondary();
+            }
+            else
+            {
+                SetUIforPrimary();
+            }
+
             saveSettings();
 
             //no longer necessary - we are doing it inside the saveSettings call above
