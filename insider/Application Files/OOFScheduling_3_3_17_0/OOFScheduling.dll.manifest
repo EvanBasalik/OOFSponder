@@ -249,7 +249,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Z2+mXhIbCCch52HBoFTnKa66F73hkeoup4j/stXRhZg=</dsig:DigestValue>
+      <dsig:DigestValue>alJQFqwEz+fGZFDzJTyws/pXA5DltYqqKAbZASZjrcc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Newtonsoft.Json.dll" size="712464">
@@ -285,7 +285,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>+x8+J04npHbkxW/6aKlly5BMHLVgDT7afldRUd4YYAc=</dsig:DigestValue>
+      <dsig:DigestValue>Gq5xmIjReB8TQ0VK/+uOOJEoq/fSvqfSgvqWwxexxR8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.exe" size="302592">
@@ -294,7 +294,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>6yPCdIuzurl0yUtSv/JLnd4PdpP6zkqielOk7GcBVJw=</dsig:DigestValue>
+      <dsig:DigestValue>X4kGfXyIX5JPVn+lX2+RK0IqgMQIoWp5LC6WIzaQgiA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFScheduling.runtimeconfig.json" size="515">
@@ -468,13 +468,13 @@
       <dsig:DigestValue>wp5KMc0/6Q2Ci1tX/zmAuCJFIDNOr6ckGnscMfTdCUk=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="WhatsNew.rtf" size="58273">
+  <file name="WhatsNew.rtf" size="59165">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>eGilO9w2vVEKC7hqN0E1e4BCm5SZRRB0Xflp48m0J2U=</dsig:DigestValue>
+      <dsig:DigestValue>vKkek7dTCOj+XQUm1zW8ixQf9sNrv/cBETFsl6CgiVc=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
