@@ -293,8 +293,8 @@ namespace OOFScheduling
             Loopy();
 
             //set up handlers to persist OOF messages
-            htmlEditorControl1.Validated += htmlEditorValidated;
-            htmlEditorControl2.Validated += htmlEditorValidated;
+            htmlEditorControlExternal.Validated += htmlEditorValidated;
+            htmlEditorControlInternal.Validated += htmlEditorValidated;
 
             //ensure the UI is right for AudienceScope
             //do this really late in load due to dependencies making it tough
@@ -350,8 +350,8 @@ namespace OOFScheduling
 
             //set the AccessibleName for the OOF message controls
             //External
-            htmlEditorControl1.AccessibleName = "External OOF Message";
-            foreach (Control item in htmlEditorControl1.Controls)
+            htmlEditorControlExternal.AccessibleName = "External OOF Message";
+            foreach (Control item in htmlEditorControlExternal.Controls)
             {
                 if (item.GetType() == typeof(ToolStrip))
                 {
@@ -361,8 +361,8 @@ namespace OOFScheduling
 
 
             //Internal
-            htmlEditorControl2.AccessibleName = "Internal OOF Message";
-            foreach (Control item in htmlEditorControl2.Controls)
+            htmlEditorControlInternal.AccessibleName = "Internal OOF Message";
+            foreach (Control item in htmlEditorControlInternal.Controls)
             {
                 if (item.GetType() == typeof(ToolStrip))
                 {
@@ -502,8 +502,8 @@ namespace OOFScheduling
                     OOFSponder.Logger.Info("Got OOF times");
 
                     //persist settings just in case
-                    string oofMessageExternal = htmlEditorControl1.BodyHtml;
-                    string oofMessageInternal = htmlEditorControl2.BodyHtml;
+                    string oofMessageExternal = htmlEditorControlExternal.BodyHtml;
+                    string oofMessageInternal = htmlEditorControlInternal.BodyHtml;
 
                     //if not logged in, give the user a chance to log in
                     OOFSponder.Logger.Info("Checking to make sure the user is logged in before doing OOF work");
@@ -896,15 +896,15 @@ namespace OOFScheduling
             if (primaryToolStripMenuItem.Checked)
             {
                 OOFSponder.Logger.Info("Saving Primary OOF message");
-                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControlExternal.BodyHtml;
+                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControlInternal.BodyHtml;
             }
             else
             //since customer is editing Secondary message, save text in Secondary
             {
                 OOFSponder.Logger.Info("Saving Secondary OOF message");
-                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControlExternal.BodyHtml;
+                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControlInternal.BodyHtml;
             }
 
             //persist if they want the UI minimized on start up
@@ -1275,12 +1275,12 @@ namespace OOFScheduling
             tsmiExternal.Tag = tsmiInternal.Tag = "Extended";
 
             //Accessibility settings
-            lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Extended OOF External Message";
-            lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Extended OOF Internal Message";
+            lblExternalMesage.Text = htmlEditorControlExternal.AccessibleDescription = htmlEditorControlExternal.AccessibleName = "Extended OOF External Message";
+            lblInternalMessage.Text = htmlEditorControlInternal.AccessibleDescription = htmlEditorControlInternal.AccessibleName = "Extended OOF Internal Message";
             DoAccessibilityWorkforOpenSavedOOFMenuItems();
 
-            htmlEditorControl1.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
-            htmlEditorControl2.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
+            htmlEditorControlExternal.BodyHtml = OOFData.Instance.SecondaryOOFExternalMessage;
+            htmlEditorControlInternal.BodyHtml = OOFData.Instance.SecondaryOOFInternalMessage;
 
             //update the UI according to PermaOOF
             SetPermaOOFUIControlState();
@@ -1375,12 +1375,12 @@ namespace OOFScheduling
             tsmiExternal.Tag = tsmiInternal.Tag = "Primary";
 
             //Accessibility settings
-            lblExternalMesage.Text = htmlEditorControl1.AccessibleDescription = htmlEditorControl1.AccessibleName = "Primary OOF External Message";
-            lblInternalMessage.Text = htmlEditorControl2.AccessibleDescription = htmlEditorControl2.AccessibleName = "Primary OOF Internal Message";
+            lblExternalMesage.Text = htmlEditorControlExternal.AccessibleDescription = htmlEditorControlExternal.AccessibleName = "Primary OOF External Message";
+            lblInternalMessage.Text = htmlEditorControlInternal.AccessibleDescription = htmlEditorControlInternal.AccessibleName = "Primary OOF Internal Message";
             DoAccessibilityWorkforOpenSavedOOFMenuItems();
 
-            htmlEditorControl1.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
-            htmlEditorControl2.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
+            htmlEditorControlExternal.BodyHtml = OOFData.Instance.PrimaryOOFExternalMessage;
+            htmlEditorControlInternal.BodyHtml = OOFData.Instance.PrimaryOOFInternalMessage;
 
             //update the UI according to PermaOOF
             SetPermaOOFUIControlState();
@@ -1422,16 +1422,16 @@ namespace OOFScheduling
             if (radPrimary.Checked)
             {
                 //Persist the opposite message
-                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControlExternal.BodyHtml;
+                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControlInternal.BodyHtml;
 
                 SetUIforPrimary();
             }
             else
             {
                 //Persist the opposite message
-                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControlExternal.BodyHtml;
+                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControlInternal.BodyHtml;
 
                 SetUIforSecondary();
             }
@@ -1440,17 +1440,19 @@ namespace OOFScheduling
         //common call for both controls, regardless of primary or secondary
         private void htmlEditorValidated(object sender, EventArgs e)
         {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
             if (radPrimary.Checked)
             {
                 OOFSponderInsights.Track("PermaOOF off - persisting primary messages");
-                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.PrimaryOOFExternalMessage = htmlEditorControlExternal.BodyHtml;
+                OOFData.Instance.PrimaryOOFInternalMessage = htmlEditorControlInternal.BodyHtml;
             }
             else
             {
                 OOFSponderInsights.Track("PermaOOF on - persisting secondary messages");
-                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControl1.BodyHtml;
-                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControl2.BodyHtml;
+                OOFData.Instance.SecondaryOOFExternalMessage = htmlEditorControlExternal.BodyHtml;
+                OOFData.Instance.SecondaryOOFInternalMessage = htmlEditorControlInternal.BodyHtml;
             }
         }
 
@@ -1559,10 +1561,10 @@ namespace OOFScheduling
                     switch (tsmi.Text.Replace(tsmi.Tag + " ", "").Replace("...", ""))
                     {
                         case "External":
-                            htmlEditorControl1.BodyHtml = SavedOOFMessageHTML;
+                            htmlEditorControlExternal.BodyHtml = SavedOOFMessageHTML;
                             break;
                         case "Internal":
-                            htmlEditorControl2.BodyHtml = SavedOOFMessageHTML;
+                            htmlEditorControlInternal.BodyHtml = SavedOOFMessageHTML;
                             break;
                     }
 
@@ -1661,20 +1663,19 @@ namespace OOFScheduling
             bool isEditable = OOFData.Instance.ExternalAudienceScope != ExternalAudienceScope.None;
 
             // Enable or disable the External Message entry box
-            htmlEditorControl1.Enabled = isEditable;
+            htmlEditorControlExternal.Enabled = isEditable;
 
             // Update the HTML content to reflect the read-only state
             if (isEditable)
             {
                 //if it editable, then just reload the saved text
                 //reload primary/secondary based on which one is active
-                //just copy from appropriate Internal
-                htmlEditorControl1.BodyHtml = radPrimary.Checked ?
-                    OOFData.Instance.PrimaryOOFInternalMessage : OOFData.Instance.SecondaryOOFInternalMessage;
+                htmlEditorControlExternal.BodyHtml = radPrimary.Checked ?
+                    OOFData.Instance.PrimaryOOFExternalMessage : OOFData.Instance.SecondaryOOFExternalMessage;
             }
             else
             {
-                foreach (Panel item in htmlEditorControl1.Controls.OfType<Panel>())
+                foreach (Panel item in htmlEditorControlExternal.Controls.OfType<Panel>())
                 {
                     //we know there is only one in the control, so can cheat
                     foreach (WebBrowser wb in item.Controls.OfType<WebBrowser>())
@@ -1686,7 +1687,7 @@ namespace OOFScheduling
                     }
 
                 }
-                // htmlEditorControl1.BodyHtml = htmlEditorControl1.BodyHtml.Replace("scroll=auto", "scroll=auto style='" + OOFData.HTMLReadOnlyIndicator + "'");
+                // htmlEditorControlExternal.BodyHtml = htmlEditorControlExternal.BodyHtml.Replace("scroll=auto", "scroll=auto style='" + OOFData.HTMLReadOnlyIndicator + "'");
             }
         }
 
