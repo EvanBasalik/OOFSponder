@@ -56,9 +56,9 @@
             openFileDialog = new System.Windows.Forms.OpenFileDialog();
             lblExternalMesage = new System.Windows.Forms.Label();
             notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
-            htmlEditorControl2 = new MSDN.Html.Editor.HtmlEditorControl();
+            htmlEditorControlInternal = new MSDN.Html.Editor.HtmlEditorControl();
             button2 = new System.Windows.Forms.Button();
-            htmlEditorControl1 = new MSDN.Html.Editor.HtmlEditorControl();
+            htmlEditorControlExternal = new MSDN.Html.Editor.HtmlEditorControl();
             saturdayOffWorkCB = new System.Windows.Forms.CheckBox();
             fridayOffWorkCB = new System.Windows.Forms.CheckBox();
             thursdayOffWorkCB = new System.Windows.Forms.CheckBox();
@@ -95,8 +95,8 @@
             radSecondary = new System.Windows.Forms.RadioButton();
             radPrimary = new System.Windows.Forms.RadioButton();
             statusStrip1.SuspendLayout();
-            (htmlEditorControl2).BeginInit();
-            (htmlEditorControl1).BeginInit();
+            (htmlEditorControlInternal).BeginInit();
+            (htmlEditorControlExternal).BeginInit();
             menuStrip1.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -357,15 +357,15 @@
             notifyIcon1.Visible = true;
             notifyIcon1.MouseDoubleClick += notifyIcon1_MouseDoubleClick;
             // 
-            // htmlEditorControl2
+            // htmlEditorControlInternal
             // 
-            htmlEditorControl2.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            htmlEditorControl2.InnerText = null;
-            htmlEditorControl2.Location = new System.Drawing.Point(9, 386);
-            htmlEditorControl2.Margin = new System.Windows.Forms.Padding(4);
-            htmlEditorControl2.Name = "htmlEditorControl2";
-            htmlEditorControl2.Size = new System.Drawing.Size(776, 200);
-            htmlEditorControl2.TabIndex = 32;
+            htmlEditorControlInternal.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            htmlEditorControlInternal.InnerText = null;
+            htmlEditorControlInternal.Location = new System.Drawing.Point(9, 386);
+            htmlEditorControlInternal.Margin = new System.Windows.Forms.Padding(4);
+            htmlEditorControlInternal.Name = "htmlEditorControlInternal";
+            htmlEditorControlInternal.Size = new System.Drawing.Size(776, 200);
+            htmlEditorControlInternal.TabIndex = 32;
             // 
             // button2
             // 
@@ -378,15 +378,15 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // htmlEditorControl1
+            // htmlEditorControlExternal
             // 
-            htmlEditorControl1.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            htmlEditorControl1.InnerText = null;
-            htmlEditorControl1.Location = new System.Drawing.Point(9, 159);
-            htmlEditorControl1.Margin = new System.Windows.Forms.Padding(4);
-            htmlEditorControl1.Name = "htmlEditorControl1";
-            htmlEditorControl1.Size = new System.Drawing.Size(776, 200);
-            htmlEditorControl1.TabIndex = 31;
+            htmlEditorControlExternal.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            htmlEditorControlExternal.InnerText = null;
+            htmlEditorControlExternal.Location = new System.Drawing.Point(9, 159);
+            htmlEditorControlExternal.Margin = new System.Windows.Forms.Padding(4);
+            htmlEditorControlExternal.Name = "htmlEditorControlExternal";
+            htmlEditorControlExternal.Size = new System.Drawing.Size(776, 200);
+            htmlEditorControlExternal.TabIndex = 31;
             // 
             // saturdayOffWorkCB
             // 
@@ -862,7 +862,7 @@
             Controls.Add(dtPermaOOF);
             Controls.Add(btnPermaOOF);
             Controls.Add(lblExternalMesage);
-            Controls.Add(htmlEditorControl2);
+            Controls.Add(htmlEditorControlInternal);
             Controls.Add(button2);
             Controls.Add(saturdayOffWorkCB);
             Controls.Add(fridayOffWorkCB);
@@ -893,7 +893,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(menuStrip1);
-            Controls.Add(htmlEditorControl1);
+            Controls.Add(htmlEditorControlExternal);
             MaximumSize = new System.Drawing.Size(1300, 730);
             Name = "MainForm";
             Text = "OOFSponder";
@@ -903,8 +903,8 @@
             Resize += MainForm_Resize;
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
-            (htmlEditorControl2).EndInit();
-            (htmlEditorControl1).EndInit();
+            (htmlEditorControlInternal).EndInit();
+            (htmlEditorControlExternal).EndInit();
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             groupBox1.ResumeLayout(false);
@@ -940,9 +940,9 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Label lblExternalMesage;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
-        private MSDN.Html.Editor.HtmlEditorControl htmlEditorControl2;
+        private MSDN.Html.Editor.HtmlEditorControl htmlEditorControlInternal;
         private System.Windows.Forms.Button button2;
-        private MSDN.Html.Editor.HtmlEditorControl htmlEditorControl1;
+        private MSDN.Html.Editor.HtmlEditorControl htmlEditorControlExternal;
         private System.Windows.Forms.CheckBox saturdayOffWorkCB;
         private System.Windows.Forms.CheckBox fridayOffWorkCB;
         private System.Windows.Forms.CheckBox thursdayOffWorkCB;
