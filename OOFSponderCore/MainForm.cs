@@ -1635,10 +1635,19 @@ namespace OOFScheduling
 
         }
 
+        private AboutBox a;
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AboutBox a = new AboutBox();
-            a.Show();
+            if (a == null || a.IsDisposed) // Check if the form is null or disposed
+            {
+                a = new AboutBox(); // Create a new instance of the child form
+                a.FormClosed += (s, e) => a = null; // Reset the reference when the form is closed
+                a.Show(); // Show the form
+            }
+            else
+            {
+                a.Focus(); // Bring the existing form to the front
+            }
         }
 
         private void cboExternalAudienceScope_SelectedIndexChanged(object sender, EventArgs e)
