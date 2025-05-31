@@ -1687,7 +1687,6 @@ namespace OOFScheduling
                     }
 
                 }
-                // htmlEditorControlExternal.BodyHtml = htmlEditorControlExternal.BodyHtml.Replace("scroll=auto", "scroll=auto style='" + OOFData.HTMLReadOnlyIndicator + "'");
             }
         }
 
