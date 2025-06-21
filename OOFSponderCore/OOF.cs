@@ -222,8 +222,8 @@ namespace OOFScheduling
                         catch
                         {
                             // Default to 9am-5pm working hours, not OOF
-                            OOFItem.StartTime = DateTime.UtcNow.Date.AddHours(9);
-                            OOFItem.EndTime = DateTime.UtcNow.Date.AddHours(17);
+                            OOFItem.StartTime = DateTime.Now.Date.AddHours(9);
+                            OOFItem.EndTime = DateTime.Now.Date.AddHours(17);
                             OOFItem.IsOOF = false;
                         }
 
