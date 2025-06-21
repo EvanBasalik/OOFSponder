@@ -203,14 +203,27 @@ namespace OOFScheduling
                         string[] currentWorkingTime = workingTimes[i].Split('~');
                         WorkingDay OOFItem = new WorkingDay();
                         OOFItem.DayOfWeek = (DayOfWeek)i;
-                        OOFItem.StartTime = DateTime.Parse(currentWorkingTime[0]);
-                        OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
-                        if (currentWorkingTime[2] == "0")
+
+                        //try to parse the results of splitting the WorkingHours string
+                        //if it fails, then default to 9am-5pm working hours, not OOF
+                        try
                         {
-                            OOFItem.IsOOF = true;
+                            OOFItem.StartTime = DateTime.Parse(currentWorkingTime[0]);
+                            OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
+                            if (currentWorkingTime[2] == "0")
+                            {
+                                OOFItem.IsOOF = true;
+                            }
+                            else
+                            {
+                                OOFItem.IsOOF = false;
+                            }
                         }
-                        else
+                        catch
                         {
+                            // Default to 9am-5pm working hours, not OOF
+                            OOFItem.StartTime = DateTime.UtcNow.Date.AddHours(9);
+                            OOFItem.EndTime = DateTime.UtcNow.Date.AddHours(17);
                             OOFItem.IsOOF = false;
                         }
 
