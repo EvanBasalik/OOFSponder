@@ -219,8 +219,9 @@ namespace OOFScheduling
                                 OOFItem.IsOOF = false;
                             }
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            Logger.Error(new string($"Unable to parse WorkingHours string into valid date for {OOFItem.DayOfWeek.ToString()}"), ex);
                             // Default to 9am-5pm working hours, not OOF
                             OOFItem.StartTime = DateTime.Now.Date.AddHours(9);
                             OOFItem.EndTime = DateTime.Now.Date.AddHours(17);
