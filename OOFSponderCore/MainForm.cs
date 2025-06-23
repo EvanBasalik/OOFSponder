@@ -98,6 +98,8 @@ namespace OOFScheduling
                     cb.Checked = _workingday.IsOOF;
                 }
 
+                Logger.Info("Successfully set checkboxes based on working days");
+
                 foreach (LastDateTimePicker picker in this.Controls.OfType<LastDateTimePicker>())
                 {
                     System.DayOfWeek day;
@@ -118,6 +120,8 @@ namespace OOFScheduling
                     picker.Enabled = !this.Controls.OfType<CheckBox>()
                         .First(x => x.Tag.ToString() == day.ToString()).Checked;
                 }
+
+                Logger.Info("Successfully set DateTimePickers based on working hours");
             }
             else
             {
