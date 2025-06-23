@@ -124,6 +124,14 @@ namespace OOFScheduling
                 Logger.Warning("Don't have WorkingDayCollection");
             }
 
+            //if we were unable to parse the WorkingHours, tell the user
+            if (OOFData.Instance.UnabletoParseWorkingHours)
+            {
+                MessageBox.Show(Resources.UnabletoParseWorkingHours,
+                                Resources.UnabletoParseWorkingHoursTitle,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             //now that the values are set, can apply the event handler
             //and while we are looping through, the accessibility
             //get a list of the checkbox controls so we can apply special event handling to the OffWork ones

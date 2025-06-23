@@ -226,6 +226,9 @@ namespace OOFScheduling
                             OOFItem.StartTime = DateTime.Now.Date.AddHours(9);
                             OOFItem.EndTime = DateTime.Now.Date.AddHours(17);
                             OOFItem.IsOOF = false;
+
+                            //set a flag so we know to tell the user that we couldn't parse the WorkingHours string
+                            this.UnabletoParseWorkingHours = true;
                         }
 
                         _WorkingDayCollection.Add(OOFItem);
@@ -572,6 +575,8 @@ namespace OOFScheduling
         public bool StartMinimized { get; internal set; }
 
         public Microsoft.Graph.ExternalAudienceScope _externalAudienceScope;
+        public bool UnabletoParseWorkingHours = false;
+
         public Microsoft.Graph.ExternalAudienceScope ExternalAudienceScope { get => _externalAudienceScope; set => _externalAudienceScope = value; }
 
         private void LogProperties()

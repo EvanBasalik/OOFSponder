@@ -131,4 +131,10 @@ To avoid responding to external users, select 'Contacts Only' or 'None' from the
   <data name="MissingNecessaryDataMessageBoxTitle" xml:space="preserve">
     <value>Missing necessary data!</value>
   </data>
+  <data name="UnabletoParseWorkingHours" xml:space="preserve">
+    <value>Unable to convert the saved working schedule to days and times - used defaults instead</value>
+  </data>
+  <data name="UnabletoParseWorkingHoursTitle" xml:space="preserve">
+    <value>Unable to parse WorkingHours</value>
+  </data>
 </root>

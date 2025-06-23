@@ -97,5 +97,23 @@ namespace OOFScheduling {
                 return ResourceManager.GetString("MissingNecessaryDataMessageBoxTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to convert the saved working schedule to days and times - used defaults instead.
+        /// </summary>
+        internal static string UnabletoParseWorkingHours {
+            get {
+                return ResourceManager.GetString("UnabletoParseWorkingHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to parse WorkingHours.
+        /// </summary>
+        internal static string UnabletoParseWorkingHoursTitle {
+            get {
+                return ResourceManager.GetString("UnabletoParseWorkingHoursTitle", resourceCulture);
+            }
+        }
     }
 }
