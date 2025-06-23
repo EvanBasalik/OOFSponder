@@ -194,28 +194,89 @@ namespace OOFScheduling
                     _WorkingDayCollection = new Collection<WorkingDay>();
                 }
 
+                if (WorkingHours == string.Empty && _WorkingDayCollection.Count != 7)
+                {
+                    //if WorkingHours has never been set and we and we don't have WorkingDayCollection
+                    //then create one with the defaults
+                    Logger.Info("WorkingHours = default and no existing WorkingDayCollection, so defaulting to base collection of WorkingDays");
+                    for (int i = 0; i < 7; i++)
+                    {
+                        // Default to 9am-5pm working hours, not OOF
+                        WorkingDay OOFItem = new WorkingDay();
+                        OOFItem.DayOfWeek = (DayOfWeek)i;
+                        OOFItem.StartTime = DateTime.Now.Date.AddHours(9);
+                        OOFItem.EndTime = DateTime.Now.Date.AddHours(17);
+                        OOFItem.IsOOF = false;
+                        _WorkingDayCollection.Add(OOFItem);
+                    }
+                }
+
                 if (_WorkingDayCollection.Count != 7)
                 {
                     //convert the array of string objects to real objects
                     string[] workingTimes = WorkingHours.Split('|');
-                    for (int i = 0; i < 7; i++)
+
+                    //if we have a value for all 7 days, then try to parse each day
+                    if (workingTimes.Length == 7)
                     {
-                        string[] currentWorkingTime = workingTimes[i].Split('~');
-                        WorkingDay OOFItem = new WorkingDay();
-                        OOFItem.DayOfWeek = (DayOfWeek)i;
-                        OOFItem.StartTime = DateTime.Parse(currentWorkingTime[0]);
-                        OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
-                        if (currentWorkingTime[2] == "0")
+                        Logger.Info("Have 7 workingTimes, so converting to WorkingDay objects");
+                        for (int i = 0; i < 7; i++)
                         {
-                            OOFItem.IsOOF = true;
-                        }
-                        else
-                        {
-                            OOFItem.IsOOF = false;
+                            string[] currentWorkingTime = workingTimes[i].Split('~');
+                            WorkingDay OOFItem = new WorkingDay();
+                            OOFItem.DayOfWeek = (DayOfWeek)i;
+
+                            //try to parse the results of splitting the WorkingHours string
+                            //if it fails, then default to 9am-5pm working hours, not OOF
+                            try
+                            {
+                                OOFItem.StartTime = DateTime.Parse(currentWorkingTime[0]);
+                                OOFItem.EndTime = DateTime.Parse(currentWorkingTime[1]);
+                                if (currentWorkingTime[2] == "0")
+                                {
+                                    OOFItem.IsOOF = true;
+                                }
+                                else
+                                {
+                                    OOFItem.IsOOF = false;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Error("Unable to parse WorkingHours string into valid date for: " + OOFItem.DayOfWeek.ToString(), ex);
+                                // Default to 9am-5pm working hours, not OOF
+                                OOFItem.StartTime = DateTime.Now.Date.AddHours(9);
+                                OOFItem.EndTime = DateTime.Now.Date.AddHours(17);
+                                OOFItem.IsOOF = false;
+
+                                //set a flag so we know to tell the user that we couldn't parse the WorkingHours string
+                                this.UnabletoParseWorkingHours = true;
+                            }
+
+                            _WorkingDayCollection.Add(OOFItem);
                         }
 
-                        _WorkingDayCollection.Add(OOFItem);
                     }
+                    //if we don't have all 7, then assume WorkingHours busted and create a new one with defaults
+                    else
+                    {
+                        Logger.Info("Couldn't parse WorkingHours, so defaulting to base collection of WorkingDays");
+                        for (int i = 0; i < 7; i++)
+                        {
+                            // Default to 9am-5pm working hours, not OOF
+                            WorkingDay OOFItem = new WorkingDay();
+                            OOFItem.DayOfWeek = (DayOfWeek)i;
+                            OOFItem.StartTime = DateTime.Now.Date.AddHours(9);
+                            OOFItem.EndTime = DateTime.Now.Date.AddHours(17);
+                            OOFItem.IsOOF = false;
+                            _WorkingDayCollection.Add(OOFItem);
+                        }
+
+                        //set a flag so we know to tell the user that we couldn't parse the WorkingHours string
+                        this.UnabletoParseWorkingHours = true;
+                    }
+
+
                 }
 
                 return _WorkingDayCollection;
@@ -558,6 +619,8 @@ namespace OOFScheduling
         public bool StartMinimized { get; internal set; }
 
         public Microsoft.Graph.ExternalAudienceScope _externalAudienceScope;
+        public bool UnabletoParseWorkingHours = false;
+
         public Microsoft.Graph.ExternalAudienceScope ExternalAudienceScope { get => _externalAudienceScope; set => _externalAudienceScope = value; }
 
         private void LogProperties()

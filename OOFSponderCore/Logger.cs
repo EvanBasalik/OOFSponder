@@ -52,7 +52,15 @@ namespace OOFSponder
         {
             StackFrame fr = new StackFrame(1, true);
             StackTrace st = new StackTrace(fr);
-            WriteEntry(message + ": " + ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "error", fr.GetMethod().Name + ":" + st.ToString());
+
+            if (ex.InnerException == null)
+            {
+                WriteEntry(message + ": " + ScrubMessage(ex.Message), "error", fr.GetMethod().Name + ":" + st.ToString());
+            }
+            else
+            {
+                WriteEntry(message + ": " + ScrubMessage(ex.Message) + " due to " + ScrubMessage(ex.InnerException.Message), "error", fr.GetMethod().Name + ":" + st.ToString());
+            }
         }
 
         /// <summary>
@@ -117,14 +125,14 @@ namespace OOFSponder
 
                     //keep the Trace calls for backward compatability with Legacy
 #if NETFRAMEWORK
-                Trace.WriteLine(
-                        string.Format("{0},{1},{2},{3}",
-                                      DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
-                                      type,
-                                      module,
-                                      ScrubMessage(message)));
+                    Trace.WriteLine(
+                            string.Format("{0},{1},{2},{3}",
+                                          DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"),
+                                          type,
+                                          module,
+                                          ScrubMessage(message)));
 #endif
-#if NET
+#if NET8_0_OR_GREATER
                     using (StreamWriter writer = new StreamWriter(LogFileName, true))
                     {
                         writer.WriteLine(

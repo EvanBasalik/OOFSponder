@@ -98,6 +98,8 @@ namespace OOFScheduling
                     cb.Checked = _workingday.IsOOF;
                 }
 
+                Logger.Info("Successfully set checkboxes based on working days");
+
                 foreach (LastDateTimePicker picker in this.Controls.OfType<LastDateTimePicker>())
                 {
                     System.DayOfWeek day;
@@ -118,10 +120,20 @@ namespace OOFScheduling
                     picker.Enabled = !this.Controls.OfType<CheckBox>()
                         .First(x => x.Tag.ToString() == day.ToString()).Checked;
                 }
+
+                Logger.Info("Successfully set DateTimePickers based on working hours");
             }
             else
             {
                 Logger.Warning("Don't have WorkingDayCollection");
+            }
+
+            //if we were unable to parse the WorkingHours, tell the user
+            if (OOFData.Instance.UnabletoParseWorkingHours)
+            {
+                MessageBox.Show(Resources.UnabletoParseWorkingHours,
+                                Resources.UnabletoParseWorkingHoursTitle,
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             //now that the values are set, can apply the event handler
@@ -914,7 +926,16 @@ namespace OOFScheduling
             Enum.TryParse(cboExternalAudienceScope.SelectedItem.ToString().Replace(" ", ""), out ExternalAudienceScope result);
             OOFData.Instance.ExternalAudienceScope = result;
 
-            OOFData.Instance.WorkingHours = ScheduleString();
+            //only write out the WorkingHours if we don't have a WorkingDayCollection
+            //this should never be null, but just in case, handle it here
+            if (OOFData.Instance.WorkingDayCollection == null)
+            {
+                OOFData.Instance.WorkingHours = ScheduleString();
+            }
+            else
+            {
+                OOFData.Instance.WorkingHours = string.Empty;
+            }
 
             //check to make sure we have the minimum data
             if (!OOFData.Instance.HaveNecessaryData)
