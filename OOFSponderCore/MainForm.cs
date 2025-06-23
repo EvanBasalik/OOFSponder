@@ -928,7 +928,7 @@ namespace OOFScheduling
 
             //only write out the WorkingHours if we don't have a WorkingDayCollection
             //this should never be null, but just in case, handle it here
-            if (OOFData.Instance.WorkingDayCollection == null)
+            if (OOFData.Instance.WorkingDayCollection == null | !OOFData.Instance.useNewOOFMath)
             {
                 OOFData.Instance.WorkingHours = ScheduleString();
             }
