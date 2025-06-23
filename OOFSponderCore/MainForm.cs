@@ -926,7 +926,16 @@ namespace OOFScheduling
             Enum.TryParse(cboExternalAudienceScope.SelectedItem.ToString().Replace(" ", ""), out ExternalAudienceScope result);
             OOFData.Instance.ExternalAudienceScope = result;
 
-            OOFData.Instance.WorkingHours = ScheduleString();
+            //only write out the WorkingHours if we don't have a WorkingDayCollection
+            //this should never be null, but just in case, handle it here
+            if (OOFData.Instance.WorkingDayCollection == null)
+            {
+                OOFData.Instance.WorkingHours = ScheduleString();
+            }
+            else
+            {
+                OOFData.Instance.WorkingHours = string.Empty;
+            }
 
             //check to make sure we have the minimum data
             if (!OOFData.Instance.HaveNecessaryData)

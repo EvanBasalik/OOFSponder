@@ -194,10 +194,11 @@ namespace OOFScheduling
                     _WorkingDayCollection = new Collection<WorkingDay>();
                 }
 
-                if (WorkingHours == string.Empty)
+                if (WorkingHours == string.Empty && _WorkingDayCollection.Count != 7)
                 {
-                    //if WorkingHours has never been set, then create one with the defaults
-                    Logger.Info("WorkingHours = default, so defaulting to base collection of WorkingDays");
+                    //if WorkingHours has never been set and we and we don't have WorkingDayCollection
+                    //then create one with the defaults
+                    Logger.Info("WorkingHours = default and no existing WorkingDayCollection, so defaulting to base collection of WorkingDays");
                     for (int i = 0; i < 7; i++)
                     {
                         // Default to 9am-5pm working hours, not OOF
