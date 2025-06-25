@@ -1,9 +1,10 @@
 param components_OOFSponderInsights_name string = 'OOFSponderInsightsBicep'
 param components_OOFSponderLogAnalytics_name string = 'OOFSponderLogAnalyticsBicep'
+param location string = resourceGroup().location
 
 resource components_OOFSponderInsights_name_resource 'microsoft.insights/components@2020-02-02' = {
   name: components_OOFSponderInsights_name
-  location: 'westus'
+  location: location
   kind: 'web'
   properties: {
     Application_Type: 'web'
@@ -20,7 +21,7 @@ resource components_OOFSponderInsights_name_resource 'microsoft.insights/compone
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-06-01' = {
   name: components_OOFSponderLogAnalytics_name
-  location: 'westus'
+  location: location
   sku: {
     name: 'PerGB2018'
   }
