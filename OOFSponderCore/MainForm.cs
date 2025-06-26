@@ -1350,6 +1350,29 @@ namespace OOFScheduling
                     UpdatedtPermaOOFSettings();
                 }
             }
+
+
+            //independent of whether or not PermaOOF is enabled,
+            //if we are in Primary mode, then disable the PermaOOF DateTimePicker
+            //if we are in Secondary mode, then enable the PermaOOF DateTimePicker
+            if (primaryToolStripMenuItem.Checked)
+            {
+                dtPermaOOF.Enabled = false;
+                btnPermaOOF.Enabled = false;
+            }
+            else
+            {
+                if (OOFData.Instance.IsPermaOOFOn)
+                {
+                    dtPermaOOF.Enabled = false;
+                }
+                else
+                {
+                    dtPermaOOF.Enabled = true;
+                }
+
+                btnPermaOOF.Enabled = true;
+            }
         }
 
         private void UpdatedtPermaOOFSettings()
@@ -1368,8 +1391,6 @@ namespace OOFScheduling
                 dtPermaOOF.Value = DateTime.Now.AddDays(1);
                 dtPermaOOF.Enabled = true;
             }
-
-
         }
 
         private void primaryToolStripMenuItem_Click(object sender, EventArgs e)
