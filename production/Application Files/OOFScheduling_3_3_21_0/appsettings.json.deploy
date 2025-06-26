@@ -6,10 +6,11 @@
     "PrimaryOOFInternalMessage": "default",
     "SecondaryOOFExternalMessage": "default",
     "SecondaryOOFInternalMessage": "default",
-    "ExternalAudienceScope":  "All",
+    "ExternalAudienceScope": "All",
     "IsOnCallModeOn": false,
     "StartMinimized": false,
-    "UseNewOOFMath":  false
+    "UseNewOOFMath": false,
+    "WorkingDayCollection": ""
   },
   "UserSettingsSource": "OOFSponder_Core"
 }
