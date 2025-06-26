@@ -18,6 +18,7 @@ namespace OOFSponderConfig
     //  },
     //  "UserSettingsSource": "OOFSponder_Core_{.NET version}"
     //}
+
     public class WorkingDayCollection
     {
         public string DayOfWeek { get; set; }
@@ -29,6 +30,7 @@ namespace OOFSponderConfig
 
     internal class OOFData
     {
+        public const string DeprecatedValue = "DeprecatedSetting";
         public string WorkingHours { get; set; }
         public DateTime PermaOOFDate { get; set; }
         public string PrimaryOOFExternalMessage { get; set; }

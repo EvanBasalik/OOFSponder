@@ -194,7 +194,17 @@ namespace OOFScheduling
                     _WorkingDayCollection = new Collection<WorkingDay>();
                 }
 
-                if (WorkingHours == string.Empty && _WorkingDayCollection.Count != 7)
+                //if it already has 7 days, then that means it was read in from the config file
+                //as a persisted value
+                //In that case, we can just return the collection
+                if (_WorkingDayCollection.Count == 7)
+                {
+                    //if we have all 7 days, then return the collection
+                    Logger.Info("Have 7 WorkingDays, so just returning the collection");
+                    return _WorkingDayCollection;
+                }
+
+                if (WorkingHours == string.Empty && _WorkingDayCollection.Count == 0)
                 {
                     //if WorkingHours has never been set and we and we don't have WorkingDayCollection
                     //then create one with the defaults
@@ -211,7 +221,9 @@ namespace OOFScheduling
                     }
                 }
 
-                if (_WorkingDayCollection.Count != 7)
+                //if we don't have all the working days, then try to parse the WorkingHours string
+                //if we aren't able to parse, fill in defaults
+                if (_WorkingDayCollection.Count < 7 && WorkingHours != string.Empty)
                 {
                     //convert the array of string objects to real objects
                     string[] workingTimes = WorkingHours.Split('|');
@@ -257,16 +269,19 @@ namespace OOFScheduling
                         }
 
                     }
-                    //if we don't have all 7, then assume WorkingHours busted and create a new one with defaults
+                    //if we don't have all 7, then assume WorkingHours or WorkingDays is busted and create a new one with defaults
                     else
                     {
+                        //first, clear out the collection so we don't end up with more than 14
+                        _WorkingDayCollection.Clear();
+
                         Logger.Info("Couldn't parse WorkingHours, so defaulting to base collection of WorkingDays");
                         for (int i = 0; i < 7; i++)
                         {
                             // Default to 9am-5pm working hours, not OOF
                             WorkingDay OOFItem = new WorkingDay();
                             OOFItem.DayOfWeek = (DayOfWeek)i;
-                            OOFItem.StartTime = DateTime.Now.Date.AddHours(9);
+                            OOFItem.StartTime = DateTime.Now.Date.AddHours(8);
                             OOFItem.EndTime = DateTime.Now.Date.AddHours(17);
                             OOFItem.IsOOF = false;
                             _WorkingDayCollection.Add(OOFItem);
