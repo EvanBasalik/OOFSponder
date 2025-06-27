@@ -876,7 +876,7 @@ namespace OOFScheduling
             //if PermaOOF is enabled, then adjust starting check date to 00:01 on that day
             if (OOFData.Instance.IsPermaOOFOn)
             {
-                currentCheckDate = DateTime.Parse(OOFData.Instance.PermaOOFDate.ToString("D") + " " + "00:01");
+                currentCheckDate = OOFData.Instance.PermaOOFDate.Date.Add(new TimeSpan(0, 0, 1));
             }
 
             string[] futureWorkingTime = workingTimesArray[(int)currentCheckDate.DayOfWeek].Split('~');
