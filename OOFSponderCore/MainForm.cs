@@ -873,15 +873,38 @@ namespace OOFScheduling
                 }
             }
 
-            string[] futureWorkingTime = workingTimesArray[(int)currentCheckDate.AddDays(1).DayOfWeek].Split('~');
+            //if PermaOOF is enabled, then adjust starting check date to 00:01 on that day
+            if (OOFData.Instance.IsPermaOOFOn)
+            {
+                currentCheckDate = OOFData.Instance.PermaOOFDate.Date.Add(new TimeSpan(0, 0, 1));
+            }
+
+            string[] futureWorkingTime = workingTimesArray[(int)currentCheckDate.DayOfWeek].Split('~');
             EndTime = DateTime.Now;
             if (futureWorkingTime[2] == "1")
             {
-                EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime[0]);
+                if (OOFData.Instance.IsPermaOOFOn)
+                {
+                    //if PermaOOF is on, then don't add a day
+                    EndTime = DateTime.Parse(OOFData.Instance.PermaOOFDate.AddDays(0).ToString("D") + " " + futureWorkingTime[0]);
+                }
+                else
+                //if not PermaOOF, then just use the standard logic
+                {
+                    EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime[0]);
+                }
             }
             else
             {
                 int daysforward = 1;
+
+                //need to subtract one day to account for the standard next day logic
+                //adds one by default and we really want to start the math at 00:00 on the PermaOOF date
+                if (OOFData.Instance.IsPermaOOFOn)
+                {
+                    currentCheckDate = currentCheckDate.AddDays(-1);
+                }
+
                 //create a way to exit if someone has all 7 days marked as OOF
                 while (daysforward <= 365)
                 {
@@ -1271,6 +1294,17 @@ namespace OOFScheduling
                 //if we fail to set OOF, disable PermaOOF to reset the UI
                 OOFData.Instance.PermaOOFDate = DateTime.Now;
 
+                if (((Button)sender).Tag.ToString() == "Enable")
+                {
+                    SetUIforSecondary();
+                    OOFSponderInsights.Track("Failed while trying to enable PermaOOF");
+                }
+                else
+                {
+                    SetUIforPrimary();
+                    OOFSponderInsights.Track("Failed while trying to disable PermaOOF");
+                }
+
             }
 
         }
@@ -1350,6 +1384,29 @@ namespace OOFScheduling
                     UpdatedtPermaOOFSettings();
                 }
             }
+
+
+            //independent of whether or not PermaOOF is enabled,
+            //if we are in Primary mode, then disable the PermaOOF DateTimePicker
+            //if we are in Secondary mode, then enable the PermaOOF DateTimePicker
+            if (primaryToolStripMenuItem.Checked)
+            {
+                dtPermaOOF.Enabled = false;
+                btnPermaOOF.Enabled = false;
+            }
+            else
+            {
+                if (OOFData.Instance.IsPermaOOFOn)
+                {
+                    dtPermaOOF.Enabled = false;
+                }
+                else
+                {
+                    dtPermaOOF.Enabled = true;
+                }
+
+                btnPermaOOF.Enabled = true;
+            }
         }
 
         private void UpdatedtPermaOOFSettings()
@@ -1368,8 +1425,6 @@ namespace OOFScheduling
                 dtPermaOOF.Value = DateTime.Now.AddDays(1);
                 dtPermaOOF.Enabled = true;
             }
-
-
         }
 
         private void primaryToolStripMenuItem_Click(object sender, EventArgs e)
