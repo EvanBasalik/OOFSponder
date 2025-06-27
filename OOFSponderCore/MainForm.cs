@@ -873,15 +873,38 @@ namespace OOFScheduling
                 }
             }
 
-            string[] futureWorkingTime = workingTimesArray[(int)currentCheckDate.AddDays(1).DayOfWeek].Split('~');
+            //if PermaOOF is enabled, then adjust starting check date to 00:01 on that day
+            if (OOFData.Instance.IsPermaOOFOn)
+            {
+                currentCheckDate = DateTime.Parse(OOFData.Instance.PermaOOFDate.ToString("D") + " " + "00:01");
+            }
+
+            string[] futureWorkingTime = workingTimesArray[(int)currentCheckDate.DayOfWeek].Split('~');
             EndTime = DateTime.Now;
             if (futureWorkingTime[2] == "1")
             {
-                EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime[0]);
+                if (OOFData.Instance.IsPermaOOFOn)
+                {
+                    //if PermaOOF is on, then don't add a day
+                    EndTime = DateTime.Parse(OOFData.Instance.PermaOOFDate.AddDays(0).ToString("D") + " " + futureWorkingTime[0]);
+                }
+                else
+                //if not PermaOOF, then just use the standard logic
+                {
+                    EndTime = DateTime.Parse(currentCheckDate.AddDays(1).ToString("D") + " " + futureWorkingTime[0]);
+                }
             }
             else
             {
                 int daysforward = 1;
+
+                //need to subtract one day to account for the standard next day logic
+                //adds one by default and we really want to start the math at 00:00 on the PermaOOF date
+                if (OOFData.Instance.IsPermaOOFOn)
+                {
+                    currentCheckDate = currentCheckDate.AddDays(-1);
+                }
+
                 //create a way to exit if someone has all 7 days marked as OOF
                 while (daysforward <= 365)
                 {
@@ -1270,6 +1293,17 @@ namespace OOFScheduling
                 MessageBox.Show("Failed to set OOF message. Please check your settings and try again", "OOFSponder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 //if we fail to set OOF, disable PermaOOF to reset the UI
                 OOFData.Instance.PermaOOFDate = DateTime.Now;
+
+                if (((Button)sender).Tag.ToString() == "Enable")
+                {
+                    SetUIforSecondary();
+                    OOFSponderInsights.Track("Failed while trying to enable PermaOOF");
+                }
+                else
+                {
+                    SetUIforPrimary();
+                    OOFSponderInsights.Track("Failed while trying to disable PermaOOF");
+                }
 
             }
 
