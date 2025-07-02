@@ -551,13 +551,14 @@ namespace OOFScheduling
                     //due to the way the math works out, need to add extra day if permaOOF>oofTimes[1]
                     {
                         int adjustmentDays = 0;
-                        if (!OOFData.Instance.useNewOOFMath)
-                        {
-                            if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
-                            {
-                                adjustmentDays = 1;
-                            }
-                        }
+                        //TODO: Remove since this IF is no longer necessary with the rework of the calculation logic
+                        //if (!OOFData.Instance.useNewOOFMath)
+                        //{
+                        //    if (OOFData.Instance.PermaOOFDate > oofTimes[0] && OOFData.Instance.PermaOOFDate < oofTimes[1])
+                        //    {
+                        //        adjustmentDays = 1;
+                        //    }
+                        //}
                         //in order to accomodate someone going OOF mid-schedule
                         //check if now is before the next scheduled "OFF" slot
                         //if it is, then adjust start time to NOW
