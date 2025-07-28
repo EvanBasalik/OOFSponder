@@ -1393,7 +1393,10 @@ namespace OOFScheduling
             if (primaryToolStripMenuItem.Checked)
             {
                 dtPermaOOF.Enabled = false;
-                btnPermaOOF.Enabled = false;
+
+                //TODO: remove
+                //revert back to old behavior based on user feedback
+                //btnPermaOOF.Enabled = false;
             }
             else
             {
@@ -1406,7 +1409,9 @@ namespace OOFScheduling
                     dtPermaOOF.Enabled = true;
                 }
 
-                btnPermaOOF.Enabled = true;
+                //TODO: remove
+                //revert back to old behavior based on user feedback
+                //btnPermaOOF.Enabled = true;
             }
         }
 
