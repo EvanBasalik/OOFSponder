@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "OOFScheduling/3.3.21.0": {
+      "OOFScheduling/3.3.24.0": {
         "dependencies": {
           "MSDN.HtmlEditorControl": "1.0.0",
           "Microsoft.ApplicationInsights": "2.22.0",
@@ -1093,7 +1093,7 @@
     }
   },
   "libraries": {
-    "OOFScheduling/3.3.21.0": {
+    "OOFScheduling/3.3.24.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
