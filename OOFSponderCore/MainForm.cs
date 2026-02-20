@@ -222,7 +222,7 @@ namespace OOFScheduling
 
             #region Add to Startup
 
-            AutoStartup.AddToStartup();
+            AutoStartup.AddToStartup(true);
 
             #endregion
 
