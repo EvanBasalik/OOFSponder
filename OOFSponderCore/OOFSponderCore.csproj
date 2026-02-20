@@ -71,6 +71,9 @@
     <Content Include="WhatsNew.rtf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="OOFSponderLauncher.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HTMLEditorControlCore\HTMLEditorControlCore.csproj" />
