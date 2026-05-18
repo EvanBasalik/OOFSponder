@@ -88,7 +88,7 @@ namespace OOFScheduling
             try
             {
 
-                AIClient.InstrumentationKey = "e08ff67b-d5de-4311-81f2-c04773989961";
+                Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.ConnectionString = "InstrumentationKey=de2926dc-096a-4560-861f-c3d65e5df1db;IngestionEndpoint=https://eastus2-3.in.applicationinsights.azure.com/;LiveEndpoint=https://eastus2.livediagnostics.monitor.azure.com/;ApplicationId=9c84d0b2-69e8-47ab-8d07-f78f4203b600";
 
 #if DEBUG
                 Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.TelemetryChannel.DeveloperMode = true;
