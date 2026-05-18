@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="OOFScheduling.exe" version="3.3.24.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="OOFScheduling.exe" version="3.3.26.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="OOFSponderLogo.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -81,13 +81,13 @@
       <dsig:DigestValue>6R+BhXK4gcOQcTiSey2B96C3HnSlJ5bdtuA9tCStNfM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Microsoft.Bcl.Cryptography.dll" size="96008">
+  <file name="Microsoft.Bcl.Cryptography.dll" size="296232">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>l/EEHc9XOS9ybcyaJprYioXanaL5TgWUsA6Fmp3GYw0=</dsig:DigestValue>
+      <dsig:DigestValue>qU9uHkiSf84QPpnKPDJ68v8vDPiPBRunNi4xJhspxMw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Microsoft.Extensions.Configuration.Abstractions.dll" size="28440">
@@ -249,7 +249,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>lZDXbobW8UQbxy7VJLb8WzSiA956vxaO1QpVkBz+JAU=</dsig:DigestValue>
+      <dsig:DigestValue>kLz6Z1tmlTmj80zbWiwpuJPqVFObGaoOnJb5fgn03HI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Newtonsoft.Json.dll" size="712464">
@@ -270,40 +270,40 @@
       <dsig:DigestValue>DzSCOlIKKaQaztXj8u6LpVGibKBzrOjmE5Byv3Rxgy4=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="OOFScheduling.deps.json" size="80727">
+  <file name="OOFScheduling.deps.json" size="24715">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>TF9Nr0tzC9V0Yknavz/SMg8+DQ8YFJoPxCehFMOUhBY=</dsig:DigestValue>
+      <dsig:DigestValue>WNCCWG3z6NCwqJPf55M40JQNLg+I1hTYL8nhgV42UBA=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="OOFScheduling.dll" size="783360">
+  <file name="OOFScheduling.dll" size="783872">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>1ylk3DGJgEf2Ch6wIwJtiXMpHWcmCk2EoQ14Y5nqSmU=</dsig:DigestValue>
+      <dsig:DigestValue>JmB0BUUdcGimsXWDcM+0sarJP4Y5Lp7qMlHn6ed8JII=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="OOFScheduling.exe" size="313344">
+  <file name="OOFScheduling.exe" size="314880">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>9ViAXpjW5/f/IT+sxmxbdZDNVFZrpvx4A+YurX+7VQ4=</dsig:DigestValue>
+      <dsig:DigestValue>ienFd1X9Qo5ku511zgHOoVmr9js1jclN/6Y0yA0xzFc=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="OOFScheduling.runtimeconfig.json" size="515">
+  <file name="OOFScheduling.runtimeconfig.json" size="429">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ia0epcnCC2smZUfvJ8CuOEDKtWQtPCrt8GtwJiRWcd0=</dsig:DigestValue>
+      <dsig:DigestValue>c7NzhLsAHnjbIBTTKHUOspkDk3Ev1jzQDA9Blls9vpY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="OOFSponderIcon.ico" size="162798">
@@ -351,13 +351,13 @@
       <dsig:DigestValue>qoyzXRAJP+S9pkOs0w77cKtTm30HkklBQ0DwOqjWQeM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll" size="318216">
+  <file name="runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll" size="339792">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>VSuynRU5zuOWpeOts4uWsdcRbW6hrl7U5e5aSfNAlks=</dsig:DigestValue>
+      <dsig:DigestValue>pwmaYsOqNZ23jaA4bN6owd4z0Tc7C/3jY6rBq9qD3Ic=</dsig:DigestValue>
     </hash>
   </file>
   <file name="runtimes\win-arm64\native\msalruntime_arm64.dll" size="3151392">
@@ -405,13 +405,13 @@
       <dsig:DigestValue>5eWadSitCi+94BdfIXnaoZi+VbHabivaLLS8vxVqqyQ=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="System.Formats.Asn1.dll" size="96056">
+  <file name="System.Formats.Asn1.dll" size="95568">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>zNEhhwPZ/WTckFzng5qPuqA0Ibpx8FfHs3rzfNnmN18=</dsig:DigestValue>
+      <dsig:DigestValue>kYJLoivRq6tzkO8jabypAq5ALI+feajl1/AXCN5O5HA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="System.IO.Pipelines.dll" size="77608">
@@ -423,13 +423,13 @@
       <dsig:DigestValue>o586cCb+I/8bKoTaPTYnj1pBC4CcsqEA+IbC/iemzYU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="System.Security.Cryptography.Pkcs.dll" size="264480">
+  <file name="System.Security.Cryptography.Pkcs.dll" size="286032">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>8M1y7ytlnFUAizlD7GA8SoN2hjo0RFUOIgXHP+VNfhs=</dsig:DigestValue>
+      <dsig:DigestValue>GeOOYBP7JMW9VlqW2cQ7vKi6bpBG9BgH7A+vesKc5vQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="System.Security.Cryptography.ProtectedData.dll" size="37656">
@@ -441,13 +441,13 @@
       <dsig:DigestValue>30YR3o2hsKnGQ8lM3OU/y8/zthaaxkgtuRfUfdO8oMY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="System.Security.Cryptography.Xml.dll" size="199984">
+  <file name="System.Security.Cryptography.Xml.dll" size="204624">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Q/Wnog2fO2w4jPGV9ZTOl/97jJXG1v5GOGFDji1BKW8=</dsig:DigestValue>
+      <dsig:DigestValue>qekEVRcNMxm8+koubL1hVLOwRYflkphLh3jvtjhcdNE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="System.Text.Encodings.Web.dll" size="70960">
