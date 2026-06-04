@@ -1,8 +1,15 @@
 ## ReadMe
+
 ![Image of primary UI](https://github.com/EvanBasalik/OOFSponder/blob/main/ReadMeImages/Primary.png)
 **Getting Started**
 
-Install from [here](https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application). Note that Windows will throw a warning the first time you install OOFSponder, but if you select _Keep_ and then _Run anyway_ it will install properly. Future upgrades will not show the same warning.
+👉 Try the new CDN-based, signed version here: [OOFSponder Install](https://aka.ms/OOFSponderInstall) 👈
+
+> Note: this CDN-based release is still in the early phases of rollout, so expect ongoing improvements and updates.
+
+⬇️ If you still want the legacy hosted installer, use [this old link](https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application).
+
+Note that Windows may throw a warning the first time you install the older OOFSponder, but if you select _Keep_ and then _Run anyway_ it will install properly. Future upgrades will not show the same warning.
 
 Set the hours to when you work, if you don't work that day check Off Work.  
 
