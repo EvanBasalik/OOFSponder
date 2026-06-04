@@ -3,7 +3,7 @@
 ![Image of primary UI](https://github.com/EvanBasalik/OOFSponder/blob/main/ReadMeImages/Primary.png)
 **Getting Started**
 
-👉 Try the new CDN-based, signed version here: [OOFSponder Install](https://aka.ms/OOFSponderInstall) 👈
+👉 Try the new CDN-based, signed version here: [OOFSponder CDN Install](https://aka.ms/OOFSponderInstall) 👈
 
 > Note: this CDN-based release is still in its early rollout phase, so expect ongoing improvements and updates. We will gradually move existing Click Once releases (alpha, then insider, then production) to the CDN install, hopefully with minimal disruption beyond the change itself.
 
