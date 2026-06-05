@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,6 +32,8 @@ namespace OOFSponderCore.Migration
     {
         private const string AppName = "OOFSponder";
         private const string LauncherExeName = "OOFSponderLauncher.exe";
+        private const string StandaloneFolderName = "OOFSponderStandalone";
+        private const string LauncherSubFolderName = "Launcher";
         private const string MigratedMarkerFileName = "migrated.json";
         private const string DontAskAgainMarkerFileName = "migration.dontask";
         private const string RunKeyName = "OOFSponder";
@@ -56,7 +59,7 @@ namespace OOFSponderCore.Migration
             {
                 if (!IsClickOnceInstall())
                 {
-                    SafeLog("Migration: not a ClickOnce install; skipping migration.");
+                    MigrationLog("Migration: not a ClickOnce install; skipping migration.");
                     return false;
                 }
 
@@ -65,71 +68,73 @@ namespace OOFSponderCore.Migration
 
                 if (HasMigratedMarker(appDataDir))
                 {
-                    SafeLog("Migration: migrated marker found; migration already complete.");
+                    MigrationLog("Migration: migrated marker found; migration already complete.");
                     return false;
                 }
 
                 if (HasDontAskAgainMarker(appDataDir))
                 {
-                    SafeLog("Migration: don't-ask-again marker found; skipping migration.");
+                    MigrationLog("Migration: don't-ask-again marker found; skipping migration.");
                     return false;
                 }
 
                 var coreRing = ResolveRingFromAppref();
-                SafeLog("Migration: resolved core ring '" + coreRing + "'.");
+                MigrationLog("Migration: resolved core ring '" + coreRing + "'.");
 
                 var coreCdnBase = MigrationRingResolver.GetCdnBaseUrlForRing(coreRing);
-                SafeLog("Migration: core CDN base URL is '" + coreCdnBase + "'.");
+                MigrationLog("Migration: core CDN base URL is '" + coreCdnBase + "'.");
 
-                SafeLog("Migration: downloading launcher manifest from production CDN.");
+                MigrationLog("Migration: downloading launcher manifest from production CDN.");
                 var manifest = await DownloadManifestAsync(MigrationRingResolver.ProductionCdnBaseUrl).ConfigureAwait(true);
                 var launcherEntry = MigrationRingResolver.SelectLauncherEntry(manifest, LauncherBootstrapRing);
                 if (launcherEntry == null || string.IsNullOrWhiteSpace(launcherEntry.Version))
                 {
-                    SafeLog("Migration: no launcher manifest entry for ring '" + LauncherBootstrapRing + "'.");
+                    MigrationLog("Migration: no launcher manifest entry for ring '" + LauncherBootstrapRing + "'.");
                     return false;
                 }
-                SafeLog("Migration: launcher manifest entry found; version='" + launcherEntry.Version + "'.");
+                MigrationLog("Migration: launcher manifest entry found; version='" + launcherEntry.Version + "'.");
 
                 var prompt = MigrationPrompt.Show(launcherEntry.Version, coreRing);
                 if (prompt == MigrationPromptResult.DontAskAgain)
                 {
-                    SafeLog("Migration: user chose don't-ask-again.");
+                    MigrationLog("Migration: user chose don't-ask-again.");
                     WriteDontAskAgainMarker(appDataDir);
                     return false;
                 }
                 if (prompt != MigrationPromptResult.Yes)
                 {
-                    SafeLog("Migration: user declined migration prompt.");
+                    MigrationLog("Migration: user declined migration prompt.");
                     return false;
                 }
-                SafeLog("Migration: user accepted migration prompt.");
+                MigrationLog("Migration: user accepted migration prompt.");
 
                 var installDir = GetTargetInstallDir();
-                SafeLog("Migration: target install dir is '" + installDir + "'.");
+                MigrationLog("Migration: target install dir is '" + installDir + "'.");
                 EnsureCleanTargetDir(installDir);
 
                 var launcherUrl = ResolveLauncherUrl(MigrationRingResolver.ProductionCdnBaseUrl, launcherEntry);
                 if (string.IsNullOrWhiteSpace(launcherUrl))
                 {
-                    SafeLog("Migration: launcher entry has no usable download URL.");
+                    MigrationLog("Migration: launcher entry has no usable download URL.");
                     return false;
                 }
-                SafeLog("Migration: downloading launcher from '" + launcherUrl + "'.");
+                MigrationLog("Migration: downloading launcher from '" + launcherUrl + "'.");
 
                 var launcherBytes = await DownloadAndVerifyLauncherAsync(launcherUrl, launcherEntry.Sha256Hash).ConfigureAwait(true);
                 if (launcherBytes == null)
                 {
                     return false;
                 }
-                SafeLog("Migration: launcher downloaded and SHA-256 verified (" + launcherBytes.Length + " bytes).");
+                MigrationLog("Migration: launcher downloaded and SHA-256 verified (" + launcherBytes.Length + " bytes).");
 
-                var launcherDest = Path.Combine(installDir, LauncherExeName);
+                var launcherSubDir = Path.Combine(installDir);
+                Directory.CreateDirectory(launcherSubDir);
+                var launcherDest = Path.Combine(launcherSubDir, LauncherExeName);
                 File.WriteAllBytes(launcherDest, launcherBytes);
-                SafeLog("Migration: launcher written to '" + launcherDest + "'.");
+                MigrationLog("Migration: launcher written to '" + launcherDest + "'.");
 
                 WriteAppSettingsJson(installDir, coreRing, coreCdnBase);
-                SafeLog("Migration: appsettings.json written.");
+                MigrationLog("Migration: appsettings.json written.");
 
                 // No user-settings translation is required: OOFSponderCore already
                 // persists user state to %AppData%\OOFSponder\usersettings.json using
@@ -137,19 +142,19 @@ namespace OOFSponderCore.Migration
                 // file is left in place and picked up by the new install as-is.
 
                 RepointStartupToLauncher(installDir);
-                SafeLog("Migration: startup registry key re-pointed to launcher.");
+                MigrationLog("Migration: startup registry key re-pointed to launcher.");
 
                 RemoveLegacyApprefShortcut();
-                SafeLog("Migration: legacy appref-ms shortcut removed.");
+                MigrationLog("Migration: legacy appref-ms shortcut removed.");
 
                 TryUninstallClickOnce();
-                SafeLog("Migration: ClickOnce uninstall triggered.");
+                MigrationLog("Migration: ClickOnce uninstall triggered.");
 
                 WriteMigratedMarker(appDataDir, coreRing, launcherEntry.Version, installDir);
-                SafeLog("Migration: migrated marker written.");
+                MigrationLog("Migration: migrated marker written.");
 
                 StartLauncher(installDir);
-                SafeLog("Migration: launcher process started; requesting app exit.");
+                MigrationLog("Migration: launcher process started; requesting app exit.");
 
                 // Ask the legacy app to exit so the launcher can take over cleanly.
                 Application.Exit();
@@ -157,7 +162,7 @@ namespace OOFSponderCore.Migration
             }
             catch (Exception ex)
             {
-                SafeLog("Migration failed: " + ex);
+                MigrationLog("Migration failed: " + ex);
                 return false;
             }
         }
@@ -261,7 +266,7 @@ namespace OOFSponderCore.Migration
         {
             if (string.IsNullOrWhiteSpace(expectedSha256))
             {
-                SafeLog("Migration: aborting launcher download. Manifest entry is missing Sha256Hash; refusing to install unverified launcher from " + launcherUrl);
+                MigrationLog("Migration: aborting launcher download. Manifest entry is missing Sha256Hash; refusing to install unverified launcher from " + launcherUrl);
                 return null;
             }
 
@@ -272,7 +277,7 @@ namespace OOFSponderCore.Migration
                 var actual = ComputeSha256Hex(bytes);
                 if (!actual.Equals(expectedSha256, StringComparison.OrdinalIgnoreCase))
                 {
-                    SafeLog("Migration: launcher SHA-256 mismatch. Expected " + expectedSha256 + ", got " + actual);
+                    MigrationLog("Migration: launcher SHA-256 mismatch. Expected " + expectedSha256 + ", got " + actual);
                     return null;
                 }
 
@@ -298,10 +303,10 @@ namespace OOFSponderCore.Migration
 
         private static string GetTargetInstallDir()
         {
-            // Match the launcher's default user-writable install location
-            // (ApplicationConfig.AppDirectory): %APPDATA%\OOFSponderStandalone
+            // Match the launcher's install location under the standalone root:
+            // %APPDATA%\OOFSponderStandalone\Launcher
             var appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            return Path.Combine(appData, "OOFSponderStandalone");
+            return Path.Combine(appData, StandaloneFolderName, LauncherSubFolderName);
         }
 
         private static void EnsureCleanTargetDir(string dir)
@@ -325,6 +330,12 @@ namespace OOFSponderCore.Migration
         private static void WriteAppSettingsJson(string installDir, string ring, string cdnBaseUrl)
         {
             // Shape MUST match LauncherConfiguration in src/OOFSponderLauncher.
+            // AppDirectory is the standalone root (%APPDATA%\OOFSponderStandalone),
+            // not the launcher subfolder.
+            var standaloneRoot = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                StandaloneFolderName);
+
             var config = new
             {
                 _comment = "Bootstrapped by OOFSponder ClickOnce migration on " +
@@ -343,7 +354,7 @@ namespace OOFSponderCore.Migration
                 Application = new
                 {
                     AppName = AppName,
-                    AppDirectory = installDir
+                    AppDirectory = standaloneRoot
                 },
                 DotNetRuntime = new
                 {
@@ -433,10 +444,10 @@ namespace OOFSponderCore.Migration
                             var uninstallString = sub.GetValue("UninstallString") as string;
                             if (string.IsNullOrEmpty(uninstallString)) continue;
 
-                            // ClickOnce UninstallString looks like:
-                            //   rundll32.exe dfshim.dll,ShArpMaintain ...
-                            // It accepts no real "silent" flag, so we fire-and-forget; the
-                            // user will see the standard ClickOnce confirm dialog.
+                            // Start the ClickOnce uninstall process first so dfshim.dll has
+                            // time to load while the user is reading our explanation dialog.
+                            // By the time they click OK the ClickOnce confirm dialog should
+                            // already be on screen.
                             try
                             {
                                 Process.Start(new ProcessStartInfo
@@ -450,8 +461,24 @@ namespace OOFSponderCore.Migration
                             }
                             catch (Exception ex)
                             {
-                                SafeLog("Migration: ClickOnce uninstall failed: " + ex.Message);
+                                MigrationLog("Migration: ClickOnce uninstall failed: " + ex.Message);
                             }
+
+                            // Now show our context-setting dialog. dfshim.dll is already
+                            // spinning up in the background so the ClickOnce confirm dialog
+                            // should appear shortly after (or by the time) the user clicks OK.
+                            // add a brief delay here to give ClickOnce time to show its confirm dialog before we show ours,
+                            // so they don't overlap and confuse the user. The ClickOnce dialog is modal, so if it shows after ours,
+                            // it will pop up behind and the user might miss it
+                            Thread.Sleep(1000);
+                            MessageBox.Show(
+                                "Windows will now ask you to confirm removal of the old OOFSponder ClickOnce installation.\n\n" +
+                                "This removes only the old ClickOnce copy — your settings are not affected.\n\n" +
+                                "Please confirm the Windows prompt to complete the migration.",
+                                "OOFSponder – Remove old ClickOnce version",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
+
                             return;
                         }
                     }
@@ -470,7 +497,7 @@ namespace OOFSponderCore.Migration
             var launcherPath = Path.Combine(installDir, LauncherExeName);
             if (!File.Exists(launcherPath))
             {
-                SafeLog("Migration: launcher not present at " + launcherPath);
+                MigrationLog("Migration: launcher not present at " + launcherPath);
                 return;
             }
 
@@ -530,7 +557,7 @@ namespace OOFSponderCore.Migration
             }
             catch (Exception ex)
             {
-                SafeLog("Migration: failed to write migrated marker: " + ex.Message);
+                MigrationLog("Migration: failed to write migrated marker: " + ex.Message);
             }
         }
 
@@ -541,7 +568,7 @@ namespace OOFSponderCore.Migration
             try { if (File.Exists(path)) File.Delete(path); } catch { }
         }
 
-        private static void SafeLog(string message)
+        private static void MigrationLog(string message)
         {
             try
             {
