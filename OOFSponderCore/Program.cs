@@ -34,6 +34,18 @@ namespace OOFScheduling
                     Application.SetHighDpiMode(HighDpiMode.SystemAware);
                     Application.SetCompatibleTextRenderingDefault(false);
 
+                    // One-shot ClickOnce -> launcher migration. If it returns true,
+                    // the launcher has already been started and the legacy app should exit.
+                    var migrated = OOFSponderCore.Migration.MigrationInstaller
+                        .RunIfNeededAsync()
+                        .GetAwaiter()
+                        .GetResult();
+                    if (migrated)
+                    {
+                        GC.KeepAlive(m);
+                        return;
+                    }
+
                     //switch to the new form since cannot fix the HTMLEditor scaling on Form1
                     //Application.Run(new Form1());
                     Application.Run(new MainForm());
