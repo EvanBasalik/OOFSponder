@@ -5,9 +5,9 @@
 
 👉 Try the new CDN-based, signed version here: [OOFSponder CDN Install](https://aka.ms/OOFSponderInstall) 👈
 
-> Note: this CDN-based release is still in its early rollout phase, so expect ongoing improvements and updates. We will gradually move existing Click Once releases (alpha, then insider, then production) to the CDN install, hopefully with minimal disruption beyond the change itself.
+> Note: this CDN-based release is still in its early rollout phase, so expect ongoing improvements and updates. We will gradually move existing ClickOnce releases (alpha, then insider, then production) to the CDN install, hopefully with minimal disruption beyond the change itself.
 
-If you still want the legacy Click Once installer, use [this old link](https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application).
+If you still want the legacy ClickOnce installer, use [this old link](https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application).
 
 Note that Windows may throw a warning the first time you install the older OOFSponder, but if you select _Keep_ and then _Run anyway_ it will install properly. Future upgrades will not show the same warning.
 
