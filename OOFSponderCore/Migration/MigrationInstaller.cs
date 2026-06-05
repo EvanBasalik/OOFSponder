@@ -41,8 +41,11 @@ namespace OOFSponderCore.Migration
         private const string UninstallKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
 
         // The launcher bootstrap always comes from PROD CDN, regardless of core ring.
-        // Core ring still follows the legacy ClickOnce ring and is written to appsettings.
+        // Core ring preserves the legacy ClickOnce ring for UI visibility, but CDN is
+        // always PROD (PPE is only used in local debug builds). Users can manually
+        // hand-edit appsettings to opt into alpha/insider PPE if they want.
         private const string LauncherBootstrapRing = "production";
+        private const string BootstrapCdnBaseUrl = "https://oofsponder-dev-148884-mi-aca6h9ageaeretav.b02.azurefd.net";
 
         // The legacy ClickOnce shortcut the GitHub build drops here:
         //   %AppData%\Microsoft\Windows\Start Menu\Programs\Evan Basalik\OOFSponder.appref-ms
@@ -79,20 +82,19 @@ namespace OOFSponderCore.Migration
                 }
 
                 var coreRing = ResolveRingFromAppref();
-                MigrationLog("Migration: resolved core ring '" + coreRing + "'.");
-
                 var coreCdnBase = MigrationRingResolver.GetCdnBaseUrlForRing(coreRing);
-                MigrationLog("Migration: core CDN base URL is '" + coreCdnBase + "'.");
+                MigrationLog("Migration: resolved core ring '" + coreRing + "' -> " + coreCdnBase);
 
-                MigrationLog("Migration: downloading launcher manifest from production CDN.");
                 var manifest = await DownloadManifestAsync(MigrationRingResolver.ProductionCdnBaseUrl).ConfigureAwait(true);
+                MigrationLog("Migration: downloading launcher from PROD CDN manifest...");
                 var launcherEntry = MigrationRingResolver.SelectLauncherEntry(manifest, LauncherBootstrapRing);
                 if (launcherEntry == null || string.IsNullOrWhiteSpace(launcherEntry.Version))
                 {
                     MigrationLog("Migration: no launcher manifest entry for ring '" + LauncherBootstrapRing + "'.");
                     return false;
                 }
-                MigrationLog("Migration: launcher manifest entry found; version='" + launcherEntry.Version + "'.");
+
+                MigrationLog("Migration: launcher manifest entry found; version=" + launcherEntry.Version);
 
                 var prompt = MigrationPrompt.Show(launcherEntry.Version, coreRing);
                 if (prompt == MigrationPromptResult.DontAskAgain)
@@ -103,14 +105,15 @@ namespace OOFSponderCore.Migration
                 }
                 if (prompt != MigrationPromptResult.Yes)
                 {
-                    MigrationLog("Migration: user declined migration prompt.");
+                    MigrationLog("Migration: user declined migration.");
                     return false;
                 }
-                MigrationLog("Migration: user accepted migration prompt.");
+
+                MigrationLog("Migration: user accepted migration.");
 
                 var installDir = GetTargetInstallDir();
-                MigrationLog("Migration: target install dir is '" + installDir + "'.");
                 EnsureCleanTargetDir(installDir);
+                MigrationLog("Migration: verified clean install directory.");
 
                 var launcherUrl = ResolveLauncherUrl(MigrationRingResolver.ProductionCdnBaseUrl, launcherEntry);
                 if (string.IsNullOrWhiteSpace(launcherUrl))
@@ -118,22 +121,18 @@ namespace OOFSponderCore.Migration
                     MigrationLog("Migration: launcher entry has no usable download URL.");
                     return false;
                 }
-                MigrationLog("Migration: downloading launcher from '" + launcherUrl + "'.");
 
+                MigrationLog("Migration: downloading launcher from " + launcherUrl);
                 var launcherBytes = await DownloadAndVerifyLauncherAsync(launcherUrl, launcherEntry.Sha256Hash).ConfigureAwait(true);
                 if (launcherBytes == null)
                 {
+                    MigrationLog("Migration: launcher download or verification failed.");
                     return false;
                 }
-                MigrationLog("Migration: launcher downloaded and SHA-256 verified (" + launcherBytes.Length + " bytes).");
 
-                var launcherSubDir = Path.Combine(installDir);
-                Directory.CreateDirectory(launcherSubDir);
-                var launcherDest = Path.Combine(launcherSubDir, LauncherExeName);
-                File.WriteAllBytes(launcherDest, launcherBytes);
-                MigrationLog("Migration: launcher written to '" + launcherDest + "'.");
-
-                WriteAppSettingsJson(installDir, coreRing, coreCdnBase);
+                MigrationLog("Migration: launcher downloaded and verified; writing to " + installDir);
+                File.WriteAllBytes(Path.Combine(installDir, LauncherExeName), launcherBytes);
+                WriteAppSettingsJson(installDir, coreRing, BootstrapCdnBaseUrl);
                 MigrationLog("Migration: appsettings.json written.");
 
                 // No user-settings translation is required: OOFSponderCore already
