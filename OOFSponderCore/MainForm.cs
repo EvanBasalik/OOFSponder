@@ -732,16 +732,8 @@ namespace OOFScheduling
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
-
                         OOFSponder.Logger.Info("Successfully set OOF");
-
-                        //also update Teams status if enabled - Teams presence expires hourly so refresh each cycle
-                        if (OOFData.Instance.SetTeamsStatus)
-                        {
-                            bool isCurrentlyOOF = DateTime.Now >= StartTime && DateTime.Now <= EndTime;
-                            try { await O365.SetTeamsPresenceAsync(isCurrentlyOOF); } catch (Exception tex) { OOFSponder.Logger.Error("Teams presence update failed", tex); }
-                        }
-
+                        await TryUpdateTeamsPresenceAsync(StartTime, EndTime);
                         return true;
                     }
                     else
@@ -755,14 +747,7 @@ namespace OOFScheduling
                 {
                     OOFSponder.Logger.Info("Remote OOF matches - no changes");
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
-
-                    //also update Teams status if enabled - Teams presence expires hourly so refresh each cycle
-                    if (OOFData.Instance.SetTeamsStatus)
-                    {
-                        bool isCurrentlyOOF = DateTime.Now >= StartTime && DateTime.Now <= EndTime;
-                        try { await O365.SetTeamsPresenceAsync(isCurrentlyOOF); } catch (Exception tex) { OOFSponder.Logger.Error("Teams presence update failed", tex); }
-                    }
-
+                    await TryUpdateTeamsPresenceAsync(StartTime, EndTime);
                     return true;
                 }
             }
@@ -1893,6 +1878,29 @@ namespace OOFScheduling
 
             //force a save so the preference is persisted immediately
             saveSettings();
+        }
+
+        /// <summary>
+        /// Updates Teams presence based on whether the user is currently within an OOF window.
+        /// Silently swallows failures so Teams status issues never block OOF setting.
+        /// Teams presence has a 1-hour server-side expiry, so this must be called every cycle.
+        /// </summary>
+        private async System.Threading.Tasks.Task TryUpdateTeamsPresenceAsync(DateTime startTime, DateTime endTime)
+        {
+            if (!OOFData.Instance.SetTeamsStatus)
+            {
+                return;
+            }
+
+            bool isCurrentlyOOF = DateTime.Now >= startTime && DateTime.Now <= endTime;
+            try
+            {
+                await O365.SetTeamsPresenceAsync(isCurrentlyOOF);
+            }
+            catch (Exception ex)
+            {
+                OOFSponder.Logger.Error("Teams presence update failed", ex);
+            }
         }
     }
 

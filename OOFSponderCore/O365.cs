@@ -36,6 +36,9 @@ namespace OOFScheduling
 
         internal static AuthenticationResult authResult = null;
 
+        //shared HttpClient for Teams presence requests
+        private static readonly System.Net.Http.HttpClient _presenceHttpClient = new System.Net.Http.HttpClient();
+
         internal enum AADAction
         {
             SignIn, SignOut, ForceSignIn
@@ -373,8 +376,6 @@ namespace OOFScheduling
                 return false;
             }
 
-            var httpClient = new System.Net.Http.HttpClient();
-
             try
             {
 #if !NOOOF
@@ -409,7 +410,7 @@ namespace OOFScheduling
                 request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
 
                 OOFSponder.Logger.Info("Sending Teams presence request to Graph: " + (isOOF ? "setPresence Away" : "clearPresence"));
-                var response = await httpClient.SendAsync(request);
+                var response = await _presenceHttpClient.SendAsync(request);
                 OOFSponder.Logger.Info("Teams presence response: " + response.StatusCode.ToString());
 
                 return response.IsSuccessStatusCode;
