@@ -164,13 +164,13 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
     public ICommand SignOutCommand { get; }
     public ICommand ApplyNowCommand { get; }
 
-    private async Task SaveAsync()
+    private Task SaveAsync()
     {
         AppLogger.Info("SaveAsync");
         PushToModel();
         _data.WriteProperties();
         StatusText = "Settings saved.";
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 
     private async Task SignInAsync()
@@ -188,14 +188,14 @@ public sealed class MainViewModel : ViewModelBase, IDisposable
         StatusText = "Signed out.";
     }
 
-    private async Task ApplyNowAsync()
+    private Task ApplyNowAsync()
     {
         StatusText = "Applying OOF settings…";
         PushToModel();
         // Restart scheduler so it applies immediately
         _scheduler.Stop();
         _scheduler.Start();
-        await Task.CompletedTask;
+        return Task.CompletedTask;
     }
 
     // ─── Model sync ───────────────────────────────────────────────────────────

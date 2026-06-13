@@ -45,23 +45,19 @@ public static class O365Service
         set => _defaultUserUPN = value;
     }
 
-    public static bool IsSignedIn
+    public static async Task<bool> IsSignedInAsync()
     {
-        get
+        if (_pca == null) return false;
+        try
         {
-            if (_pca == null) return false;
-            try
-            {
-                var task = _pca.GetAccountsAsync();
-                task.Wait(10_000);
-                return task.Result.Any(a =>
-                    string.IsNullOrEmpty(_defaultUserUPN) ||
-                    a.Username.Equals(_defaultUserUPN, StringComparison.OrdinalIgnoreCase));
-            }
-            catch
-            {
-                return false;
-            }
+            var accounts = await _pca.GetAccountsAsync().ConfigureAwait(false);
+            return accounts.Any(a =>
+                string.IsNullOrEmpty(_defaultUserUPN) ||
+                a.Username.Equals(_defaultUserUPN, StringComparison.OrdinalIgnoreCase));
+        }
+        catch
+        {
+            return false;
         }
     }
 

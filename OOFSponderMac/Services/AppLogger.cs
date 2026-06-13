@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace OOFSponderMac.Services;
 
@@ -66,8 +67,12 @@ public static class AppLogger
             var dir = Path.GetDirectoryName(path)!;
             var stem = Path.GetFileNameWithoutExtension(path);
             var ext = Path.GetExtension(path);
-            var rolled = Directory.GetFiles(dir, $"{stem}*.{ext.TrimStart('.')}")
-                .Where(f => f.Length == path.Length + 2)
+            // Match rolled files of the form "{stem}.{digits}{ext}" (e.g. oofsponder.0.log, oofsponder.10.log)
+            var rolledPattern = new Regex(
+                $@"^{Regex.Escape(stem)}\.\d+{Regex.Escape(ext)}$",
+                RegexOptions.IgnoreCase);
+            var rolled = Directory.GetFiles(dir, $"{stem}*{ext}")
+                .Where(f => rolledPattern.IsMatch(Path.GetFileName(f)))
                 .OrderByDescending(f => f)
                 .ToList();
 

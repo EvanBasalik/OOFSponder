@@ -185,8 +185,11 @@ public class OOFData : IDisposable
                 var day = new WorkingDay { DayOfWeek = (SysDayOfWeek)i };
                 try
                 {
-                    day.StartTime = DateTime.Parse(parts[0]);
-                    day.EndTime = DateTime.Parse(parts[1]);
+                    if (!DateTime.TryParse(parts[0], out var start) ||
+                        !DateTime.TryParse(parts[1], out var end))
+                        throw new FormatException("Invalid time format");
+                    day.StartTime = start;
+                    day.EndTime = end;
                     day.IsOOF = parts[2] == "0";
                 }
                 catch

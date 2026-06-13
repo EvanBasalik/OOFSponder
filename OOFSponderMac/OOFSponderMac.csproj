@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <!-- net8.0 targets Windows, macOS, and Linux -->
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>OOFSponderMac</RootNamespace>
     <AssemblyName>OOFSponderMac</AssemblyName>

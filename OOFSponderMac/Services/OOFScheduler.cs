@@ -78,7 +78,7 @@ public sealed class OOFScheduler : IDisposable
             return;
         }
 
-        if (!O365Service.IsSignedIn)
+        if (!await O365Service.IsSignedInAsync().ConfigureAwait(false))
         {
             AppLogger.Info("ApplyOOFAsync: not signed in – attempting silent sign-in");
             bool ok = await O365Service.SignInAsync();
