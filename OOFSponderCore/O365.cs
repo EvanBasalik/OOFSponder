@@ -20,13 +20,16 @@ namespace OOFScheduling
         internal static IPublicClientApplication PublicClientApp;
         internal static string AutomatedReplySettingsURL = "/mailboxSettings/automaticRepliesSetting";
         internal static string MailboxSettingsURL = "/mailboxSettings";
+        internal static string SetPresenceURL = "/presence/setPresence";
+        internal static string ClearPresenceURL = "/presence/clearPresence";
+        internal static string PresenceSessionId = "OOFSponder";
         public static object pcaInitLock = new object();
 
         //Set the API Endpoint to Graph 'me' endpoint
         static string _graphAPIEndpoint = "https://graph.microsoft.com/v1.0/me";
 
         //Set the scope for API call to user.read
-        static string[] _scopes = new string[] { "user.read", "MailboxSettings.ReadWrite" };
+        static string[] _scopes = new string[] { "user.read", "MailboxSettings.ReadWrite", "Presence.ReadWrite" };
 
         //create something we can lock against
         internal static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
@@ -349,6 +352,76 @@ namespace OOFScheduling
             {
                 OOFSponder.Logger.Error(new Exception("Unable to set OOF", ex));
                 throw new Exception("Unable to set OOF: " + ex.Message, ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets or clears the Teams presence for the signed-in user.
+        /// When isOOF is true, presence is set to Away. When false, the app-set presence is cleared.
+        /// </summary>
+        /// <param name="isOOF">True to set Teams status to Away; false to clear the app-set presence.</param>
+        public static async Task<bool> SetTeamsPresenceAsync(bool isOOF)
+        {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod() + " isOOF=" + isOOF);
+
+            //check and refresh token if necessary
+            await O365.MSALWork(O365.AADAction.SignIn);
+
+            if (authResult == null)
+            {
+                OOFSponder.Logger.Error("SetTeamsPresenceAsync: authResult is null, cannot set Teams presence");
+                return false;
+            }
+
+            var httpClient = new System.Net.Http.HttpClient();
+
+            try
+            {
+#if !NOOOF
+                string jsonBody;
+                string presenceUrl;
+
+                if (isOOF)
+                {
+                    // Set presence to Away for the OOF period; expiration of 1 hour ensures
+                    // Teams reverts automatically if OOFSponder stops running
+                    presenceUrl = UrlCombine(_graphAPIEndpoint, SetPresenceURL);
+                    jsonBody = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                    {
+                        sessionId = PresenceSessionId,
+                        availability = "Away",
+                        activity = "Away",
+                        expirationDuration = "PT1H"
+                    });
+                }
+                else
+                {
+                    // Clear the OOFSponder-set presence so Teams manages status normally
+                    presenceUrl = UrlCombine(_graphAPIEndpoint, ClearPresenceURL);
+                    jsonBody = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                    {
+                        sessionId = PresenceSessionId
+                    });
+                }
+
+                var request = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, presenceUrl);
+                request.Content = new System.Net.Http.StringContent(jsonBody, Encoding.UTF8, "application/json");
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authResult.AccessToken);
+
+                OOFSponder.Logger.Info("Sending Teams presence request to Graph: " + (isOOF ? "setPresence Away" : "clearPresence"));
+                var response = await httpClient.SendAsync(request);
+                OOFSponder.Logger.Info("Teams presence response: " + response.StatusCode.ToString());
+
+                return response.IsSuccessStatusCode;
+#else
+                OOFSponder.Logger.Warning("Running NOOOF mode - not actually setting Teams presence");
+                return true;
+#endif
+            }
+            catch (Exception ex)
+            {
+                OOFSponder.Logger.Error(new Exception("Unable to set Teams presence", ex));
+                return false;
             }
         }
 
