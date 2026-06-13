@@ -107,9 +107,9 @@ namespace OOFScheduling
                                 return path;
                         }
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        // Fall through to path-based detection
+                        Logger.Error("Could not parse Dropbox info file '" + infoFile + "': " + ex.Message);
                     }
                 }
             }
@@ -187,7 +187,7 @@ namespace OOFScheduling
             }
             catch (Exception ex)
             {
-                Logger.Error("Error reading cloud storage config: " + ex.Message);
+                Logger.Error("Error reading cloud storage config", ex);
             }
             return null;
         }

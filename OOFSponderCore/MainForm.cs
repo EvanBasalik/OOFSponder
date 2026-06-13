@@ -1683,7 +1683,7 @@ namespace OOFScheduling
 
             string providerInfo = detectedProviders.Count > 0
                 ? "Detected cloud providers:\n" + string.Join("\n",
-                    detectedProviders.ConvertAll(p => $"  \u2022 {p.Name}: {p.BasePath}"))
+                    detectedProviders.ConvertAll(p => $"  - {p.Name}: {p.BasePath}"))
                 : "No cloud providers were automatically detected.";
 
             string message = currentStatus + "\n\n" + providerInfo +
@@ -1721,7 +1721,11 @@ namespace OOFScheduling
                         currentSettingsFolder,
                         SettingsHelpers.PerUserSettingsFile());
 
-                    if (System.IO.File.Exists(currentSettingsFile) && selectedPath != currentSettingsFolder)
+                    if (System.IO.File.Exists(currentSettingsFile) &&
+                        !string.Equals(
+                            System.IO.Path.GetFullPath(selectedPath),
+                            System.IO.Path.GetFullPath(currentSettingsFolder),
+                            StringComparison.OrdinalIgnoreCase))
                     {
                         var copyResult = MessageBox.Show(
                             "Would you like to copy your current settings to the new location?",
