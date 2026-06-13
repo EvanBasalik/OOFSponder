@@ -1670,6 +1670,123 @@ namespace OOFScheduling
             System.Diagnostics.Process.Start(psi);
         }
 
+        private void tsmiCloudStorage_Click(object sender, EventArgs e)
+        {
+            OOFSponder.Logger.Info(OOFSponderInsights.CurrentMethod());
+
+            string currentPath = CloudStorageHelper.GetCloudStoragePath();
+            var detectedProviders = CloudStorageHelper.DetectCloudProviders();
+
+            string currentStatus = string.IsNullOrEmpty(currentPath)
+                ? $"Current: Local storage only\n  ({Program.AppDataRoamingFolder})"
+                : $"Current: Cloud storage\n  ({currentPath})";
+
+            string providerInfo = detectedProviders.Count > 0
+                ? "Detected cloud providers:\n" + string.Join("\n",
+                    detectedProviders.ConvertAll(p => $"  \u2022 {p.Name}: {p.BasePath}"))
+                : "No cloud providers were automatically detected.";
+
+            string message = currentStatus + "\n\n" + providerInfo +
+                "\n\nClick Yes to choose a cloud storage folder, or No to clear cloud storage and use local storage.";
+
+            var choice = MessageBox.Show(
+                message,
+                "Cloud Storage Settings",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question);
+
+            if (choice == DialogResult.Yes)
+            {
+                using var folderDialog = new System.Windows.Forms.FolderBrowserDialog();
+                folderDialog.Description = "Select a folder for OOFSponder settings.\n" +
+                    "Choose a folder inside OneDrive, Dropbox, Google Drive, or any synced cloud folder.";
+                folderDialog.UseDescriptionForTitle = true;
+                folderDialog.ShowNewFolderButton = true;
+
+                // Default to the first detected cloud provider, otherwise current path, otherwise user profile
+                if (!string.IsNullOrEmpty(currentPath))
+                    folderDialog.InitialDirectory = currentPath;
+                else if (detectedProviders.Count > 0)
+                    folderDialog.InitialDirectory = detectedProviders[0].BasePath;
+                else
+                    folderDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+                if (folderDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    string selectedPath = folderDialog.SelectedPath;
+
+                    // Offer to copy existing settings to the new location
+                    string currentSettingsFolder = CloudStorageHelper.GetEffectiveSettingsFolder();
+                    string currentSettingsFile = System.IO.Path.Combine(
+                        currentSettingsFolder,
+                        SettingsHelpers.PerUserSettingsFile());
+
+                    if (System.IO.File.Exists(currentSettingsFile) && selectedPath != currentSettingsFolder)
+                    {
+                        var copyResult = MessageBox.Show(
+                            "Would you like to copy your current settings to the new location?",
+                            "Copy Settings?",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question);
+
+                        if (copyResult == DialogResult.Yes)
+                        {
+                            try
+                            {
+                                if (!System.IO.Directory.Exists(selectedPath))
+                                    System.IO.Directory.CreateDirectory(selectedPath);
+
+                                string targetFile = System.IO.Path.Combine(selectedPath, SettingsHelpers.PerUserSettingsFile());
+                                System.IO.File.Copy(currentSettingsFile, targetFile, true);
+                                Logger.Info("Copied settings to cloud storage: " + targetFile);
+                            }
+                            catch (Exception ex)
+                            {
+                                Logger.Error("Failed to copy settings to cloud storage", ex);
+                                MessageBox.Show(
+                                    "Could not copy settings: " + ex.Message,
+                                    "Copy Failed",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                            }
+                        }
+                    }
+
+                    CloudStorageHelper.SetCloudStoragePath(selectedPath);
+
+                    MessageBox.Show(
+                        $"Cloud storage path set to:\n{selectedPath}\n\nSettings will be read from and saved to this location.",
+                        "Cloud Storage Set",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+
+                    toolStripStatusLabel1.Text = "Cloud storage path updated";
+                    Logger.Info("Cloud storage path set to: " + selectedPath);
+                }
+            }
+            else if (choice == DialogResult.No && !string.IsNullOrEmpty(currentPath))
+            {
+                var clearResult = MessageBox.Show(
+                    "Clear the cloud storage setting and save settings to local AppData instead?",
+                    "Clear Cloud Storage?",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (clearResult == DialogResult.Yes)
+                {
+                    CloudStorageHelper.SetCloudStoragePath(null);
+                    toolStripStatusLabel1.Text = "Cloud storage cleared - using local storage";
+                    Logger.Info("Cloud storage cleared - reverting to local AppData");
+
+                    MessageBox.Show(
+                        "Cloud storage cleared.\nSettings will now be stored locally in:\n" + Program.AppDataRoamingFolder,
+                        "Cloud Storage Cleared",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+            }
+        }
+
         private void MainForm_ResizeEnd(object sender, EventArgs e)
         {
 
