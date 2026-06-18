@@ -669,6 +669,9 @@ namespace OOFScheduling
         {
             OOFSponder.Logger.Info("Reading settings");
 
+            string settingsFolder = CloudStorageHelper.GetEffectiveSettingsFolder();
+            OOFSponder.Logger.Info("Settings folder: " + CloudStorageHelper.GetEffectiveSettingsFolderDescription());
+
             //new approach using appsettings.json
             var config = new ConfigurationBuilder()
                 .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
@@ -678,7 +681,7 @@ namespace OOFScheduling
                 //and if the user's file doesn't have them, the new default gets added
                 //from the updated appsettings.json
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile(Path.Combine(Logger.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile()), true)
+                .AddJsonFile(Path.Combine(settingsFolder, SettingsHelpers.PerUserSettingsFile()), true)
                 .Build();
 
             OOFSponderConfig.Root OOFSponderConfig = new OOFSponderConfig.Root();
@@ -778,8 +781,10 @@ namespace OOFScheduling
             string jsonString = System.Text.Json.JsonSerializer.Serialize(config, options);
 
             // Write the JSON string to a file
-            //user-specific appsettings.json
-            string userappsettingsFile = Path.Combine(Logger.PerUserDataFolder(), SettingsHelpers.PerUserSettingsFile());
+            //user-specific appsettings.json, stored in the effective settings folder (cloud or local)
+            string settingsFolder = CloudStorageHelper.GetEffectiveSettingsFolder();
+            OOFSponder.Logger.Info("Writing settings to: " + CloudStorageHelper.GetEffectiveSettingsFolderDescription());
+            string userappsettingsFile = Path.Combine(settingsFolder, SettingsHelpers.PerUserSettingsFile());
             System.IO.File.WriteAllText(userappsettingsFile, jsonString);
 
             OOFSponder.Logger.Info("Persisted settings");

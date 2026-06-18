@@ -40,6 +40,7 @@
             tsmiShowOOFMessageFolder = new System.Windows.Forms.ToolStripMenuItem();
             tsmiStartMinimized = new System.Windows.Forms.ToolStripMenuItem();
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiCloudStorage = new System.Windows.Forms.ToolStripMenuItem();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             tsmiUseNewOOFMath = new System.Windows.Forms.ToolStripMenuItem();
             showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -203,12 +204,22 @@
             enableOnCallModeToolStripMenuItem.Visible = false;
             enableOnCallModeToolStripMenuItem.Click += enableOnCallModeToolStripMenuItem_Click;
             // 
+            // tsmiCloudStorage
+            // 
+            tsmiCloudStorage.AccessibleDescription = "A menu item that opens cloud storage settings";
+            tsmiCloudStorage.AccessibleName = "Cloud storage settings";
+            tsmiCloudStorage.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiCloudStorage.Name = "tsmiCloudStorage";
+            tsmiCloudStorage.Size = new System.Drawing.Size(225, 22);
+            tsmiCloudStorage.Text = "&Cloud storage...";
+            tsmiCloudStorage.Click += tsmiCloudStorage_Click;
+            // 
             // fileToolStripMenuItem
             // 
             fileToolStripMenuItem.AccessibleDescription = "File";
             fileToolStripMenuItem.AccessibleName = "File";
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, tsmiUseNewOOFMath, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, tsmiUseNewOOFMath, enableOnCallModeToolStripMenuItem, tsmiCloudStorage, showLogsToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(46, 22);
             fileToolStripMenuItem.Text = "&File...";
@@ -925,6 +936,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiShowOOFMessageFolder;
         private System.Windows.Forms.ToolStripMenuItem tsmiStartMinimized;
         private System.Windows.Forms.ToolStripMenuItem enableOnCallModeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCloudStorage;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showLogsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem oOFSponderLogToolStripMenuItem;
