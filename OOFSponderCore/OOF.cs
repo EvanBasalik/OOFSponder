@@ -632,6 +632,7 @@ namespace OOFScheduling
 
         public bool useNewOOFMath { get; internal set; }
         public bool StartMinimized { get; internal set; }
+        public bool SetTeamsStatus { get; set; }
 
         public Microsoft.Graph.ExternalAudienceScope _externalAudienceScope;
         public bool UnabletoParseWorkingHours = false;
@@ -703,6 +704,7 @@ namespace OOFScheduling
 
             instance.IsOnCallModeOn = OOFSponderConfig.OOFData.IsOnCallModeOn == baseBool ? false : OOFSponderConfig.OOFData.IsOnCallModeOn;
             instance.StartMinimized = OOFSponderConfig.OOFData.StartMinimized == baseBool ? false : OOFSponderConfig.OOFData.StartMinimized;
+            instance.SetTeamsStatus = OOFSponderConfig.OOFData.SetTeamsStatus;
 
             instance.UserSettingsSource = OOFSponderConfig.UserSettingsSource;
 
@@ -752,6 +754,7 @@ namespace OOFScheduling
             config.OOFData.WorkingHours = instance.WorkingHours;
             config.OOFData.IsOnCallModeOn = instance.IsOnCallModeOn;
             config.OOFData.StartMinimized = instance.StartMinimized;
+            config.OOFData.SetTeamsStatus = instance.SetTeamsStatus;
             config.OOFData.ExternalAudienceScope = (Microsoft.Graph.ExternalAudienceScope)instance.ExternalAudienceScope;
             config.UserSettingsSource = "OOFSponder_Core_" + RuntimeInformation.FrameworkDescription;
             config.OOFData.WorkingDayCollection = instance.WorkingDayCollection;
