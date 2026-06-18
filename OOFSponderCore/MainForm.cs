@@ -183,8 +183,6 @@ namespace OOFScheduling
             }
 
             cboExternalAudienceScope.SelectedIndex = (int)OOFData.Instance.ExternalAudienceScope;
-            //need to decide if the External Message needs to be marked ReadOnly
-            DecideonHTMLReadOnly();
 
             //pull all the runtime accessibility work into one place
             //wire up to respond to changes
@@ -321,16 +319,17 @@ namespace OOFScheduling
             tsmiStartMinimized.Click += tsmiStartMinimized_CheckStateChanged;
             #endregion
 
-            //wait on async auth stuff if not null
-            if (AuthTask != null)
-            {
-                AuthTask.Wait();
-            }
-
             //fileToolStripMenuItem.DropDownOpening += fileToolStripMenuItem_DropDownOpening;
 
-            //now that everything is loaded, trigger a check on current status
-            System.Threading.Tasks.Task.Run(() => RunSetOofO365());
+            //trigger a check on current status after auth completes, without blocking the UI thread
+            if (AuthTask != null)
+            {
+                AuthTask.ContinueWith(_ => RunSetOofO365());
+            }
+            else
+            {
+                System.Threading.Tasks.Task.Run(() => RunSetOofO365());
+            }
 
             //unset the base instantiation tracker
             inInitialization = false;
