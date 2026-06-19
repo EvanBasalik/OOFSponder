@@ -5,6 +5,10 @@
 
 👉 Try the new CDN-based, signed version here: [OOFSponder CDN Install](https://aka.ms/OOFSponderInstall) 👈
 
+> Platform support: OOFSponder ships as a Windows desktop app (`OOFSponderCore`).  
+> A cross-platform macOS/Linux version (`OOFSponderMac`) is also available in this repository, built with [Avalonia UI](https://avaloniaui.net/).  
+> See the `OOFSponderMac/` folder to build and run it on macOS or Linux.
+
 The migration to the CDN-based release will show some approval/install prompts, but general functionality won't change and it will still continue to auto-update.
 
 > Note: Alpha and Insider are already migrated to the new CDN release, but Production won't go for a bit longer still. 
