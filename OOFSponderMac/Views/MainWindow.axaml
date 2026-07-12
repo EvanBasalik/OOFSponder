@@ -1,0 +1,227 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:OOFSponderMac.ViewModels"
+        x:Class="OOFSponderMac.Views.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="OOFSponder"
+        Width="800"
+        Height="700"
+        MinWidth="680"
+        MinHeight="600"
+        WindowStartupLocation="CenterScreen">
+
+    <DockPanel LastChildFill="True">
+
+        <!-- ═══ Status bar ═══ -->
+        <Border DockPanel.Dock="Bottom"
+                Background="{DynamicResource SystemControlBackgroundChromeMediumBrush}"
+                Padding="8,4">
+            <TextBlock Text="{Binding StatusText}"
+                       FontSize="12"
+                       Opacity="0.8" />
+        </Border>
+
+        <!-- ═══ Sign-in bar ═══ -->
+        <Border DockPanel.Dock="Top"
+                Background="{DynamicResource SystemControlBackgroundChromeMediumLowBrush}"
+                Padding="8,6">
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock Text="{Binding SignedInText}"
+                           VerticalAlignment="Center"
+                           FontSize="12" />
+                <Button Content="Sign In"
+                        Command="{Binding SignInCommand}"
+                        IsVisible="{Binding !IsSignedIn}"
+                        Padding="12,4" />
+                <Button Content="Sign Out"
+                        Command="{Binding SignOutCommand}"
+                        IsVisible="{Binding IsSignedIn}"
+                        Padding="12,4" />
+            </StackPanel>
+        </Border>
+
+        <!-- ═══ Action toolbar ═══ -->
+        <Border DockPanel.Dock="Bottom"
+                Padding="8">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Spacing="8">
+                <Button Content="Apply Now"
+                        Command="{Binding ApplyNowCommand}"
+                        Padding="14,6" />
+                <Button Content="Save Settings"
+                        Command="{Binding SaveCommand}"
+                        Padding="14,6" />
+            </StackPanel>
+        </Border>
+
+        <!-- ═══ Tab control ═══ -->
+        <TabControl Margin="4">
+
+            <!-- ── Working Schedule ── -->
+            <TabItem Header="Working Hours">
+                <ScrollViewer Padding="8">
+                    <StackPanel Spacing="2">
+                        <TextBlock Text="Mark a day as 'Off Work' to set OOF on that day."
+                                   FontSize="12"
+                                   Opacity="0.7"
+                                   Margin="0,0,0,8" />
+
+                        <!-- Column headers -->
+                        <Grid ColumnDefinitions="120,90,90,90,90" Margin="0,0,0,4">
+                            <TextBlock Grid.Column="0" Text="Day"       FontWeight="SemiBold" />
+                            <TextBlock Grid.Column="1" Text="Off Work"  FontWeight="SemiBold" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="2" Text="Start"     FontWeight="SemiBold" HorizontalAlignment="Center" />
+                            <TextBlock Grid.Column="3" Text="End"       FontWeight="SemiBold" HorizontalAlignment="Center" />
+                        </Grid>
+
+                        <!-- One row per day -->
+                        <ItemsControl ItemsSource="{Binding WorkingDays}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="vm:WorkingDayViewModel">
+                                    <Grid ColumnDefinitions="120,90,90,90"
+                                          Margin="0,2">
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding DayName}"
+                                                   VerticalAlignment="Center" />
+                                        <CheckBox  Grid.Column="1"
+                                                   IsChecked="{Binding IsOOF}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   ToolTip.Tip="Check to mark this day as Off Work (OOF active)" />
+                                        <TextBox   Grid.Column="2"
+                                                   Text="{Binding StartTimeDisplay}"
+                                                   IsEnabled="{Binding TimePickersEnabled}"
+                                                   HorizontalAlignment="Center"
+                                                   Width="70"
+                                                   ToolTip.Tip="Start of working day (HH:mm)" />
+                                        <TextBox   Grid.Column="3"
+                                                   Text="{Binding EndTimeDisplay}"
+                                                   IsEnabled="{Binding TimePickersEnabled}"
+                                                   HorizontalAlignment="Center"
+                                                   Width="70"
+                                                   ToolTip.Tip="End of working day (HH:mm)" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Separator Margin="0,12" />
+
+                        <!-- On-call mode -->
+                        <CheckBox IsChecked="{Binding IsOnCallModeOn}"
+                                  Content="On-call mode (flip OOF logic: OOF during hours shown above)"
+                                  Margin="0,4" />
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- ── Primary OOF ── -->
+            <TabItem Header="Primary OOF">
+                <Grid RowDefinitions="Auto,*,Auto,*,Auto" Margin="8">
+
+                    <TextBlock Grid.Row="0"
+                               Text="External recipients"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,4" />
+                    <TextBox   Grid.Row="1"
+                               Text="{Binding PrimaryOOFExternal}"
+                               AcceptsReturn="True"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Stretch"
+                               Margin="0,0,0,8"
+                               ToolTip.Tip="HTML or plain text OOF message shown to external recipients" />
+
+                    <TextBlock Grid.Row="2"
+                               Text="Internal recipients"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,4" />
+                    <TextBox   Grid.Row="3"
+                               Text="{Binding PrimaryOOFInternal}"
+                               AcceptsReturn="True"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Stretch"
+                               Margin="0,0,0,8"
+                               ToolTip.Tip="HTML or plain text OOF message shown to internal recipients" />
+
+                    <!-- External audience scope -->
+                    <StackPanel Grid.Row="4"
+                                Orientation="Horizontal"
+                                Spacing="8"
+                                Margin="0,4">
+                        <TextBlock Text="External audience:"
+                                   VerticalAlignment="Center" />
+                        <ComboBox ItemsSource="{Binding AudienceScopes}"
+                                  SelectedIndex="{Binding ExternalAudienceIndex}"
+                                  Width="200" />
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <!-- ── Secondary / Extended OOF ── -->
+            <TabItem Header="Extended OOF">
+                <Grid RowDefinitions="Auto,Auto,*,Auto,*" Margin="8">
+
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal"
+                                Spacing="12"
+                                Margin="0,0,0,8">
+                        <CheckBox IsChecked="{Binding IsPermaOOFMode}"
+                                  Content="Enable extended OOF (away for multiple days)" />
+                    </StackPanel>
+
+                    <!-- Perma-OOF date picker -->
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                Spacing="8"
+                                IsVisible="{Binding PermaOOFVisible}"
+                                Margin="0,0,0,8">
+                        <TextBlock Text="Resume normal schedule on:"
+                                   VerticalAlignment="Center" />
+                        <CalendarDatePicker SelectedDate="{Binding PermaOOFDate}"
+                                            Width="160" />
+                    </StackPanel>
+
+                    <TextBlock Grid.Row="2"
+                               Text="External recipients (extended OOF)"
+                               FontWeight="SemiBold"
+                               Margin="0,0,0,4" />
+                    <!-- Note: XAML Row 2 label needs to be Row 2, messages Row 3 -->
+
+                    <TextBox   Grid.Row="3"
+                               Text="{Binding SecondaryOOFExternal}"
+                               AcceptsReturn="True"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Stretch"
+                               Margin="0,0,0,8"
+                               ToolTip.Tip="HTML or plain text extended OOF message shown to external recipients" />
+                    <TextBox   Grid.Row="4"
+                               Text="{Binding SecondaryOOFInternal}"
+                               AcceptsReturn="True"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Stretch"
+                               ToolTip.Tip="HTML or plain text extended OOF message shown to internal recipients" />
+                </Grid>
+            </TabItem>
+
+            <!-- ── Settings ── -->
+            <TabItem Header="Settings">
+                <StackPanel Spacing="12" Margin="16">
+                    <CheckBox IsChecked="{Binding StartMinimized}"
+                              Content="Start minimized (OOFSponder runs in the background on launch)" />
+                    <TextBlock Text="OOFSponder checks your schedule every 10 minutes and updates your Out-of-Office reply in Exchange Online automatically."
+                               TextWrapping="Wrap"
+                               Opacity="0.7"
+                               FontSize="12" />
+                    <TextBlock Text="Hint: You can copy your OOF message from Outlook and paste HTML directly into the message boxes."
+                               TextWrapping="Wrap"
+                               Opacity="0.7"
+                               FontSize="12" />
+                </StackPanel>
+            </TabItem>
+
+        </TabControl>
+
+    </DockPanel>
+
+</Window>

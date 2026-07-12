@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <!-- net8.0 targets Windows, macOS, and Linux -->
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>OOFSponderMac</RootNamespace>
+    <AssemblyName>OOFSponderMac</AssemblyName>
+    <ProductName>OOFSponder</ProductName>
+    <Version>1.0.0</Version>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Avalonia cross-platform UI -->
+    <PackageReference Include="Avalonia" Version="11.2.7" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.2.7" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.7" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.7" />
+
+    <!-- Microsoft Graph for OOF API calls -->
+    <PackageReference Include="Microsoft.Graph" Version="3.21.0" />
+
+    <!-- MSAL – cross-platform authentication (no Windows broker) -->
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.67.1" />
+    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.67.1" />
+
+    <!-- Settings and serialization -->
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+
+    <!-- Telemetry -->
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.22.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>
