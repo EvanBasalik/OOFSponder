@@ -7,7 +7,7 @@
 
 The migration to the CDN-based release will show some approval/install prompts, but general functionality won't change and it will still continue to auto-update.
 
-> Note: Alpha and Insider are already migrated to the new CDN release, but Production won't go for a bit longer still. 
+> Note: Alpha and Insider are already migrated to the new CDN release. Production is rolling out gradually, with roughly 10% of eligible users offered migration each day.
 
 Note that Windows may throw a warning the first time you install the older OOFSponder, but if you select _Keep_ and then _Run anyway_ it will install properly. Future upgrades will not show the same warning, nor will the CDN-based installer.
 

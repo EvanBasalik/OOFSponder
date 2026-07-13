@@ -39,6 +39,7 @@ namespace OOFSponderCore.Migration
         private const string RunKeyName = "OOFSponder";
         private const string RunKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
         private const string UninstallKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
+        private const int DailyRolloutPercentage = 10;
 
         // The launcher bootstrap always comes from PROD CDN, regardless of core ring.
         // Core ring preserves the legacy ClickOnce ring for UI visibility, but CDN is
@@ -78,6 +79,12 @@ namespace OOFSponderCore.Migration
                 if (HasDontAskAgainMarker(appDataDir))
                 {
                     MigrationLog("Migration: don't-ask-again marker found; skipping migration.");
+                    return false;
+                }
+
+                if (!IsInDailyRolloutCohort(appDataDir))
+                {
+                    MigrationLog("Migration: user not in today's rollout cohort; skipping migration.");
                     return false;
                 }
 
@@ -192,6 +199,27 @@ namespace OOFSponderCore.Migration
             catch
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Limits migration prompts to roughly one-third of users per UTC day.
+        /// The same user gets a stable result for the entire day.
+        /// </summary>
+        private static bool IsInDailyRolloutCohort(string appDataDir)
+        {
+            // Stable daily seed so each user is either in or out for the full day.
+            var seed = string.Join("|",
+                DateTime.UtcNow.ToString("yyyy-MM-dd"),
+                Environment.UserName ?? string.Empty,
+                Environment.MachineName ?? string.Empty,
+                appDataDir ?? string.Empty);
+
+            using (var sha = SHA256.Create())
+            {
+                var hash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(seed));
+                var bucket = hash[0] % 100;
+                return bucket < DailyRolloutPercentage;
             }
         }
 
