@@ -39,7 +39,7 @@ namespace OOFSponderCore.Migration
         private const string RunKeyName = "OOFSponder";
         private const string RunKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
         private const string UninstallKeyPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall";
-        private const int DailyRolloutPercentage = 10;
+        private const int DailyRolloutPercentage = 100;
 
         // The launcher bootstrap always comes from PROD CDN, regardless of core ring.
         // Core ring preserves the legacy ClickOnce ring for UI visibility, but CDN is
