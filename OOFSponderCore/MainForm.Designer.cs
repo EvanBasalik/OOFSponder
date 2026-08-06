@@ -42,6 +42,7 @@
             enableOnCallModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             tsmiUseNewOOFMath = new System.Windows.Forms.ToolStripMenuItem();
+            tsmiSetTeamsStatus = new System.Windows.Forms.ToolStripMenuItem();
             showLogsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             oOFSponderLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             oOFSponderLogFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -208,7 +209,7 @@
             fileToolStripMenuItem.AccessibleDescription = "File";
             fileToolStripMenuItem.AccessibleName = "File";
             fileToolStripMenuItem.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
-            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, tsmiUseNewOOFMath, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem });
+            fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { toolStripMenuItem1, tsmiSavedOOFMessage, tsmiStartMinimized, tsmiUseNewOOFMath, tsmiSetTeamsStatus, enableOnCallModeToolStripMenuItem, showLogsToolStripMenuItem, exitToolStripMenuItem });
             fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             fileToolStripMenuItem.Size = new System.Drawing.Size(46, 22);
             fileToolStripMenuItem.Text = "&File...";
@@ -225,6 +226,17 @@
             tsmiUseNewOOFMath.Size = new System.Drawing.Size(225, 22);
             tsmiUseNewOOFMath.Text = "Use &new OOF math";
             tsmiUseNewOOFMath.CheckStateChanged += tsmiUseNewOOFMath_CheckStateChanged;
+            // 
+            // tsmiSetTeamsStatus
+            // 
+            tsmiSetTeamsStatus.AccessibleDescription = "A menu item that causes OOFSponder to also set Teams status when OOF is active";
+            tsmiSetTeamsStatus.AccessibleName = "Set Teams status";
+            tsmiSetTeamsStatus.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuItem;
+            tsmiSetTeamsStatus.CheckOnClick = true;
+            tsmiSetTeamsStatus.Name = "tsmiSetTeamsStatus";
+            tsmiSetTeamsStatus.Size = new System.Drawing.Size(225, 22);
+            tsmiSetTeamsStatus.Text = "Set &Teams status";
+            tsmiSetTeamsStatus.CheckStateChanged += tsmiSetTeamsStatus_CheckStateChanged;
             // 
             // showLogsToolStripMenuItem
             // 
@@ -979,5 +991,6 @@
         private System.Windows.Forms.RadioButton radPrimary;
         private System.Windows.Forms.RadioButton radSecondary;
         private System.Windows.Forms.ToolStripMenuItem tsmiUseNewOOFMath;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSetTeamsStatus;
     }
 }

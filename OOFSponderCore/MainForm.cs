@@ -256,6 +256,9 @@ namespace OOFScheduling
             //add a visual indicator of using the new OOF logic
             tsmiUseNewOOFMath.Checked = OOFData.Instance.useNewOOFMath;
 
+            //add a visual indicator for Teams status integration
+            tsmiSetTeamsStatus.Checked = OOFData.Instance.SetTeamsStatus;
+
             cboExternalAudienceScope.SelectedItem = OOFData.Instance.ExternalAudienceScope.ToString();
             if (OOFData.Instance.IsPermaOOFOn)
             {
@@ -729,8 +732,8 @@ namespace OOFScheduling
                     if (result.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - OOF message set - Start: " + StartTime + " - End: " + EndTime);
-
                         OOFSponder.Logger.Info("Successfully set OOF");
+                        await TryUpdateTeamsPresenceAsync(StartTime, EndTime);
                         return true;
                     }
                     else
@@ -744,6 +747,7 @@ namespace OOFScheduling
                 {
                     OOFSponder.Logger.Info("Remote OOF matches - no changes");
                     UpdateStatusLabel(toolStripStatusLabel1, DateTime.Now.ToString() + " - No changes needed, OOF Message not changed - Start: " + StartTime + " - End: " + EndTime);
+                    await TryUpdateTeamsPresenceAsync(StartTime, EndTime);
                     return true;
                 }
             }
@@ -944,6 +948,9 @@ namespace OOFScheduling
 
             //persist if they want the UI minimized on start up
             OOFData.Instance.StartMinimized = tsmiStartMinimized.Checked;
+
+            //persist the Teams status integration preference
+            OOFData.Instance.SetTeamsStatus = tsmiSetTeamsStatus.Checked;
 
             //persist the external message scope
             Enum.TryParse(cboExternalAudienceScope.SelectedItem.ToString().Replace(" ", ""), out ExternalAudienceScope result);
@@ -1863,6 +1870,37 @@ namespace OOFScheduling
                 button2.Text = button2.Text.Replace(_newOOFMathIndicator, "");
             }
 #endif
+        }
+
+        private void tsmiSetTeamsStatus_CheckStateChanged(object sender, EventArgs e)
+        {
+            OOFData.Instance.SetTeamsStatus = tsmiSetTeamsStatus.Checked;
+
+            //force a save so the preference is persisted immediately
+            saveSettings();
+        }
+
+        /// <summary>
+        /// Updates Teams presence based on whether the user is currently within an OOF window.
+        /// Silently swallows failures so Teams status issues never block OOF setting.
+        /// Teams presence has a 1-hour server-side expiry, so this must be called every cycle.
+        /// </summary>
+        private async System.Threading.Tasks.Task TryUpdateTeamsPresenceAsync(DateTime startTime, DateTime endTime)
+        {
+            if (!OOFData.Instance.SetTeamsStatus)
+            {
+                return;
+            }
+
+            bool isCurrentlyOOF = DateTime.Now >= startTime && DateTime.Now <= endTime;
+            try
+            {
+                await O365.SetTeamsPresenceAsync(isCurrentlyOOF);
+            }
+            catch (Exception ex)
+            {
+                OOFSponder.Logger.Error("Teams presence update failed", ex);
+            }
         }
     }
 

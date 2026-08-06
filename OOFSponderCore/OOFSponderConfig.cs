@@ -42,6 +42,7 @@ namespace OOFSponderConfig
         public bool StartMinimized { get; set; }
 
         public bool UseNewOOFMath { get; set; }
+        public bool SetTeamsStatus { get; set; }
         public Collection<OOFScheduling.WorkingDay> WorkingDayCollection { get; set; }
     }
 
