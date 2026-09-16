@@ -68,4 +68,5 @@ Valid values are from 1 to 99.
 ![Image of the Max Message History Dialogue Box](/ReadMeImages/MaxMessagHistoryDialogue.png)
 
 ## Legacy ClickOnce Installer
+
 If you still want the legacy ClickOnce installer, use [this old link](https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application).
