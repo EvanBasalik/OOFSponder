@@ -57,11 +57,15 @@ Whenever you edit any of your OOF Messages, OOFSponder automatically saves a cop
 
 You can access your saved messages by going to "File...", then "Open Saved OOF Message...".
 
-You can also configure how many saved copies OOFSponder keeps by going to "File...", then "Max Message History (x)..." ("x" shows the current number of messages being kept).
-When you save a change to the Max History value, OOFSponder will immediately attempt to cleanup any older messages above the new value.
-Valid values are from 1 to 99.
+![Image of Selecting the Open Saved OOF Messages Menu Item](/ReadMeImages/OpenSavedOOFMessages.png)
 
-![Image of the Max Message Dialogue Box](/ReadMeImages/MaxMessagHistoryDialogue.png)
+You can also configure how many saved copies OOFSponder keeps by going to "File...", then "Max Message History (x)..." ("x" shows the current number of messages being kept).  
+When you save a change to the Max History value, OOFSponder will immediately attempt to cleanup any older messages above the new value.  
+Valid values are from 1 to 99.  
+
+![Image of Selecting the Max Message History Menu Item](/ReadMeImages/MaxMessageHistoryMenuItem.png)
+
+![Image of the Max Message History Dialogue Box](/ReadMeImages/MaxMessagHistoryDialogue.png)
 
 ## Legacy ClickOnce Installer
 If you still want the legacy ClickOnce installer, use [this old link](https://evanbasalik.github.io/OOFSponder/production/OOFScheduling.application).
